@@ -3,7 +3,7 @@
 class ScheduleUploader < CarrierWave::Uploader::Base
 
   storage :file
-  
+
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{model.order.id}"
   end
@@ -14,7 +14,7 @@ class ScheduleUploader < CarrierWave::Uploader::Base
 
   def filename
     if super.present?
-      model.uploader_secure_token ||= SecureRandom.uuid.gsub("-","")
+      model.uploader_secure_token ||= SecureRandom.uuid.gsub("-", "")
       "#{model.uploader_secure_token}.#{file.extension.downcase}"
     end
   end

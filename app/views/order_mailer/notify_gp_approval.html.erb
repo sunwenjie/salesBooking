@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 
 <body>
 <div>
   <% if @local_language == "en" %>
       <p>Dear Sir/Madam,</p>
-      <p>Order(id) has been rejected, should you need redo gp projection, please adjust the product gp % and re-submit again. Thanks.</p>
-      <p>Order <%= @order.code %>: <%= @order.title%></p>
-      <p>Link: http://<%= CURRENT_DOMAIN %>/en/orders/<%= @order.id%></p>
+
+      <p>Order(id) has been rejected, should you need redo gp projection, please adjust the product gp % and re-submit
+        again. Thanks.</p>
+
+      <p>Order <%= @order.code %>: <%= @order.title %></p>
+
+      <p>Link: http://<%= CURRENT_DOMAIN %>/en/orders/<%= @order.id %></p>
+
       <p>Please login to the system for details.</p>
+
       <p>If any enquiries, please contact: technology@i-click.com</p>
+
       <p>Regards,</p>
+
       <p>iClick Interactive Asia Limited</p>
   <% else %>
       <p>您好:</p>
+
       <p>订单审批不通过,如有需要请重新核对毛利预估，完成后请重新提交。谢谢</p>
-      <p>订单 <%= @order.code %>: <%= @order.title%></p>
-      <p>链接: http://<%=CURRENT_DOMAIN %>/zh-cn/orders/<%= @order.id %></p>
+
+      <p>订单 <%= @order.code %>: <%= @order.title %></p>
+
+      <p>链接: http://<%= CURRENT_DOMAIN %>/zh-cn/orders/<%= @order.id %></p>
+
       <p>您可以登录系统查看详情。</p>
+
       <p>如有问题，请联系: technology@i-click.com</p>
+
       <p>谢谢</p>
+
       <p>爱点击互动（北京）广告有限公司</p>
   <% end %>
 </div>

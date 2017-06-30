@@ -3,70 +3,72 @@
 <% end %>
 <div class="big_section big_section_book">
 
-  <%= form_tag( { :action => "set_sales_group_type" }, :class => "form-horizontal" , :autocomplete=>"off" ) do %>
+  <%= form_tag({:action => "set_sales_group_type"}, :class => "form-horizontal", :autocomplete => "off") do %>
 
-    <div class="sub_section_white sub_section_white_book">
-      <div class="product_type control-group t_margin_20">
-        <label class="control-label">
-          <label for="direct_sales_group" class="inline"><%=t('approval_flows.form.direct_group_type')%></label>
-        </label>
-        <div class="controls">
-          <div class="row">
-            <div class="span" id="bu_products">
-              <%= select_tag "direct_sales_group", options_for_select(options_for_users,params[:direct_sales_group] || []), {:style=>"width:380px;",:name=>"direct_sales_group[]",:class=>"chzn-select l_margin_0",:multiple=>true} %>
-            </div>
+      <div class="sub_section_white sub_section_white_book">
+        <div class="product_type control-group t_margin_20">
+          <label class="control-label">
+            <label for="direct_sales_group" class="inline"><%= t('approval_flows.form.direct_group_type') %></label>
+          </label>
 
-            <div class="span l_margin_10 t_margin_5">
-              <a class="selection_icon direct_sales_group" data-target="#direct_sales_group" href="javascript:void(0);"></a>
-            </div>
-          </div>
-        </div>
-      </div>
+          <div class="controls">
+            <div class="row">
+              <div class="span" id="bu_products">
+                <%= select_tag "direct_sales_group", options_for_select(options_for_users, params[:direct_sales_group] || []), {:style => "width:380px;", :name => "direct_sales_group[]", :class => "chzn-select l_margin_0", :multiple => true} %>
+              </div>
 
-      <div class="product_type control-group t_margin_20">
-        <label class="control-label">
-          <label for="channel_sales_group" class="inline"><%=t('approval_flows.form.channel_group_type')%></label>
-        </label>
-        <div class="controls">
-          <div class="row">
-            <div class="span" id="bu_products">
-              <%= select_tag "channel_sales_group",options_for_select(options_for_users,params[:channel_sales_group] || []), {:style=>"width:380px;",:name=>"channel_sales_group[]",:class=>"chzn-select l_margin_0",:multiple=>true} %>
-            </div>
-
-            <div class="span l_margin_10 t_margin_5">
-              <a class="selection_icon channel_sales_group" data-target="#channel_sales_group" href="javascript:void(0);"></a>
+              <div class="span l_margin_10 t_margin_5">
+                <a class="selection_icon direct_sales_group" data-target="#direct_sales_group" href="javascript:void(0);"></a>
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="product_type control-group t_margin_20">
+          <label class="control-label">
+            <label for="channel_sales_group" class="inline"><%= t('approval_flows.form.channel_group_type') %></label>
+          </label>
+
+          <div class="controls">
+            <div class="row">
+              <div class="span" id="bu_products">
+                <%= select_tag "channel_sales_group", options_for_select(options_for_users, params[:channel_sales_group] || []), {:style => "width:380px;", :name => "channel_sales_group[]", :class => "chzn-select l_margin_0", :multiple => true} %>
+              </div>
+
+              <div class="span l_margin_10 t_margin_5">
+                <a class="selection_icon channel_sales_group" data-target="#channel_sales_group" href="javascript:void(0);"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-
-    <!-- sub_section_white end -->
-    <div class="row big_section_b_book">
-      <!-- button area -->
-      <div class="button_area">
-        <div class="r_margin_20">
+      <!-- sub_section_white end -->
+      <div class="row big_section_b_book">
+        <!-- button area -->
+        <div class="button_area">
+          <div class="r_margin_20">
             <div class="pull-right">
               <div class="outer_cancel submit_btn">
-                <a href="<%=approval_flows_path%>" class="cancel cancel_pretargeting change_cancel_btn"><%=t('approval_flows.form.cancel')%>
+                <a href="<%= approval_flows_path %>" class="cancel cancel_pretargeting change_cancel_btn"><%= t('approval_flows.form.cancel') %>
                 </a>
               </div>
               <div class="outer_submit submit_btn">
-                <input type="submit" value="<%=t('approval_flows.form.submit_btn')%>" name="commit" class="submit_tag_button" >
-               </div>
+                <input type="submit" value="<%= t('approval_flows.form.submit_btn') %>" name="commit" class="submit_tag_button">
+              </div>
             </div>
 
             <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
               <img src="/images/pre-loading_small.gif">
             </div>
-       </div>
+          </div>
+        </div>
       </div>
-   </div>
-  <%end%>
+  <% end %>
 </div>
 
 <script type="text/javascript">
-  multiple_chosen("#direct_sales_group", ".direct_sales_group");
-  multiple_chosen("#channel_sales_group", ".channel_sales_group");
+    multiple_chosen("#direct_sales_group", ".direct_sales_group");
+    multiple_chosen("#channel_sales_group", ".channel_sales_group");
 </script>

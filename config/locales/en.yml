@@ -413,7 +413,8 @@ en:
         name: "User Permission Name"
         node_id: "Flow Node"
         user_group: "User Groups"
-        approval_group: "Permission Group"
+        approval_group: "Permission Groups"
+        coordinate_groups: "Coordinate Groups(Permission Group or Planner Leader Group)"
     errors:
       models:
           user:
@@ -537,6 +538,8 @@ en:
               min:
                 blank: "is required, cannot be empty"
               max:
+                blank: "is required, cannot be empty"
+              coordinate_groups:
                 blank: "is required, cannot be empty"
           product:
             attributes:

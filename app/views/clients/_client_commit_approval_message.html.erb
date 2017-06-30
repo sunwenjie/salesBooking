@@ -1,23 +1,23 @@
 <%
    if client.whether_cross_district?
-     node_id = 6 if (node_ids.include? "6") && (client.state == "unapproved" || client.state == "approved" )
+     node_id = 6 if (node_ids.include? "6") && (client.state == "unapproved" || client.state == "approved")
      if node_ids.include? "9"
        if client.state == "cross_unapproved" || client.state == "approved"
-       node_id = 9
+         node_id = 9
        else
-       common_approved= "unapproved" # 跨区审批时 普通审批未审批
-     end
+         common_approved= "unapproved" # 跨区审批时 普通审批未审批
+       end
      end
 
-     create_user,create_group,create_time,approval_user,approval_group,approval_time,comment = client.last_commit_and_approval(6)
-     cross_create_user,cross_create_group,cross_create_time,cross_approval_user,cross_approval_group,cross_approval_time,cross_comment = client.last_commit_and_approval(9)
+     create_user, create_time, approval_user, approval_time, comment = client.last_commit_and_approval(6)
+     cross_create_user, cross_create_time, cross_approval_user, cross_approval_time, cross_comment = client.last_commit_and_approval(9)
      cross_comment = comment.present? ? comment+";"+cross_comment : cross_comment
    else
      node_id = 6 if (node_ids.include? "6")
-     create_user,create_group,create_time,approval_user,approval_group,approval_time,comment = client.last_commit_and_approval(6)
+     create_user, create_time, approval_user, approval_time, comment = client.last_commit_and_approval(6)
    end
 
-   client_status =  client.state.present? ? t("clients.index."+client.state) : ''
+   client_status = client.state? ? t("clients.index."+client.state) : ''
 %>
 <div style="min-width:300px;" class=" popover xmo-progress-popover no-mouseout xmo-popover fade in">
   <div class="arrow"></div>
@@ -26,69 +26,57 @@
       <label class="popover-head"><%= t("clients.index.client_approve") %></label>
       <ul class="nav popover-nav" id="myTabs" style="margin-top:10px;">
         <li class="active">
-          <a data-toggle="tab" href="#tab-submit"><%=t("clients.index.submit_approve")%></a>
+          <a data-toggle="tab" href="#tab-submit"><%= t("clients.index.submit_approve") %></a>
         </li>
         <li>
-          <a data-toggle="tab" href="#tab-docheck"><%=t("clients.index.run_approve")%></a>
+          <a data-toggle="tab" href="#tab-docheck"><%= t("clients.index.run_approve") %></a>
         </li>
       </ul>
       <div class="tab-content">
-        <div class="tab-pane active fade in" id="tab-submit"  style="padding:10px 0">
+        <div class="tab-pane active fade in" id="tab-submit" style="padding:10px 0">
           <ul class="popover-detail">
             <li>
-              <span class="popover-detail-title"><%=t("clients.index.submiter")%></span>
+              <span class="popover-detail-title"><%= t("clients.index.submiter") %></span>
               <span class="popover-detail-result"><%= create_user %></span>
             </li>
-            <!--<li>-->
-              <!--<span class="popover-detail-title"><%#=t("clients.index.group")%></span>-->
-              <!--<span class="popover-detail-result"><%#= create_group %></span>-->
-            <!--</li>-->
             <li>
-              <span class="popover-detail-title"><%=t("clients.index.submit_time")%></span>
+              <span class="popover-detail-title"><%= t("clients.index.submit_time") %></span>
               <span class="popover-detail-result"><%= create_time %></span>
             </li>
           </ul>
           <hr>
           <ul class="popover-detail">
             <li>
-              <span class="popover-detail-title"><%=t("clients.index.approver")%></span>
+              <span class="popover-detail-title"><%= t("clients.index.approver") %></span>
               <span class="popover-detail-result"><%= approval_user %></span>
             </li>
-            <!--<li>-->
-              <!--<span class="popover-detail-title"><%=t("clients.index.group")%></span>-->
-              <!--<span class="popover-detail-result"><%= approval_group%></span>-->
-            <!--</li>-->
             <li>
-              <span class="popover-detail-title"><%=t("clients.index.approve_time")%></span>
+              <span class="popover-detail-title"><%= t("clients.index.approve_time") %></span>
               <span class="popover-detail-result"><%= approval_time %></span>
             </li>
           </ul>
           <% if client.whether_cross_district? %>
-          <hr>
-          <ul class="popover-detail">
-            <li>
-              <span class="popover-detail-title"><%=t("clients.index.cross_submiter")%></span>
-              <span class="popover-detail-result"><%= cross_approval_user %></span>
-            </li>
-            <!--<li>-->
-            <!--<span class="popover-detail-title"><%#=t("clients.index.group")%></span>-->
-            <!--<span class="popover-detail-result"><%#= create_group %></span>-->
-            <!--</li>-->
-            <li>
-              <span class="popover-detail-title"><%=t("clients.index.corss_submit_time")%></span>
-              <span class="popover-detail-result"><%= cross_approval_time %></span>
-            </li>
-          </ul>
-          <% end %>
-          <% if   client.state == "approved" %>
               <hr>
-              <div class="control-group t_margin_5" >
+              <ul class="popover-detail">
+                <li>
+                  <span class="popover-detail-title"><%= t("clients.index.cross_submiter") %></span>
+                  <span class="popover-detail-result"><%= cross_approval_user %></span>
+                </li>
+                <li>
+                  <span class="popover-detail-title"><%= t("clients.index.corss_submit_time") %></span>
+                  <span class="popover-detail-result"><%= cross_approval_time %></span>
+                </li>
+              </ul>
+          <% end %>
+          <% if client.state == "approved" %>
+              <hr>
+              <div class="control-group t_margin_5">
                 <div class="controls">
                   <div class="row">
                     <div class="">
                       <label class="checkbox">
-                        <input id= "<%=client.id.to_s %>_client_released" client_id = "<%= client.id %>" type="checkbox" value="yes" onclick="client_released(this)">
-                        <%=t("clients.show.client_released")%>
+                        <input id="<%= client.id.to_s %>_client_released" client_id="<%= client.id %>" type="checkbox" value="yes" onclick="client_released(this)">
+                        <%= t("clients.show.client_released") %>
                       </label>
                     </div>
                   </div>
@@ -100,55 +88,56 @@
           <div style="text-align:center;">
             <div class="popover-commit popover-submit">
               <div class="outer_cancel">
-                <input class="cancel back_button" type="button" value="<%= t('clients.index.cancel_bth')%>" onclick="go_back(this)">
+                <input class="cancel back_button" type="button" value="<%= t('clients.index.cancel_bth') %>" onclick="go_back(this)">
               </div>
               <div class="outer_submit">
-                <input name="commit" type="button" value="<%= client.state == "approved" ? t('clients.index.submit_released') : t('clients.index.submit_approve')%>"  data_node_id="<%= node_id %>"   data_params="no" data_client_id="<%= client.id %>" class="submit" onclick="go_approval(this)">
+                <input name="commit" type="button" value="<%= client.state == "approved" ? t('clients.index.submit_released') : t('clients.index.submit_approve') %>" data_node_id="<%= node_id %>" data_params="no" data_client_id="<%= client.id %>" class="submit" onclick="go_approval(this)">
               </div>
             </div>
           </div>
 
           <div class="popover-ahref ">
-            <a href="<%= client_path(:id=>client.id,:node_id => node_ids) %>" class="blue-href"><%= t('clients.index.view_detail')%></a>
+            <a href="<%= client_path(:id => client.id, :node_id => node_ids) %>" class="blue-href"><%= t('clients.index.view_detail') %></a>
           </div>
           <div class="popover-end">
             <label><%= client_status %></label>
           </div>
 
         </div>
-        <div class="tab-pane  fade " id="tab-docheck"  style="padding:10px 0">
+        <div class="tab-pane  fade " id="tab-docheck" style="padding:10px 0">
           <div class="popover-group">
-            <label><%= client.whether_cross_district? && (status == ["2","0"] || status == ["2","2"] || status == ["2","3"]) ? t("clients.index.cross_approve") : t("clients.index.approve")%></label>
+            <label><%= client.whether_cross_district? && (status == ["2", "0"] || status == ["2", "2"] || status == ["2", "3"]) ? t("clients.index.cross_approve") : t("clients.index.approve") %></label>
+
             <div class="popover-inputs" style="float:left;">
               <!--xmo input-append-->
               <div class="input-append">
 
 
                 <label class="radio">
-                  <input type="radio" id="examine_state_client_approval_<%= client.id%>" name="examine_state_client_approval_<%= client.id%>" value="0" <%= client.state != "cli_rejected" ? "checked" : ""%> ><%= t("clients.index.pass")%>
+                  <input type="radio" id="examine_state_client_approval_<%= client.id %>" name="examine_state_client_approval_<%= client.id %>" value="0" <%= client.state != "cli_rejected" ? "checked" : "" %> ><%= t("clients.index.pass") %>
                 </label>
                 <label class="radio">
-                  <input type="radio" id="examine_state_client_approval_<%= client.id%>" name="examine_state_client_approval_<%= client.id%>" value="-1" <%= client.state == "cli_rejected" ? "checked" : ""%> ><%= t("clients.index.unpass")%>
+                  <input type="radio" id="examine_state_client_approval_<%= client.id %>" name="examine_state_client_approval_<%= client.id %>" value="-1" <%= client.state == "cli_rejected" ? "checked" : "" %> ><%= t("clients.index.unpass") %>
                 </label>
               </div>
             </div>
           </div>
           <div class="popover-group">
-            <textarea  id= "<%= client.id %>_client_approval_msg" placeholder="<%=t('clients.index.please_mark')%>" style="width:100%;box-sizing:border-box;"cols="20" rows="8"><%= client.whether_cross_district? ? cross_comment : comment %></textarea>
+            <textarea id="<%= client.id %>_client_approval_msg" placeholder="<%= t('clients.index.please_mark') %>" style="width:100%;box-sizing:border-box;" cols="20" rows="8"><%= client.whether_cross_district? ? cross_comment : comment %></textarea>
 
           </div>
           <div style="text-align:center;">
             <div class="popover-commit popover-approval">
               <div class="outer_cancel">
-                <input class="cancel back_button" type="button" value="<%=t('clients.index.cancel_bth')%>" onclick="go_back(this)">
+                <input class="cancel back_button" type="button" value="<%= t('clients.index.cancel_bth') %>" onclick="go_back(this)">
               </div>
               <div class="outer_submit">
-                <input name="commit" type="button" value="<%= (client.state == "unapproved" || client.state == "cross_unapproved" )? (client.whether_cross_district? ? t('clients.index.cross_submit_approve_button') : t('clients.index.submit_approve_button')) : t('clients.index.submit_approve')%>"  data_node_id="<%= node_id %>" data_common_aproved = "<%= common_approved %>"  data_params="yes" data_client_id="<%= client.id %>" class="submit" onclick="go_approval(this)">
+                <input name="commit" type="button" value="<%= (client.state == "unapproved" || client.state == "cross_unapproved") ? (client.whether_cross_district? ? t('clients.index.cross_submit_approve_button') : t('clients.index.submit_approve_button')) : t('clients.index.submit_approve') %>" data_node_id="<%= node_id %>" data_common_aproved="<%= common_approved %>" data_params="yes" data_client_id="<%= client.id %>" class="submit" onclick="go_approval(this)">
               </div>
             </div>
           </div>
           <div class="popover-ahref ">
-            <a href="<%= client_path(:id=>client.id,:node_id => node_ids) %>" class="blue-href"><%= t('clients.index.view_detail')%></a>
+            <a href="<%= client_path(:id => client.id, :node_id => node_ids) %>" class="blue-href"><%= t('clients.index.view_detail') %></a>
           </div>
 
           <div class="popover-end">
@@ -162,30 +151,31 @@
 </div>
 <script type="text/javascript">
 
-    $(function(){
+    $(function () {
         // $(".select").chosen();
-        $(".popover-nav").find("li").on("click",function(){
-            var id =$(this).find("a").attr("href");
+        $(".popover-nav").find("li").on("click", function () {
+            var id = $(this).find("a").attr("href");
             $(this).siblings("li").removeClass("active");
             $(this).addClass("active");
             $(this).parent().parent().find(".tab-pane").removeClass("active").removeClass("in");
             $(this).parent().parent().find(id).addClass("active").addClass("in");
-        })})
+        })
+    })
 
     <%
     client_state = client.state
     if ["cli_saved","released"].include? client_state
     %>
-    $("#examine_state_client_approval_"+<%= client.id.to_s%>).prop('disabled', true);
-    $("#"+<%= client.id.to_s %> + "_client_approval_msg").prop('disabled',true);
+    $("#examine_state_client_approval_" +<%= client.id.to_s%>).prop('disabled', true);
+    $("#" + <%= client.id.to_s %> +"_client_approval_msg").prop('disabled', true);
     $(".popover-approval").addClass('hide');
     <% elsif client_state == "unapproved" || client_state == "cross_unapproved" %>
     $(".popover-submit").addClass('hide');
     <% elsif ["cli_rejected","approved"].include? client_state %>
     $(".popover-approval").addClass('hide');
     $(".popover-submit").addClass('hide');
-    $("#examine_state_client_approval_"+<%= client.id.to_s%>).prop('disabled', true);
-    $("#"+<%= client.id.to_s %> + "_client_approval_msg").prop('disabled',true);
+    $("#examine_state_client_approval_" +<%= client.id.to_s%>).prop('disabled', true);
+    $("#" + <%= client.id.to_s %> +"_client_approval_msg").prop('disabled', true);
     <% end %>
 
 </script>

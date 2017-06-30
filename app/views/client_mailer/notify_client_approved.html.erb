@@ -1,35 +1,50 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-  <% if @local_language == "en"%>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<% if @local_language == "en" %>
     <p>Dear Sir/Madam,</p>
-    <p>Advertiser <%= @client.code %>: <%= @client.clientname %> | Brand: <%= Client.display_item_class(@client.brand) %> | Agency: <%= Client.display_item_class(@client.channel_name)%>	</p>
+
+    <p>Advertiser <%= @client.code %>: <%= @client.clientname %> |
+      Brand: <%= Client.display_item_class(@client.brand) %> |
+      Agency: <%= Client.display_item_class(@client.channel_name) %>    </p>
+
     <p>Status: <%= @status[0] %>.</p>
+
     <p>Approver: <%= @approver %></p>
 
-    <p>Link: http://<%=CURRENT_DOMAIN %>/en/clients/<%= @client.id %></p>
+    <p>Link: http://<%= CURRENT_DOMAIN %>/en/clients/<%= @client.id %></p>
+
     <p>Please login to the system for details.</p>
 
     <p>If any enquiries, please contact: technology@i-click.com </p>
+
     <p>Regards,</p>
+
     <p>iClick Interactive Asia Limited </p>
 
-   <% else %>
+<% else %>
     <p>您好:</p>
-    <p>广告主 <%= @client.code %>: <%= @client.clientname %> | 品牌: <%= Client.display_item_class(@client.brand) %> | 代理公司: <%= Client.display_item_class(@client.channel_name)%>	</p>
-    <p>状态: <%= @status[1] %></p>
-    <p>审批人: <%= @approver %></p>
-    <p>
-        链接: http://<%=CURRENT_DOMAIN %>/zh-cn/clients/<%= @client.id %></p>
-        <p>您可以登录系统查看详情。</p>
 
-        <p>如有问题，请联系: technology@i-click.com	</p>
-        <p>谢谢,</p>
-        <p>爱点击互动（北京）广告有限公司 </p>
-   <% end %>
-  </body>
+    <p>广告主 <%= @client.code %>: <%= @client.clientname %> | 品牌: <%= Client.display_item_class(@client.brand) %> |
+      代理公司: <%= Client.display_item_class(@client.channel_name) %>    </p>
+
+    <p>状态: <%= @status[1] %></p>
+
+    <p>审批人: <%= @approver %></p>
+
+    <p>
+      链接: http://<%= CURRENT_DOMAIN %>/zh-cn/clients/<%= @client.id %></p>
+
+    <p>您可以登录系统查看详情。</p>
+
+    <p>如有问题，请联系: technology@i-click.com </p>
+
+    <p>谢谢,</p>
+
+    <p>爱点击互动（北京）广告有限公司 </p>
+<% end %>
+</body>
 </html>

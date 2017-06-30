@@ -10,7 +10,26 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+
+//= require jquery-1.7.1.min
+//= require bootstrap/bootstrap.min.js
+//= require bootstrap/bootstrap-tooltip.js
+//= require jquery.tooltip
+//= require common
+//= require chosen.jquery.min
+//= require jquery.dataTables.min
+//= require dataTables.scroller
+//= require jquery-ui-1.8.21.custom.min
+//= require jquery.linkselect.min
+//= require jquery.xmo_tooltips
+//= require component
+//= require jquery.validate.min
+//= require jquery.sticky
+//= require jquery.form
+//= require jquery.metadata
+//= require jquery.defaultvalue
+//= require expandTable
+//= require underscore-min
+//= require city
+//= require xmo-calendar-copy
+

@@ -3,7 +3,7 @@
 class ProofUploader < CarrierWave::Uploader::Base
 
   storage :file
-  
+
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{model.id}"
   end
@@ -15,8 +15,6 @@ class ProofUploader < CarrierWave::Uploader::Base
   #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
   # end
 
-  
-
 
   def extension_white_list
     %w(jpg jpeg gif png pdf xls xlsx)
@@ -24,7 +22,7 @@ class ProofUploader < CarrierWave::Uploader::Base
 
   def filename
     if super.present?
-      model.uploader_secure_token ||= SecureRandom.uuid.gsub("-","")
+      model.uploader_secure_token ||= SecureRandom.uuid.gsub("-", "")
       "#{model.uploader_secure_token}.#{file.extension.downcase}"
     end
   end

@@ -111,7 +111,7 @@ module SendMenu
         gp_img = "icon05_green.png"
         gp_text = t("order.form.gp_meet_standard2")
     end
-    return "<img src='/images/assets/#{gp_img}'/>" + " " + "#{gp_text}"
+    return   "<img src='/images/circle_icon/"+gp_img+"'/>" + " " + "#{gp_text}"
   end
 
 
@@ -125,59 +125,17 @@ module SendMenu
 
   module ModelClassMethods
 
-    def sync_attributes_services(me_name,system="SAP")
+    def share_sales_services(me_name)
       class_name = me_name.to_s.camelize.constantize
 
-      #获取类拓展属性
-      define_method("sync_attributes_#{me_name}s") do
-        instance_variable_set("@sync_attributes_#{me_name}s",SyncAttribute.where("type = ? and system = ?",me_name,system).map(&:en) )
-      end
-
-      #保存类拓展属性
-      define_method("sync_attributes_save_#{me_name}s") do
-        @cate = class_name.find(params[:id])
-        attribute_value_mode = (me_name.to_s.camelize+"AttributeValue").constantize
-        attribute_value_mode.where("#{me_name}_id = ? ",params[:id]).each{|att| att.delete }
-        SyncAttribute.where("type = ? and system = ?",me_name,system).each do |sttr_name|
-          @attribute_value_mode = attribute_value_mode.new
-          @attribute_value_mode["value"] = params["#{sttr_name[:en]}"].present? ? params["#{sttr_name[:en]}"].class == Array ?  (params["#{sttr_name[:en]}"]).join("|") :(params["#{sttr_name[:en]}"]) :""
-          @attribute_value_mode["attribute_en_name"] = sttr_name[:en]
-          @attribute_value_mode["system"] = sttr_name[:system]
-          @attribute_value_mode["attribute_id"] = sttr_name[:id]
-          @attribute_value_mode["#{me_name}_id"] = @cate.id
-          @attribute_value_mode.save!
-        end
-      end
-
-      #查询类拓展属性值数组
-      define_method("sync_attributes_read_#{me_name}s") do
-        if params[:id]
-          @cate = class_name.find(params[:id])
-          @attribute_values = @cate.send("#{me_name}_attribute_values").collect{|val|[val.attribute_en_name,val.value]}
-          instance_variable_set("@sync_attributes_#{me_name}_values",@attribute_values)
-          unless me_name.to_s == "channel"
-            share_model = ("Share"+me_name.to_s.camelize).constantize
-            share_ids = share_model.where("#{me_name}_id = ?",params[:id].to_i).map(&:share_id)
-            instance_variable_set("@share_sales_#{me_name}_ids",share_ids)
+      #查询共享销售
+      define_method("share_sales_read_#{me_name}s") do |object_id|
+        if object_id
+          share_model = ("Share#{class_name}").constantize
+          share_ids = share_model.where("#{me_name}_id = ?",object_id).map(&:share_id)
+          instance_variable_set("@share_sales_#{me_name}_ids",share_ids)
           end
         end
-      end
-
-      #共享销售保存
-      define_method("update_share_#{me_name}s") do
-        @cate = class_name.find(params[:id])
-        share_model = ("Share"+me_name.to_s.camelize).constantize
-        ids = share_model.where("#{me_name}_id = ?",@cate.id).pluck(:id)
-        share_model.delete(ids)
-        if params["share_#{me_name}"]
-          params["share_#{me_name}"].each do |share_id|
-            @share_model = share_model.new()
-            @share_model["#{me_name}_id"] = @cate.id
-            @share_model.share_id = share_id
-            @share_model.save
-          end
-        end
-      end
 
     end
 

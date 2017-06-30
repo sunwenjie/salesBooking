@@ -5,7 +5,8 @@ module Generator
 
     attr_reader :excel,:workbook,:order,:worksheet
 
-    attr_accessor :styles 
+    attr_accessor :styles
+
     include ActionView::Helpers::NumberHelper
     
     def init_styles
@@ -152,14 +153,14 @@ module Generator
         worksheet.add_row [I18n.t('order.schedule_excel.sheet_bonus_package'),order.free_tag.to_s == "1" ? I18n.t('order.executer_excel.sheet_base_bonus_package_reason_yes', :free_reason => "#{ order.free_notice}") : I18n.t('order.executer_excel.sheet_base_bonus_package_reason_no')], :style => styles[:info]
         worksheet.add_row [I18n.t('order.schedule_excel.sheet_info_start_date'),order.start_date.try(:strftime, '%Y/%m/%d')], :style => styles[:info]
         worksheet.add_row [I18n.t('order.schedule_excel.sheet_info_end_date'),order.ending_date.try(:strftime, '%Y/%m/%d')], :style => styles[:info]
-        worksheet.add_row [I18n.t('order.schedule_excel.sheet_info_exclude_date'), order.exclude_date.present? ? order.exclude_date.join(",") : '-'], :style => styles[:info]
+        worksheet.add_row [I18n.t('order.schedule_excel.sheet_info_exclude_date'), order.exclude_date? ? order.exclude_date.join(",") : '-'], :style => styles[:info]
         worksheet.add_row [I18n.t('order.schedule_excel.sheet_price_total_day') , "#{order.period.to_s}" + I18n.t('order.executer_excel.sheet_base_total_day_number')], :style => styles[:info]
         worksheet.add_row [I18n.t('order.executer_excel.sheet_nonuniform') , order.whether_nonuniform == true ? I18n.t('order.executer_excel.sheet_detail_yes') : I18n.t('order.executer_excel.sheet_detail_no')], :style => styles[:info]
         generate_stablize_delivery
         worksheet.add_row [I18n.t('order.schedule_excel.sheet_info_geo'),order.china_region_all? ? (order.map_country.to_s) : (order.map_country.to_s+ " " + (order.china_regional? ? order.map_city.to_s : ""))], :style => styles[:info]
-        worksheet.add_row [I18n.t('order.schedule_excel.sheet_target_goal')  , order.convert_goal.present? ? order.convert_goal : "-"], :style => styles[:info]
+        worksheet.add_row [I18n.t('order.schedule_excel.sheet_target_goal')  , order.convert_goal? ? order.convert_goal : "-"], :style => styles[:info]
         worksheet.add_row [I18n.t('order.schedule_excel.sheet_price_audience_group')  , Order.display_item_class(order.interest_crowd)], :style => styles[:info]
-        worksheet.add_row [I18n.t('order.schedule_excel.sheet_3rd_monitor')  , order.whether_monitor.present? ? order.whether_monitor : '-'], :style => styles[:info]
+        worksheet.add_row [I18n.t('order.schedule_excel.sheet_3rd_monitor')  , order.whether_monitor? ? order.whether_monitor : '-'], :style => styles[:info]
         worksheet.add_row [I18n.t('order.schedule_excel.sheet_price_blacklist') ,"#{Order.display_item_class(order.blacklist_website)}"], :style => styles[:info]
       end
 
@@ -346,7 +347,7 @@ module Generator
 
       
       def uncpe_admeasure(advertisement)
-         if  advertisement.admeasure_state && advertisement.admeasure.present?
+         if  advertisement.admeasure_state && advertisement.admeasure?
            (I18n.locale == :en ? advertisement.admeasure_en[0..-2].select{|a| a[1].present?} : advertisement.admeasure[0..-2].select{|a| a[1].present?}).each do |distribution|
                 city = distribution[0]
                 city_budget_distribution = distribution[1].to_f / advertisement.budget_ratio("super")

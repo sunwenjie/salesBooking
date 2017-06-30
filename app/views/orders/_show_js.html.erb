@@ -1,369 +1,379 @@
 <script type="text/javascript">
- $.fn.extend({
-  numeric: function(options){
-    var jq_dis = $(options['dis']);
-    var that = this;
-    jq_dis.val(format_to_numeric($(this).val()));
-    $(["focus" , "blur" ]).each(function(i , ele){
-      jq_dis.bind(ele , function(){
-        $(this).val(format_to_numeric(jq_dis.val()));
-        $(that).val(format_to_machine_number(jq_dis.val()));
-        $(that).trigger(ele);
-      })
-    })
-  }
-});
+    $.fn.extend({
+        numeric: function (options) {
+            var jq_dis = $(options['dis']);
+            var that = this;
+            jq_dis.val(format_to_numeric($(this).val()));
+            $(["focus", "blur"]).each(function (i, ele) {
+                jq_dis.bind(ele, function () {
+                    $(this).val(format_to_numeric(jq_dis.val()));
+                    $(that).val(format_to_machine_number(jq_dis.val()));
+                    $(that).trigger(ele);
+                })
+            })
+        }
+    });
 
-$("#order_budget").numeric({dis:"#budget_dis_input"});
-$("#order_cost").numeric({dis:"#cost_dis_input"});
-$("#order_discount").numeric({dis:"#discount_dis_input"});
+    $("#order_budget").numeric({dis: "#budget_dis_input"});
+    $("#order_cost").numeric({dis: "#cost_dis_input"});
+    $("#order_discount").numeric({dis: "#discount_dis_input"});
 
-function add_third_monitor(n){
-  if (n=="true"){
-  $("#add_third_monitor").show()}
-  else{
-  $("#order_third_monitor_admaster").attr("checked","checked");
-  $("#order_third_monitor_other").removeAttr("checked");
-  $("#order_description").val("")
-  $("#add_third_monitor").hide()  
-  }
-}
+    function add_third_monitor(n) {
+        if (n == "true") {
+            $("#add_third_monitor").show()
+        }
+        else {
+            $("#order_third_monitor_admaster").attr("checked", "checked");
+            $("#order_third_monitor_other").removeAttr("checked");
+            $("#order_description").val("")
+            $("#add_third_monitor").hide()
+        }
+    }
 
 
-$("#order_budget_currency").change(function(){
-      current_currency = $(this).find("option:selected").text();
-      old_currency = $(".currency_unit").eq(0).text()
-       $.ajax({
-          type: 'post',
-          data: {currency: current_currency, base_currency: old_currency},
-          url: "<%= exchange_rate_orders_path %>",
-          success: function(data) {
-            var rate = parseFloat(data["rate"]);
-            // console.log(rate)
-            cost_prices = ["#general_price", "#cpm_prediction" , "#cpc_prediction"]
-            jQuery.each( cost_prices, function( i, val ) {
-              $(val).text(format_to_numeric(convert_null_to_zero($(val).text()) * rate));
-            });
-            // budget
-            budget = convert_null_to_zero($("#budget_dis_input").val()) * rate;
+    $("#order_budget_currency").change(function () {
+        current_currency = $(this).find("option:selected").text();
+        old_currency = $(".currency_unit").eq(0).text()
+        $.ajax({
+            type: 'post',
+            data: {currency: current_currency, base_currency: old_currency},
+            url: "<%= exchange_rate_orders_path %>",
+            success: function (data) {
+                var rate = parseFloat(data["rate"]);
+                // console.log(rate)
+                cost_prices = ["#general_price", "#cpm_prediction", "#cpc_prediction"]
+                jQuery.each(cost_prices, function (i, val) {
+                    $(val).text(format_to_numeric(convert_null_to_zero($(val).text()) * rate));
+                });
+                // budget
+                budget = convert_null_to_zero($("#budget_dis_input").val()) * rate;
 
-            $("#budget_dis_input").val(format_to_numeric(budget));
-            
-            // reset the dis input
-            $(".currency_unit").each(function(){
-              // unit change
-              $(this).html(current_currency);
-              // price set
-              var old_price_input = $(this).siblings("input").eq(1);
-              if(old_price_input.val() != ""){
-                var exchange_price = convert_null_to_zero(old_price_input.val()) * rate;
-                old_price_input.val(format_to_numeric(exchange_price));
-              }
-              
-            });
-          },
-         error: function(data) {}
+                $("#budget_dis_input").val(format_to_numeric(budget));
+
+                // reset the dis input
+                $(".currency_unit").each(function () {
+                    // unit change
+                    $(this).html(current_currency);
+                    // price set
+                    var old_price_input = $(this).siblings("input").eq(1);
+                    if (old_price_input.val() != "") {
+                        var exchange_price = convert_null_to_zero(old_price_input.val()) * rate;
+                        old_price_input.val(format_to_numeric(exchange_price));
+                    }
+
+                });
+            },
+            error: function (data) {
+            }
         });
     })
-function convert_null_to_zero(val){
-  val = (val == " " || val == null) ? 0 : parseFloat(val.replace(/\,/g, ""));
-  return val;
-}
-
-$("#order_description").change(function(){change_order_third_monitor();});
-function change_order_third_monitor(){
-  $("#order_third_monitor_admaster").removeAttr("checked");
-  $("#order_third_monitor_other").attr("checked","checked");
-}
-
-$(".report_period_check").change(function(){
-  report_period = $("#order_report_period").val();
-  report_period = report_period.split(",")
-  current_period = $(this).attr("id").replace("report_period_", "");
-  if($(this).is(':checked')){
-    if(jQuery.inArray(current_period, report_period) == -1 ){
-      report_period.push(current_period);
+    function convert_null_to_zero(val) {
+        val = (val == " " || val == null) ? 0 : parseFloat(val.replace(/\,/g, ""));
+        return val;
     }
-  }else{
-    if(jQuery.inArray(current_period, report_period) !== -1 ){
-      report_period = $.grep(report_period, function(value) {return value != current_period;});
+
+    $("#order_description").change(function () {
+        change_order_third_monitor();
+    });
+    function change_order_third_monitor() {
+        $("#order_third_monitor_admaster").removeAttr("checked");
+        $("#order_third_monitor_other").attr("checked", "checked");
     }
-  }
-  $("#order_report_period").val(report_period.join(","));
-})
 
-$("#order_frequency_limit").change(function(){toggle_frequency_capping();}).change();
-function toggle_frequency_capping(){
-  if($("#order_frequency_limit").is(':checked')){
-      $("#show_frequency").show();
-    }else{
-      $("#show_frequency").hide();
+    $(".report_period_check").change(function () {
+        report_period = $("#order_report_period").val();
+        report_period = report_period.split(",")
+        current_period = $(this).attr("id").replace("report_period_", "");
+        if ($(this).is(':checked')) {
+            if (jQuery.inArray(current_period, report_period) == -1) {
+                report_period.push(current_period);
+            }
+        } else {
+            if (jQuery.inArray(current_period, report_period) !== -1) {
+                report_period = $.grep(report_period, function (value) {
+                    return value != current_period;
+                });
+            }
+        }
+        $("#order_report_period").val(report_period.join(","));
+    })
+
+    $("#order_frequency_limit").change(function () {
+        toggle_frequency_capping();
+    }).change();
+    function toggle_frequency_capping() {
+        if ($("#order_frequency_limit").is(':checked')) {
+            $("#show_frequency").show();
+        } else {
+            $("#show_frequency").hide();
+        }
     }
-}
 
-function empty_description(){
-  $("#order_description").val("")
-}
+    function empty_description() {
+        $("#order_description").val("")
+    }
 
-function check_client(){
-    $.ajax({
-      type: "GET",
-      url:  "/<%=I18n.locale.to_s%>/clients/check_client?id="+$('#client_id').val(),
-      success: function(msg){
-        $("#order_linkman").val(msg["linkman_name"])
-        $("#order_linkman_tel").val(msg["linkman_tel"]);
-      },
-      error: function(msg){
-      }
-    });
-}
-
-$("#order_ad_platform").change(function(){
-  check_ad_platform();
-})
-
-function check_ad_platform(){
-   $.ajax({
-      type: "GET",
-      url:  "/<%=I18n.locale.to_s%>/orders/check_ad_platform?ad_platform="+$('#order_ad_platform').val(),
-      dataType:"text",
-        success: function(msg){
-          $("#ad_type_change").empty();
-          $("#ad_type_change").append(msg);
-          ad_type_change();
-        },
-      error: function(msg){
-      }
-    });
-}
-
-$("#order_ad_type").change(function(){
-  ad_type_change();
-}).change();
-
-function ad_type_change(){
-  var current_ad_type = $("#order_ad_type").val();
-  var platform_cost_type = <%= raw (Order::COMPUTER_COS_TYPE + Order::MOBILE_COS_TYPE)%>;
-  current_cost_type = $.grep(platform_cost_type,function(n, i){ return n[0] == current_ad_type});
-  $("#order_cost_type option").remove(); 
-  $("#order_cost_type").append("<option value=" + current_cost_type[0][1] + ">" + current_cost_type[0][1] + "</option>");
-  check_type_message();
-}
-
-$("#order_blacklist_website").change(function(){
-                        var str=escape($("#order_blacklist_website").val());
-                        var ent="%0A";
-                        var arr=str.split(ent);
-                        $("#bk_websize").html("网站总数："+arr.length+"/500")
-                        })
-$(function() {var str = escape($("#order_blacklist_website").val());
-                        var ent="%0A";
-                        var arr=str.split(ent);
-                        $("#bk_websize").html("网站总数："+(arr!="" ? arr.length : 0)+"/500")})
-
-$("#order_cost_type").change(function(){check_type_message();})
-
-function city_me(n){
-   $.ajax({
-      type: "GET",
-      url:  "/<%=I18n.locale.to_s%>/orders/check_city?city="+n,
-      dataType:"text",
-      success: function(msg){
-       $("#city_change").empty();
-       $("#city_change").append(msg);
-       check_type_message();
-      },
-      error: function(msg){
-      }
-    });
-}
-
-    function check_cost(){
+    function check_client() {
         $.ajax({
-          type: "GET",
-          url:  "/<%= I18n.locale.to_s%>/orders/check_cost?send_city="+$('#send_city').val()+"&cost="+$('#order_cost').val(),
-          dataType:"text",
-          success: function(msg){
-           $("#city_change").empty();
-           $("#city_change").append(msg);
-          },
-          error: function(msg){
-          }
+            type: "GET",
+            url: "/<%=I18n.locale.to_s%>/clients/check_client?id=" + $('#client_id').val(),
+            success: function (msg) {
+                $("#order_linkman").val(msg["linkman_name"])
+                $("#order_linkman_tel").val(msg["linkman_tel"]);
+            },
+            error: function (msg) {
+            }
+        });
+    }
+
+
+    $("#order_ad_type").change(function () {
+        ad_type_change();
+    }).change();
+
+    function ad_type_change() {
+        var current_ad_type = $("#order_ad_type").val();
+        var platform_cost_type = <%= raw (Order::COMPUTER_COS_TYPE + Order::MOBILE_COS_TYPE)%>;
+        current_cost_type = $.grep(platform_cost_type, function (n, i) {
+            return n[0] == current_ad_type
+        });
+        $("#order_cost_type option").remove();
+        $("#order_cost_type").append("<option value=" + current_cost_type[0][1] + ">" + current_cost_type[0][1] + "</option>");
+        check_type_message();
+    }
+
+    $("#order_blacklist_website").change(function () {
+        var str = escape($("#order_blacklist_website").val());
+        var ent = "%0A";
+        var arr = str.split(ent);
+        $("#bk_websize").html("网站总数：" + arr.length + "/500")
+    })
+    $(function () {
+        var str = escape($("#order_blacklist_website").val());
+        var ent = "%0A";
+        var arr = str.split(ent);
+        $("#bk_websize").html("网站总数：" + (arr != "" ? arr.length : 0) + "/500")
+    })
+
+    $("#order_cost_type").change(function () {
+        check_type_message();
+    })
+
+    function city_me(n) {
+        $.ajax({
+            type: "GET",
+            url: "/<%=I18n.locale.to_s%>/orders/check_city?city=" + n,
+            dataType: "text",
+            success: function (msg) {
+                $("#city_change").empty();
+                $("#city_change").append(msg);
+                check_type_message();
+            },
+            error: function (msg) {
+            }
+        });
+    }
+
+    function check_cost() {
+        $.ajax({
+            type: "GET",
+            url: "/<%= I18n.locale.to_s%>/orders/check_cost?send_city=" + $('#send_city').val() + "&cost=" + $('#order_cost').val(),
+            dataType: "text",
+            success: function (msg) {
+                $("#city_change").empty();
+                $("#city_change").append(msg);
+            },
+            error: function (msg) {
+            }
         });
     }
 
     $("#chosen_multiple_test").chosen();
     //右边触发js
-    $('.selection_trigger').click(function(){
-    var target = $(this).attr('data-target') + '_chzn';
-    $(target).mousedown();
-    return false;
+    $('.selection_trigger').click(function () {
+        var target = $(this).attr('data-target') + '_chzn';
+        $(target).mousedown();
+        return false;
     })
 
-  function buget_currency_show(currency){
-  $("#currency_show").text(currency);
-  }
-  buget_currency_show($("#order_budget_currency").find("option:selected").text());
+    function buget_currency_show(currency) {
+        $("#currency_show").text(currency);
+    }
+    buget_currency_show($("#order_budget_currency").find("option:selected").text());
 
-  $("#order_budget_currency").change(function(){
-          var currency = $(this).find("option:selected").text();
-          buget_currency_show(currency);
-  })
+    $("#order_budget_currency").change(function () {
+        var currency = $(this).find("option:selected").text();
+        buget_currency_show(currency);
+    })
 
-  selectable_with_all("#chosen_multiple_test", "all_cities");
-  function selectable_with_all(ele_id, all_val){
-    var option_all_selected = true;
-    var option_other_selected = true;
-    $(ele_id).change(function(){
-      var is_all = false;
-      var is_otherall = false;
-      if($(ele_id + " option:selected").length == 0){
-          $("#order_regional").val("")
-      }else {
-          var state = $("#send_city").val()
-          $("#order_regional").val(state)
-      };
+    selectable_with_all("#chosen_multiple_test", "all_cities");
+    function selectable_with_all(ele_id, all_val) {
+        var option_all_selected = true;
+        var option_other_selected = true;
+        $(ele_id).change(function () {
+            var is_all = false;
+            var is_otherall = false;
+            if ($(ele_id + " option:selected").length == 0) {
+                $("#order_regional").val("")
+            } else {
+                var state = $("#send_city").val()
+                $("#order_regional").val(state)
+            }
+            ;
 
-      check_type_message();
-      
-      $(ele_id + " option:selected").each(function(i , l){
-      if($(l).val() == all_val) is_all = true;
-      if($(l).val() == "otherall") is_otherall = true;
-      if($(l).val() == "other") city_me("other");
-      if($(l).val() == "BSGS") city_me("special");
-      });
-      
-      if($(ele_id + " option:selected").length == 1){
-          $(ele_id).trigger("liszt:updated");
-          option_all_selected = is_all;
-          return false;
-      }
+            check_type_message();
 
-      if($(ele_id + " option:selected").length > 1 && is_otherall && option_other_selected) {
-          $(ele_id +" option[value=" + "otherall" + "]").removeAttr('selected');
-            option_other_selected = false;
-      }else if (!option_other_selected && $(ele_id + " option:selected").length > 1 && is_otherall){
-          $(ele_id + " option:selected").each(function(i, l) {
-             if ($(l).val() != "otherall") { $(l).removeAttr('selected'); }
-             });
-             option_other_selected = true;
-      }
-
-      if(option_all_selected && is_all){
-        $(ele_id +" option[value=" + all_val + "]").removeAttr('selected');
-          option_all_selected = false;
-        }else if(!option_all_selected && is_all){
-            $(ele_id + " option:selected").each(function(i, l) {
-                if ($(l).val() != all_val) { $(l).removeAttr('selected'); }
+            $(ele_id + " option:selected").each(function (i, l) {
+                if ($(l).val() == all_val) is_all = true;
+                if ($(l).val() == "otherall") is_otherall = true;
+                if ($(l).val() == "other") city_me("other");
+                if ($(l).val() == "BSGS") city_me("special");
             });
-            option_all_selected = true;
+
+            if ($(ele_id + " option:selected").length == 1) {
+                $(ele_id).trigger("liszt:updated");
+                option_all_selected = is_all;
+                return false;
+            }
+
+            if ($(ele_id + " option:selected").length > 1 && is_otherall && option_other_selected) {
+                $(ele_id + " option[value=" + "otherall" + "]").removeAttr('selected');
+                option_other_selected = false;
+            } else if (!option_other_selected && $(ele_id + " option:selected").length > 1 && is_otherall) {
+                $(ele_id + " option:selected").each(function (i, l) {
+                    if ($(l).val() != "otherall") {
+                        $(l).removeAttr('selected');
+                    }
+                });
+                option_other_selected = true;
+            }
+
+            if (option_all_selected && is_all) {
+                $(ele_id + " option[value=" + all_val + "]").removeAttr('selected');
+                option_all_selected = false;
+            } else if (!option_all_selected && is_all) {
+                $(ele_id + " option:selected").each(function (i, l) {
+                    if ($(l).val() != all_val) {
+                        $(l).removeAttr('selected');
+                    }
+                });
+                option_all_selected = true;
+            }
+            $(ele_id).trigger("liszt:updated");
+        });
+    }
+
+    function format_to_numeric(str) {
+        str = format_to_machine_number(str);
+        if (/^-?\d+(?:\.\d+)?/.test(str)) {
+            digitalGroup = /(\d)((\d{3}?)+)$/;
+            var zhengshu = Math.floor(parseFloat(str)) + '';
+            var xiaoshu = Math.floor(Math.round(parseFloat(str) * 100) % 100) + '';
+            while (digitalGroup.test(zhengshu)) {
+                zhengshu = zhengshu.replace(digitalGroup, '$1' + "," + '$2');
+            }
+            ;
+            if (parseInt(xiaoshu) < 10) {
+                xiaoshu = '0' + xiaoshu
+            }
+            ;
+            str = zhengshu + "." + xiaoshu;
+
+            while (digitalGroup.test(str)) {
+                str = str.replace(digitalGroup, '$1' + "," + '$2');
+            }
+            ;
+            if (/\.\d$/.test(str)) {
+                str += '0';
+            } else if (/^[^\.]+$/.test(str)) {
+                str += '.00';
+            }
         }
-        $(ele_id).trigger("liszt:updated");
+        return str;
+    }
+
+    function format_to_machine_number(str) {
+        str += '';
+        str = str.replace(/[^\d\.\,\-]/g, "");
+        if (/^-?(?:\d+|\d{1,3}(?:,\d{3})*)(?:\.\d+)?/.test(str)) {
+            str = str.replace(/,/g, "").replace(/^0+/g, "0").replace(/^0(\d)/g, "$1");
+            str = Math.round(parseFloat(str) * 100) / 100 + "";
+            return str;
+        } else {
+            return str
+        }
+    }
+    $("#cost_dis_input, #budget_dis_input, #discount_dis_input").blur(function () {
+        check_type_message();
     });
-  }
-
-  function format_to_numeric(str){
-   str = format_to_machine_number(str);
-    if(/^-?\d+(?:\.\d+)?/.test(str)){
-      digitalGroup = /(\d)((\d{3}?)+)$/;
-      var zhengshu = Math.floor(parseFloat(str)) + '';
-      var xiaoshu = Math.floor(Math.round(parseFloat(str) * 100) % 100) + '';
-      while (digitalGroup.test(zhengshu)) {
-        zhengshu = zhengshu.replace(digitalGroup, '$1' + "," + '$2');
-      };
-      if(parseInt(xiaoshu) < 10){
-        xiaoshu = '0' + xiaoshu
-      };
-      str = zhengshu + "." + xiaoshu;
-
-      while (digitalGroup.test(str)) {
-        str = str.replace(digitalGroup, '$1' + "," + '$2');
-      };
-      if(/\.\d$/.test(str)){
-        str += '0';
-      }else if(/^[^\.]+$/.test(str)){
-        str += '.00';
-      }
+    function check_type_message() {
+        if ($("#order_budget").val() != "" && $("#order_cost").val() != "" && $("#order_regional").val() != "") {
+            $.ajax({
+                url: "<%= check_type_message_orders_path %>",
+                type: "POST",
+                data: {
+                    budget: $("#order_budget").val(), ad_platform: $("#order_ad_platform").val(),
+                    ad_type: $("#order_ad_type").val(), regional: $("#order_regional").val(),
+                    cost_type: $("#order_cost_type").val(), cost: $("#order_cost").val(),
+                    discount: $("#order_discount").val(), budget_currency: $("#order_budget_currency").val()
+                },
+                success: function (data) {
+                    $("#ctr_prediction").text(format_to_numeric(data["ctr_prediction"]) + "%");
+                    $("#cpm_prediction").text(format_to_numeric(data["cpm_prediction"]));
+                    $("#cpc_prediction").text(format_to_numeric(data["cpc_prediction"]));
+                    $("#clicks_prediction, #show_cpc_prediction").text(format_to_numeric(data["clicks_prediction"]).slice(0, -3));
+                    $("#impressions_prediction, #show_cpm_prediction").text(format_to_numeric(data["impressions_prediction"]).slice(0, -3))
+                    $("#general_price").text(format_to_numeric(data["general_price"]));
+                    discount_cost_msg(data["cost_can"]);
+                }
+            })
+        } else {
+            if ($("#order_regional").val() != "") {
+                $.ajax({
+                    url: "<%= check_type_message_orders_path %>",
+                    type: "POST",
+                    data: {
+                        budget: $("#order_budget").val(), ad_platform: $("#order_ad_platform").val(),
+                        ad_type: $("#order_ad_type").val(), regional: $("#order_regional").val(),
+                        cost_type: $("#order_cost_type").val(), cost: $("#order_cost").val(),
+                        discount: $("#order_discount").val(), budget_currency: $("#order_budget_currency").val()
+                    },
+                    success: function (data) {
+                        $("#general_price").text(format_to_numeric(data["general_price"]));
+                    }
+                })
+            } else {
+                $("#general_price").text("");
+            }
+            $("#ctr_prediction, #cpm_prediction, #cpc_prediction").text("");
+            $("#clicks_prediction, #show_cpc_prediction").text("");
+            $("#impressions_prediction, #show_cpm_prediction").text("");
+            $("#check_cost").html("");
+        }
+        show_cost_type();
     }
-    return str;
-}
 
-function format_to_machine_number(str){
-   str += '';
-    str = str.replace(/[^\d\.\,\-]/g,"");
-    if(/^-?(?:\d+|\d{1,3}(?:,\d{3})*)(?:\.\d+)?/.test(str)){
-      str = str.replace(/,/g,"").replace(/^0+/g,"0").replace(/^0(\d)/g, "$1");
-      str = Math.round( parseFloat(str) * 100 )/ 100 + "";
-      return str;
-    }else{
-      return str
+
+    function show_cost_type() {
+        cost_type = $("#order_cost_type").val();
+        if (cost_type == "CPC") {
+            $("#cpc_prediction, #show_cpm_prediction, #clicks_prediction, #cpm_text, #cpc_pre_text, #click_text").hide();
+            $("#cpm_prediction, #show_cpc_prediction, #impressions_prediction, #cpc_text, #cpm_pre_text, #impression_text").show();
+        } else {
+            $("#cpc_prediction, #show_cpm_prediction, #clicks_prediction, #cpm_text, #cpc_pre_text, #click_text").show();
+            $("#cpm_prediction, #show_cpc_prediction, #impressions_prediction, #cpc_text, #cpm_pre_text, #impression_text").hide();
+        }
     }
-}
-$("#cost_dis_input, #budget_dis_input, #discount_dis_input").blur(function(){check_type_message();});
-function check_type_message(){
-  if($("#order_budget").val() != "" && $("#order_cost").val() != "" && $("#order_regional").val() != ""){
-    $.ajax({
-      url : "<%= check_type_message_orders_path %>",
-      type : "POST",
-      data : {budget: $("#order_budget").val(), ad_platform: $("#order_ad_platform").val(),
-              ad_type: $("#order_ad_type").val(), regional: $("#order_regional").val(),
-              cost_type: $("#order_cost_type").val(), cost: $("#order_cost").val(),
-              discount: $("#order_discount").val(), budget_currency: $("#order_budget_currency").val()},
-      success : function(data){
-        $("#ctr_prediction").text(format_to_numeric(data["ctr_prediction"]) + "%");
-        $("#cpm_prediction").text(format_to_numeric(data["cpm_prediction"]));
-        $("#cpc_prediction").text(format_to_numeric(data["cpc_prediction"]));
-        $("#clicks_prediction, #show_cpc_prediction").text(format_to_numeric(data["clicks_prediction"]).slice(0, -3));
-        $("#impressions_prediction, #show_cpm_prediction").text(format_to_numeric(data["impressions_prediction"]).slice(0, -3))
-        $("#general_price").text(format_to_numeric(data["general_price"]));
-        discount_cost_msg(data["cost_can"]);
-      }
-    })
-  }else{
-    if ($("#order_regional").val() != ""){
-      $.ajax({
-      url : "<%= check_type_message_orders_path %>",
-      type : "POST",
-      data : {budget: $("#order_budget").val(), ad_platform: $("#order_ad_platform").val(),
-              ad_type: $("#order_ad_type").val(), regional: $("#order_regional").val(),
-              cost_type: $("#order_cost_type").val(), cost: $("#order_cost").val(),
-              discount: $("#order_discount").val(), budget_currency: $("#order_budget_currency").val()},
-      success : function(data){
-        $("#general_price").text(format_to_numeric(data["general_price"]));
-      }
-    })
-    }else{
-      $("#general_price").text("");
+
+    function discount_cost_msg(flag) {
+        if (flag) {
+            $("#check_cost").html("<img src='/images/icon_tick.png'/>");
+        } else {
+            $("#check_cost").html("<span style='padding-right: 5px;'><img src='/images/icon_cross.png'/></span>" + "<%= t('order.form.price_description_content')%>");
+        }
     }
-    $("#ctr_prediction, #cpm_prediction, #cpc_prediction").text("");
-    $("#clicks_prediction, #show_cpc_prediction").text("");
-    $("#impressions_prediction, #show_cpm_prediction").text("");
-    $("#check_cost").html("");
-  }
-  show_cost_type();
-}
-
-
-function show_cost_type(){
-  cost_type = $("#order_cost_type").val();
-  if(cost_type == "CPC"){
-    $("#cpc_prediction, #show_cpm_prediction, #clicks_prediction, #cpm_text, #cpc_pre_text, #click_text").hide();
-    $("#cpm_prediction, #show_cpc_prediction, #impressions_prediction, #cpc_text, #cpm_pre_text, #impression_text").show();
-  }else{
-    $("#cpc_prediction, #show_cpm_prediction, #clicks_prediction, #cpm_text, #cpc_pre_text, #click_text").show();
-    $("#cpm_prediction, #show_cpc_prediction, #impressions_prediction, #cpc_text, #cpm_pre_text, #impression_text").hide();
-  }
-}
-
-function discount_cost_msg(flag){
-  if(flag){
-    $("#check_cost").html("<img src='/images/icon_tick.png'/>");
-  }else{
-    $("#check_cost").html("<span style='padding-right: 5px;'><img src='/images/icon_cross.png'/></span>" + "<%= t('order.form.price_description_content')%>");
-  }
-}
- <% if params[:action] == "show" %>
- $(".proof_ready_unmodify").prop('disabled', true);
- <%end%>
+    <% if params[:action] == "show" %>
+    $(".proof_ready_unmodify").prop('disabled', true);
+    <%end%>
 
 </script>

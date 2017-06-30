@@ -255,3 +255,26 @@ fieldset[disabled] .btn-danger.active {
   color: #d9534f;
   background-color: #fff;
 }
+.announcement{
+    background-color: #FFEEEE;
+    border: 1px solid #da1818;
+    padding: 5px 10px;
+    width: 250px;
+    min-height: 28px;
+    word-wrap: break-word;
+    font-size: 12px;
+    text-align: left;
+    border-radius: 5px;
+    position: relative;
+}
+.announcement  label{
+    margin: 0;
+}
+.announcement .close_message{
+    position: absolute;
+    top: -14px;
+    background: url("/images/shared/components/close-message.png") no-repeat left top;
+    width: 26px;
+    height: 26px;
+    right: -4px;
+}

@@ -3,14 +3,14 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :set_locale
-  skip_before_filter  :verify_authenticity_token
+  skip_before_filter :verify_authenticity_token
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_filter :store_location
-  before_action :authenticate_user?, :except => [:xmo_login,:authenticate_token,:current_user,:login,:logout,:login_authenticate,:create_order_by_business_opportunity,:client_approval_from_pms]
-  skip_before_filter :authenticate_user?, :only => [:raise_not_found!,:render_ar_error, :render_error, :render_access_denied]
+  before_action :authenticate_user?, :except => [:xmo_login, :authenticate_token, :current_user, :login, :logout, :login_authenticate, :create_order_by_business_opportunity, :client_approval_from_pms]
+  skip_before_filter :authenticate_user?, :only => [:raise_not_found!, :render_ar_error, :render_error, :render_access_denied]
   before_filter :load_current_user
-  include SendMenu 
-  
+  include SendMenu
+
   before_filter do
     resource = controller_name.singularize.to_sym
     method = "#{resource}_params"
@@ -18,12 +18,12 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    I18n.locale = params[:locale]  || I18n.default_locale
+    I18n.locale = params[:locale] || I18n.default_locale
     I18n.locale = :en unless ["en", "zh-cn"].include?(I18n.locale.to_s)
   end
 
   def default_url_options(options={})
-    { locale: I18n.locale }
+    {locale: I18n.locale}
   end
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -47,27 +47,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # def authenticate_token
-  ##ip = request.env['HTTP_X_FORWARDED_FOR'] || request.env['HTTP_X_REAL_IP'] || request.remote_ip
-  ##(XomIp.include? ip)
-  #   session[:user_id] = nil
-  #   if params[:token]
-  #      user = User.find_by_unlock_token(params[:token])
-  #      if user
-  #        user.unlock_token = nil
-  #        user.save
-  #        current_user = user
-  #        session[:user_id] = user.id 
-  #      end
-  #   end
-  #   if session[:user_id] && !params["xmo"] 
-  #     redirect_to "/orders"
-  #   else
-  #     redirect_to login_admins_path
-  #   end
-  # end
-
-
 
   def authenticate_user?
     back_url = URI.escape(request.original_url, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
@@ -83,19 +62,11 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
-  def after_sign_in_path_for(user)
-    redirect_root_path = orders_path
-    session[:previous_url] || redirect_root_path
-  end
-  
-  def after_sign_out_path_for(user)
-   new_user_session_path
-  end
+
 
   AR_ERROR_CLASSES = [ActiveRecord::RecordNotFound, ActiveRecord::StatementInvalid]
   ERROR_CLASSES = [NameError, NoMethodError, RuntimeError,
-                   ActionView::TemplateError,ActionController::MissingFile,
+                   ActionView::TemplateError, ActionController::MissingFile,
                    ActiveRecord::StaleObjectError, ActionController::RoutingError,
                    ActionController::UnknownController, AbstractController::ActionNotFound,
                    ActionController::MethodNotAllowed, ActionController::InvalidAuthenticityToken]
@@ -107,15 +78,15 @@ class ApplicationController < ActionController::Base
     rescue_from *ERROR_CLASSES, :with => :render_error
     #rescue_from *ACCESS_DENIED_CLASSES, :with => :render_access_denied
   end
-  
+
   def controller_name
     params["controller"]
   end
-  
+
   def action_name
     params[:action]
   end
-  
+
   #called by last route matching unmatched routes.  Raises RoutingError which will be rescued from in the same way as other exceptions.
   def raise_not_found!
     raise ActionController::RoutingError.new("No route matches #{params[:unmatched_route]}")
@@ -123,8 +94,10 @@ class ApplicationController < ActionController::Base
 
   def render_ar_error(exception)
     case exception
-    when *AR_ERROR_CLASSES then exception_class = exception.class.to_s
-    else exception_class = 'Exception'
+      when *AR_ERROR_CLASSES then
+        exception_class = exception.class.to_s
+      else
+        exception_class = 'Exception'
     end
 
     send_error_email(exception, exception_class)
@@ -132,8 +105,10 @@ class ApplicationController < ActionController::Base
 
   def render_error(exception)
     case exception
-    when *ERROR_CLASSES then exception_class = exception.class.to_s
-    else exception_class = 'Exception'
+      when *ERROR_CLASSES then
+        exception_class = exception.class.to_s
+      else
+        exception_class = 'Exception'
     end
 
     send_error_email(exception, exception_class)
@@ -141,8 +116,10 @@ class ApplicationController < ActionController::Base
 
   def render_access_denied(exception)
     case exception
-    when *ACCESS_DENIED_CLASSES then exception_class = exception.class.to_s
-    else exception_class = "Exception"
+      when *ACCESS_DENIED_CLASSES then
+        exception_class = exception.class.to_s
+      else
+        exception_class = "Exception"
     end
     send_error_email(exception, exception_class)
   end
@@ -169,13 +146,13 @@ class ApplicationController < ActionController::Base
       msg += "message   : #{exception.message}\n"
       msg += "backtrace : #{exception.backtrace[0..10].join("\n")}"
       begin
-        ErrorWorker.perform_async(RECIPIENTS,msg)
+        ErrorWorker.perform_async(RECIPIENTS, msg)
       rescue
       end
     end
     @message_log.debug "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")}|#{exception_class}|#{exception.message}|#{exception.backtrace[0]}"
 
-    return redirect_to :controller => :admins, :action =>:error_mail
+    return redirect_to :controller => :admins, :action => :error_mail
   end
 
 
@@ -192,7 +169,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-   devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:username, :email, :password) }
+    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:username, :email, :password) }
   end
-  
+
 end

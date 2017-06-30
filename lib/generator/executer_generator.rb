@@ -41,8 +41,6 @@ module Generator
       worksheet.column_info[1].width = 28
     end
 
-  
-
     def initialize(order)
       @excel ||= Axlsx::Package.new
       @workbook ||= @excel.workbook
@@ -51,7 +49,6 @@ module Generator
       @styles ||= Hash.new
       init_styles
     end
-    
     # def total_ad_rows
     #   all_ad_rows = 0
     #   order.advertisements.each do |ad|
@@ -86,9 +83,9 @@ module Generator
         generate_order_nonuniform
         empety_rows(2)
         init_size
-        if @order.gps.size >0
-        generate_sov(@workbook)
-        end
+        # if @order.gps.size >0
+        # generate_sov(@workbook)
+        # end
         tmp_directory = File.join(Rails.root,"tmp/executer/")
         tmp_filename = "#{order.id.to_s}_#{DateTime.now.to_i}.xlsx"
         FileUtils::mkdir_p(tmp_directory) unless File.directory?(tmp_directory)
@@ -175,10 +172,10 @@ module Generator
         worksheet.add_row [I18n.t('order.executer_excel.sheet_nonuniform'),order.whether_nonuniform == true ? I18n.t('order.executer_excel.sheet_detail_yes') : I18n.t('order.executer_excel.sheet_detail_no'),'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
         worksheet.add_row [I18n.t('order.executer_excel.sheet_base_geo_target'),order.map_country.to_s+" " + (order.china_regional? ? order.map_city.to_s : ""),'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
         worksheet.add_row [I18n.t('order.schedule_excel.sheet_msa_framwork'), (order.whether_msa == true && order.msa_contract.present?) ? order.msa_contract : '-', '','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
-        worksheet.add_row [I18n.t('order.executer_excel.sheet_base_target_goal'),order.convert_goal.present? ? order.convert_goal : "-" ,'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
-        worksheet.add_row [I18n.t('order.executer_excel.sheet_base_audience_group'),order.interest_crowd.present? ? order.interest_crowd : '-' ,'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
-        worksheet.add_row [I18n.t('order.executer_excel.sheet_base_3rd_party'),order.whether_monitor.present? ? order.whether_monitor : '-','','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
-        worksheet.add_row [I18n.t('order.executer_excel.sheet_base_website_blacklist'),order.blacklist_website.present? ? order.blacklist_website : "-" ,'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
+        worksheet.add_row [I18n.t('order.executer_excel.sheet_base_target_goal'),order.convert_goal? ? order.convert_goal : "-" ,'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
+        worksheet.add_row [I18n.t('order.executer_excel.sheet_base_audience_group'),order.interest_crowd? ? order.interest_crowd : '-' ,'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
+        worksheet.add_row [I18n.t('order.executer_excel.sheet_base_3rd_party'),order.whether_monitor? ? order.whether_monitor : '-','','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
+        worksheet.add_row [I18n.t('order.executer_excel.sheet_base_website_blacklist'),order.blacklist_website? ? order.blacklist_website : "-" ,'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
       end
 
       def ad_base
@@ -194,7 +191,7 @@ module Generator
         for advertisement  in order.advertisements
           admeasure_rows = advertisement.admeasure.to_a.select{|a| a[1].present?}.size.to_i
           #ad_rows = (advertisement.admeasure_state && advertisement.admeasure.to_a.size.to_i > 0 ? (advertisement.admeasure.to_a.size.to_i - 1) : 0) + (advertisement.diff_ctr? ? 5 : 4)
-          ad_rows = (advertisement.admeasure_state.present? && admeasure_rows > 0 ? (admeasure_rows - 1) : 0) + (advertisement.diff_ctr? ? 6 : 5)
+          ad_rows = (advertisement.admeasure_state? && admeasure_rows > 0 ? (admeasure_rows - 1) : 0) + (advertisement.diff_ctr? ? 6 : 5)
           worksheet.merge_cells("A#{ad_start_row}:A#{ad_start_row + ad_rows}")
           (0..ad_rows).each do |i|
             worksheet.merge_cells("B#{ad_start_row + i}:C#{ad_start_row + i}")
@@ -202,8 +199,8 @@ module Generator
           end
           worksheet.add_row [advertisement.product ? (I18n.locale == :en ? (advertisement.product.en_name.present? ? advertisement.product.en_name : '-') : advertisement.product.name) : advertisement.ad_type , I18n.t('order.executer_excel.sheet_ad_base_product_category'), '', advertisement.product.present? ? I18n.locale == :en ? (advertisement.product.product_type_en.present? ? advertisement.product.product_type_en : '-') : advertisement.product.product_type_cn : "-", ''], :style => [styles[:sign],styles[:sign],styles[:sign],styles[:info],styles[:info]]
           worksheet.add_row ['', I18n.t('order.executer_excel.sheet_ad_base_total_budget',currency: "#{advertisement.budget_currency_show}"), '', number_with_precision(advertisement.budget, :precision => 2, :delimiter => ","), ''], :style => [styles[:sign],styles[:sign],styles[:sign],styles[:info],styles[:info]]
-          if advertisement.admeasure_state.present?
-            dmeasure_datas = (I18n.locale == :en ? (advertisement.admeasure_en.present? ? advertisement.admeasure_en[0..-2].select{|a| a[1].present?} : []) : advertisement.admeasure[0..-2].select{|a| a[1].present?})
+          if advertisement.admeasure_state?
+            dmeasure_datas = (I18n.locale == :en ? (advertisement.admeasure_en? ? advertisement.admeasure_en[0..-2].select{|a| a[1].present?} : []) : advertisement.admeasure[0..-2].select{|a| a[1].present?})
             dmeasure_datas.each do |distribution|
               city = distribution[0].present? ? distribution[0] : "-"
               city_budget_distribution = distribution[1].to_f / advertisement.budget_ratio("super")
@@ -216,9 +213,9 @@ module Generator
           if advertisement.diff_ctr?
             worksheet.add_row ['', 'CTR', '', number_with_precision(advertisement.planner_ctr, :precision => 2, :delimiter => ",") + "%" + "(" + I18n.t('order.executer_excel.sheet_ad_base_normal_ctr') + ":" + number_with_precision(advertisement.forecast_ctr, :precision => 2, :delimiter => ",") + "%)", ''], :style => [styles[:sign],styles[:sign],styles[:sign],styles[:info],styles[:info]]
           end
-          worksheet.add_row ['', I18n.t('order.executer_excel.sheet_ad_base_unnormal_kpi'), '', advertisement.nonstandard_kpi.present? ? advertisement.nonstandard_kpi : '-', ''], :style => [styles[:sign],styles[:sign],styles[:sign],styles[:info],styles[:info]]
+          worksheet.add_row ['', I18n.t('order.executer_excel.sheet_ad_base_unnormal_kpi'), '', advertisement.nonstandard_kpi? ? advertisement.nonstandard_kpi : '-', ''], :style => [styles[:sign],styles[:sign],styles[:sign],styles[:info],styles[:info]]
           worksheet.add_row ['', I18n.t('order.executer_excel.sheet_ad_base_bonus_click'), '', advertisement.planner_clicks.present? ? advertisement.planner_clicks : '-', ''], :style => [styles[:sign],styles[:sign],styles[:sign],styles[:info],styles[:info]]
-          worksheet.add_row ['', I18n.t('order.executer_excel.sheet_ad_base_price_remark'), '', advertisement.price_presentation.present? ? advertisement.price_presentation : '-', ''], :style => [styles[:sign],styles[:sign],styles[:sign],styles[:info],styles[:info]]
+          worksheet.add_row ['', I18n.t('order.executer_excel.sheet_ad_base_price_remark'), '', advertisement.price_presentation? ? advertisement.price_presentation : '-', ''], :style => [styles[:sign],styles[:sign],styles[:sign],styles[:info],styles[:info]]
           ad_start_row += (ad_rows + 1)
          # worksheet.add_row [I18n.t(advertisement.ad_platform)+ " - " +I18n.t(advertisement.ad_type),number_with_precision(advertisement.budget, :precision => 2, :delimiter => ","), (advertisement.cpm? ? 'CPM: ' : 'CPC: ') + number_with_precision(advertisement.cost, :precision => 2, :delimiter => ",") + order.budget_currency  ,advertisement.nonstandard_kpi, advertisement.planner_clicks],:style => [styles[:info]]
         end
@@ -228,9 +225,9 @@ module Generator
         # worksheet.merge_cells "A#{22+total_ad_rows+2}:E#{22+total_ad_rows+2}"
         worksheet.merge_cells "A#{37+total_ad_rows+2}:E#{37+total_ad_rows+2}"
         worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_delievery'),'','','',''], :style => [styles[:b_color]]
-        worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_landing_page'),order.landing_page.present? ? order.landing_page : '-' ,'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
-        worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_frequency'),order.frequency.to_i != 0 && order.frequency_limit == true ? "#{order.frequency.present? ? order.frequency : '-'} " + I18n.t('order.executer_excel.sheet_detail_fre_content') : "",'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
-        worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_keywords'),order.keywords.present? ? order.keywords : '-','','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info],styles[:info],styles[:info]]
+        worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_landing_page'),order.landing_page? ? order.landing_page : '-' ,'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
+        worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_frequency'),order.frequency.to_i != 0 && order.frequency_limit == true ? "#{order.frequency? ? order.frequency : '-'} " + I18n.t('order.executer_excel.sheet_detail_fre_content') : "",'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
+        worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_keywords'),order.keywords? ? order.keywords : '-','','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info],styles[:info],styles[:info]]
         #worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_3rd_monitor'),order.whether_monitor == true ? I18n.t('order.executer_excel.sheet_detail_yes') : I18n.t('order.executer_excel.sheet_detail_no'),'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
         #worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_3rd_business'),order.description.to_s != '' ? order.description : order.third_monitor,'',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]] if order.whether_monitor == true
         #worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_3rd_code'),order.third_monitor_code,'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]] if order.whether_monitor == true
@@ -238,7 +235,7 @@ module Generator
         worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_creative_asstets'),order.client_material == true ? I18n.t('order.executer_excel.sheet_detail_yes') : I18n.t('order.executer_excel.sheet_detail_no'),'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
         worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_report_template'),I18n.t("report_template_#{order.report_template}"),'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
         worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_report_period'),order.report_period.split(",").map{|period| I18n.t("report_period_#{period}")}.join(","),'','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
-        worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_screenshot'),order.screenshot.present? ? order.screenshot : '-','','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
+        worksheet.add_row [I18n.t('order.executer_excel.sheet_detail_screenshot'),order.screenshot? ? order.screenshot : '-','','',''],:style => [styles[:sign],styles[:info],styles[:info],styles[:info],styles[:info]]
         # worksheet.add_row ['频次限制',order.frequency+" 每天 当前媒体计划"],:style => [styles[:sign],styles[:info]]
         # worksheet.add_row ['关键词',order.keywords],:style => [styles[:sign],styles[:info]]
         # worksheet.add_row ['是否添加第三方监测',I18n.t(order.whether_monitor.to_s)],:style => [styles[:sign],styles[:info]]
@@ -272,181 +269,9 @@ module Generator
 
 
 
-      # def generate_head
-      #   worksheet.merge_cells "B2:E2"
-      #   worksheet.merge_cells "B3:E3"
-      #   worksheet.add_row ['','PMP需求表 - 销售提交运营专用','','',''], :style => [styles[:not_style],styles[:head_title],styles[:head_title],styles[:head_title],styles[:head_title]]
-      #   worksheet.add_row ['',"需求填写日期：#{DateTime.now.to_date.to_s(:db)}",'','',''], :style => [styles[:not_style],styles[:right_style],styles[:right_style],styles[:right_style],styles[:right_style]]
-      #   worksheet.add_row ['','公司名称',order.client.clientname,'销售联系人',order.linkman],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','项目名称','','运营负责人',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','项目开始日期：',order.start_date.to_s(:db),'项目结束日期:',order.ending_date.to_s(:db)],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      # end
 
 
-      # def generate_base
-      #   worksheet.merge_cells "C8:E8"
-      #   worksheet.merge_cells "C9:E9"
-      #   worksheet.merge_cells "C10:E10"
-      #   worksheet.merge_cells "C11:E11"
-      #   worksheet.merge_cells "C12:E12"
-      #   worksheet.merge_cells "C13:E13"
-      #   worksheet.merge_cells "C14:E14"
-      #   worksheet.merge_cells "C15:E15"
-      #   worksheet.merge_cells "C16:E16"
-      #   worksheet.merge_cells "C17:E17"
-      #   worksheet.merge_cells "C18:E18"
-      #   worksheet.merge_cells "C19:E19"
-      #   worksheet.merge_cells "C20:E20"
-      #   worksheet.merge_cells "C21:E21"
-      #   worksheet.merge_cells "C22:E22"
-      #   worksheet.add_row ['','基本信息','（必填）','',''], :style => [styles[:not_style],styles[:b_color],styles[:b_color],styles[:b_color],styles[:b_color]]
-      #   worksheet.add_row ['','客户名称',order.client.name,'',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['',"总预算 (#{order.budget_currency})",order.budget,'',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','项目开始日期',order.start_date.to_s(:db),'',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','项目结束日期',order.ending_date.to_s(:db),'',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','购买单位',order.cost_type,'',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','购买单价',order.cost,'',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','KPI(IMP/CLICKS/CTR)','','',''], :style => [styles[:not_style],styles[:left_y_color],styles[:sign],styles[:sign],styles[:sign]]
-      #   worksheet.add_row ['','项目Landing Page','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','是否添加第三方监测','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','第三方监测服务商','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','是否添加XMO网站监测代码','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','报表周期（日报/周报/结案）','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','特殊拷屏要求','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      #   worksheet.add_row ['','客户是否提供素材','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]
-      # end
 
-      # def generate_channel
-      #   worksheet.merge_cells "B24:E24"
-      #   worksheet.merge_cells "B26:E26"
-      #   worksheet.add_row ['','投放渠道、预算及指标（非转化类指标）','','',''], :style => [styles[:not_style],styles[:b_color],styles[:b_color],styles[:b_color],styles[:b_color]]
-      #   worksheet.add_row ['','渠道/媒体','预算','单价','指标及其它备注'] , :style => [styles[:not_style],styles[:sign],styles[:sign],styles[:sign],styles[:left_y_color]]     
-      #   worksheet.add_row ['','投放形式有特殊要求请备注','','',''] , :style => [styles[:not_style],styles[:y_color],styles[:y_color],styles[:y_color],styles[:y_color]]      
-      # end
-
-
-      # def generate_orient
-      #   worksheet.merge_cells "C28:E28"
-      #   worksheet.add_row ['','定向说明','必填','',''], :style => [styles[:not_style],styles[:b_color],styles[:b_color],styles[:b_color],styles[:b_color]]   
-      #   worksheet.add_row ['','地域定向需求','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]     
-      #   worksheet.add_row ['','投放人群需求','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]     
-      #   worksheet.add_row ['','频次限制','','',''] ,:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]     
-      #   worksheet.add_row ['','关键词(可包含竞品)','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]     
-
-      # end
-
-
-      # def generate_policy
-      #   worksheet.merge_cells "C34:E34"
-      #   worksheet.add_row ['','投放策略  (单选)','运营团队填写','',''], :style => [styles[:not_style],styles[:b_color],styles[:b_color],styles[:b_color],styles[:b_color]]    
-      #   worksheet.add_row ['','CTR最大化 ','','',''] ,:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]    
-      #   worksheet.add_row ['','曝光最大化 (CPM价格优化) ','','',''] ,:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]    
-      #   worksheet.add_row ['','CPC价格优化 ','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]]   
-      #   worksheet.add_row ['','投放力度最大化 (预算消耗) ','','',''],:style => [styles[:not_style],styles[:sign],styles[:info],styles[:sign],styles[:info]] 
-      # end
-
-
-      # def generate_remark
-      #   worksheet.add_row ['','备注 ',''] 
-      #   worksheet.add_row ['','1. PMP系统外指定媒体执行，销售需提供媒介团队确认邮件'] 
-
-      # end
-
-
-    def generate_sov(wb)
-
-        styles = wb.styles
-        title = styles.add_style :sz => 26, :alignment => {:horizontal => :center,
-                                                           :vertical => :center,
-                                                           :wrap_text => true}
-        @default = styles.add_style :border => Axlsx::STYLE_THIN_BORDER, :b => true, :sz => 15
-        @default1 = styles.add_style :border => Axlsx::STYLE_THIN_BORDER, :sz => 9, :alignment => {:horizontal => :right,
-                                                                                                   :wrap_text => true}
-        @combing = styles.add_style :alignment => {:horizontal => :center,
-                                                   :vertical => :center,
-                                                   :wrap_text => true}
-        # @table = styles.add_style :bg_color => 'D4D4D4', :fg_color => '00', :b => true, :border => {:style => :thin, :color => "00"}, :sz => 15, :paper_height => '200mm', :alignment => {:horizontal => :left,
-        #                                                                                                                                                                                  :vertical => :center,
-        #                                                                                                                                                                                  :wrap_text => true}
-        # @table_default = styles.add_style  :sz => 15,:b => true, :font_name=>"宋体",:border => { :style => :thin, :color => "00" }, :alignment => {:horizontal => :left, :vertical => :center, :wrap_text => true}
-        #
-
-        @table = styles.add_style :bg_color => 'D4D4D4', :fg_color => '00', :b => true,:border => { :style => :thin, :color => "00" },:sz => 12,:paper_height=>'100mm',:alignment => { :horizontal => :left,
-                                                                                                                                                                                       :vertical => :center ,
-                                                                                                                                                                                       :wrap_text => true}
-        @table_default = styles.add_style :fg_color => '00',:sz => 12,:border => { :style => :thin, :color => "00" },:alignment => { :horizontal => :left,
-                                                                                                                                     :vertical => :center ,
-                                                                                                                                     :wrap_text => true}
-
-        tmp_directory = File.join(Rails.root,"tmp/datas/gps")
-        tmp_filename = random+"_#{DateTime.now.to_i}.xlsx"
-
-        wb.add_worksheet(:name => 'Media SOV') do |ws|
-          @ws=ws
-          @ws.merge_cells "A1:B4"
-          @ws.merge_cells "C1:D4"
-          generate_logo
-          @ws.add_row ['','','爱点击媒体组合列表','','','','','',''], :style => title
-          empety_rows(3)
-          order = Order.find(@order.id)
-          if order.client && order.client.channel_name.present?
-            channel="渠道:"+order.client.channel_name
-          else
-            channel="直客"
-          end
-          clients = order.client ? order.client.clientname+" | "+" 品牌:"+order.client.brand+" | "+channel : ""
-
-          @ws.add_row ['订单号:',order.code],:style => @table_default
-          @ws.add_row ['订单名称:',order.title],:style => @table_default
-          @ws.add_row ['客户名称:',order.client.clientname],:style => @table_default
-          @ws.add_row ['行业:',order.industry_name],:style => @table_default
-          @ws.add_row ['提交销售:',order.user.real_name],:style => @table_default
-          @ws.add_row ['订单生成时间:',order.created_at.localtime.to_s(:db)],:style => @table_default
-          @ws.add_row ['计划开始日期:',order.start_date.to_s(:db)],:style => @table_default
-          @ws.add_row ['计划结束日期:',order.ending_date.to_s(:db)],:style => @table_default
-          @ws.add_row ['排除日期:',order.exclude_date.join(",")],:style => @table_default
-          @ws.add_row ['总天数:',order.period.to_s],:style => @table_default
-          @ws.add_row ['地域定向:',order.china_region_all? ? (order.map_country.to_s) :(order.map_country.to_s+" " + (order.china_regional? ? order.map_city.to_s : ""))],:style => @table_default
-
-          empety_rows(1)
-          # media_gps = Order.get_media_list(params[:order_id])
-          media_gps = Gp.get_gp_list(@order.id)
-          @result = media_gps.group_by(&:advertisement_id)
-          @result.each{|advertisement_id,city_gps|
-            ad = Advertisement.find(advertisement_id)
-            @ws.add_row [ad.get_advertisements_live,t(ad.ad_type)],:style => @table_default
-            @city_gp_data = city_gps.group_by(&:city)
-            @city_gp_data.each{|city,gp|
-              # @ws.add_row ['地域',city == "-" ?  order.city.map{|c| t("city."+c) if c.present?  }.join("|"):city ],:style => @table_default
-              if ad.ad_type == "BAN"
-                @ws.add_row ['地域','网站名称', '网站类型', '广告形式', '原始尺寸', '停靠/拓展尺寸', '参考点击率','分配点击量','分配点击量比例'], :style => @table
-              else
-                @ws.add_row ['地域','网站名称', '网站类型', '广告形式', '原始尺寸', '停靠/拓展尺寸', '参考点击率','分配展示量','分配展示量比例'], :style => @table
-              end
-              city_pv_config = 0
-              gp.each do |g|
-                city_pv_config += g.pv_config
-                @ws.add_row [city == "-" ?  "-":city,g.media,g.media_type,g.media_form,g.ad_original_size,g.ad_expand_size,g.ctr,number_with_precision(g.pv_config, :precision => 0, :delimiter => ",")+"K",sprintf("%.2f",g.pv_config_scale).to_s+"%"], :style => @table_default
-              end
-              @ws.add_row ['','','','','','','全部',number_with_precision(city_pv_config, :precision => 0, :delimiter => ",")+'K','100.00%'], :style => @table_default
-
-              empety_rows(0)
-            }
-          }
-          empety_rows(1)
-
-      end
-        FileUtils::mkdir_p(tmp_directory) unless File.directory?(tmp_directory)
-        excel.serialize File.join(tmp_directory, tmp_filename)
-        begin
-          f=File.open(File.join(tmp_directory, tmp_filename))
-        rescue Exception => e;
-        ensure
-          f.close
-        end
-        File.delete(File.join(tmp_directory,tmp_filename))
-
-    end
 
     def random
       request_id = ([*('A'..'Z'), *('a'..'z'), *('0'..'9')]-%w(0 1 h I O)).sample(14).join

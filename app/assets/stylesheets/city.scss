@@ -1,0 +1,298 @@
+.cityDomNew {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-right: 10px;
+    border-bottom: none;
+}
+
+.cityDomNew ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    width: 99%;
+    display: inline;
+    _zoom: 1;
+    *display: inline;
+}
+
+.cityDomNew ul li {
+    line-height: 28px;
+}
+
+.cityDomNew input {
+    margin-top: 0px
+}
+
+.cityDomNew label {
+    display: inline;
+    display: -moz-inline-stack;
+    zoom: 1;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 28px;
+}
+
+.cityDomNew .searchText {
+    float: right;
+    border-radius: 5px;
+    width: 196px;
+    height: 26px;
+    border: 1px solid #ccc;
+    padding: 0px 0px 0px 22px;
+    background: image_url("shared/components/search.png") no-repeat scroll 0 1px transparent;
+    margin-right: 3px;
+    margin-top: 1px
+}
+
+.cityDomNew .cityArea {
+    min-height: 28px;
+    line-height: 28px;
+    border-bottom: 1px solid #ccc;
+}
+
+.cityDomNew .cityArea .cityAreaName, .cityArea .cityCon, .cityArea .cityName, .cityArea .township {
+    display: inline-block;
+}
+
+.cityDomNew .cityArea .cityAreaName {
+    height: 18px;
+    line-height: 30px;
+    padding: 0px 5px;
+}
+
+.cityDomNew .cityArea .cityWrap {
+    position: relative;
+}
+
+.cityDomNew .cityArea .cityWrap:hover .cityCon {
+    z-index: 1000;
+    border: 1px solid #ccc;
+    background-color: #fff
+}
+
+.cityDomNew .cityArea .cityWrap:hover .township {
+    display: inline-block;
+    border: 1px solid #ccc;
+    left: 110px;
+    z-index: 999;
+}
+
+.cityDomNew .cityArea .cityWrap:hover .citySum {
+    display: none;
+}
+
+.cityDomNew .cityArea .cityAreaCon {
+    min-height: 30px
+}
+
+.cityDomNew .cityArea .cityCon {
+    position: relative;
+    border: 1px solid transparent;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px 5px;
+    min-width: 100px;
+}
+
+.cityDomNew .cityArea .township {
+    display: none;
+    width: 300px;
+    background: #fff;
+    border: 1px solid transparent;
+    position: absolute;
+    padding: 0px 5px;
+}
+
+.cityDomNew .cityArea .township ul li {
+    float: left;
+    width: 90px;
+    height: 28px;
+    line-height: 28px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cityDomNew .citySelector {
+    font: 12px/1.5 tahoma, arial, \5b8b\4f53;
+    background: #fff;
+    text-align: left;
+}
+
+.cityDomNew .cityslide {
+    width: 221px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #85BEE5;
+    border-right-color: #3485C0;
+    border-bottom-color: #3485C0;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+    margin-top: -2px;
+    overflow-y: scroll;
+    min-height: 24px;
+    max-height: 250px;
+    display: inline-block;
+}
+
+.cityDomNew .cityslide li {
+    display: block;
+    list-style: none;
+    overflow: hidden;
+    height: 18px;
+    line-height: 18px;
+    padding: 4px 5px;
+}
+
+.cityDomNew .cityslide li.on {
+    background: #3875d7;
+    color: #fff;
+    cursor: pointer;
+}
+
+.cityDomNew .cityslide li b {
+    font-weight: normal;
+}
+
+.cityDomNew .cityslide li.empty {
+    background: #fff2e8;
+    color: #666;
+}
+
+.cityDomNew .cityslide li.empty em {
+    color: red;
+    font-style: normal;
+}
+
+.cityDomNew .cityspell {
+    float: right;
+}
+
+.cityDomNew .cityBox {
+    width: 320px;
+    border: 1px solid #85BEE5;
+    overflow: hidden;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.cityDomNew .cityBox ul {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.cityDomNew .cityBox ul li {
+    float: left;
+    list-style: none;
+    padding: 2px 4px;
+    border: 1px solid #85BEE5;
+    cursor: pointer;
+    margin-left: 4px;
+    display: inline;
+    background: #E1EFFE;
+}
+
+.cityDomNew .cityBox ul li.on {
+    background: #fff;
+    border-bottom-color: #fff;
+    position: relative;
+}
+
+.cityDomNew .hide {
+    display: none;
+}
+
+.cityDomNew p.tip {
+    color: #666;
+    line-height: 20px;
+    padding: 5px;
+    margin: 0;
+    text-indent: 3px;
+}
+
+.cityDomNew .cityinput {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #666 #ccc #ccc #666;
+    height: 24px;
+    line-height: 24px;
+    width: 175px;
+    font-size: 12px;
+    padding-left: 2px;
+    background: no-repeat 150px 5px;
+}
+
+.cityDomNew .countryName {
+    width: 106px;
+    background-color: #999;
+    height: 30px;
+    line-height: 30px;
+    padding: 0px 5px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.cityDomNew .countryName.selected {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-bottom: 0px;
+    border-top: 0px;
+    border-left: 0px;
+    position: relative;
+    top: 1px;
+}
+
+.cityDomNew .countryName .AllControl {
+    color: #fff
+}
+
+.cityDomNew .countryName.selected .AllControl {
+    color: #555
+}
+
+.cityDomNew .citySum {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    margin-left: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #eb5749;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #fbcfcd;
+    border-radius: 8px;
+    position: absolute;
+    top: 5px;
+}
+
+.cityDomNew .citySelectArea {
+    zoom: 1;
+}
+
+.cityDomNew .citySelectArea:after {
+    content: "";
+    clear: both;
+}
+
+.cityDomNew .selectButton {
+    margin-right: 10px;
+}
+
+.cityDomNew .selectButton:hover {
+    cursor: pointer;
+    color: red;
+}
+
+.city label input {
+    display: inline-block !important
+}
+
+.cityDomNew .countryName input {
+    display: inline-block !important
+}

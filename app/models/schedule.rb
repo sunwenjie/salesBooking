@@ -1,5 +1,5 @@
 class Schedule < Asset
-  belongs_to :order,inverse_of: :schedule,touch:true
+  belongs_to :order, inverse_of: :schedule, touch: true
 
   attr_accessor :uploader_secure_token
 

@@ -1,14 +1,20 @@
 <div style="margin-top: -25px;">
-  <div class="row" style="font-size: 14px;"><%= @order.code.present? ? @order.code : ''%></div>
-  <div class="row"><div style="font-size: 14px;color: #336dc6;display:inline"><span id="title1"><%= @order.title.present? ? @order.title : t('order.form.undefined_order')%></span></div><div style="font-size: 12px;display:inline;margin-left: 3px;">(<%= t('order.list.budget1') %> : <span class="currency_unit"><%=@order.budget_currency%></span>&nbsp;<span id="budget1"><%= @order.budget.present? ? number_with_precision(@order.budget.to_f, :precision => 2, :delimiter => ",") : ''%></span>)</div></div>
+  <div class="row" style="font-size: 14px;"><%= @order.code? ? @order.code : '' %></div>
+  <div class="row">
+    <div style="font-size: 14px;color: #336dc6;display:inline">
+      <span id="title1"><%= @order.title? ? @order.title : t('order.form.undefined_order') %></span></div>
+    <div style="font-size: 12px;display:inline;margin-left: 3px;">(<%= t('order.list.budget1') %> :
+      <span class="currency_unit"><%= @order.budget_currency %></span>&nbsp;<span id="budget1"><%= @order.budget.present? ? number_with_precision(@order.budget.to_f, :precision => 2, :delimiter => ",") : '' %></span>)
+    </div>
+  </div>
 </div>
-<ul class="nav nav-tabs sub-nav-tabs" id="myTab" >
+<ul class="nav nav-tabs sub-nav-tabs" id="myTab">
   <li class="list_order active">
-    <a data-toggle="tab" href="#tab-order"><%= t("order.order_detail")%></a>
+    <a data-toggle="tab" href="#tab-order"><%= t("order.order_detail") %></a>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade active  in" id="tab-order">
-    <%= render :partial => "new_and_edit_form" %>
+    <%= render 'new_and_edit_form' %>
   </div>
 </div>

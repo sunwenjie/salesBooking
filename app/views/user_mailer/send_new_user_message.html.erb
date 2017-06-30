@@ -1,80 +1,91 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
 
 <div>
-<table width='90%' cellspacing="0" cellpadding="0" border="0" bgcolor="#FFF" style="font-family:Arial;" >
-  <!-- Header -->
-  <tr><td colspan='5'><div style='height:35px;font-family:Arial;'></td></tr>
-  <tr>
-    <td width='5%'></td>
-    <td colspan='3'><img class="logo" src="http://xmo.optimix.asia/images/logo/xmo.optimix.asia.png"></td>
-    <td width='5%'></td>
-  </tr>
-  <!-- Line -->
-  <tr>
-    <td width='2%'></td>
-    <td colspan='3'><div style='height:1px;background-color:#818181;font-family:Arial;'></div></td>
-    <td width='2%'></td>
-  </tr>
+  <table width='90%' cellspacing="0" cellpadding="0" border="0" bgcolor="#FFF" style="font-family:Arial;">
+    <!-- Header -->
+    <tr>
+      <td colspan='5'>
+        <div style='height:35px;font-family:Arial;'>
+      </td>
+    </tr>
+    <tr>
+      <td width='5%'></td>
+      <td colspan='3'><img class="logo" src="http://xmo.optimix.asia/images/logo/xmo.optimix.asia.png"></td>
+      <td width='5%'></td>
+    </tr>
+    <!-- Line -->
+    <tr>
+      <td width='2%'></td>
+      <td colspan='3'>
+        <div style='height:1px;background-color:#818181;font-family:Arial;'></div>
+      </td>
+      <td width='2%'></td>
+    </tr>
 
-  <tr>
-    <td width='5%'></td>
-    <td width='80px' height='height:100%'></td>
-    <td height='height:100%'>
-      <p>
+    <tr>
+      <td width='5%'></td>
+      <td width='80px' height='height:100%'></td>
+      <td height='height:100%'>
+        <p>
+
         <h2 style="font-weight:bold;font-size:24px;color:#504F4F;font-family:Arial;">iClick订单管理系统登录信息确认</h2>
-      </p>
-      <p style='font-size:13px;color:#504F4F;font-family:Arial;'>
-        尊敬的 <%= @user.real_name %> 您好:
-      </p>
-       <p style='font-size:13px;color:#504F4F;font-family:Arial;'>
-        您被邀请加入iClick订单管理系统。您的用户名是 <%= @user.username %>
-      </p>
-      <% if @user.user_status=='Inactive'%>
-      <p style='font-size:13px;color:#504F4F;font-family:Arial;'>
-        您的账号已冻结，请联系管理员。
-      </p>
-      <% elsif @user.user_status=='Paused' %>
-      <p style='font-size:13px;color:#504F4F;font-family:Arial;'>
-        您的账号已移除，请联系管理员。
-      </p>
-      <%else%>
-      <p style='font-size:13px;color:#504F4F;font-family:Arial;'>
-        请点击以下链接进行账户激活：
-            <br>
-            <a style="color: rgb(232, 56, 40);font-family:Arial;" href="<%= @url %>"><%= @url %></a>
-      </p>
-       <% end %>
-      <p>
-        <h2 style="font-weight:bold;font-size:20px;color:#504F4F;font-family:Arial;">感谢您使用iClick订单管理系统。</h2>
-      </p>
-      <br/>
-    </td>
-    <td width='80px;'></td>
-    <td width='5%'></td>
-  </tr>
+        </p>
+        <p style='font-size:13px;color:#504F4F;font-family:Arial;'>
+          尊敬的 <%= @user.real_name %> 您好:
+        </p>
 
-  <!-- Disclaimer Text -->
-  <tr>
-    <td width='5%'></td>
-    <td width='80px;'></td>
-    <td>
-            <p style='color:#818181;font-size:11px;font-family:Arial;'>
-            本邮件为保密邮件，受到法律保护。<br/>
-            如果你并不是正确的收件地址请勿复制、转发、公开或使用其中的部分内容。如果这并不是发给你的邮件，请将其彻底删除并回复邮件告知。
+        <p style='font-size:13px;color:#504F4F;font-family:Arial;'>
+          您被邀请加入iClick订单管理系统。您的用户名是 <%= @user.username %>
+        </p>
+        <% if @user.user_status=='Inactive' %>
+            <p style='font-size:13px;color:#504F4F;font-family:Arial;'>
+              您的账号已冻结，请联系管理员。
             </p>
-    </td>
-    <td width='80px;'></td>
-    <td width='5%'></td>
-  </tr>
-  <!-- Footer -->
-  <tr height='35px;'><td colspan='5'></td></tr>
-  
-</table>
+        <% elsif @user.user_status=='Paused' %>
+            <p style='font-size:13px;color:#504F4F;font-family:Arial;'>
+              您的账号已移除，请联系管理员。
+            </p>
+        <% else %>
+            <p style='font-size:13px;color:#504F4F;font-family:Arial;'>
+              请点击以下链接进行账户激活：
+              <br>
+              <a style="color: rgb(232, 56, 40);font-family:Arial;" href="<%= @url %>"><%= @url %></a>
+            </p>
+        <% end %>
+        <p>
+
+        <h2 style="font-weight:bold;font-size:20px;color:#504F4F;font-family:Arial;">感谢您使用iClick订单管理系统。</h2>
+        </p>
+        <br/>
+      </td>
+      <td width='80px;'></td>
+      <td width='5%'></td>
+    </tr>
+
+    <!-- Disclaimer Text -->
+    <tr>
+      <td width='5%'></td>
+      <td width='80px;'></td>
+      <td>
+        <p style='color:#818181;font-size:11px;font-family:Arial;'>
+          本邮件为保密邮件，受到法律保护。<br/>
+          如果你并不是正确的收件地址请勿复制、转发、公开或使用其中的部分内容。如果这并不是发给你的邮件，请将其彻底删除并回复邮件告知。
+        </p>
+      </td>
+      <td width='80px;'></td>
+      <td width='5%'></td>
+    </tr>
+    <!-- Footer -->
+    <tr height='35px;'>
+      <td colspan='5'></td>
+    </tr>
+
+  </table>
 </div>
 
 </body>

@@ -1,17 +1,18 @@
 <!-- body start -->
 
 <div class="control-group t_margin_30" style="margin-left:20px;">
-        <div class="sub_title" data-target="#setting_con_custom" data-toggle="collapse"><u><%= t('order.form.order_details') %></u> <i class="icon-arrow-right"></i></div>
+  <div class="sub_title" data-target="#setting_con_custom" data-toggle="collapse">
+    <u><%= t('order.form.order_details') %></u> <i class="icon-arrow-right"></i></div>
 </div>
-<div id="setting_con_custom" class="collapse <%= @operater_flag ? 'in' : 'on' %>"  >
-  <%= form_for(@order, :url => order_examine_order_path(@order),:html=>{:id=>"order_form", :class=>"form-horizontal"}) do |f| %>
-      <%= render :partial => "form" ,:locals=>{:f => f}%> </div>
+<div id="setting_con_custom" class="collapse <%= @operater_flag ? 'in' : 'on' %>">
+  <%= form_for(@order, :url => order_examine_order_path(@order), :html => {:id => "order_form", :class => "form-horizontal"}) do |f| %>
+      <%= render 'form', f: f %> </div>
       <!--end menigment -->
-  <%end%>
+  <% end %>
   <!--end setting_con_custom -->
-    <div class="row ">
-     
-      <%if @order.examinations&&@order.examinations.size>1%>
+  <div class="row ">
+
+    <% if @order.examinations&&@order.examinations.size>1 %>
         <div class="row t_margin_10">
           <div class='item_four'>
             <div class="span2 " style="vertical-align: top;">
@@ -22,7 +23,7 @@
             </div>
             <div class="span l_padding_0">
               <span data-width="220" data-position="right" class="xmo-tooltip" data-id="a07469988342172363">
-                 <img style="margin-left:8px" src="/images/shared/components/help-icon.png">
+                <%= image_tag('shared/components/help-icon.png',style: 'margin-left:8px') %>
                  <div class="popover xmo-popover fade in">
                    <div class="arrow"></div>
                    <div class="popover-inner xmo-popover-inner">
@@ -32,60 +33,60 @@
                    </div>
                  </div>
               </span>
-           </div>
+            </div>
           </div>
         </div>
-      <%end%>
+    <% end %>
 
-  <%= render :partial => "delete_and_copy" if @user_for_order_edit%>
+    <%= render 'delete_and_copy' if @user_for_order_edit %>
 
     <!-- button area -->
     <div class="button_area">
-    <div class="r_margin_20">
+      <div class="r_margin_20">
         <div class="pull-right">
-            
-            <div class="outer_cancel">
-              <a href="<%=session[:left_tab]%>" class="change_cancel_btn cancel cancel_pretargeting">
-                <%= t('order.form.back_button') %>
-              </a>
-            </div>
-             
-            <%if @order.can_edit?(current_user) %> 
-              <div class= "outer_cancel"> 
+
+          <div class="outer_cancel">
+            <a href="<%= session[:left_tab] %>" class="change_cancel_btn cancel cancel_pretargeting">
+              <%= t('order.form.back_button') %>
+            </a>
+          </div>
+
+          <% if @order.can_edit?(current_user) %>
+              <div class="outer_cancel">
                 <a class='cancel cancel_pretargeting change_cancel_btn' href='<%= edit_order_url(@order) %>'><%= t('order.form.edit_button') %></a>
               </div>
-            <% end %>
-            
+          <% end %>
+
+        </div>
       </div>
     </div>
-    </div>
   </div>
-</div>
+  </div>
 
-<script type="text/javascript">
-    $('#setting_con_custom').on('show',function(){
-        $('div[data-target="#setting_con_custom"] .icon-arrow-right').addClass('icon-arrow-down');
-     }).on('hide',function(){
-        $('div[data-target="#setting_con_custom"] .icon-arrow-right').removeClass('icon-arrow-down');
-     })
-     if($('#setting_con_custom').hasClass('in')){
-        $('div[data-target="#setting_con_custom"] .icon-arrow-right').addClass('icon-arrow-down');
-    }
+  <script type="text/javascript">
+      $('#setting_con_custom').on('show', function () {
+          $('div[data-target="#setting_con_custom"] .icon-arrow-right').addClass('icon-arrow-down');
+      }).on('hide', function () {
+          $('div[data-target="#setting_con_custom"] .icon-arrow-right').removeClass('icon-arrow-down');
+      })
+      if ($('#setting_con_custom').hasClass('in')) {
+          $('div[data-target="#setting_con_custom"] .icon-arrow-right').addClass('icon-arrow-down');
+      }
 
-    
-    $("#order_form").find("input,textarea,select").prop('disabled', true);
-    $(":button").prop('disabled', false);
-    $(":submit").prop('disabled', false);
-    //$("#setting_con_custom select").prop('disabled',false);
-    $("#exclude_dates").prop('disabled', false);
-    $("#chosen_multiple_test").attr('disabled', true).trigger("liszt:updated");
-    $("#chosen_multiple_country").attr('disabled', true).trigger("liszt:updated");
-    $("#order_delivery_province").attr('disabled', true).trigger("liszt:updated");
-    $("#order_delivery_city_level").attr('disabled', true).trigger("liszt:updated");
-    $("#pretargeting_mainland").attr('disabled', true).trigger("liszt:updated");
-    $("#chosen_multiple_country_special").attr('disabled', true).trigger("liszt:updated");
-    $(".admeasure_first").prop('disabled',true);
-    $(".admeasure_show").prop('disabled', false);
-    $("#approval_comment").prop('disabled', false);
-</script>
+
+      $("#order_form").find("input,textarea,select").prop('disabled', true);
+      $(":button").prop('disabled', false);
+      $(":submit").prop('disabled', false);
+      //$("#setting_con_custom select").prop('disabled',false);
+      $("#exclude_dates").prop('disabled', false);
+      $("#chosen_multiple_test").attr('disabled', true).trigger("liszt:updated");
+      $("#chosen_multiple_country").attr('disabled', true).trigger("liszt:updated");
+      $("#order_delivery_province").attr('disabled', true).trigger("liszt:updated");
+      $("#order_delivery_city_level").attr('disabled', true).trigger("liszt:updated");
+      $("#pretargeting_mainland").attr('disabled', true).trigger("liszt:updated");
+      $("#chosen_multiple_country_special").attr('disabled', true).trigger("liszt:updated");
+      $(".admeasure_first").prop('disabled', true);
+      $(".admeasure_show").prop('disabled', false);
+      $("#approval_comment").prop('disabled', false);
+  </script>
 

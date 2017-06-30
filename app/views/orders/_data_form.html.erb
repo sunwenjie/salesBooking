@@ -1,90 +1,93 @@
-<script type="text/javascript" src="/js/xmo-calendar.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/css/xmo-calendar.css">
 <div class="control-group t_margin_20">
   <label class="control-label"><%= t('order.form.period_label') %></label>
+
   <div class="controls">
-      <div class="row">
-        <div class="row ">
-           <div class="span">
-              <% a = @order.errors && (@order.errors.full_messages.include?"开始时间 不能为空") ? "have_error" : "" %>
-                 <div class="input-append <%=a%>">
-                    <input type="text" style="width: 180px;" value="<%= @order.start_date %> <%=  @order.ending_date ? "~" : ""%> <%=@order.ending_date%>" name="date_range" id="appendedInput" class="span2 required_input xmoCalendarInputSchedule">
-                    <% exclude_dates = @order.exclude_date.present? ? @order.exclude_date.join(",") : ""%>
-                    <input type="hidden" class="exclude_dates" name="exclude_dates" id="exclude_dates" value="<%= exclude_dates %>">
-                    <span class="add-on"><i class="icon-calendar icon_trigger r_margin_0"></i></span>
-                 </div>
-           </div>
+    <div class="row">
+      <div class="row ">
+        <div class="span">
+          <% a = @order.errors && (@order.errors.full_messages.include? "开始时间 不能为空") ? "have_error" : "" %>
+          <div class="input-append <%= a %>">
+            <input type="text" style="width: 180px;" value="<%= @order.start_date %> <%= @order.ending_date ? "~" : "" %> <%= @order.ending_date %>" name="date_range" id="appendedInput" class="span2 required_input xmoCalendarInputSchedule">
+            <% exclude_dates = @order.exclude_date? ? @order.exclude_date.join(",") : "" %>
+            <input type="hidden" class="exclude_dates" name="exclude_dates" id="exclude_dates" value="<%= exclude_dates %>">
+            <span class="add-on"><i class="icon-calendar icon_trigger r_margin_0"></i></span>
+          </div>
         </div>
       </div>
-      <div class="row">
-         <div class="span">
-            <label class="sub_txt">
-                <%= t('order.form.total_day') %>
-                :&nbsp;&nbsp;<span id="total_days"><%= @order.start_date ? @order.period : "" %></span>
-                <%= t('order.form.day') %>
-            </label>
-         </div>
+    </div>
+    <div class="row">
+      <div class="span">
+        <label class="sub_txt">
+          <%= t('order.form.total_day') %>
+          :&nbsp;&nbsp;<span id="total_days"><%= @order.start_date ? @order.period : "" %></span>
+          <%= t('order.form.day') %>
+        </label>
       </div>
+    </div>
   </div>
 </div>
 <% if ["new", "create", "edit", "update"].include?(params[:action]) %>
-<script type="text/javascript">
-var date_range = $("#appendedInput").val().split("~");
-var calendar = new xmoCalendar({
-inputId : '#appendedInput',
+    <script type="text/javascript">
+        var date_range = $("#appendedInput").val().split("~");
+        var calendar = new xmoCalendar({
+            inputId: '#appendedInput',
 // lang : 'EN',
-lang : "<%= I18n.locale ==:en ? "EN" : "CN"  %>", //"CN" "EN"
-initTime : '2013-10-28',
-submitCallback : function(){
-    update_days_remaining();
-},
+            lang: "<%= I18n.locale ==:en ? "EN" : "CN"  %>", //"CN" "EN"
+            initTime: '2013-10-28',
+            submitCallback: function () {
+                update_days_remaining();
+            },
 
-})
-
-function parseDate(input) {
-  var parts = input.match(/(\d+)/g);
-  return new Date(parts[0], parts[1]-1, parts[2]);
-}
-
-function update_days_remaining() {
-    var date_range = $("#appendedInput").val().split("~");
-    var exclude_after_today_length = 0
-    var exclude_dates_length = 0
-
-    if (date_range[1] && date_range[1] != "") {
-      var today = "<%=  Date.today.to_s(:db) %>";
-      var regEx = new RegExp("\\-","gi");
-      var d = new Date(date_range[0].replace(regEx,"/"))
-
-      if($(".exclude_dates").val() != ""){
-      var exclude_dates = $(".exclude_dates").val().split(",");
-      exclude_dates_length = exclude_dates.length;
-      if(exclude_dates_length > 1){
-        $.each(exclude_dates,function(i, val){
-          if(parseDate(val) - parseDate(today) >= 0){exclude_after_today_length++}
         })
-      }
-    }
 
-      var remaining_days;
-      if(d > new Date()){
-        remaining_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
-      }
-      else{
-      remaining_days = (parseDate(date_range[1]) - parseDate(today)) / (24 * 3600 * 1000) + 1;
-      }
-      var total_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
-      if(total_days <= 0){
-        return
-      }
-      var total_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
-      $("#total_days").html(total_days - exclude_dates_length);
-      remaining_days = remaining_days - exclude_after_today_length;
-      if(remaining_days < 0){remaining_days = 0}
-      $("#remaining_days").html(remaining_days)
-    }
+        function parseDate(input) {
+            var parts = input.match(/(\d+)/g);
+            return new Date(parts[0], parts[1] - 1, parts[2]);
+        }
 
-  }
+        function update_days_remaining() {
+            var date_range = $("#appendedInput").val().split("~");
+            var exclude_after_today_length = 0
+            var exclude_dates_length = 0
 
-</script>
+            if (date_range[1] && date_range[1] != "") {
+                var today = "<%=  Date.today.to_s(:db) %>";
+                var regEx = new RegExp("\\-", "gi");
+                var d = new Date(date_range[0].replace(regEx, "/"))
+
+                if ($(".exclude_dates").val() != "") {
+                    var exclude_dates = $(".exclude_dates").val().split(",");
+                    exclude_dates_length = exclude_dates.length;
+                    if (exclude_dates_length > 1) {
+                        $.each(exclude_dates, function (i, val) {
+                            if (parseDate(val) - parseDate(today) >= 0) {
+                                exclude_after_today_length++
+                            }
+                        })
+                    }
+                }
+
+                var remaining_days;
+                if (d > new Date()) {
+                    remaining_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
+                }
+                else {
+                    remaining_days = (parseDate(date_range[1]) - parseDate(today)) / (24 * 3600 * 1000) + 1;
+                }
+                var total_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
+                if (total_days <= 0) {
+                    return
+                }
+                var total_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
+                $("#total_days").html(total_days - exclude_dates_length);
+                remaining_days = remaining_days - exclude_after_today_length;
+                if (remaining_days < 0) {
+                    remaining_days = 0
+                }
+                $("#remaining_days").html(remaining_days)
+            }
+
+        }
+
+    </script>
 <% end %>

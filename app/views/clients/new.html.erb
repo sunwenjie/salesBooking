@@ -1,5 +1,8 @@
 <div>
-  <div class="row" style="font-size: 14px;"><%= @client.code.present? ? @client.code : ''%></br>
-    <div style="font-size: 14px;color: #336dc6;display:inline"><span id="title1"><%= @client.clientname.present? ? @client.clientname : t('order.form.undefined_order')%></span></div></div>
+  <div class="row" style="font-size: 14px;"><%= @client.code? ? @client.code : '' %></br>
+    <div style="font-size: 14px;color: #336dc6;display:inline">
+      <span id="title1"><%= @client.clientname? ? @client.clientname : t('order.form.undefined_order') %></span>
+    </div>
+  </div>
 </div>
-<%= render :partial => "form" %>
+<%= render 'form' %>

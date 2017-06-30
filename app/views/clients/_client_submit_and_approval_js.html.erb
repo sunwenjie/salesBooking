@@ -1,59 +1,57 @@
-<script src="/javascripts/underscore-min.js" type="text/javascript"></script>
 <script type="text/javascript">
-    function client_released(obj){
-        $(obj).attr("disabled","disabled");
-        if ($(obj).is(':checked')){
-            $("#"+$(obj).attr("id")+"_h").val("released");
-            $("[data_client_id='"+$(obj).attr("client_id")+"']").attr("data_client_state","released")
+    function client_released(obj) {
+        if ($(obj).is(':checked')) {
+            $("#" + $(obj).attr("id") + "_h").val("released");
+            $("[data_client_id='" + $(obj).attr("client_id") + "']").attr("data_client_state", "released")
             $(".popover-submit").removeClass('hide');
             $(".popover-submit").addClass('show');
-        } else{
-            $("#"+$(obj).attr("id")+"_h").val("unreleased")
+        } else {
+            $("#" + $(obj).attr("id") + "_h").val("unreleased")
             $(".popover-submit").removeClass('show');
             $(".popover-submit").addClass('hide');
         }
     }
-    function go_approval(obj){
+    function go_approval(obj) {
         $(obj).attr("disabled","disabled");
         var node_id = $(obj).attr("data_node_id");
         var client_id = $(obj).attr("data_client_id");
         var is_params = $(obj).attr("data_params");
-        var position  = $(".xmo-tooltip-click").last().attr("position")
-        var msg_id = client_id+"_client_approval_msg_clone";
-        var current_status =  $(obj).attr("current_status");
-        var radio_name = "examine_state_client_approval_"+ client_id+"_clone";
-        var client_released_h = $("#"+client_id+"_client_released_h").val()
+        var position = $(".xmo-tooltip-click").last().attr("position")
+        var msg_id = client_id + "_client_approval_msg_clone";
+        var current_status = $(obj).attr("current_status");
+        var radio_name = "examine_state_client_approval_" + client_id + "_clone";
+        var client_released_h = $("#" + client_id + "_client_released_h").val()
         var status = client_released_h == "released" ? "4" : "1";
-        var is_ok = $("input[name='"+radio_name+"']:checked").val();
+        var is_ok = $("input[name='" + radio_name + "']:checked").val();
         var common_aproved = $(obj).attr("data_common_aproved");
-        var msg = $("#"+msg_id).val();
-        $("#"+client_id+"_client_released_h").val("");
+        var msg = $("#" + msg_id).val();
+        $("#" + client_id + "_client_released_h").val("");
 
-        var base_param = {id:client_id,status:status,node_id:node_id,nodename:"client_approval",position: position,common_aproved:common_aproved}
-        if(is_params == "yes"){
+        var base_param = {
+            id: client_id,
+            status: status,
+            node_id: node_id,
+            nodename: "client_approval",
+            position: position,
+            common_aproved: common_aproved
+        }
+        if (is_params == "yes") {
             base_param["comment"] = msg
             base_param["status"] = is_ok == "0" ? "2" : "3";
         }
-        // console.log(client_released);
-        // console.log(radio_name);
-        // console.log($(obj).attr("data_client_id"));
-        // console.log($(obj).attr("data_params"));
-        // console.log($("#"+msg_id).val());
-        // console.log($("input[name='"+radio_name+"']:checked").val())
-        // console.log(base_param)
-        $.post("<%=send_client_approval_clients_url%>",{list:base_param},function(data){
+        $.post("<%=send_client_approval_clients_url%>", {list: base_param}, function (data) {
             $.hideTips();
             $("#client_error").html(data.msg);
             if (data.msg != "") {
                 $(".notice").addClass("hide")
                 $("#error_num").addClass('hide')
             }
-            if ((node_id !="" || base_param["status"] == "1")  && data.msg == "" ) {
+            if ((node_id != "" || base_param["status"] == "1") && data.msg == "") {
                 var color_div = $("#" + client_id + "_message");
                 var client_state = data.client_state
                 var state = data.state
-                $("#"+client_id+"_client_state").text(client_state)
-                if(position != "client_show_page" &&  state != "") {
+                $("#" + client_id + "_client_state").text(client_state)
+                if (position != "client_show_page" && state != "") {
                     $('[name=edit_client_link][data_client_id = ' + client_id + ']').attr("data_client_state", state);
                 }
                 color_div.removeClass("status-submit");
@@ -61,11 +59,11 @@
                 color_div.removeClass("status-error");
                 color_div.addClass(data.color_class);
             }
-            scroll(0,0);
-        },"json")
+            scroll(0, 0);
+        }, "json")
     }
 
-    function go_back(){
+    function go_back() {
         $.hideTips();
     }
 </script>

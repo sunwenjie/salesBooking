@@ -1,95 +1,96 @@
-                <div class="span">
-                   <%  @send_country = @send_country.to_s != "" ? @send_country : "EMPTY" %>
-                   <%= hidden_field_tag "send_country",@send_country %>
-                   <%= select_tag 'order[country][]',send("options_for_"+@send_country.downcase),:selected =>"",:multiple => true,:class => "chzn-select span5",:tabindex=>"-1",:id=>"chosen_multiple_country"%>
-                </div>
-                <div class="span">
-                   <a class="selection_icon selection_trigger" data-target="#chosen_multiple_country" href="javascript:void(0);"></a>
-                </div>
+<div class="span">
+  <% @send_country = @send_country.to_s != "" ? @send_country : "EMPTY" %>
+  <%= hidden_field_tag "send_country", @send_country %>
+  <%= select_tag 'order[country][]', send("options_for_"+@send_country.downcase), :selected => "", :multiple => true, :class => "chzn-select span5", :tabindex => "-1", :id => "chosen_multiple_country" %>
+</div>
+<div class="span">
+  <a class="selection_icon selection_trigger" data-target="#chosen_multiple_country" href="javascript:void(0);"></a>
+</div>
 
 <script type="text/javascript">
-  function country_change(){
-    $("#order_delivery_type").val("");
-    if($("#chosen_multiple_country option:selected[value='china']").size() > 0){
-      $("#city_select").show();
-      $("#delivery_select").show();
-      $("#order_delivery_type").addClass("required");
-    }else{
-      $("#order_delivery_type").removeClass("required");
-      $("#delivery_select").hide();
-      $("#province_select").hide();
-      $("#order_delivery_province").val(["all_provinces"]).trigger("liszt:updated");
-      $("#city_level_select").hide();
-      $("#order_delivery_city_level").val(["all_city_level"]).trigger("liszt:updated");
-      $("#mainland_select").hide();
+    function country_change() {
+        $("#order_delivery_type").val("");
+        if ($("#chosen_multiple_country option:selected[value='china']").size() > 0) {
+            $("#city_select").show();
+            $("#delivery_select").show();
+            $("#order_delivery_type").addClass("required");
+        } else {
+            $("#order_delivery_type").removeClass("required");
+            $("#delivery_select").hide();
+            $("#province_select").hide();
+            $("#order_delivery_province").val(["all_provinces"]).trigger("liszt:updated");
+            $("#city_level_select").hide();
+            $("#order_delivery_city_level").val(["all_city_level"]).trigger("liszt:updated");
+            $("#mainland_select").hide();
+        }
     }
-  }
- 
-    function country_me(n){
-       $.ajax({
-          type: "GET",
-          url:  "/<%= I18n.locale.to_s%>/orders/check_country?country="+n,
-          dataType:"text",
-          success: function(msg){
-           $("#country_change").empty();
-           $("#country_change").append(msg);
-           var state = $("#send_country").val();
-           if ($("#send_country").val()!= "CHINA") $("#pretargeting_mainland").val("");
-           $("#chosen_multiple_country_special").val(["all_countrys"])
-           $("#chosen_multiple_country_special").trigger("liszt:updated");
-           if(state == "CHINA"){
-             $("#order_regional").val("NATION");
-           }else{
-             $("#order_regional").val(state);
-           }
-           check_type_message_all();
 
-           if(n=="SPECIAL_COUNTRY"){
-              $("#unnstandard_country_notice").show();
-              $("#unnstandard_country_select").show();
-              $("#unnstandard_country_text").text("<%= t("order.form.geo_group")%>");
-            }else{
-              $("#unnstandard_country_notice").hide();
-              $("#unnstandard_country_select").hide();
-              $("#unnstandard_country_text").text("<%= t("order.form.country")%>");
-            };
+    function country_me(n) {
+        $.ajax({
+            type: "GET",
+            url: "/<%= I18n.locale.to_s%>/orders/check_country?country=" + n,
+            dataType: "text",
+            success: function (msg) {
+                $("#country_change").empty();
+                $("#country_change").append(msg);
+                var state = $("#send_country").val();
+                if ($("#send_country").val() != "CHINA") $("#pretargeting_mainland").val("");
+                $("#chosen_multiple_country_special").val(["all_countrys"])
+                $("#chosen_multiple_country_special").trigger("liszt:updated");
+                if (state == "CHINA") {
+                    $("#order_regional").val("NATION");
+                } else {
+                    $("#order_regional").val(state);
+                }
+                check_type_message_all();
 
-           country_change();
-          },
-          error: function(msg){
-          }
+                if (n == "SPECIAL_COUNTRY") {
+                    $("#unnstandard_country_notice").show();
+                    $("#unnstandard_country_select").show();
+                    $("#unnstandard_country_text").text("<%= t("order.form.geo_group")%>");
+                } else {
+                    $("#unnstandard_country_notice").hide();
+                    $("#unnstandard_country_select").hide();
+                    $("#unnstandard_country_text").text("<%= t("order.form.country")%>");
+                }
+                ;
+
+                country_change();
+            },
+            error: function (msg) {
+            }
         });
     }
 
     //右边触发js
-		$('.selection_trigger').click(function(){
-		var target = $(this).attr('data-target') + '_chzn';
-		$(target).mousedown();
-		return false;
-		})
+    $('.selection_trigger').click(function () {
+        var target = $(this).attr('data-target') + '_chzn';
+        $(target).mousedown();
+        return false;
+    })
 
     $("#chosen_multiple_country").chosen();
 
     selectable_with_country("#chosen_multiple_country");
-    function selectable_with_country(ele_id){
-    $(ele_id).change(function(){
-      $(ele_id + " option:selected").each(function(i , l){
-      if($(l).val() == "SPECIAL_COUNTRY") country_me("SPECIAL_COUNTRY");
-      if($(l).val() == "CHINA") country_me("CHINA");
-      if($(l).val() == "US_UK_AU_NZ_MY") country_me("US_UK_AU_NZ_MY");
-      if($(l).val() == "HK_TW_MA_SG") country_me("HK_TW_MA_SG");
-      if($(l).val() == "OTHER_COUNTRY") country_me("OTHER_COUNTRY");
-      });
+    function selectable_with_country(ele_id) {
+        $(ele_id).change(function () {
+            $(ele_id + " option:selected").each(function (i, l) {
+                if ($(l).val() == "SPECIAL_COUNTRY") country_me("SPECIAL_COUNTRY");
+                if ($(l).val() == "CHINA") country_me("CHINA");
+                if ($(l).val() == "US_UK_AU_NZ_MY") country_me("US_UK_AU_NZ_MY");
+                if ($(l).val() == "HK_TW_MA_SG") country_me("HK_TW_MA_SG");
+                if ($(l).val() == "OTHER_COUNTRY") country_me("OTHER_COUNTRY");
+            });
 
-      if($(ele_id + " option:selected").length == 0){
-          $("#order_regional").val("");
-          $("#city_select").hide();
-      };
+            if ($(ele_id + " option:selected").length == 0) {
+                $("#order_regional").val("");
+                $("#city_select").hide();
+            }
+            ;
 
-      $(ele_id).trigger("liszt:updated");
-    });
-  }
-
+            $(ele_id).trigger("liszt:updated");
+        });
+    }
 
 
 </script>

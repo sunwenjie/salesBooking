@@ -1,4 +1,4 @@
-<%= render :partial => "show_and_edit" %>
+<%= render 'show_and_edit' %>
 <script type="text/javascript">
     $("input,textarea,select").prop('disabled', true);
     $("#user_share_operater_list").attr('disabled', true).trigger("liszt:updated");
@@ -12,55 +12,57 @@
     var order_status = node_object.attr("status").split(",")
     var is_standard = node_object.attr("is_statndard_or_unstatnard")
     var current_order_approval_status = is_standard == "true" ? order_status[2] : order_status[1]
-    $( document ).ready(function() {
-    if(jQuery.inArray("1",node_ids) > -1){
-        $('#order_business_opportunity_number').attr('disabled', 'disabled').trigger("liszt:updated");
-        $("#client_id").attr('disabled', true).trigger("liszt:updated");
-        $("#interest_crowd").prop('disabled',false);
-        $(":button").prop('disabled', false);
-        $(":submit").prop('disabled', false);
-    }
-
-    if(jQuery.inArray("4",node_ids) > -1){
-        $("[name = 'order[whether_msa]']").prop("disabled",false);
-        if($("[type=radio][name='order[whether_msa]']:checked").val() == "1"){
-            $("#order_msa_contract").prop("disabled",false);
-        }else{
-            $("#order_msa_contract").prop("disabled",true);
-        }
-        $(":button").prop('disabled', false);
-        $(":submit").prop('disabled', false);
-    }
-
-
-    if(jQuery.inArray("2",node_ids) > -1 || jQuery.inArray("3",node_ids) > -1 || (node_ids.size == 1 && node_ids[0] == "") || node_ids == ""){
-        if(current_order_approval_status == "1" && order_status[0] != "3" && order_status[3] != "3"){
-            $("input,textarea,select").prop('disabled', true);
-            $("#user_share_operater_list").attr('disabled', true).trigger("liszt:updated");
-            $("#share_order_group_list").attr('disabled', true).trigger("liszt:updated");
+    $(document).ready(function () {
+        if (jQuery.inArray("1", node_ids) > -1) {
             $('#order_business_opportunity_number').attr('disabled', 'disabled').trigger("liszt:updated");
             $("#client_id").attr('disabled', true).trigger("liszt:updated");
-            $("#execute_div3").show();
-            $("#order_rebate").attr('disabled',false);
-        }else {
-            $("input,textarea,select").not("#order_msa_contract").prop('disabled', false);
-            $("#user_share_operater_list").attr('disabled', false).trigger("liszt:updated");
-            $("#share_order_group_list").attr('disabled', false).trigger("liszt:updated");
-            var all_zero =  _.every(order_status, function(i) {  return parseInt(i) < 1});
-            if (all_zero){
-                $("[name= 'order[whether_business_opportunity]' ]").prop('disabled', false);
-                $('#order_business_opportunity_number').attr('disabled', false).trigger("liszt:updated");
-            }else{
-                $("[name= 'order[whether_business_opportunity]' ]").prop('disabled', true);
-                $('#order_business_opportunity_number').attr('disabled', true);
-            }
-
-            get_opportunity_number();
+            $("#interest_crowd").prop('disabled', false);
+            $(":button").prop('disabled', false);
+            $(":submit").prop('disabled', false);
         }
-        $(":button").prop('disabled', false);
-        $(":submit").prop('disabled', false);
 
-    }
+        if (jQuery.inArray("4", node_ids) > -1) {
+            $("[name = 'order[whether_msa]']").prop("disabled", false);
+            $("#order_rebate").attr('disabled', false);
+            if ($("[type=radio][name='order[whether_msa]']:checked").val() == "1") {
+                $("#order_msa_contract").prop("disabled", false);
+            } else {
+                $("#order_msa_contract").prop("disabled", true);
+            }
+            $(":button").prop('disabled', false);
+            $(":submit").prop('disabled', false);
+        }
+
+        if (jQuery.inArray("2", node_ids) > -1 || jQuery.inArray("3", node_ids) > -1 || (node_ids.size == 1 && node_ids[0] == "") || node_ids == "") {
+            if (current_order_approval_status == "1" && order_status[0] != "3" && order_status[3] != "3") {
+                $("input,textarea,select").prop('disabled', true);
+                $("#user_share_operater_list").attr('disabled', true).trigger("liszt:updated");
+                $("#share_order_group_list").attr('disabled', true).trigger("liszt:updated");
+                $('#order_business_opportunity_number').attr('disabled', 'disabled').trigger("liszt:updated");
+                $("#client_id").attr('disabled', true).trigger("liszt:updated");
+                $("#execute_div3").show();
+                $("#order_rebate").attr('disabled', false);
+            } else {
+                $("input,textarea,select").not("#order_msa_contract").prop('disabled', false);
+                $("#user_share_operater_list").attr('disabled', false).trigger("liszt:updated");
+                $("#share_order_group_list").attr('disabled', false).trigger("liszt:updated");
+                var all_zero = _.every(order_status, function (i) {
+                    return parseInt(i) < 1
+                });
+                if (all_zero) {
+                    $("[name= 'order[whether_business_opportunity]' ]").prop('disabled', false);
+                    $('#order_business_opportunity_number').attr('disabled', false).trigger("liszt:updated");
+                } else {
+                    $("[name= 'order[whether_business_opportunity]' ]").prop('disabled', true);
+                    $('#order_business_opportunity_number').attr('disabled', true);
+                }
+
+                get_opportunity_number();
+            }
+            $(":button").prop('disabled', false);
+            $(":submit").prop('disabled', false);
+
+        }
 
     });
 

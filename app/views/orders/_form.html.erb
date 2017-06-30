@@ -1,82 +1,84 @@
-<%= javascript_include_tag "js/component.js" %>
-<%= javascript_include_tag "BS_city/city" %>
-<%= stylesheet_link_tag "city/city" %>
-<% if @order.errors.any?  %>
-  <div id="error_explanation" class="error sticker">
-    <h2><%= @order.errors.count %><%= @order.errors.count > 1 ?  t("order.form.error_tip") : t("order.form.error_tip_one") %> :</h2>
-    <ul>
-      <% @order.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
- <% end %>
+<% if @order.errors.any? %>
+    <div id="error_explanation" class="error sticker">
+      <h2><%= @order.errors.count %><%= @order.errors.count > 1 ? t("order.form.error_tip") : t("order.form.error_tip_one") %>
+        :</h2>
+      <ul>
+        <% @order.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
 <div id="order_assign_error"></div>
 
 <!--订单编号 -->
 
- <div class="control-group t_margin_20 hide">
-  	 <label class="control-label">
-  	   <label for="campaign_campaignname" class="inline"><%= t("order.form.order_id")%></label>
-  	 </label>
-  	 <div class="controls">
-  	   <div class="row">
-  	     <div class="span">
-                 <%= f.text_field :code, :value=>"#{@order.code}", :disname=>"计划名称", :class=>"required span5",:readonly=>true,:size=>30 %>
-      	     </div>
-  	   </div>
-  	 </div>
- </div>
+<div class="control-group t_margin_20 hide">
+  <label class="control-label">
+    <label for="campaign_campaignname" class="inline"><%= t("order.form.order_id") %></label>
+  </label>
+
+  <div class="controls">
+    <div class="row">
+      <div class="span">
+        <%= f.text_field :code, :value => "#{@order.code}", :disname => "计划名称", :class => "required span5", :readonly => true, :size => 30 %>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <div class="control-group t_margin_20">
-     <label class="control-label">
-       <label for="campaign_campaignname" class="inline"><%= t("order.form.order_name")%></label>
-     </label>
-     <div class="controls">
-       <div class="row">
-         <div class="span">
-                 <%= f.text_field :title, :disname=>"订单名称", :class=>"required span5 proof_ready_unmodify",:size=>30 %>
-             </div>
-       </div>
-     </div>
-</div>
-<%if action_name=="edit" || action_name=="update"%>
-    <%@readonly,@disabled,@role_disabled = true,true,true %>
-<%else%>
-    <%@readonly,@disabled,@role_disabled = false,false,false %>
-<%end%>
-<div class="control-group t_margin_20" >
   <label class="control-label">
-    <label for="campaign_campaignname" class="inline"><%=t("order.form.sales_opportunity_id")%></label>
+    <label for="campaign_campaignname" class="inline"><%= t("order.form.order_name") %></label>
   </label>
+
+  <div class="controls">
+    <div class="row">
+      <div class="span">
+        <%= f.text_field :title, :disname => "订单名称", :class => "required span5 proof_ready_unmodify", :size => 30 %>
+      </div>
+    </div>
+  </div>
+</div>
+<% if action_name=="edit" || action_name=="update" %>
+    <% @readonly, @disabled, @role_disabled = true, true, true %>
+<% else %>
+    <% @readonly, @disabled, @role_disabled = false, false, false %>
+<% end %>
+<div class="control-group t_margin_20">
+  <label class="control-label">
+    <label for="campaign_campaignname" class="inline"><%= t("order.form.sales_opportunity_id") %></label>
+  </label>
+
   <div class="controls">
     <div class="row">
       <div class="item_four_w_help">
         <div class="span">
           <label class="radio" style="margin-left:11px;margin-right:11px;">
-            <%= radio_button("order", "whether_business_opportunity", 1,:checked=>(@order.whether_business_opportunity == true ? "checked" : ""), :disabled => @role_disabled )%>
-            <%= t("order.form.radio_have")%>
+            <%= radio_button("order", "whether_business_opportunity", 1, :checked => (@order.whether_business_opportunity? ? "checked" : ""), :disabled => @role_disabled) %>
+            <%= t("order.form.radio_have") %>
           </label>
         </div>
 
         <div class="span">
-          <%select_ids = (@order && @order.business_opportunity_number.present?) ? @order.business_opportunity_number.to_s : ''
-            @business_opp = Order.options_for_opportunity_id(current_user,@order)
+          <% select_ids = (@order && @order.business_opportunity_number.present?) ? @order.business_opportunity_number.to_s : ''
+             @business_opp = Order.options_for_opportunity_id(current_user, @order)
           %>
-          <select name="order[business_opportunity_number]" id="order_business_opportunity_number" data-placeholder="<%= t("order.form.please_select")%>" class = "required select span5 proof_ready_unmodify" style="width:269px;"  disabled => <%=@role_disabled%>>
+          <select name="order[business_opportunity_number]" id="order_business_opportunity_number" data-placeholder="<%= t("order.form.please_select") %>" class="required select span5 proof_ready_unmodify" style="width:269px;" disabled=> <%= @role_disabled %>
+            >
             <option d_advertiser_id="" d_budget="" d_currency_id="RMB" d_date_period="" d_owner_sale="" d_cooperate_sales="" d_exist_msa="0" d_exist_service="0" value=""><%= t('order.form.please_select') %></option>
             <% @business_opp.each do |x| %>
-                <option d_advertiser_id="<%= x.advertiser_id %>" d_budget="<%= number_to_currency(x.budget, unit: '',precision: 2) %>" d_currency_id="<%= x.currency_name %>" d_date_period ="<%= x.deliver_start_date %> <%=  x.deliver_end_date ? '~' : ''%> <%=x.deliver_end_date%>" d_owner_sale="<%= x.owner_sale %>"
-                        d_cooperate_sales="<%= x.cooperate_sales %>" d_exist_msa="<%= x.exist_msa %>" d_exist_service="<%= x.exist_service %>" value=<%= x.id %> <%= x.id.to_s == select_ids ? selected = 'selected' : ''%>><%= x.opportunity_id.to_s+ '('+ x.name+ ')'%></option>
+                <option d_advertiser_id="<%= x.advertiser_id %>" d_budget="<%= number_to_currency(x.budget, unit: '', precision: 2) %>" d_currency_id="<%= x.currency_name %>" d_date_period="<%= x.deliver_start_date %> <%= x.deliver_end_date ? '~' : '' %> <%= x.deliver_end_date %>" d_owner_sale="<%= x.owner_sale %>"
+                        d_cooperate_sales="<%= x.cooperate_sales %>" d_exist_msa="<%= x.exist_msa %>" d_exist_service="<%= x.exist_service %>" value=<%= x.id %> <%= x.id.to_s == select_ids ? selected = 'selected' : '' %>><%= x.opportunity_id.to_s+ '('+ x.name+ ')' %></option>
             <% end %>
           </select>
         </div>
 
         <div class="span ">
           <label class="radio" style="margin-left:11px;margin-right:11px;">
-            <%= radio_button("order", "whether_business_opportunity", 0,:checked=>(@order.whether_business_opportunity == false ? "checked" : ""), :disabled => @role_disabled )%>
-            <%= t("order.form.radio_have_not")%>
+            <%= radio_button("order", "whether_business_opportunity", 0, :checked => (@order.whether_business_opportunity? ? "" : "checked"), :disabled => @role_disabled) %>
+            <%= t("order.form.radio_have_not") %>
           </label>
         </div>
         <div class="span l_padding_15" id="check_sales_opportunity_id" style="width:390px;"></div>
@@ -87,99 +89,59 @@
 </div>
 
 <div class="control-group">
-	 <label class="control-label">
-	     <label for="campaign_status"><%= t("order.form.client_name")%></label>
-	 </label>
-	 <div class="controls">
-	     <div class="row">
-	       <div class="item_two">
-          		 <div class="span">
-                  <% if (["new","edit","create","update"].include? action_name) %>
-                       <% if current_user.manageable_clients.present? %>
-                       <% clients = current_user.manageable_clients.collect{|u|
-                        if u.channel_name.present?
-                          channel="#{t("order.list.channel")}:"+u.channel_name
-                        else
-                          channel= t("order.list.channel1")
-                        end
-                        [(current_user.administrator? ? u.clientname : u.name) + " | "+" #{t("order.list.logo")}:"+u.brand+" | "+channel,u.id]
-                       }
-                       %>
-                       <% else %>
-                           <% if @order.client && @order.client.channel_name.present?
-                                channel="#{t("order.list.channel")}:"+@order.client.channel_name
-                              else
-                                channel=t("order.list.channel1")
-                              end
-                           %>
-                           <% clients = @order.client ? [[@order.client.clientname+" | "+" #{t("order.list.logo")}:"+@order.client.brand.to_s+" | "+channel,@order.client_id]] : [] %>
-                       <% end %>
-                  <% else %>
-                       <% if @order.client && @order.client.channel_name.present?
-                            channel="#{t("order.list.channel")}:"+@order.client.channel_name
-                          else
-                            channel=t("order.list.channel1")
-                          end
-                       %>
-                      <% clients = @order.client ? [[@order.client.clientname+" | "+" #{t("order.list.logo")}:"+(@order.client.brand.nil? ? '' : @order.client.brand) +" | "+channel,@order.client_id]] : [] %>
-                  <% end %>
+  <label class="control-label">
+    <label for="campaign_status"><%= t("order.form.client_name") %></label>
+  </label>
 
-                  <%= f.select :client_id, clients.sort_by{|i| i.first.strip} ,{:include_blank=>true},:class => "required select span5 proof_ready_unmodify",:onchange=>"check_client('client')",:id=>"client_id"%>
-          		 </div>
+  <div class="controls">
+    <div class="row">
+      <div class="item_two">
+        <div class="span">
+          <% clients = select_for_clients(action_name) %>
+          <%= f.select :client_id, clients.sort_by { |i| i.first.strip }, {:include_blank => true}, :class => "required select span5 proof_ready_unmodify", :onchange => "check_client('client')", :id => "client_id" %>
+        </div>
 
-            	 <div class="span ">
-                  <% if ["new", "create", "edit", "update"].include?(params[:action]) %>
-                     <div class="t_margin_0 header_add_new_link " style="top:0">
-                          <%=link_to "#{t("order.form.add_client")}",:controller=>"clients",:action=>"new" %>
-                     </div>
-                  <% end %>
-            	 </div>
-	       </div>
-	    </div>
-	 </div>
+        <div class="span ">
+          <% if have_base_action(params[:action]) %>
+              <div class="t_margin_0 header_add_new_link " style="top:0">
+                <%= link_to "#{t("order.form.add_client")}", :controller => "clients", :action => "new" %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-
-<!--<div class="control-group">-->
-	  <!--<label class="control-label">-->
-	     <!--<label for="campaign_status"><%#= t("order.form.industry")%></label>-->
-	  <!--</label>-->
-	  <!--<div class="controls">-->
-	    <!--<div class="row">-->
-	      <!--<div class="span">-->
-                <!--<%#= f.select :industry_id,Industry.all.collect{|u| [I18n.locale.to_s == "zh-cn" ? u.name : u.name_en ,u.id]}, {}, {:class => "required select span5 proof_ready_unmodify"} %>-->
-              <!--</div>-->
-	    <!--</div>-->
-	 <!--</div>-->
-<!--</div>-->
-
 <div class="control-group t_margin_20">
- <label class="control-label">
-    <label for="campaign_campaignname" class="inline"><%= t("order.form.client_contact")%></label>
- </label>
- <div class="controls">
-   <div class="row">
-     <div class="span">
-       <%= f.text_field :linkman, :value=>"#{@order&&@order.linkman ? @order.linkman : (@client&&@client.clientcontact ? @client.clientcontact : '')}", :disname=>"客户联络人", :class=>"required span5 proof_ready_unmodify",:readonly=>true,:size=>"30"  %>
-     </div>
-   </div>
- </div>
+  <label class="control-label">
+    <label for="campaign_campaignname" class="inline"><%= t("order.form.client_contact") %></label>
+  </label>
+
+  <div class="controls">
+    <div class="row">
+      <div class="span">
+        <%= f.text_field :linkman, :value => "#{@order&&@order.linkman ? @order.linkman : (@client&&@client.clientcontact ? @client.clientcontact : '')}", :disname => "客户联络人", :class => "required span5 proof_ready_unmodify", :readonly => true, :size => "30" %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!--订单类型 -->
 <div class="control-group">
   <label><%= t('order.form.order_type') %></label>
+
   <div class="controls">
     <div class="row">
       <div class="span">
         <label class="radio">
-          <%=radio_button("order", "whether_service", 0, :checked => ((@order.whether_service.blank? || @order.whether_service == "0") ? "checked" : ""))  %>
+          <%= radio_button("order", "whether_service", 0, :checked => (@order.whether_executive? ? "checked" : "")) %>
           <%= t('order.form.execution_order_type') %>
         </label>
       </div>
       <div class="span" style="margin-left:100px;">
         <label class="radio">
-          <%=radio_button("order", "whether_service", 1, :checked => (@order.whether_service == true ? "checked" : ""))  %>
+          <%= radio_button("order", "whether_service", 1, :checked => (@order.whether_service? ? "checked" : "")) %>
           <%= t('order.form.service_order_type') %>
         </label>
       </div>
@@ -187,34 +149,21 @@
   </div>
 </div>
 
-<!--<div class="control-group t_margin_20">-->
- <!--<label class="control-label">-->
-    <!--<label for="campaign_campaignname" class="inline"><%#= t("order.form.contact_phone")%></label>-->
- <!--</label>-->
- <!--<div class="controls">-->
-   <!--<div class="row">-->
-     <!--<div class="span">-->
-       <!--<%#= f.text_field :linkman_tel, :value=>"#{@order&&@order.linkman_tel ? @order.linkman_tel : (@client&&@client.linkman_tel ? @client.linkman_tel : '')}", :disname=>"联络人电话", :class=>"required span5 proof_ready_unmodify",:size=>"30" %>-->
-     <!--</div>-->
-   <!--</div>-->
- <!--</div>-->
-<!--</div>-->
-
 <%= f.hidden_field "channel_id" %>
 
 <div class="sub_section_white">
-  <%#= render :partial => "data_form",:object=>@order %>
   <!-- 日期 start -->
   <div class="control-group t_margin_20">
     <label class="control-label"><%= t('order.form.period_label') %></label>
+
     <div class="controls">
       <div class="row">
         <div class="row ">
           <div class="span">
-            <% a = @order.errors && (@order.errors.full_messages.include?"开始时间 不能为空") ? "have_error" : "" %>
-            <div class="input-append <%=a%>">
-              <input type="text" value="<%= @order.start_date %> <%=  @order.ending_date ? "~" : ""%> <%=@order.ending_date%>" name="date_range" id="appendedInput" class="span2 required_input xmoCalendarInputSchedule">
-              <% exclude_dates = @order.exclude_date.present? ? @order.exclude_date.join(",") : ""%>
+            <% a = @order.errors && (@order.errors.full_messages.include? "开始时间 不能为空") ? "have_error" : "" %>
+            <div class="input-append <%= a %>">
+              <input type="text" value="<%= @order.start_date %> <%= @order.ending_date ? "~" : "" %> <%= @order.ending_date %>" name="date_range" id="appendedInput" class="span2 required_input xmoCalendarInputSchedule">
+              <% exclude_dates = @order.exclude_date? ? @order.exclude_date.join(",") : "" %>
               <input type="hidden" class="exclude_dates" name="exclude_dates" id="exclude_dates" value="<%= exclude_dates %>">
               <span class="add-on"><i class="icon-calendar icon_trigger r_margin_0"></i></span>
             </div>
@@ -235,16 +184,17 @@
 
   <!-- Budget -->
   <div class="control-group">
-    <label class="control-label"><%= t("order.form.budget")%></label>
+    <label class="control-label"><%= t("order.form.budget") %></label>
+
     <div class="controls">
       <div class="row">
         <div class='item_two'>
           <div class='span'>
             <div class="input-append">
-               <%= f.text_field :budget,:disname=>"预算", :class=>"align_right numeric", :dis_wiget => "#budget_dis_input", :style=>"width:280px;display:none;"%>
-              <input type="text" id="budget_dis_input" style="width:280px;" class='align_right numeric' name='amount' />
+              <%= f.text_field :budget, :disname => "预算", :class => "align_right numeric", :dis_wiget => "#budget_dis_input", :style => "width:280px;display:none;" %>
+              <input type="text" id="budget_dis_input" style="width:280px;" class='align_right numeric' name='amount'/>
               <span class="add-on currency_unit_budget">
-               <%= f.select :budget_currency,option_for_currency(@order.budget_currency), {}, {:class=>"required span2 select-inside",:style=>"width:80px;"} %>
+               <%= f.select :budget_currency, option_for_currency(@order.budget_currency), {}, {:class => "required span2 select-inside", :style => "width:80px;"} %>
               </span>
             </div>
           </div>
@@ -257,15 +207,15 @@
   </div>
 
   <!--代理返点 -->
-  <div class="control-group" id = "execute_div3">
-    <label class="control-label"><%= t("order.form.agency_rebate")%></label>
+  <div class="control-group" id="execute_div3">
+    <label class="control-label"><%= t("order.form.agency_rebate") %></label>
+
     <div class="controls">
       <div class="row">
         <div class='item_two'>
           <div class='span'>
             <div class="input-append">
-              <input id="order_rebate" name="order[rebate]" value="<%=((@order.rebate.present? && @order.rebate != 0.00) || @order.gp_check == true) ? number_with_precision(@order.rebate.to_f, precision: 2) : (number_with_precision(@order.get_channel_rebate.to_f, precision: 2)) %>" class="align_right numeric" dis_wiget="#rebate_dis_input" style="width:342px;" type="text">
-              <%#= f.text_field :rebate,:disname=>"代理返点", :class=>"align_right numeric", :dis_wiget => "#rebate_dis_input", :style=>"width:342px;"%>
+              <input id="order_rebate" name="order[rebate]" value="<%= ((@order.rebate.present? && @order.rebate != 0.00) || @order.gp_check == true) ? number_with_precision(@order.rebate.to_f, precision: 2) : (number_with_precision(@order.get_channel_rebate.to_f, precision: 2)) %>" class="align_right numeric" dis_wiget="#rebate_dis_input" style="width:342px;" type="text">
               <span class="add-on currency_unit_rebate">%</span>
             </div>
           </div>
@@ -278,72 +228,75 @@
   </div>
 
   <div id="service_div">
-  <!--服务费 -->
-  <div class="control-group">
-    <label class="control-label"><%= t("order.form.service_charges")%></label>
-    <div class="controls">
-      <div class="row">
-        <div class='item_two'>
-          <div class='span'>
-            <div class="input-append">
-              <%= f.text_field :service_charges,:disname=>"服务费", :class=>"align_right numeric", :dis_wiget => "#service_charges_dis_input", :style=>"width:280px;display:none;"%>
-              <input type="text" id="service_charges_dis_input" style="width:280px;" class='align_right numeric' name='amount' placeholder="0.00" />
+    <!--服务费 -->
+    <div class="control-group">
+      <label class="control-label"><%= t("order.form.service_charges") %></label>
+
+      <div class="controls">
+        <div class="row">
+          <div class='item_two'>
+            <div class='span'>
+              <div class="input-append">
+                <%= f.text_field :service_charges, :disname => "服务费", :class => "align_right numeric", :dis_wiget => "#service_charges_dis_input", :style => "width:280px;display:none;" %>
+                <input type="text" id="service_charges_dis_input" style="width:280px;" class='align_right numeric' name='amount' placeholder="0.00"/>
               <span class="add-on currency_unit_budget" id="service_charge_unit" style="width: 80px;">
               </span>
+              </div>
             </div>
-          </div>
-          <div class="span hide">
+            <div class="span hide">
 
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!--服务费比例 -->
-  <div class="control-group">
-    <label class="control-label"><%= t("order.form.service_charges_radio")%></label>
-    <div class="controls">
-      <div class="row">
-        <div class='item_two'>
-          <div class='span'>
-            <div class="input-append">
-              <%= f.text_field :service_charges_scale,:value=>@order.service_charges_scale.present? ? number_with_precision(@order.service_charges_scale,:precision=>2) : 0.00 ,:disname=>"服务费比例", :class=>"align_right numeric", :dis_wiget => "#service_radio_dis_input", :style=>"width:342px;",:placeholder=> "0.00"%>
-              <span class="add-on currency_unit_budget">%</span>
+    <!--服务费比例 -->
+    <div class="control-group">
+      <label class="control-label"><%= t("order.form.service_charges_radio") %></label>
+
+      <div class="controls">
+        <div class="row">
+          <div class='item_two'>
+            <div class='span'>
+              <div class="input-append">
+                <%= f.text_field :service_charges_scale, :value => @order.service_charges_scale.present? ? number_with_precision(@order.service_charges_scale, :precision => 2) : 0.00, :disname => "服务费比例", :class => "align_right numeric", :dis_wiget => "#service_radio_dis_input", :style => "width:342px;", :placeholder => "0.00" %>
+                <span class="add-on currency_unit_budget">%</span>
+              </div>
             </div>
-          </div>
-          <div class="span hide">
+            <div class="span hide">
 
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   <!--配送单 -->
   <div class="control-group t_margin_20" id="free_order_div">
     <label class="control-label">
-      <label for="campaign_campaignname" class="inline"><%= t("order.form.free_order")%></label>
+      <label for="campaign_campaignname" class="inline"><%= t("order.form.free_order") %></label>
     </label>
+
     <div class="controls">
       <div class="row">
         <div class="item_four_w_help">
           <div class="span">
             <label class="radio">
-              <%= radio_button("order", "free_tag",1,:checked=>(@order.free_tag == "1" ? "checked" : ""))%>
-              <%= t("order.form.radio_yes")%>
+              <%= radio_button("order", "free_tag", 1, :checked => (@order.free_tag == "1" ? "checked" : "")) %>
+              <%= t("order.form.radio_yes") %>
             </label>
           </div>
           <div class="span l_margin_5">
             <label class="text" style="padding: 10px;">
-              <%= f.text_field :free_notice,:disname=>"设置为赠送单",:style=>"width:345px;margin-top:-10px;",:placeholder=>t('order.form.free_order_description')%>
+              <%= f.text_field :free_notice, :disname => "设置为赠送单", :style => "width:345px;margin-top:-10px;", :placeholder => t('order.form.free_order_description') %>
             </label>
           </div>
           <div class="span ">
             <label class="radio">
-              <%= radio_button("order", "free_tag",0,:checked=>((@order.free_tag.blank? || @order.free_tag == "0")? "checked" : ""))%>
-              <%=t("order.form.radio_no")%>
+              <%= radio_button("order", "free_tag", 0, :checked => ((@order.free_tag.blank? || @order.free_tag == "0") ? "checked" : "")) %>
+              <%= t("order.form.radio_no") %>
             </label>
           </div>
           <div class="span l_padding_15" id="check_client_name_and_brand" style="width:390px;"></div>
@@ -353,414 +306,430 @@
   </div>
 
   <%= hidden_field_tag "currency_rate", 1 %>
-  <%= f.hidden_field :new_regions, {:class=>"required",:value=>''}%>
-  <% ads = @order.new_record? ? (params[:clone_id].present? && @clone_order.present? ? (@clone_order.advertisements.present? ? @clone_order.clone_ads : [Advertisement.new]) : (@order.advertisements.present? ? @order.advertisements : [Advertisement.new])) : @order.advertisements %>
+  <%= f.hidden_field :new_regions, {:class => "required", :value => ''} %>
+  <% ads = @order.new_record? ? (params[:clone_id].present? && @clone_order.present? ? (@clone_order.advertisements.present? ? @clone_order.advertisements : [Advertisement.new]) : (@order.advertisements.present? ? @order.advertisements : [Advertisement.new])) : @order.advertisements %>
 
   <%= hidden_field_tag "ad_size", ads.present? ? ads.size : 1 %>
-  <%= hidden_field_tag :clone_id, params[:clone_id]%>
-  <%#= hidden_field_tag  "one_order_data", @order.present? ? {"whether_msa" => @order.whether_msa,"whether_service" => @order.whether_service, "whether_nonuniform" => @order.whether_nonuniform, "budget" => @order.budget} : {}%>
+  <%= hidden_field_tag :clone_id, params[:clone_id] %>
 
 
-<div id="execute_div1">
-  <!--匀速投放 -->
-  <div class="control-group" style="height:24px">
-    <label class="control-label"><%= t('order.form.nonuniform') %></label>
-    <div class="controls">
+  <div id="execute_div1">
+    <!--匀速投放 -->
+    <div class="control-group" style="height:24px">
+      <label class="control-label"><%= t('order.form.nonuniform') %></label>
+
+      <div class="controls">
         <div class="row">
-              <div class="span">
-                <label class="radio">
-                  <%= radio_button("order", "whether_nonuniform", 1, :checked => (@order.whether_nonuniform == true ? "checked" : "")) %>
-                  <%= t("order.form.radio_yes")%>
-                </label>
-              </div>
-              <div class="span" style="margin-left:100px;">
-                <label class="radio">
-                    <%= radio_button("order", "whether_nonuniform", 0, :checked => ((@order.whether_nonuniform.blank? || @order.whether_nonuniform == "0") ? "checked" : "")) %>
-                  <%= t("order.form.radio_no")%>
-                </label>
-              </div>
-        </div>
-    </div>
-  </div>
-
-  <%= render partial: 'multi_date_form' %>
-
-
-  <%#= f.hidden_field :new_regions, {:class=>"required",:value=>''}%>
-
-  <!-- Geo -->
-  <div class="control-group">
-    <label class="control-label">
-      <%= t("order.form.geo") %>
-    </label>
-    <div class="controls">
-      <div class="city" id="city" style="padding-left:20px;"></div>
-      <div class="clear" style="clear:both;padding-bottom:15px;"></div>
-
-    </div>
-  </div>
-
-  <%#= hidden_field_tag :clone_id, params[:clone_id]%>
-
-  <!--MSA框架 -->
-  <div class="control-group">
-    <label class="control-label"><%= t('order.form.msa_framework') %></label>
-    <div class="controls">
-      <div class="row">
-        <div class="item_four_w_help">
           <div class="span">
             <label class="radio">
-              <%= radio_button("order", "whether_msa",1,:checked=>(@order.whether_msa == true ? "checked" : ""))%>
-              <%= t("order.form.radio_yes")%>
+              <%= radio_button("order", "whether_nonuniform", 1, :checked => (@order.whether_nonuniform == true ? "checked" : "")) %>
+              <%= t("order.form.radio_yes") %>
             </label>
           </div>
-        </div>
-        <div class="span l_margin_5">
-          <label class="text" style="padding: 10px;">
-            <%= f.text_field :msa_contract,:disname=>"MSA框架",:style=>"width:345px;margin-top:-10px;",:placeholder=>t('order.form.msa_remark')%>
-          </label>
-        </div>
-        <div class="item_four_w_help">
-          <div class="span">
+          <div class="span" style="margin-left:100px;">
             <label class="radio">
-              <%= radio_button("order", "whether_msa",0,:checked=>((@order.whether_msa.blank? || @order.whether_msa == false)? "checked" : ""))%>
-              <%=t("order.form.radio_no")%>
+              <%= radio_button("order", "whether_nonuniform", 0, :checked => ((@order.whether_nonuniform.blank? || @order.whether_nonuniform == "0") ? "checked" : "")) %>
+              <%= t("order.form.radio_no") %>
             </label>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="control-group" style="margin-top: 30px;">
-    <label class="control-label" for=""><%= t('order.form.order_owner')%>*
-    </label>
-    <div class="controls">
-      <div class='row'>
-        <% share_order_error = (@order.errors && @order.errors[:share_order_blank].present?) ? "have_error" : "" %>
-        <div class='span <%= share_order_error %> '>
-          <select id="user_share_operater_list" name="share_order[]" multiple data-placeholder="<%= t('order.form.please_select') %>" style="width:380px" class="chzn-select l_margin_0" onchange="change_share_sales_order()" >
-            <%= options_for_share_sale("order",action_name) %>
-          </select>
+    <%= render 'multi_date_form' %>
+
+    <!-- Geo -->
+    <div class="control-group">
+      <label class="control-label">
+        <%= t("order.form.geo") %>
+      </label>
+
+      <div class="controls">
+        <div class="city" id="city" style="padding-left:20px;"></div>
+        <div class="clear" style="clear:both;padding-bottom:15px;"></div>
+
+      </div>
+    </div>
+
+    <!--MSA框架 -->
+    <div class="control-group">
+      <label class="control-label"><%= t('order.form.msa_framework') %></label>
+
+      <div class="controls">
+        <div class="row">
+          <div class="item_four_w_help">
+            <div class="span">
+              <label class="radio">
+                <%= radio_button("order", "whether_msa", 1, :checked => (@order.is_msa? ? "checked" : "")) %>
+                <%= t("order.form.radio_yes") %>
+              </label>
+            </div>
+          </div>
+          <div class="span l_margin_5">
+            <label class="text" style="padding: 10px;">
+              <%= f.text_field :msa_contract, :disname => "MSA框架", :style => "width:345px;margin-top:-10px;", :placeholder => t('order.form.msa_remark') %>
+            </label>
+          </div>
+          <div class="item_four_w_help">
+            <div class="span">
+              <label class="radio">
+                <%= radio_button("order", "whether_msa", 0, :checked => (@order.is_msa? ? "" : "checked")) %>
+                <%= t("order.form.radio_no") %>
+              </label>
+            </div>
+          </div>
         </div>
-        <div class="span l_margin_10 t_margin_5">
-          <a class="selection_icon selection_trigger user_share_operater_list" data-target="#user_share_operater_list" href="javascript:void(0);"></a>
+      </div>
+    </div>
+
+    <div class="control-group" style="margin-top: 30px;">
+      <label class="control-label" for=""><%= t('order.form.order_owner') %>*
+      </label>
+
+      <div class="controls">
+        <div class='row'>
+          <% share_order_error = (@order.errors && @order.errors[:share_order_blank].present?) ? "have_error" : "" %>
+          <div class='span <%= share_order_error %> '>
+            <!--<select id="user_share_operater_list" name="share_order[]" multiple data-placeholder="<#%= t('order.form.please_select') %>" style="width:380px" class="chzn-select l_margin_0" onchange="change_share_sales_order()" >-->
+            <select id="user_share_operater_list" name="share_order[]" multiple data-placeholder="<%= t('order.form.please_select') %>" style="width:380px" class="chzn-select l_margin_0">
+              
+              <%= options_for_share_sale("order",action_name) %>
+            </select>
+          </div>
+          <div class="span l_margin_10 t_margin_5">
+            <a class="selection_icon selection_trigger user_share_operater_list" data-target="#user_share_operater_list" href="javascript:void(0);"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group hide">
+      <label class="control-label" for=""><%= t('order.form.order_groups') %>*
+      </label>
+
+      <div class="controls">
+        <div class='row'>
+
+          <% share_order_group_error = (@order.errors && @order.errors[:share_order_group_blank].present?) ? "have_error" : "" %>
+          <div class='span <%= share_order_group_error %>' id="share_order_group">
+            <select id="share_order_group_list" name="share_order_group[]" multiple data-placeholder="<%= t('order.form.please_select') %>" style="width:380px" class="chzn-select l_margin_0">
+              <%= options_for_order_group(@order.share_order_user_ids, @order.share_order_group_ids) %>
+            </select>
+          </div>
+          <div class="span l_margin_10 t_margin_5">
+            <a class="selection_icon selection_trigger share_order_group_list" data-target="#share_order_group_list" href="javascript:void(0);"></a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="control-group">
-    <label class="control-label" for=""><%= t('order.form.order_groups') %>*
-    </label>
-    <div class="controls">
-      <div class='row'>
-
-        <% share_order_group_error = (@order.errors && @order.errors[:share_order_group_blank].present?) ? "have_error" : "" %>
-        <div class='span <%= share_order_group_error %>' id = "share_order_group" >
-          <select id="share_order_group_list" name="share_order_group[]" multiple data-placeholder="<%= t('order.form.please_select') %>"  style="width:380px" class="chzn-select l_margin_0" >
-            <%= options_for_order_group(@order,( @share_order ? @share_order : instance_variable_get("@share_sales_order_ids") ),@share_order_group) %>
-          </select>
-        </div>
-        <div class="span l_margin_10 t_margin_5">
-          <a class="selection_icon selection_trigger share_order_group_list" data-target="#share_order_group_list" href="javascript:void(0);"></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-  <%= render :partial => "order_js"%>
+  <%= render 'order_js' %>
 </div>
 
 <div id="execute_div2">
-<!--进阶设置 -->
-<div class="control-group t_margin_30">
-  <div class="sub_title" data-target="#advanced_settings" data-toggle="collapse">
-    <u><%= t("order.form.advance_settings")%></u>
-    <i class="icon-arrow-right"></i>
+  <!--进阶设置 -->
+  <div class="control-group t_margin_30">
+    <div class="sub_title" data-target="#advanced_settings" data-toggle="collapse">
+      <u><%= t("order.form.advance_settings") %></u>
+      <i class="icon-arrow-right"></i>
+    </div>
   </div>
-</div>
 
-<div id="advanced_settings" class="collapse">
-  <div class="control-group arm">
-    <label class="control-label" for=""><%= t("order.form.target_conversitions")%></label>
-    <div class="controls">
-      <div class="row">
-        <div class="item_two">
-          <div class="span">
-            <div class="span1"><%= f.text_area :convert_goal,:rows =>"6",:class=>"span5",:placeholder => t("order.form.goal_tips") %></div>
-          </div>
-          <div class="span l_padding_0">
+  <div id="advanced_settings" class="collapse">
+    <div class="control-group arm">
+      <label class="control-label" for=""><%= t("order.form.target_conversitions") %></label>
+
+      <div class="controls">
+        <div class="row">
+          <div class="item_two">
+            <div class="span">
+              <div class="span1"><%= f.text_area :convert_goal, :rows => "6", :class => "span5", :placeholder => t("order.form.goal_tips") %></div>
+            </div>
+            <div class="span l_padding_0">
             <span data-width="350" data-position="right" class="xmo-tooltip" data-id="a07469988342172363">
-              <img style="margin-left:8px" src="/images/shared/components/help-icon.png">
+              <%= image_tag 'shared/components/help-icon.png', :style => "margin-left:8px" %>
+              <div class="popover xmo-popover fade in">
+                <div class="arrow"></div>
+                <div class="popover-inner xmo-popover-inner">
+                  <div class="popover-content">
+                    <%= t("order.form.target_conversitions_helper") %>
+                  </div>
+                </div>
+              </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group type-media hide">
+      <label class="control-label" for=""><%= t("order.form.independent_website") %></label>
+
+      <div class="controls">
+        <div class="row">
+          <div class="item_two">
+            <div class="span">
+              <div class="span1">
+                <%= f.text_area :extra_website, :rows => "6", :class => "span5", :id => "extra_website", :placeholder => "#{t("order.form.independent_website_placeholder")}" %>
+              </div>
+            </div>
+            <div class="span l_padding_0">
+          <span data-width="350" data-position="right" class="xmo-tooltip" data-id="a07469988342172363">
+             <%= image_tag 'shared/components/help-icon.png', :style => "margin-left:8px" %>
+            <div class="popover xmo-popover fade in">
+              <div class="arrow"></div>
+              <div class="popover-inner xmo-popover-inner">
+                <div class="popover-content">
+                  <%= t("order.form.independent_website_tips") %>
+                </div>
+              </div>
+            </div>
+          </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group type-audience">
+      <label class="control-label" for=""><%= t("order.form.target_audience") %></label>
+
+      <div class="controls">
+        <div class="row">
+          <div class="span">
+            <%= f.text_area :interest_crowd, :rows => "6", :class => "span5", :id => "interest_crowd", :placeholder => "#{t("order.form.audience_group_example")}" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="control-group t_margin_20">
+      <label class="control-label">
+        <label for="campaign_campaignname" class="inline"><%= t("order.form.add_third_party") %></label>
+      </label>
+
+      <div class="controls">
+        <div class="row">
+          <div class="span">
+            <label class="radio">
+              <%= radio_button("order", "whether_monitor", 1, :onclick => "add_third_monitor('true')", :checked => (@order.whether_monitor? ? "checked" : "")) %>
+              <%= t("order.form.radio_yes") %>
+            </label>
+          </div>
+          <div class="span" style="margin-left:100px;">
+            <label class="radio">
+              <%= radio_button("order", "whether_monitor", 0, :onclick => "add_third_monitor('false')", :checked => (@order.whether_monitor? ? "" : "checked")) %>
+              <%= t("order.form.radio_no") %>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group t_margin_20 <%= @order.whether_monitor? ? '' : 'hide' %>" id="add_third_monitor">
+      <label class="control-label">
+        <label for="campaign_campaignname" class="inline"><%= t("order.form.select_third_party") %></label>
+      </label>
+
+      <div class="controls">
+        <div class="row">
+          <div class="span">
+            <label class="checkbox">
+              <%= check_box_tag "order[third_monitor][]", "AdMaster", checked = (((f.object.third_monitor && (f.object.third_monitor.include? 'AdMaster')) || (f.object.third_monitor == 'AdMaster')) ? true : false), :id => "order_third_monitor_admaster" %>
+              AdMaster
+            </label>
+          </div>
+          <div class="span">
+            <label class="checkbox">
+              <%= check_box_tag "order[third_monitor][]", "秒针", checked = (((f.object.third_monitor && (f.object.third_monitor.include? '秒针')) || (f.object.third_monitor == '秒针')) ? true : false), :id => "order_third_monitor_miaozhen" %><%= t("order.form.miaozhen") %>
+            </label>
+          </div>
+          <div class="span" style="margin-left:28px;">
+            <label class="checkbox">
+              <%= check_box_tag "order[third_monitor][]", "other", checked = (((f.object.third_monitor && (f.object.third_monitor.include? 'other')) || (f.object.third_monitor == 'other')) ? true : false), :id => "order_third_monitor_other" %><%= t("order.form.other") %>
+            </label>
+          </div>
+          <div class="span l_margin_5">
+            <label class="text">
+              <%= f.text_field :description, :disname => "选择第三方监测服务商", :style => "width:305px;", :placeholder => "#{t("order.form.select_third_party_tips")}" %>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group <%= @order.whether_monitor? ? '' : 'hide' %>" id="add_third_code">
+      <label class="control-label" for=""><%= t("order.form.third_monitor_code") %></label>
+
+      <div class="controls">
+        <div class="row">
+          <div class="span">
+            <%= f.text_area :third_monitor_code, :rows => "6", :class => "span5" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for=""><%= t("order.form.blanking_website") %>
+        <div class="font-12-grey"><%= t("order.form.blanking_website_num") %></div>
+      </label>
+
+      <div class="controls">
+        <div class="row">
+          <div class="item_two">
+            <div class="span">
+              <div><%= t("order.form.website_description") %></div>
+              <div class="span1">
+                <%= f.text_area :blacklist_website, :rows => "6", :class => "span5", :placeholder => t('order.form.website_description_content') %>
+              </div>
+              <div id="bk_websize"><%= t("order.form.total_website") %>：0/500</div>
+            </div>
+            <div class="span l_padding_0">
+                <span data-width="350" data-position="right" class="xmo-tooltip" data-id="a07469988342172363">
+                   <%= image_tag 'shared/components/help-icon.png', :style => "margin-left:8px" %>
                   <div class="popover xmo-popover fade in">
                     <div class="arrow"></div>
                     <div class="popover-inner xmo-popover-inner">
                       <div class="popover-content">
-                        <%= t("order.form.target_conversitions_helper")%>
+                        <%= t("order.form.blanking_website_helper") %>
+                        </br>www.123.com
+                        </br>www.abc.com
                       </div>
                     </div>
                   </div>
-              </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="control-group type-media hide">
-    <label class="control-label" for=""><%= t("order.form.independent_website")%></label>
-    <div class="controls">
-      <div class="row">
-        <div class="item_two">
-          <div class="span">
-            <div class="span1">
-              <%= f.text_area :extra_website,:rows =>"6",:class=>"span5",:id=>"extra_website", :placeholder=>"#{t("order.form.independent_website_placeholder")}" %>
-            </div>
-          </div>
-          <div class="span l_padding_0">
-          <span data-width="350" data-position="right" class="xmo-tooltip" data-id="a07469988342172363">
-             <img style="margin-left:8px" src="/images/shared/components/help-icon.png">
-             <div class="popover xmo-popover fade in">
-               <div class="arrow"></div>
-               <div class="popover-inner xmo-popover-inner">
-                 <div class="popover-content">
-                   <%= t("order.form.independent_website_tips")%>
-                 </div>
-               </div>
-             </div>
-          </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="control-group type-audience">
-    <label class="control-label" for=""><%= t("order.form.target_audience")%></label>
-    <div class="controls">
-      <div class="row">
-        <div class="span">
-          <%= f.text_area :interest_crowd,:rows =>"6",:class=>"span5",:id=>"interest_crowd", :placeholder=>"#{t("order.form.audience_group_example")}" %>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="control-group t_margin_20">
-    <label class="control-label">
-      <label for="campaign_campaignname" class="inline"><%= t("order.form.add_third_party")%></label>
-    </label>
-    <div class="controls">
-      <div class="row">
-        <div class="span">
-          <label class="radio">
-            <%= radio_button("order", "whether_monitor",1,:onclick=>"add_third_monitor('true')",:checked=>(@order.whether_monitor==true ? "checked" : "") )%>
-            <%= t("order.form.radio_yes")%>
-          </label>
-        </div>
-        <div class="span" style="margin-left:100px;">
-          <label class="radio">
-            <%= radio_button("order", "whether_monitor",0,:onclick=>"add_third_monitor('false')",:checked=>(@order.whether_monitor==false ? "checked" : "") )%>
-            <%= t("order.form.radio_no")%>
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="control-group t_margin_20 <%= (@order.whether_monitor && @order.whether_monitor==true) ? '' : 'hide' %>" id="add_third_monitor" >
-    <label class="control-label">
-      <label for="campaign_campaignname" class="inline"><%= t("order.form.select_third_party")%></label>
-    </label>
-    <div class="controls">
-      <div class="row">
-        <div class="span">
-          <label class="checkbox">
-            <%= check_box_tag "order[third_monitor][]","AdMaster",checked = ( (( f.object.third_monitor && (f.object.third_monitor.include? 'AdMaster')) || (f.object.third_monitor == 'AdMaster') ) ? true : false ) , :id=> "order_third_monitor_admaster" %>AdMaster
-          </label>
-        </div>
-        <div class="span">
-          <label class="checkbox">
-            <%= check_box_tag "order[third_monitor][]","秒针",checked = ( (( f.object.third_monitor && (f.object.third_monitor.include? '秒针')) || (f.object.third_monitor == '秒针')) ? true : false ) , :id=> "order_third_monitor_miaozhen" %><%= t("order.form.miaozhen")%>
-          </label>
-        </div>
-        <div class="span" style="margin-left:28px;">
-          <label class="checkbox">
-            <%= check_box_tag "order[third_monitor][]","other",checked = ( (( f.object.third_monitor && (f.object.third_monitor.include? 'other')) || (f.object.third_monitor == 'other') ) ? true : false ) , :id=> "order_third_monitor_other" %><%= t("order.form.other")%>
-          </label>
-        </div>
-        <div class="span l_margin_5">
-          <label class="text">
-            <%= f.text_field :description,:disname=>"选择第三方监测服务商",:style=>"width:305px;",:placeholder=>"#{t("order.form.select_third_party_tips")}"%>
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="control-group <%= (@order.whether_monitor&&@order.whether_monitor==true) ? '' : 'hide' %>" id="add_third_code">
-    <label class="control-label" for=""><%= t("order.form.third_monitor_code")%></label>
-    <div class="controls">
-      <div class="row">
-        <div class="span">
-          <%= f.text_area :third_monitor_code,:rows =>"6",:class=>"span5" %>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label class="control-label" for=""><%= t("order.form.blanking_website")%>
-      <div class="font-12-grey"><%= t("order.form.blanking_website_num")%></div>
-    </label>
-    <div class="controls">
-      <div class="row">
-        <div class="item_two">
-          <div class="span">
-            <div><%= t("order.form.website_description")%></div>
-            <div class="span1">
-              <%= f.text_area :blacklist_website,:rows =>"6",:class=>"span5", :placeholder=>t('order.form.website_description_content') %>
-            </div>
-            <div id = "bk_websize"><%= t("order.form.total_website")%>：0/500</div>
-          </div>
-          <div class="span l_padding_0">
-                <span data-width="350" data-position="right" class="xmo-tooltip" data-id="a07469988342172363">
-                   <img style="margin-left:8px" src="/images/shared/components/help-icon.png">
-                   <div class="popover xmo-popover fade in">
-                     <div class="arrow"></div>
-                     <div class="popover-inner xmo-popover-inner">
-                       <div class="popover-content">
-                         <%= t("order.form.blanking_website_helper")%>
-                         </br>www.123.com
-                         </br>www.abc.com
-                       </div>
-                     </div>
-                   </div>
                 </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <script type="text/javascript">
 
- <script type="text/javascript">
-     var action_name = "<%=params[:action].to_s%>";
-     var re_url = "<%= url_for(:action => 'get_locations_info')%>"
-     if (action_name == "edit" || action_name == "show" || (action_name == "new" && <%= @clone_order.present? %>)){
-         re_url = "<%= url_for(:action => 'get_locations_info',:o_id=>@order.id || (@clone_order.present? ? @clone_order.id : '')) %>";
-     }
-     var city = {};
-     var loc = "<%= I18n.locale%>" == "en" ? "en" : "ch";
-     $.ajax({
-         type: 'get',
-         url: re_url,
-         success: function(data) {
-             city=new bshare.Ncity({
-                 container:$("#city"),
-                 lang:loc,//英文是en中文是ch
-                 china:data.china,
-                 foreign:data.foreign,
-                 result:$("#order_new_regions"),
-                 total:data.total,
-                 callback:changeResult
-             });
+      //区域全部显示，隐藏js
+      $(document).ready(function () {
+          $('#advanced_settings').on('show', function () {
+              $('div[data-target="#advanced_settings"] .icon-arrow-right').addClass('icon-arrow-down');
+          }).on('hide', function () {
+              $('div[data-target="#advanced_settings"] .icon-arrow-right').removeClass('icon-arrow-down');
+          })
+          if ($('#advanced_settings').hasClass('in')) {
+              $('div[data-target="#advanced_settings"] .icon-arrow-right').addClass('icon-arrow-down');
+          }
+
+          if ($("[type=radio][name='order[whether_msa]']:checked").val() == "1") {
+              $("#order_msa_contract").prop("disabled", false);
+          } else {
+              $("#order_msa_contract").prop("disabled", true);
+          }
+      });
 
 
-             if (action_name == "edit" || action_name == "show" || (action_name == "new" && <%= @clone_order.present? %>)){
-                 city.setSelected(data.result);
-                 if (action_name == "show"){
-                    $("#city input").prop("disabled",true);
-                 }else if(action_name == "edit"){
-                     var node_object = $("[position = 'show_page']").last();
-                     var status = node_object.attr("status").split(",")
-                     //console.log("========status",status)
-
-                     var node_ids = node_object.attr("node_ids").split(",")
-                     //console.log("node_ids",node_ids)
-                     var is_order_approver = (jQuery.inArray("2",node_ids) > -1 || jQuery.inArray("3",node_ids) > -1)
-                     var is_statndard_or_unstatnard = node_object.attr("is_statndard_or_unstatnard")
-                     var order_approve_status = is_statndard_or_unstatnard == "true" ? status[2] : status[1]
-                     if((is_order_approver && order_approve_status != "1") || (node_ids.size == 1 && node_ids[0] == "") || node_ids == ""){
-                     $("#city input").prop("disabled",false);
-                     }else{
-                         $("#city input").prop("disabled",true);
-                     }
-                 }
-             }
-
-         }
-     });
-
-     function changeResult(value){
-         var result = [];
-         if(value!="" && JSON.parse(value)[0].country != 'foregin'){
-             result = JSON.parse(value)[0].province
-         }
-
-         var cities = "";
-         if(result.length>0){
-             _.each(result,function(item){
-                 // console.log(item)
-                 if(item.city_id==""){
-                     cities += ","+item.province_id;
-                 }else{
-                     cities += ","+(item.city_id);
-                 }
-             })
-         }
-     }
+      var action_name = "<%=params[:action].to_s%>";
+      var re_url = "<%= url_for(:action => 'get_locations_info')%>"
+      if (action_name == "edit" || action_name == "show" || (action_name == "new" && <%= @clone_order.present? %>)) {
+          re_url = "<%= url_for(:action => 'get_locations_info',:o_id=>@order.id || (@clone_order.present? ? @clone_order.id : '')) %>";
+      }
+      var city = {};
+      var loc = "<%= I18n.locale%>" == "en" ? "en" : "ch";
+      $.ajax({
+          type: 'get',
+          url: re_url,
+          success: function (data) {
+              city = new bshare.Ncity({
+                  container: $("#city"),
+                  lang: loc,//英文是en中文是ch
+                  china: data.china,
+                  foreign: data.foreign,
+                  result: $("#order_new_regions"),
+                  total: data.total,
+                  callback: changeResult
+              });
 
 
+              if (action_name == "edit" || action_name == "show" || (action_name == "new" && <%= @clone_order.present? %>)) {
+                  city.setSelected(data.result);
+                  if (action_name == "show") {
+                      $("#city input").prop("disabled", true);
+                  } else if (action_name == "edit") {
+                      var node_object = $("[position = 'show_page']").last();
+                      var status = node_object.attr("status").split(",")
+                      //console.log("========status",status)
+
+                      var node_ids = node_object.attr("node_ids").split(",")
+                      //console.log("node_ids",node_ids)
+                      var is_order_approver = (jQuery.inArray("2", node_ids) > -1 || jQuery.inArray("3", node_ids) > -1)
+                      var is_statndard_or_unstatnard = node_object.attr("is_statndard_or_unstatnard")
+                      var order_approve_status = is_statndard_or_unstatnard == "true" ? status[2] : status[1]
+                      if ((is_order_approver && order_approve_status != "1") || (node_ids.size == 1 && node_ids[0] == "") || node_ids == "") {
+                          $("#city input").prop("disabled", false);
+                      } else {
+                          $("#city input").prop("disabled", true);
+                      }
+                  }
+              }
+
+          }
+      });
+
+      function changeResult(value) {
+          var result = [];
+          if (value != "" && JSON.parse(value)[0].country != 'foregin') {
+              result = JSON.parse(value)[0].province
+          }
+
+          var cities = "";
+          if (result.length > 0) {
+              _.each(result, function (item) {
+                  // console.log(item)
+                  if (item.city_id == "") {
+                      cities += "," + item.province_id;
+                  } else {
+                      cities += "," + (item.city_id);
+                  }
+              })
+          }
+      }
+
+      <% if @order.proof_state? || (!@order.new_record? && !@order.current_user_order?(current_user)) %>
+      $(".proof_ready_unmodify").prop('disabled', true);
+      <%end%>
+
+      multiple_chosen("#user_share_operater_list", ".user_share_operater_list");
+      multiple_chosen("#share_order_group_list", ".share_order_group_list");
+      multiple_chosen("#client_id");
+      $("#order_description").change(function () {
+          change_order_third_monitor();
+      }).change();
+      $("#order_third_monitor_other").change(function () {
+          change_description_third_monitor()
+      });
+
+      function change_description_third_monitor() {
+          if (($("#order_third_monitor_other").attr("checked") != "checked")) {
+              $("#order_description").val("");
+          }
+      }
+
+      function change_order_third_monitor() {
+          if ($("#order_description").val().length > 0) {
+              $("#order_third_monitor_other").attr("checked", "checked");
+          }
+          else {
+              $("#order_third_monitor_other").removeAttr("checked");
+          }
+      }
+
+      $("#setting_con_custom input").prop('disabled', false);
+      $("#setting_con_custom textarea").prop('disabled', false);
+      $("#setting_con_custom select").prop('disabled', false);
+      //$("#addPv").parent().hide();
+
+      $('#client_business_licence_name').removeAttr("disabled");
 
 
-     <% if @order.proof_state.present? || (!@order.new_record? && !@order.current_user_order?(current_user)) %>
-     $(".proof_ready_unmodify").prop('disabled', true);
-     <%end%>
-
-     multiple_chosen("#user_share_operater_list", ".user_share_operater_list");
-     multiple_chosen("#share_order_group_list", ".share_order_group_list");
-     multiple_chosen("#client_id");
-     $("#order_description").change(function(){change_order_third_monitor();}).change();
-     $("#order_third_monitor_other").change(function(){change_description_third_monitor()});
-
-     function change_description_third_monitor(){
-         if(($("#order_third_monitor_other").attr("checked") != "checked") ){
-             $("#order_description").val("");}
-     }
-
-     function change_order_third_monitor(){
-         if ($("#order_description").val().length>0){
-             $("#order_third_monitor_other").attr("checked","checked");
-         }
-         else{
-             $("#order_third_monitor_other").removeAttr("checked");
-         }
-     }
-
-     $("#setting_con_custom input").prop('disabled', false);
-     $("#setting_con_custom textarea").prop('disabled', false);
-     $("#setting_con_custom select").prop('disabled', false);
-     //$("#addPv").parent().hide();
-
-     $('#client_business_licence_name').removeAttr("disabled");
-
-     //区域全部显示，隐藏js
-     $('#advanced_settings').on('show',function(){
-         $('div[data-target="#advanced_settings"] .icon-arrow-right').addClass('icon-arrow-down');
-     }).on('hide',function(){
-         $('div[data-target="#advanced_settings"] .icon-arrow-right').removeClass('icon-arrow-down');
-     })
-     if($('#advanced_settings').hasClass('in')){
-         $('div[data-target="#advanced_settings"] .icon-arrow-right').addClass('icon-arrow-down');
-     }
-
-     if($("[type=radio][name='order[whether_msa]']:checked").val() == "1"){
-         $("#order_msa_contract").prop("disabled",false);
-     }else{
-         $("#order_msa_contract").prop("disabled",true);
-     }
- </script>
+  </script>
 </div>

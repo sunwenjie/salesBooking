@@ -1,16 +1,51 @@
 <style type="text/css">
-    .table_wraper{width: 960px;}
-    .email_table{border: 0;width: 960px;}
-    .email_table tr{width: 960px;}
-    .email_table td{border:1px solid black;padding: 3px;}
+    .table_wraper {
+        width: 960px;
+    }
 
-    .email_table .t_info{text-align: center;}
-    .email_table tr.t_noborder td{border-top: 0;}
-    .email_table tr.t_noborder td:first-child{border-right: 0;width: 298px;}
-    .email_table tr.t_noborder td:last-child{text-align: center;width: 648px;}
-    .ad_item div{border-top: 1px solid black;}
-    .ad_item div:first-child{border-top: 0;}
-    .font_red{color: red;}
+    .email_table {
+        border: 0;
+        width: 960px;
+    }
+
+    .email_table tr {
+        width: 960px;
+    }
+
+    .email_table td {
+        border: 1px solid black;
+        padding: 3px;
+    }
+
+    .email_table .t_info {
+        text-align: center;
+    }
+
+    .email_table tr.t_noborder td {
+        border-top: 0;
+    }
+
+    .email_table tr.t_noborder td:first-child {
+        border-right: 0;
+        width: 298px;
+    }
+
+    .email_table tr.t_noborder td:last-child {
+        text-align: center;
+        width: 648px;
+    }
+
+    .ad_item div {
+        border-top: 1px solid black;
+    }
+
+    .ad_item div:first-child {
+        border-top: 0;
+    }
+
+    .font_red {
+        color: red;
+    }
 </style>
 
 <div class="table_wraper" style="width:960px;">
@@ -23,7 +58,7 @@
     </tr>
     <tr class="t_noborder" style="width:960px;">
       <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">广告主</td>
-      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @client.present? ? @client.clientname : "-"%></td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @client.present? ? @client.clientname : "-" %></td>
     </tr>
     <tr class="t_noborder" style="width:960px;">
       <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">品牌</td>
@@ -31,14 +66,16 @@
     </tr>
     <tr class="t_noborder" style="width:960px;">
       <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">代理公司</td>
-      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= Client.display_item_class(@client.channel_name)%></td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= Client.display_item_class(@client.channel_name) %></td>
     </tr>
     <tr class="t_noborder" style="width:960px;">
       <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">行业</td>
       <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @client.industry.present? ? @client.industry.name_cn : "-" %> </td>
     </tr>
 
-    <tr style="height:20px;"><td colspan='2' style="border:0"></td></tr>
+    <tr style="height:20px;">
+      <td colspan='2' style="border:0"></td>
+    </tr>
 
     <tr style="width:960px;">
       <td colspan='2' class="t_info" style="background:#FF9933;width:960px;text-align:center;">订单详情</td>
@@ -46,15 +83,17 @@
     </tr>
     <tr class="t_noborder" style="width:960px;">
       <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">订单编号</td>
-      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%=@order.code%></td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.code %></td>
     </tr>
     <tr class="t_noborder" style="width:960px;">
       <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">订单名称</td>
-      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.title.present? ? @order.title : "-" %></td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.title? ? @order.title : "-" %></td>
     </tr>
 
     <tr class="t_noborder" style="width:960px;">
-      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">总预算（<%=@order.budget_currency%>）</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">总预算（<%= @order.budget_currency %>
+        ）
+      </td>
       <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;color:red;" class="font_red"><%= number_with_precision(@order.budget, :precision => 2, :delimiter => ",") %> </td>
     </tr>
 
@@ -72,7 +111,9 @@
     </tr>
     <tr class="t_noborder" style="width:960px;">
       <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">总天数</td>
-      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.period %>天</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.period %>
+        天
+      </td>
     </tr>
     <tr class="t_noborder" style="width:960px;">
       <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">服务费</td>
@@ -80,10 +121,12 @@
     </tr>
     <tr class="t_noborder" style="width:960px;">
       <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">服务费比率</td>
-      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.service_charges_scale.present? ?  @order.service_charges_scale : '-' %></td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.service_charges_scale.present? ? @order.service_charges_scale : '-' %></td>
     </tr>
 
-    <tr style="height:20px;"><td colspan='2' style="border:0"></td></tr>
+    <tr style="height:20px;">
+      <td colspan='2' style="border:0"></td>
+    </tr>
 
     </tbody>
   </table>

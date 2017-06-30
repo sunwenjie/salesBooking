@@ -447,6 +447,8 @@ cn:
                 blank: "不能为空"
               approval_group:
                 blank: "不能为空"
+              coordinate_groups:
+                blank: "不能为空"
           product:
             attributes:
               product_serial:

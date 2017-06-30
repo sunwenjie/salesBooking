@@ -4,10 +4,11 @@
     <div class="popover-content">
       <div class="popover-group">
         <label><%= t('order.adlist.product_est_gp2') %></label>
+
         <div class="popover-inputs">
           <!--xmo input-append-->
           <div class="input-append">
-            <input name="changed_product_gp_<%= ad_id %>"  style="width:172px;" type="text" class="align_right numeric changed_product_gp"  value="<%= number_with_precision(ad_gp,:precision => 2,:delimiter=>",")%>" ad_id="<%= ad_id %>" placeholder="0.00"/>
+            <input name="changed_product_gp_<%= ad_id %>" style="width:172px;" type="text" class="align_right numeric changed_product_gp" value="<%= number_with_precision(ad_gp, :precision => 2, :delimiter => ",") %>" ad_id="<%= ad_id %>" placeholder="0.00"/>
             <span class="add-on">%</span>
           </div>
         </div>
@@ -15,17 +16,17 @@
 
       <div class="popover-group">
         <label class="sub_txt">
-          <div name="change_gp_tips_<%= ad_id%>">
+          <div name="change_gp_tips_<%= ad_id %>">
           </div>
         </label>
       </div>
 
       <div class="popover-commit_change">
         <div class="outer_cancel">
-          <input class="cancel back_button" type="button"  value="<%=t('order.adlist.cancel_label')%>" onclick="ChangeProductGp.cancel_change_gp();">
+          <input class="cancel back_button" type="button" value="<%= t('order.adlist.cancel_label') %>" onclick="ChangeProductGp.cancel_change_gp();">
         </div>
         <div class="outer_submit">
-          <input  name="commit" type="button" value="<%=t('order.adlist.submit_update')%>" class="submit change_gp_submit" onclick="ChangeProductGp.change_product_gp();">
+          <input name="commit" type="button" value="<%= t('order.adlist.submit_update') %>" class="submit change_gp_submit" onclick="ChangeProductGp.change_product_gp();">
         </div>
       </div>
     </div>

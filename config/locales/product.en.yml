@@ -33,7 +33,7 @@ en:
       channel_person_email: "Email*"
       channel_rebate_date: "Period"
       channel_company_adress: "Company Address*"
-      channel_rebate_name: "Rebate*"
+      channel_rebate_name: "Rebate"
       other_rebate: "Other agency rebate"
       channel_valid_begin_date: "Valid Begin Date"
       channel_valid_end_date: "Valid End Date"

@@ -1,16 +1,51 @@
 <style type="text/css">
-    .table_wraper{width: 960px;}
-    .email_table{border: 0;width: 960px;}
-    .email_table tr{width: 960px;}
-    .email_table td{border:1px solid black;padding: 3px;}
+    .table_wraper {
+        width: 960px;
+    }
 
-    .email_table .t_info{text-align: center;}
-    .email_table tr.t_noborder td{border-top: 0;}
-    .email_table tr.t_noborder td:first-child{border-right: 0;width: 298px;}
-    .email_table tr.t_noborder td:last-child{text-align: center;width: 648px;}
-    .ad_item div{border-top: 1px solid black;}
-    .ad_item div:first-child{border-top: 0;}
-    .font_red{color: red;}
+    .email_table {
+        border: 0;
+        width: 960px;
+    }
+
+    .email_table tr {
+        width: 960px;
+    }
+
+    .email_table td {
+        border: 1px solid black;
+        padding: 3px;
+    }
+
+    .email_table .t_info {
+        text-align: center;
+    }
+
+    .email_table tr.t_noborder td {
+        border-top: 0;
+    }
+
+    .email_table tr.t_noborder td:first-child {
+        border-right: 0;
+        width: 298px;
+    }
+
+    .email_table tr.t_noborder td:last-child {
+        text-align: center;
+        width: 648px;
+    }
+
+    .ad_item div {
+        border-top: 1px solid black;
+    }
+
+    .ad_item div:first-child {
+        border-top: 0;
+    }
+
+    .font_red {
+        color: red;
+    }
 </style>
 
 <div class="table_wraper" style="width:960px;">
@@ -21,21 +56,21 @@
     </tr>
 
     <!--<tr class="t_noborder" style="width:960px;">-->
-      <!--<td style="border:1px solid black;padding: 3px;border-top: 0;width:297px;border-right: 0;">-->
-        <!--广告形式-->
-      <!--</td>-->
-      <!--<td colspan='2' style="border:1px solid black;padding: 3px;border-top: 0;width:649px;text-align:center;">投放指标</td>-->
+    <!--<td style="border:1px solid black;padding: 3px;border-top: 0;width:297px;border-right: 0;">-->
+    <!--广告形式-->
+    <!--</td>-->
+    <!--<td colspan='2' style="border:1px solid black;padding: 3px;border-top: 0;width:649px;text-align:center;">投放指标</td>-->
     <!--</tr>-->
 
-    <% order.advertisements.each_with_index  do |advertisement,i|%>
-        <%td_size = 6%>
-        <%td_size = td_size+1 if advertisement.diff_ctr? %>
-        <%td_size = td_size+1 if advertisement.planner_clicks.present? && advertisement.planner_clicks > 0 %>
-        <%td_size = td_size+1 if [2,3,7].include? node_id %>
+    <% order.advertisements.each_with_index do |advertisement, i| %>
+        <% td_size = 6 %>
+        <% td_size = td_size+1 if advertisement.diff_ctr? %>
+        <% td_size = td_size+1 if advertisement.planner_clicks.present? && advertisement.planner_clicks > 0 %>
+        <% td_size = td_size+1 if [2, 3, 7].include? node_id %>
         <%#td_size = td_size+advertisement.admeasure[0..-2].size if advertisement.admeasure.present? && advertisement.admeasure_state %>
         <tr class="t_noborder" style="width:960px;">
           <td rowspan="<%= td_size %>" style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;text-align:center;">
-            产品<%= i+ 1%></br>
+            产品<%= i+ 1 %></br>
             <!--<span style="color:#FF9933"><%#= advertisement.other_product? ? "*此销售选择了非标产品。" : ""  %></span>-->
           </td>
           <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
@@ -51,45 +86,46 @@
             产品
           </td>
           <td style="border:1px solid black;padding: 3px;border-top: 0;width:421px;">
-            <%= advertisement.product.present? ? advertisement.product.name : "-"  %>
+            <%= advertisement.product.present? ? advertisement.product.name : "-" %>
           </td>
         </tr>
 
         <tr class="t_noborder" style="width:960px;">
           <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
-            总预算（<%= order.budget_currency%>）
+            总预算（<%= order.budget_currency %>）
           </td>
           <td style="border:1px solid black;padding: 3px;border-top: 0;color:red;width:421px;">
             <%= number_with_precision(advertisement.budget, :precision => 2, :delimiter => ",") %>
           </td>
         </tr>
-        <% if [2,3,7].include? node_id %>
-        <tr class="t_noborder" style="width:960px;">
-          <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
-            产品预估毛利
-          </td>
-          <td style="border:1px solid black;padding: 3px;border-top: 0;color:red;width:421px;">
-            <%= number_with_precision(advertisement.est_gp_value, :precision => 2, :delimiter => ",") +" ("+advertisement.est_gp.to_s+"%)"%>
-          </td>
-        </tr>
+        <% if [2, 3, 7].include? node_id %>
+            <tr class="t_noborder" style="width:960px;">
+              <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
+                产品预估毛利
+              </td>
+              <td style="border:1px solid black;padding: 3px;border-top: 0;color:red;width:421px;">
+                <%= number_with_precision(advertisement.est_gp_value, :precision => 2, :delimiter => ",") +" ("+advertisement.est_gp.to_s+"%)" %>
+              </td>
+            </tr>
         <% end %>
 
         <tr class="t_noborder" style="width:960px;">
           <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
-            单价（<%= order.budget_currency%>）
+            单价（<%= order.budget_currency %>）
           </td>
           <td style="border:1px solid black;padding: 3px;border-top: 0;width:421px;">
-            <%= advertisement.cost_type %>: <%= number_with_precision(advertisement.cost, :precision => 2, :delimiter => ",") %>
+            <%= advertisement.cost_type %>
+            : <%= number_with_precision(advertisement.cost, :precision => 2, :delimiter => ",") %>
           </td>
         </tr>
 
-        <%if advertisement.diff_ctr? %>
+        <% if advertisement.diff_ctr? %>
             <tr class="t_noborder" style="width:960px;">
               <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;color:red;width:220px">
                 CTR
               </td>
               <td style="border:1px solid black;padding: 3px;border-top: 0;color:red;width:421px;">
-                <%=number_with_precision(advertisement.planner_ctr, :precision => 2, :delimiter => ",") + "%" %>
+                <%= number_with_precision(advertisement.planner_ctr, :precision => 2, :delimiter => ",") + "%" %>
               </td>
             </tr>
         <% end %>
@@ -99,31 +135,31 @@
             非标准KPI(IMP/CLICKS/CTR)
           </td>
           <td style="border:1px solid black;padding: 3px;border-top: 0;width:421px;">
-            <%= advertisement.nonstandard_kpi.present? ? advertisement.nonstandard_kpi : "-" %>
+            <%= advertisement.nonstandard_kpi? ? advertisement.nonstandard_kpi : "-" %>
           </td>
         </tr>
 
-        <%if advertisement.planner_clicks.present? && advertisement.planner_clicks>0%>
+        <% if advertisement.planner_clicks.present? && advertisement.planner_clicks>0 %>
             <tr class="t_noborder" style="width:960px;">
               <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;color:red;width:220px">
                 配送点击
               </td>
               <td style="border:1px solid black;padding: 3px;border-top: 0;color:red;width:421px;">
-                <%= advertisement.planner_clicks%>
+                <%= advertisement.planner_clicks %>
               </td>
             </tr>
-        <%end%>
+        <% end %>
 
         <tr class="t_noborder" style="width:960px;">
           <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
             价格说明
           </td>
           <td style="border:1px solid black;padding: 3px;border-top: 0;width:421px;">
-            <%= advertisement.price_presentation.present? ? advertisement.price_presentation : "-" %>
+            <%= advertisement.price_presentation? ? advertisement.price_presentation : "-" %>
           </td>
         </tr>
 
-    <%end%>
+    <% end %>
 
     </tbody>
   </table>

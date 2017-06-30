@@ -1,5 +1,5 @@
 class Draft < Asset
-  belongs_to :order,inverse_of: :draft,touch:true
+  belongs_to :order, inverse_of: :draft, touch: true
 
   attr_accessor :uploader_secure_token
 

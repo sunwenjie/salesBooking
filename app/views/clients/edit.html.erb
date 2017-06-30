@@ -1,18 +1,18 @@
 <div style="margin-top: -50px;float: right;">
-  <%= render :partial => "client_approval_flow" %>
+  <%= render 'client_approval_flow' %>
 </div>
-<%= render :partial => "form" %>
+<%= render 'form' %>
 <script type="text/javascript">
- var node_id = $("[position='client_show_page']").attr("node_id").split(",")
-        if((jQuery.inArray("6",node_id) > -1) || (jQuery.inArray("9",node_id) > -1) || <%= ["cli_saved","cli_rejected","released"].include? @client.state%>){
-            $("input").not($("#client_code")).prop("readonly",false)
-            $("[type=radio]").prop("disabled",false)
-            $("select").prop("disabled",false)
-        }
+    var node_id = $("[position='client_show_page']").attr("node_id").split(",")
+    if ((jQuery.inArray("6", node_id) > -1) || (jQuery.inArray("9", node_id) > -1) || <%= ["cli_saved","cli_rejected","released"].include? @client.state%>) {
+        $("input").not($("#client_code")).prop("readonly", false)
+        $("[type=radio]").prop("disabled", false)
+        $("select").prop("disabled", false)
+    }
 
-        if (<%= @client.state == "approved" %>){
-     $("#client_currency_id").attr('disabled', true);
-       }
+    if (<%= @client.state == "approved" %>) {
+        $("#client_currency_id").attr('disabled', true);
+    }
 
 
 </script>

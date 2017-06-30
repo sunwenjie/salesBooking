@@ -1,206 +1,226 @@
-
 <div class="big_section big_section_book">
   <% if @approval_flow.errors.any? %>
-    <div id="error_explanation" class="error sticker" style="margin-bottom: 50px;">
-      <h2><%= t('clients.form.client_errors_message_tip') %></h2>
-      <ul>
-      <% @approval_flow.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+      <div id="error_explanation" class="error sticker" style="margin-bottom: 50px;">
+        <h2><%= t('clients.form.client_errors_message_tip') %></h2>
+        <ul>
+          <% @approval_flow.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
   <% end %>
-  
-  <%= form_for @approval_flow,:html=>{:id=>"approval_flow_form", :class=>"form-horizontal"} do |f| %>
 
-    <div class="sub_section_white sub_section_white_book">
-      <div class="control-group t_margin_20">
-        <label class="control-label">
-            <label for="approval_flow_name" class="inline"><%=t(".name")%></label>
-        </label>
-        <div class="controls">
-          <div class="row">
-             <div class="span">
-                <%= f.text_field :name, :disname=>"名称", :class=>"required span5",:size=>30 %>
-             </div>
-          </div>
-        </div>
-      </div>
+  <%= form_for @approval_flow, :html => {:id => "approval_flow_form", :class => "form-horizontal"} do |f| %>
 
-      <div class="control-group t_margin_20">
-        <label class="control-label">
-            <label for="approval_flow_node_id" class="inline"><%=t(".flow")%></label>
-        </label>
-        <div class="controls">
-          <div class="row">
-            <div class="span">
-             <%= f.select :node_id,options_for_notes,{},{:style=>"width:380px;",:class=>"chzn-select l_margin_0"}%>
-            </div>
+      <div class="sub_section_white sub_section_white_book">
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="approval_flow_name" class="inline"><%= t(".name") %></label>
+          </label>
 
-            <div class="span l_margin_10 t_margin_5">
-                <a class="selection_icon selection_trigger node_id" data-target="#approval_flow_note_id" href="javascript:void(0);"></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="control-group t_margin_20 unstandard_approve_div" >
-        <label class="control-label">
-          <label for="approval_flow_unstandard_approve" class="inline"><%=t(".gp_value")%></label>
-        </label>
-        <div class="controls">
-          <div class="row">
-            <div class="item_four_w_help">
+          <div class="controls">
+            <div class="row">
               <div class="span">
-                <%= f.select :range_type,options_for_range_type,{},{:style=>"width:100px;margin-right:15px;",:class=>"chzn-select align_right"}%>
+                <%= f.text_field :name, :disname => "名称", :class => "required span5", :size => 30 %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="approval_flow_node_id" class="inline"><%= t(".flow") %></label>
+          </label>
+
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.select :node_id, options_for_notes, {}, {:style => "width:380px;", :class => "chzn-select l_margin_0"} %>
               </div>
 
-              <div class="span input-append">
-                <div  class="min_range <%= (@approval_flow.range_type == 'range' || @approval_flow.range_type.blank? ) ? '' : 'hide' %>">
-                  <%= f.text_field :min,:disname=>"最小值", :class=>"align_right numeric",:size=>30,  :style=>"display:none;width:80px;",:dis_wiget => "#min_dis_input" %>
-                  <input type="text" id="min_dis_input" style="width:80px;"  class='align_right numeric' placeholder="0.00" />
+              <div class="span l_margin_10 t_margin_5">
+                <a class="selection_icon selection_trigger node_id" data-target="#approval_flow_note_id" href="javascript:void(0);"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group t_margin_20 unstandard_approve_div">
+          <label class="control-label">
+            <label for="approval_flow_unstandard_approve" class="inline"><%= t(".gp_value") %></label>
+          </label>
+
+          <div class="controls">
+            <div class="row">
+              <div class="item_four_w_help">
+                <div class="span">
+                  <%= f.select :range_type, options_for_range_type, {}, {:style => "width:100px;margin-right:15px;", :class => "chzn-select align_right"} %>
+                </div>
+
+                <div class="span input-append">
+                  <div class="min_range <%= show_gp_range? ? '' : 'hide' %>">
+                    <%= f.text_field :min, :disname => "最小值", :class => "align_right numeric", :size => 30, :style => "display:none;width:80px;", :dis_wiget => "#min_dis_input" %>
+                    <input type="text" id="min_dis_input" style="width:80px;" class='align_right numeric' placeholder="0.00"/>
+                    <span class="add-on">%</span>
+                    <span style="margin-left: 10px;margin-right: 10px;">~</span>
+                  </div>
+                </div>
+
+                <div class="span input-append">
+                  <%= f.text_field :max, :disname => "最大值", :class => "align_right numeric", :size => 30, :style => "display:none;width:80px;", :dis_wiget => "#max_dis_input" %>
+                  <input type="text" id="max_dis_input" style="<%= show_gp_range? ? "width:80px;" : "width:225px;" %>" class='align_right numeric' placeholder="0.00"/>
                   <span class="add-on">%</span>
-                <span style="margin-left: 10px;margin-right: 10px;">~</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
 
+        <div class="bu control-group t_margin_20">
+          <label class="control-label">
+            <label for="approval_flow_bu" class="inline"><%= t(".bu") %></label>
+          </label>
 
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.select :bu, options_for_bu(), {}, {:style => "width:380px;", :class => "chzn-select l_margin_0"} %>
+              </div>
 
-              <div class="span input-append">
-                <%= f.text_field :max,:disname=>"最大值", :class=>"align_right numeric",:size=>30,:style=>"display:none;width:80px;",:dis_wiget => "#max_dis_input" %>
-                <input type="text" id="max_dis_input" style="<%= (@approval_flow.range_type == 'range' || @approval_flow.range_type.blank?) ? "width:80px;" : "width:225px;" %>"  class='align_right numeric' placeholder="0.00" />
-                <span class="add-on">%</span>
+              <div class="span l_margin_10 t_margin_5">
+                <a class="selection_icon selection_trigger bu" data-target="#approval_flow_bu" href="javascript:void(0);"></a>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
+        <div class="product_type control-group t_margin_20">
+          <label class="control-label">
+            <label for="approval_flow_product_type" class="inline"><%= t(".product") %></label>
+          </label>
 
+          <div class="controls">
+            <div class="row">
+              <div class="span" id="bu_products">
+                <%= f.select :product_type, f.object.blank? ? [] : options_for_products(), {}, {:style => "width:380px;", :class => "chzn-select l_margin_0", :multiple => true} %>
+              </div>
 
-      <div class="bu control-group t_margin_20">
-        <label class="control-label">
-          <label for="approval_flow_bu" class="inline"><%=t(".bu")%></label>
-        </label>
-        <div class="controls">
-          <div class="row">
-            <div class="span">
-              <%= f.select :bu,options_for_bu(),{},{:style=>"width:380px;",:class=>"chzn-select l_margin_0"}%>
-            </div>
-
-            <div class="span l_margin_10 t_margin_5">
-              <a class="selection_icon selection_trigger bu" data-target="#approval_flow_bu" href="javascript:void(0);"></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="product_type control-group t_margin_20">
-        <label class="control-label">
-          <label for="approval_flow_product_type" class="inline"><%=t(".product")%></label>
-        </label>
-        <div class="controls">
-          <div class="row">
-            <div class="span" id="bu_products">
-              <%= f.select :product_type,f.object.blank? ? [] : options_for_products(),{},{:style=>"width:380px;",:class=>"chzn-select l_margin_0",:multiple=>true}%>
-            </div>
-
-            <div class="span l_margin_10 t_margin_5">
-              <a class="selection_icon approval_flow_products" data-target="#approval_flow_product_type" href="javascript:void(0);"></a>
+              <div class="span l_margin_10 t_margin_5">
+                <a class="selection_icon approval_flow_products" data-target="#approval_flow_product_type" href="javascript:void(0);"></a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="control-group t_margin_20" >
-        <label class="control-label">
-          <label for="approval_flow_user_group" class="inline"><%=t(".user_group")%></label>
-        </label>
-        <div class="controls">      
-          <div class="row">
-            <div class="span">
-              <%= f.select :user_group,options_for_users(),{},{:style=>"width:380px;",:class=>"chzn-select l_margin_0"}%>
-            </div>
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="approval_flow_user_group" class="inline"><%= t(".user_group") %></label>
+          </label>
 
-            <div class="span l_margin_10 t_margin_5">
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.select :user_group, options_for_users(), {}, {:style => "width:380px;", :class => "chzn-select l_margin_0"} %>
+              </div>
+
+              <div class="span l_margin_10 t_margin_5">
                 <a class="selection_icon selection_trigger user_group" data-target="#approval_flow_user_group" href="javascript:void(0);"></a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="control-group t_margin_20" >
-        <label class="control-label">
-          <label for="approval_flow_approval_group" class="inline"><%=raw t(".approve_group")%></label>
-        </label>
-        <div class="controls">      
-          <div class="row">
-            <div class="span">
-              <%= f.select :approval_group,options_for_approval_users(),{},{:style=>"width:380px;",:class=>"chzn-select l_margin_0"}%>
-            </div>
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="approval_flow_approval_group" class="inline"><%= raw t(".approve_group") %></label>
+          </label>
 
-            <div class="span l_margin_10 t_margin_5">
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.select :approval_group, options_for_approval_users(), {}, {:style => "width:380px;", :class => "chzn-select l_margin_0"} %>
+              </div>
+
+              <div class="span l_margin_10 t_margin_5">
                 <a class="selection_icon selection_trigger approval_group" data-target="#approval_flow_approval_group" href="javascript:void(0);"></a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="operation_am_group control-group t_margin_20" >
-        <label class="control-label">
-          <label for="approval_flow_operation_am_group" class="inline"><%=raw t(".operation_am_group")%></label>
-        </label>
-        <div class="controls">
-          <div class="row">
-            <div class="span">
-              <%= f.select :operation_am_group,options_for_users(),{},{:style=>"width:380px;",:class=>"chzn-select l_margin_0",:multiple=>true}%>
-            </div>
+        <div class="coordinate_groups control-group t_margin_20">
+          <label class="control-label">
+            <label for="approval_flow_coordinate_groups" class="inline"><%= raw t(".operation_am_group") %></label>
+          </label>
 
-            <div class="span l_margin_10 t_margin_5">
-              <a class="selection_icon selection_trigger operation_am_group" data-target="#approval_flow_operation_am_group" href="javascript:void(0);"></a>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.select :coordinate_groups, options_for_users(), {}, {:style => "width:380px;", :class => "chzn-select l_margin_0", :multiple => true} %>
+              </div>
+
+              <div class="span l_margin_10 t_margin_5">
+                <a class="selection_icon selection_trigger coordinate_groups" data-target="#approval_flow_coordinate_groups" href="javascript:void(0);"></a>
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="p_coordinate_groups control-group t_margin_20">
+          <label class="control-label">
+            <label for="approval_flow_p_coordinate_groups" class="inline"><%= raw t(".p_head_groups") %></label>
+          </label>
+
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.select :p_coordinate_groups, options_for_users(), {}, {:style => "width:380px;", :class => "chzn-select l_margin_0"} %>
+              </div>
+
+              <div class="span l_margin_10 t_margin_5">
+                <a class="selection_icon selection_trigger p_coordinate_groups" data-target="#approval_flow_p_coordinate_groups" href="javascript:void(0);"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
 
-
-    </div>
-
-    <!-- sub_section_white end -->
-    <div class="row big_section_b_book">
-      <!-- button area -->
-      <div class="button_area">
-        <div class="r_margin_20">
+      <!-- sub_section_white end -->
+      <div class="row big_section_b_book">
+        <!-- button area -->
+        <div class="button_area">
+          <div class="r_margin_20">
             <div class="pull-right">
               <div class="outer_cancel submit_btn">
-                <a href="<%=approval_flows_path%>" class="cancel cancel_pretargeting change_cancel_btn"><%=t(".cancel")%>
+                <a href="<%= approval_flows_path %>" class="cancel cancel_pretargeting change_cancel_btn"><%= t(".cancel") %>
                 </a>
               </div>
-              <div class="outer_submit submit_btn">
-                  <%= f.submit  t(".submit_btn"),{:class=>"submit_tag_button"} %>
-
-               </div>
+              <div class="outer_submit submit_btn" style="margin-left: 15px;">
+                <%= f.submit t(".submit_btn"), {:class => "submit_tag_button"} %>
+              </div>
             </div>
             <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
               <img src="/images/pre-loading_small.gif">
             </div>
-       </div>
+          </div>
+        </div>
       </div>
-   </div>
-  <%end%>
+  <% end %>
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
         $("#approval_flow_node_id").trigger("change");
 
         $.fn.extend({
-            numeric: function(options){
+            numeric: function (options) {
                 var jq_dis = $(options['dis']);
                 var that = this;
                 jq_dis.val(format_to_numeric($(this).val()));
-                $(["focus" , "blur" ]).each(function(i , ele){
-                    jq_dis.bind(ele , function(){
+                $(["focus", "blur"]).each(function (i, ele) {
+                    jq_dis.bind(ele, function () {
                         $(this).val(format_to_numeric(jq_dis.val()));
                         $(that).val(format_to_machine_number(jq_dis.val()));
                         $(that).trigger(ele);
@@ -210,26 +230,29 @@
         });
 
 
-        function format_to_numeric(str){
+        function format_to_numeric(str) {
             str = format_to_machine_number(str);
-            if(/^-?\d+(?:\.\d+)?/.test(str)){
+            if (/^-?\d+(?:\.\d+)?/.test(str)) {
                 digitalGroup = /(\d)((\d{3}?)+)$/;
                 var zhengshu = Math.floor(parseFloat(str)) + '';
                 var xiaoshu = Math.floor(Math.round(parseFloat(str) * 100) % 100) + '';
                 while (digitalGroup.test(zhengshu)) {
                     zhengshu = zhengshu.replace(digitalGroup, '$1' + "," + '$2');
-                };
-                if(parseInt(xiaoshu) < 10){
+                }
+                ;
+                if (parseInt(xiaoshu) < 10) {
                     xiaoshu = '0' + xiaoshu
-                };
+                }
+                ;
                 str = zhengshu + "." + xiaoshu;
 
                 while (digitalGroup.test(str)) {
                     str = str.replace(digitalGroup, '$1' + "," + '$2');
-                };
-                if(/\.\d$/.test(str)){
+                }
+                ;
+                if (/\.\d$/.test(str)) {
                     str += '0';
-                }else if(/^[^\.]+$/.test(str)){
+                } else if (/^[^\.]+$/.test(str)) {
                     str += '.00';
                 }
             }
@@ -237,80 +260,86 @@
         }
 
 
-        function format_to_machine_number(str){
+        function format_to_machine_number(str) {
             str += '';
-            str = str.replace(/[^\d\.\,\-]/g,"");
-            if(/^-?(?:\d+|\d{1,3}(?:,\d{3})*)(?:\.\d+)?/.test(str)){
-                str = str.replace(/,/g,"").replace(/^0+/g,"0").replace(/^0(\d)/g, "$1");
-                str = Math.round( parseFloat(str) * 100 )/ 100 + "";
+            str = str.replace(/[^\d\.\,\-]/g, "");
+            if (/^-?(?:\d+|\d{1,3}(?:,\d{3})*)(?:\.\d+)?/.test(str)) {
+                str = str.replace(/,/g, "").replace(/^0+/g, "0").replace(/^0(\d)/g, "$1");
+                str = Math.round(parseFloat(str) * 100) / 100 + "";
                 return str;
-            }else{
+            } else {
                 return str
             }
         }
 
-        $("#approval_flow_min").numeric({dis:"#min_dis_input"});
-        $("#approval_flow_max").numeric({dis:"#max_dis_input"});
+        $("#approval_flow_min").numeric({dis: "#min_dis_input"});
+        $("#approval_flow_max").numeric({dis: "#max_dis_input"});
 
 
     })
 
 
-  multiple_chosen("#approval_flow_product_type", ".approval_flow_products");
-  multiple_chosen("#approval_flow_node_id", ".node_id");
-  multiple_chosen("#approval_flow_user_group", ".user_group");
-  multiple_chosen("#approval_flow_approval_group", ".approval_group");
-  multiple_chosen("#approval_flow_operation_am_group", ".operation_am_group");
-  selectable_with_all("#approval_flow_product_type","ALL");
-  multiple_chosen("#approval_flow_bu", ".bu");
-  $("#approval_flow_bu").change(function() {
-    var bu = $(this).val();
-    $.get("<%=get_bu_products_approval_flows_url%>",{bu:bu},function(data){
-      $("#bu_products").html(data);
+    multiple_chosen("#approval_flow_product_type", ".approval_flow_products");
+    multiple_chosen("#approval_flow_node_id", ".node_id");
+    multiple_chosen("#approval_flow_user_group", ".user_group");
+    multiple_chosen("#approval_flow_approval_group", ".approval_group");
+
+    multiple_chosen("#approval_flow_coordinate_groups", ".coordinate_groups");
+    multiple_chosen("#approval_flow_p_coordinate_groups", ".p_coordinate_groups");
+    selectable_with_all("#approval_flow_product_type", "ALL");
+    multiple_chosen("#approval_flow_bu", ".bu");
+    $("#approval_flow_bu").change(function () {
+        var bu = $(this).val();
+        $.get("<%=get_bu_products_approval_flows_url%>", {bu: bu}, function (data) {
+            $("#bu_products").html(data);
+        })
     })
-  })
-  $("#approval_flow_node_id").change(function (){
-      var node_id = $(this).val();
-      var node_id_index = jQuery.inArray(node_id,["1","5","7"]);
-      if (node_id == "5"){
-          $(".operation_am_group").show();
-      }else{
-          $(".operation_am_group").hide();
-      }
+    $("#approval_flow_node_id").change(function () {
+        var node_id = $(this).val();
+        var node_id_index = jQuery.inArray(node_id, ["1", "5", "7"]);
+        if (node_id == "5") {
+            $(".coordinate_groups").show();
+            $(".p_coordinate_groups").hide();
+        } else if (node_id == "1") {
+            $(".coordinate_groups").hide();
+            $(".p_coordinate_groups").show();
+        } else {
+            $(".coordinate_groups").hide();
+            $(".p_coordinate_groups").hide();
+        }
 
-      if (node_id == "3"){
-          $(".unstandard_approve_div").show();
-      }else{
-          $(".unstandard_approve_div").hide();
-      }
+        if (node_id == "3") {
+            $(".unstandard_approve_div").show();
+        } else {
+            $(".unstandard_approve_div").hide();
+        }
 
 
-      if (node_id_index >= 0){
-          $(".bu").show();
-          $(".product_type").show();
-      }else{
-          $(".bu").hide();
-          $(".product_type").hide();
-          $("#approval_flow_bu").val("").trigger("liszt:updated");
-          $("#approval_flow_bu").trigger("change");
-      }
-  })
+        if (node_id_index >= 0) {
+            $(".bu").show();
+            $(".product_type").show();
+        } else {
+            $(".bu").hide();
+            $(".product_type").hide();
+            $("#approval_flow_bu").val("").trigger("liszt:updated");
+            $("#approval_flow_bu").trigger("change");
+        }
+    })
 
-  $("#approval_flow_range_type").change(function (){
-      var range_type = $(this).val();
-      console.log("========range_type====:"+range_type);
-      $("#min_dis_input,#max_dis_input").val('');
-      $("#approval_flow_min,#approval_flow_max").val('');
+    $("#approval_flow_range_type").change(function () {
+        var range_type = $(this).val();
+        $("#min_dis_input,#max_dis_input").val('');
+        $("#approval_flow_min,#approval_flow_max").val('');
 
-      if (range_type == "range") {
-          $(".min_range").removeClass('hide');
-          $("#max_dis_input").attr('style','width:80px;');
-      }else{
-          $(".min_range").addClass('hide');
-          $("#max_dis_input").attr('style','width:225px;');
-      }
-  })
-    $("#approval_flow_form").submit(function(){
-        $(":submit",this).attr("disabled","disabled");
+        if (range_type == "range") {
+            $(".min_range").removeClass('hide');
+            $("#max_dis_input").attr('style', 'width:80px;');
+        } else {
+            $(".min_range").addClass('hide');
+            $("#max_dis_input").attr('style', 'width:225px;');
+        }
+    })
+    $("#approval_flow_form").submit(function () {
+        $(":submit", this).attr("disabled", "disabled");
     });
 </script>

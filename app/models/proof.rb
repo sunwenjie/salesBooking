@@ -1,5 +1,5 @@
 class Proof < Asset
-  belongs_to :order,inverse_of: :proof,touch:true
+  belongs_to :order, inverse_of: :proof, touch: true
 
   attr_accessor :uploader_secure_token
 

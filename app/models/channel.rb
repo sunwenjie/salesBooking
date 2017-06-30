@@ -1,23 +1,33 @@
 class Channel < ActiveRecord::Base
 
-has_and_belongs_to_many :users, join_table: "#{SendMenu::DbConnection}.user_channels"
-has_many :client,:class=>Client
-has_many :channel_attribute_values, inverse_of: :channel
-has_many :order , inverse_of: :channel
-has_many :channels_contact, inverse_of: :channel
-has_many :channel_rebates, inverse_of: :channel,dependent: :destroy
+  has_and_belongs_to_many :users, join_table: "#{SendMenu::DbConnection}.user_channels"
 
-validates_uniqueness_of :channel_name,conditions: -> { where("is_delete is null") }
-validates :channel_name, presence: true
-validates :user_ids, presence: true
-validates :qualification_name, presence: true
-validates :company_adress, presence: true
-# validate :valid_rebate
-validates :contact_person, presence: true
-validates :phone, presence: true
+  has_many :client, :class => Client
+
+  has_many :order, inverse_of: :channel
+
+  has_many :channels_contact, inverse_of: :channel
+
+  has_many :channel_rebates, inverse_of: :channel, dependent: :destroy
+
+  validates_uniqueness_of :channel_name, conditions: -> { where("is_delete is null") }
+
+  validates :channel_name, presence: true
+
+  validates :user_ids, presence: true
+
+  validates :qualification_name, presence: true
+
+  validates :company_adress, presence: true
+
+  validates :contact_person, presence: true
+
+  validates :phone, presence: true
+
   VALID_EMAIL_REGEX = /\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-validates :email, presence: true, format:{ with: VALID_EMAIL_REGEX }
-validates :position, presence: true
+  validates :email, presence: true, format: {with: VALID_EMAIL_REGEX}
+
+  validates :position, presence: true
 
   attr_accessor :all_nonuniforms_date_range, :all_nonuniform_rebate
 
@@ -26,12 +36,12 @@ validates :position, presence: true
   end
 
 #代理返点验证
-  def valid_rebate
-    errors.add(:nonuniform_date_range,I18n.t("order.rebate_date_validate")) if  all_nonuniforms_date_range["nonuniform_date_range"].blank?
-    errors.add(:nonuniform_rebate,I18n.t("order.rebate_value_validate")) if all_nonuniform_rebate["nonuniform_rebate"].blank?
-    # p '-----errors------------'
-    # p errors.messages
-  end
+  # def valid_rebate
+  #   errors.add(:nonuniform_date_range, I18n.t("order.rebate_date_validate")) if all_nonuniforms_date_range["nonuniform_date_range"].blank?
+  #   errors.add(:nonuniform_rebate, I18n.t("order.rebate_value_validate")) if all_nonuniform_rebate["nonuniform_rebate"].blank?
+  #   # p '-----errors------------'
+  #   # p errors.messages
+  # end
 
   def self.with_sale_agencies(current_user)
     if current_user.administrator?
@@ -69,6 +79,28 @@ validates :position, presence: true
     end
     return Channel.find_by_sql(sql)
   end
+
+#新增代理公司
+  def self.new_channel(params)
+    channel = self.new(params[:channel])
+    channel.all_nonuniforms_date_range, channel.all_nonuniform_rebate = rebate_array(params)
+    return channel
+  end
+
+#代理返点日期范围和代理返点数据封装
+
+  def self.rebate_array(params)
+    all_nonuniforms_date_range = params.select { |k, v| k =~ /^nonuniform_date_range(\d+|)$/ && v.strip != "" }
+    all_nonuniform_rebate = params.select { |k, v| k =~ /^nonuniform_rebate(\d+|)$/ && v.strip != "" }
+    return all_nonuniforms_date_range, all_nonuniform_rebate
+  end
+
+#插入代理返点
+  def insert_channel_rebate
+    self.channel_rebates.destroy_all
+    ChannelRebate.insert_channel_rebate(self.id, self.all_nonuniforms_date_range, self.all_nonuniform_rebate) if self.all_nonuniforms_date_range.present? and self.all_nonuniform_rebate.present?
+  end
+
 
 end
 

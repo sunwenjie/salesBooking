@@ -1,67 +1,69 @@
 <p>
-	您好，</p>
+  您好，</p>
 <p>
-	&nbsp;</p>
+  &nbsp;</p>
 <p>
-	订单<%=@obj_case.code%>正在等待审批。</p>
+  订单<%= @obj_case.code %>正在等待审批。</p>
 <p>
-	&nbsp;</p>
+  &nbsp;</p>
 <p>
-	* 您可以直接回复YES 或 NO （不区分大小写），给出审批结果。YES 代表通过，NO代表不通过。您也可以登录系统进行审批，并填写备注说明，该订单链接为：<a href="http://www.xxx.com/xxx/xxx">http://www.xxx.com/xxx/xxx</a>。（注：此链接为审批订单页面）</p>
-<p>
-	&nbsp;</p>
-<p>
-	<strong><u>以下为订单详情：</u></strong></p>
-<p>
-	订单编号：<%=@obj_case.code%></p>
-<p>
-	客户名称：<%=@obj_case.client.clientname%></p>
-<p>
-	所属行业：<%=  @obj_case.industry.name_cn%></p>
-<p>
-	客户联系人：<%=  @obj_case.client.clientcontact%></p>
-<p>
-	联络人电话：<%=  @obj_case.client.clientphone%></p>
-<p>
-	订单创建人：<%=  @obj_case.user.real_name%></p>
-<p>
-	创建时间：<%=  @obj_case.created_at.strftime("%Y.%m.%d")%></p>
-<p>
-	&nbsp;</p>
-<p>
-	产品类型：<%=  t(@obj_case.product_type)%></p>
-<p>
-	日期：<%=  @obj_case.start_date.strftime('%Y.%m.%d')%> &ndash; <%=  @obj_case.ending_date.strftime('%Y.%m.%d')%></p>
-<p>
-	总天数：<%= @obj_case.period %>天</p>
-<p>
-	整体预算：<%= @obj_case.budget %> RMB</p>
-<p>
-	地域：北京，上海，深圳</p>
-<p>
-	卖价：<%= @obj_case.cost_type %> <%= @obj_case.cost %> <%= @obj_case.cost_currency%> </p>
-<p>
-	折扣：<%= (@obj_case.discount*100).to_i.to_s+"%" %> </p>
-<p>
-	价格说明：<%= @obj_case.price_presentation ? @obj_case.price_presentation : "'无'" %></p>
-<p>
-	转化目标：<%= @obj_case.convert_goal ? @obj_case.convert_goal : "'无'"%></p>
-<p>
-	<%if @obj_case.product_type=="MEDIA_BUYING"%>
-        独立购买网站：<%= @obj_case.extra_website ? @obj_case.extra_website : "'无'"%>
-        <%else%>
-        人群购买：<%= @obj_case.interest_crowd ? @obj_case.interest_crowd : "'无'"%>
-        <%end%>
+  * 您可以直接回复YES 或 NO （不区分大小写），给出审批结果。YES
+  代表通过，NO代表不通过。您也可以登录系统进行审批，并填写备注说明，该订单链接为：<a href="http://www.xxx.com/xxx/xxx">http://www.xxx.com/xxx/xxx</a>。（注：此链接为审批订单页面）
 </p>
 <p>
-	网站黑名单：<%= @obj_case.blacklist_website ? @obj_case.blacklist_website : "'无'"%></p>
+  &nbsp;</p>
 <p>
-	其他需求：<%= @obj_case.description ? @obj_case.description : "'无'"%></p>
+  <strong><u>以下为订单详情：</u></strong></p>
 <p>
-	&nbsp;</p>
+  订单编号：<%= @obj_case.code %></p>
 <p>
-	谢谢。</p>
+  客户名称：<%= @obj_case.client.clientname %></p>
 <p>
-	爱点击互动</p>
+  所属行业：<%= @obj_case.industry.name_cn %></p>
+<p>
+  客户联系人：<%= @obj_case.client.clientcontact %></p>
+<p>
+  联络人电话：<%= @obj_case.client.clientphone %></p>
+<p>
+  订单创建人：<%= @obj_case.user.real_name %></p>
+<p>
+  创建时间：<%= @obj_case.created_at.strftime("%Y.%m.%d") %></p>
+<p>
+  &nbsp;</p>
+<p>
+  产品类型：<%= t(@obj_case.product_type) %></p>
+<p>
+  日期：<%= @obj_case.start_date.strftime('%Y.%m.%d') %> &ndash; <%= @obj_case.ending_date.strftime('%Y.%m.%d') %></p>
+<p>
+  总天数：<%= @obj_case.period %>天</p>
+<p>
+  整体预算：<%= @obj_case.budget %> RMB</p>
+<p>
+  地域：北京，上海，深圳</p>
+<p>
+  卖价：<%= @obj_case.cost_type %> <%= @obj_case.cost %> <%= @obj_case.cost_currency %> </p>
+<p>
+  折扣：<%= (@obj_case.discount*100).to_i.to_s+"%" %> </p>
+<p>
+  价格说明：<%= @obj_case.price_presentation ? @obj_case.price_presentation : "'无'" %></p>
+<p>
+  转化目标：<%= @obj_case.convert_goal ? @obj_case.convert_goal : "'无'" %></p>
+<p>
+  <% if @obj_case.product_type=="MEDIA_BUYING" %>
+      独立购买网站：<%= @obj_case.extra_website ? @obj_case.extra_website : "'无'" %>
+  <% else %>
+      人群购买：<%= @obj_case.interest_crowd ? @obj_case.interest_crowd : "'无'" %>
+  <% end %>
+</p>
+<p>
+  网站黑名单：<%= @obj_case.blacklist_website ? @obj_case.blacklist_website : "'无'" %></p>
+<p>
+  其他需求：<%= @obj_case.description ? @obj_case.description : "'无'" %></p>
+<p>
+  &nbsp;</p>
+<p>
+  谢谢。</p>
+<p>
+  爱点击互动</p>
 
 

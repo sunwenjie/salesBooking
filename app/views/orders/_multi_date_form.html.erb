@@ -1,31 +1,29 @@
-<script type="text/javascript" src="/js/xmo-calendar-copy.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/css/xmo-calendar.css">
-
 <div class="control-group t_margin_20" id="nonuniform_div">
   <div class="controls" id="yunsu">
     <!-- <div style="margin-left: 20px;"><%#= t('order.form.assigned_by_date') %></div> -->
-      <div class="row ">
-        <div class="span">
-         <% order_nonuniforms = @order.new_record? ? @clone_order.present? ? @clone_order.order_nonuniforms : @order.order_nonuniforms : @order.order_nonuniforms %>
-          <%nonuniform_num = order_nonuniforms.size.to_i %>
-          <%nonuniform_datas = order_nonuniforms.order('start_date asc') %>
-          <%= t('order.form.assigned_by_date') %>
-          <div class="input-append" style="margin-top: 8px;">
-            <input type="text" value="<%= nonuniform_datas.first.present? ? nonuniform_datas.first.start_date : '' %> <%= ((nonuniform_datas.first.present? && nonuniform_datas.first.end_date.present?) ? nonuniform_datas.first.end_date : '').present? ? "~" : ""%> <%=(nonuniform_datas.first.present? && nonuniform_datas.first.end_date.present?) ? nonuniform_datas.first.end_date : ''%>" name="nonuniform_date_range" id="nonuniforms_appendedInput" class="span2 required_input xmoCalendarInputSchedule proof_ready_unmodify">
-            <span class="add-on"><i class="icon-calendar icon_trigger r_margin_0"></i></span>
-              <%= text_field_tag  "nonuniform_budget", ((nonuniform_datas.first.present? && nonuniform_datas.first.nonuniform_budget.present?) ? number_to_currency(nonuniform_datas.first.nonuniform_budget.to_f,precision: 0,unit: '') : ''),:class => "align_right numeric assign_budget proof_ready_unmodify", :style => "width:126px;margin-left:5px;" %>
-              <span class="add-on currency_unit_budget" id="nonuniform_budget_unit" name = "nonuniform_budget_unit"></span>
+    <div class="row ">
+      <div class="span">
+        <% order_nonuniforms = @order.new_record? ? @clone_order.present? ? @clone_order.order_nonuniforms : @order.order_nonuniforms : @order.order_nonuniforms %>
+        <% nonuniform_num = order_nonuniforms.size.to_i %>
+        <% nonuniform_datas = order_nonuniforms.order('start_date asc') %>
+        <%= t('order.form.assigned_by_date') %>
+        <div class="input-append" style="margin-top: 8px;">
+          <input type="text" value="<%= nonuniform_datas.first.present? ? nonuniform_datas.first.start_date : '' %> <%= ((nonuniform_datas.first.present? && nonuniform_datas.first.end_date.present?) ? nonuniform_datas.first.end_date : '').present? ? "~" : "" %> <%= (nonuniform_datas.first.present? && nonuniform_datas.first.end_date.present?) ? nonuniform_datas.first.end_date : '' %>" name="nonuniform_date_range" id="nonuniforms_appendedInput" class="span2 required_input xmoCalendarInputSchedule proof_ready_unmodify">
+          <span class="add-on"><i class="icon-calendar icon_trigger r_margin_0"></i></span>
+          <%= text_field_tag "nonuniform_budget", ((nonuniform_datas.first.present? && nonuniform_datas.first.nonuniform_budget.present?) ? number_to_currency(nonuniform_datas.first.nonuniform_budget.to_f, precision: 0, unit: '') : ''), :class => "align_right numeric assign_budget proof_ready_unmodify", :style => "width:126px;margin-left:5px;" %>
+          <span class="add-on currency_unit_budget" id="nonuniform_budget_unit" name="nonuniform_budget_unit"></span>
              <span class="delete_one" style="position: absolute">
-            <img src="/images/shared/components/btn_del.png" style="margin-left: 10px;margin-top: 10px;" onclick="delete_one_by_date(this);">
+               <%= image_tag 'shared/components/btn_del.png', :style => "margin-left: 10px;margin-top: 10px;", :onclick => "delete_one_by_date(this);" %>
             </span>
-          </div>
         </div>
-
       </div>
+
+    </div>
     <div class="row">
       <div class="span add_one_by_date">
-        <div class="pull-left add_clone header_add_new_link" style="margin-left: -23px;margin-top: -8px;">
-          <img src = '/images/assets/btn_add.png'/><span style="margin-left: 6px;"><%= t('order.form.add_one_by_date') %></span>
+        <div class="pull-left add_clone ">
+          <%= image_tag "circle_icon/btn_add.png" %>
+          <span style="margin-left: 6px;"><%= t('order.form.add_one_by_date') %></span>
         </div>
       </div>
     </div>
@@ -45,214 +43,227 @@
   </div>
 </div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        tofang_obj = initCalendar("appendedInput",[],true);
-        var initdisable = [];
-        var id_num = 1;
-        getNewInitDisable("appendedInput");
+    tofang_obj = initCalendar("appendedInput", [], true);
+    var initdisable = [];
+    var id_num = 1;
+    getNewInitDisable("appendedInput");
 
-        delivery_obj = initCalendar("nonuniforms_appendedInput",initdisable,false);
-        function getNewInitDisable(id){
-            initdisable=[];
-            var toufangval = $("#"+id).val();
-            if ($.trim(toufangval)!="") {
-                var toufangArr = toufangval.split(" ~ ");
-                console.log("==========toufangArr",toufangArr);
-                var toufangExclude = $("#"+id).next().val();
-                if (toufangExclude!="") {
-                    var toufangExcludeArr = toufangExclude.split(",");
-                    for (var i = 0; i < toufangExcludeArr.length; i++) {
-                        initdisable.push(toufangExcludeArr[i]);
-                    };
-                };
-                initdisable.push("1980-12-11 ~ "+ new Date((Date.parse(toufangArr[0]) - 86400000)).dateFormatNew("yyyy-MM-dd"));
-                initdisable.push(new Date((Date.parse(toufangArr[1]) + 86400000)).dateFormatNew("yyyy-MM-dd") +" ~ 3000-12-11");
-            }else{
-                initdisable.push("1980-12-11 ~ 3000-12-11");
-            }
-            //console.log("========initdisable",initdisable)
-        }
-        function initCalendar(id,disabledDate,canCancel){
-            return new xmoCalendar({
-                inputId : '#'+id,
-                // lang : 'EN',
-                lang : "<%= I18n.locale.to_s == 'zh-cn' ? 'CN' : 'EN' %>", //"CN" "EN"
-                initTime : '2013-10-28',
-                disabledDate:disabledDate,
-                canCancel:canCancel,
-                submitCallback : function(that){
-                    update_days_remaining();
-                    refresh_remain(id,that);
+    delivery_obj = initCalendar("nonuniforms_appendedInput", initdisable, false);
+    function getNewInitDisable(id) {
+        initdisable = [];
+        var toufangval = $("#" + id).val();
+        if ($.trim(toufangval) != "") {
+            var toufangArr = toufangval.split(" ~ ");
+            console.log("==========toufangArr", toufangArr);
+            var toufangExclude = $("#" + id).next().val();
+            if (toufangExclude != "") {
+                var toufangExcludeArr = toufangExclude.split(",");
+                for (var i = 0; i < toufangExcludeArr.length; i++) {
+                    initdisable.push(toufangExcludeArr[i]);
                 }
+                ;
+            }
+            ;
+            initdisable.push("1980-12-11 ~ " + new Date((Date.parse(toufangArr[0]) - 86400000)).dateFormatNew("yyyy-MM-dd"));
+            initdisable.push(new Date((Date.parse(toufangArr[1]) + 86400000)).dateFormatNew("yyyy-MM-dd") + " ~ 3000-12-11");
+        } else {
+            initdisable.push("1980-12-11 ~ 3000-12-11");
+        }
+        //console.log("========initdisable",initdisable)
+    }
+    function initCalendar(id, disabledDate, canCancel) {
+        return new xmoCalendar({
+            inputId: '#' + id,
+            // lang : 'EN',
+            lang: "<%= I18n.locale.to_s == 'zh-cn' ? 'CN' : 'EN' %>", //"CN" "EN"
+            initTime: '2013-10-28',
+            disabledDate: disabledDate,
+            canCancel: canCancel,
+            submitCallback: function (that) {
+                update_days_remaining();
+                refresh_remain(id, that);
+            }
+        })
+    }
+    function refresh_remain(id, that) {
+        var newDisabledDate = [];
+        if (id == "appendedInput") {
+            getNewInitDisable(id);
+            that.wrapperBox.nextAll().remove();
+            $("#yunsu").find(".input-append").each(function (index) {
+                if ($(this).find(".xmoCalendarInputSchedule").length > 0) {
+                    $(this).find("input").val("");
+                    var rebuildId = $(this).find(".xmoCalendarInputSchedule").attr("id");
+                    initCalendar(rebuildId, initdisable);
+                }
+                ;
+
+
             })
+            return false;
         }
-        function refresh_remain(id,that){
-            var newDisabledDate=[];
-            if (id=="appendedInput") {
-                getNewInitDisable(id);
-                that.wrapperBox.nextAll().remove();
-                $("#yunsu").find(".input-append").each(function(index){
-                    if ($(this).find(".xmoCalendarInputSchedule").length>0) {
-                        $(this).find("input").val("");
-                        var rebuildId = $(this).find(".xmoCalendarInputSchedule").attr("id");
-                        initCalendar(rebuildId,initdisable);
-                    };
+        ;
 
-
-                })
-                return false;
-            };
-
-            if ($("#"+id).parent().parent().parent().nextAll().length>1) {
-                for (var i = 0; i < initdisable.length; i++) {
-                    newDisabledDate.push(initdisable[i]);
-                };
-                if($("#"+id).val().indexOf(" ~ ")>-1){
-                    newDisabledDate.push($("#"+id).val());
-                }
-                $("#"+id).parent().parent().parent().prevAll().each(function(){
-                    if(typeof ($(this).find(".xmoCalendarInputSchedule").val()) != 'undefined' && $(this).find(".xmoCalendarInputSchedule").val().indexOf(" ~ ")>-1){
-                        newDisabledDate.push($(this).find(".xmoCalendarInputSchedule").val());
-                    }
-                })
-
-                that.wrapperBox.nextAll().remove();
-
-                $("#"+id).parent().parent().parent().nextAll().each(function(){
-                    if ($(this).find(".xmoCalendarInputSchedule").length>0) {
-                        $(this).find("input").val("");
-                        var rebuildId = $(this).find(".xmoCalendarInputSchedule").attr("id");
-
-                        initCalendar(rebuildId,newDisabledDate,false);
-                    };
-                })
-            };
-        }
-        $(".add_clone").on("click",function(){
-                var that = this;
-                //var id = new Date().getTime();
-                clone_period(that);
-        });
-
-
-        <% if params[:action] != "show" %>
-        $(".add_one,.delete_one").show();
-        <% else %>
-        $(".add_one,.delete_one").hide();
-        <% end %>
-
-        function delete_one_by_date(obj){
-            if($("#yunsu").find("input").length >2) {
-                $(obj).parent().parent().parent().remove();
-                initCalendar("appendedInput", [], true);
-                $("#yunsu").find("input").eq(0).attr("name", "nonuniform_date_range");
-                $("#yunsu").find("input").eq(0).attr("id", "nonuniforms_appendedInput")
-                $("#yunsu").find("input").eq(1).attr("name", "nonuniform_budget");
-                $("#yunsu").find("input").eq(1).attr("id", "nonuniform_budget");
-                caculate_budget();
-            }
-        }
-
-
-        function clone_period(that,data_period,data_budget){
-
-            var data_period = data_period || ''
-            var data_budget = data_budget || ''
-            console.log("=========data_period",data_period);
-            var $parentClone=$(that).parent().parent();
-            var disabledDate=[];
+        if ($("#" + id).parent().parent().parent().nextAll().length > 1) {
             for (var i = 0; i < initdisable.length; i++) {
-                disabledDate.push(initdisable[i]);
-            };
-
-            var cloneDateHtml = $("#nonuniforms_appendedInput").parent().parent().parent().clone();
-            cloneDateHtml.find("input").each(function(){
-                $(this).val("");
-                if (data_period != ""){
-                    if($(this).attr('name') == 'nonuniform_date_range'){
-                        $(this).val(data_period)
-                    }
-                    if($(this).attr('name') == 'nonuniform_budget'){
-                        $(this).val(data_budget)
-                    }
-                }
-                $(this).attr("id",$(this).attr("id")+id_num);
-                $(this).attr("name",$(this).attr("name") + id_num);
-            })
-
-            console.log("===========333333:"+$parentClone.parent());
-            $parentClone.parent().find(".xmoCalendarInputSchedule").each(function(i){
-                if($(this).val()!=""){
-                    console.log("===========333333:");
-
-                    disabledDate.push($(this).val());
-
+                newDisabledDate.push(initdisable[i]);
+            }
+            ;
+            if ($("#" + id).val().indexOf(" ~ ") > -1) {
+                newDisabledDate.push($("#" + id).val());
+            }
+            $("#" + id).parent().parent().parent().prevAll().each(function () {
+                if (typeof ($(this).find(".xmoCalendarInputSchedule").val()) != 'undefined' && $(this).find(".xmoCalendarInputSchedule").val().indexOf(" ~ ") > -1) {
+                    newDisabledDate.push($(this).find(".xmoCalendarInputSchedule").val());
                 }
             })
-            $parentClone.before(cloneDateHtml);
-            var calendarClone = initCalendar("nonuniforms_appendedInput"+id_num,disabledDate,false);
-            id_num += 1;
-        };
 
-        function parseDate(input) {
-            var parts = input.match(/(\d+)/g);
-            return new Date(parts[0], parts[1]-1, parts[2]);
+            that.wrapperBox.nextAll().remove();
+
+            $("#" + id).parent().parent().parent().nextAll().each(function () {
+                if ($(this).find(".xmoCalendarInputSchedule").length > 0) {
+                    $(this).find("input").val("");
+                    var rebuildId = $(this).find(".xmoCalendarInputSchedule").attr("id");
+
+                    initCalendar(rebuildId, newDisabledDate, false);
+                }
+                ;
+            })
         }
+        ;
+    }
+    $(".add_clone").on("click", function () {
+        var that = this;
+        //var id = new Date().getTime();
+        clone_period(that);
+    });
 
-        function update_days_remaining() {
-            var date_range = $("#appendedInput").val().split("~");
-            var exclude_after_today_length = 0
-            var exclude_dates_length = 0
 
-            if (date_range[1] && date_range[1] != "") {
-                var today = "<%=  Date.today.to_s(:db) %>";
-                var regEx = new RegExp("\\-","gi");
-                var d = new Date(date_range[0].replace(regEx,"/"))
+    <% if params[:action] != "show" %>
+    $(".add_one,.delete_one").show();
+    <% else %>
+    $(".add_one,.delete_one").hide();
+    <% end %>
 
-                if($(".exclude_dates").val() != ""){
-                    var exclude_dates = $(".exclude_dates").val().split(",");
-                    exclude_dates_length = exclude_dates.length;
-                    if(exclude_dates_length > 1){
-                        $.each(exclude_dates,function(i, val){
-                            if(parseDate(val) - parseDate(today) >= 0){exclude_after_today_length++}
-                        })
-                    }
-                }
+    function delete_one_by_date(obj) {
+        if ($("#yunsu").find("input").length > 2) {
+            $(obj).parent().parent().parent().remove();
+            initCalendar("appendedInput", [], true);
+            $("#yunsu").find("input").eq(0).attr("name", "nonuniform_date_range");
+            $("#yunsu").find("input").eq(0).attr("id", "nonuniforms_appendedInput")
+            $("#yunsu").find("input").eq(1).attr("name", "nonuniform_budget");
+            $("#yunsu").find("input").eq(1).attr("id", "nonuniform_budget");
+            caculate_budget();
+        }
+    }
 
-                var remaining_days;
-                if(d > new Date()){
-                    remaining_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
+
+    function clone_period(that, data_period, data_budget) {
+
+        var data_period = data_period || ''
+        var data_budget = data_budget || ''
+        console.log("=========data_period", data_period);
+        var $parentClone = $(that).parent().parent();
+        var disabledDate = [];
+        for (var i = 0; i < initdisable.length; i++) {
+            disabledDate.push(initdisable[i]);
+        }
+        ;
+
+        var cloneDateHtml = $("#nonuniforms_appendedInput").parent().parent().parent().clone();
+        cloneDateHtml.find("input").each(function () {
+            $(this).val("");
+            if (data_period != "") {
+                if ($(this).attr('name') == 'nonuniform_date_range') {
+                    $(this).val(data_period)
                 }
-                else{
-                    remaining_days = (parseDate(date_range[1]) - parseDate(today)) / (24 * 3600 * 1000) + 1;
+                if ($(this).attr('name') == 'nonuniform_budget') {
+                    $(this).val(data_budget)
                 }
-                var total_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
-                if(total_days <= 0){
-                    return
+            }
+            $(this).attr("id", $(this).attr("id") + id_num);
+            $(this).attr("name", $(this).attr("name") + id_num);
+        })
+
+        console.log("===========333333:" + $parentClone.parent());
+        $parentClone.parent().find(".xmoCalendarInputSchedule").each(function (i) {
+            if ($(this).val() != "") {
+                console.log("===========333333:");
+
+                disabledDate.push($(this).val());
+
+            }
+        })
+        $parentClone.before(cloneDateHtml);
+        var calendarClone = initCalendar("nonuniforms_appendedInput" + id_num, disabledDate, false);
+        id_num += 1;
+    }
+    ;
+
+    function parseDate(input) {
+        var parts = input.match(/(\d+)/g);
+        return new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+
+    function update_days_remaining() {
+        var date_range = $("#appendedInput").val().split("~");
+        var exclude_after_today_length = 0
+        var exclude_dates_length = 0
+
+        if (date_range[1] && date_range[1] != "") {
+            var today = "<%=  Date.today.to_s(:db) %>";
+            var regEx = new RegExp("\\-", "gi");
+            var d = new Date(date_range[0].replace(regEx, "/"))
+
+            if ($(".exclude_dates").val() != "") {
+                var exclude_dates = $(".exclude_dates").val().split(",");
+                exclude_dates_length = exclude_dates.length;
+                if (exclude_dates_length > 1) {
+                    $.each(exclude_dates, function (i, val) {
+                        if (parseDate(val) - parseDate(today) >= 0) {
+                            exclude_after_today_length++
+                        }
+                    })
                 }
-                var total_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
-                $("#total_days").html(total_days - exclude_dates_length);
-                remaining_days = remaining_days - exclude_after_today_length;
-                if(remaining_days < 0){remaining_days = 0}
-                $("#remaining_days").html(remaining_days)
             }
 
+            var remaining_days;
+            if (d > new Date()) {
+                remaining_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
+            }
+            else {
+                remaining_days = (parseDate(date_range[1]) - parseDate(today)) / (24 * 3600 * 1000) + 1;
+            }
+            var total_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
+            if (total_days <= 0) {
+                return
+            }
+            var total_days = (parseDate(date_range[1]) - parseDate(date_range[0])) / (24 * 3600 * 1000) + 1;
+            $("#total_days").html(total_days - exclude_dates_length);
+            remaining_days = remaining_days - exclude_after_today_length;
+            if (remaining_days < 0) {
+                remaining_days = 0
+            }
+            $("#remaining_days").html(remaining_days)
         }
-    </script>
 
-<%if nonuniform_num > 1  %>
-<%nonuniform_datas[1..(nonuniform_num-1)].each_with_index do |col,ind| %>
-    <% data_period = col.start_date.strftime('%Y-%m-%d') + ' ~ ' + col.end_date.strftime('%Y-%m-%d')
-       date_budget = number_to_currency(col.nonuniform_budget.to_f, precision: 0,unit: '')
-    %>
-    <script type="text/javascript">
-        var data_period  = '<%= col.start_date.strftime('%Y-%m-%d') + ' ~ ' + col.end_date.strftime('%Y-%m-%d')%>'
-        var data_budget = '<%= number_to_currency(col.nonuniform_budget.to_f, precision: 0,unit: '')%>'
-        var ind_num = '<%= ind + 1 %>'
-        console.log("=======ind_num======",ind_num)
-        clone_period($(".add_clone"),data_period,data_budget)
+    }
+</script>
 
-    </script>
-<% end %>
+<% if nonuniform_num > 1 %>
+    <% nonuniform_datas[1..(nonuniform_num-1)].each_with_index do |col, ind| %>
+        <% data_period = col.start_date.strftime('%Y-%m-%d') + ' ~ ' + col.end_date.strftime('%Y-%m-%d')
+           date_budget = number_to_currency(col.nonuniform_budget.to_f, precision: 0, unit: '')
+        %>
+        <script type="text/javascript">
+            var data_period = '<%= col.start_date.strftime('%Y-%m-%d') + ' ~ ' + col.end_date.strftime('%Y-%m-%d')%>'
+            var data_budget = '<%= number_to_currency(col.nonuniform_budget.to_f, precision: 0,unit: '')%>'
+            var ind_num = '<%= ind + 1 %>'
+            console.log("=======ind_num======", ind_num)
+            clone_period($(".add_clone"), data_period, data_budget)
+
+        </script>
+    <% end %>
 <% end %>

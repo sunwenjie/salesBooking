@@ -36,6 +36,7 @@ en:
       user_group: "User Groups"
       approve_group: "Permission Group (E.g. Supervisor)"
       operation_am_group: "Assigned User Groups (E.g. Subordinate)"
+      p_head_groups: "Planner Leader Group"
       flow: "Flow Node"
       new_flow: "New Approval Flow"
       edit_flow: "Edit Approval Flow"

@@ -1,8 +1,6 @@
-<!-- body start -->
-<script type="text/javascript" src="/javascripts/underscore-min.js"></script>
-<script type="text/javascript" src="/js/xmo-calendar.js"></script>
-<script src="/js/chosen.jquery.min.js?9120" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="/css/css/xmo-calendar.css">
+<%
+   order_approval = order_approval_flow
+%>
 <div id="order_detail_error1" class="order_tip"></div>
 <div class="pull-left" style="width: 45px;">
   <span data-position="bottom" data-offset="top_10" class="xmo-tooltip l_margin_0 l_padding_5" data-id="a07843974591232836">
@@ -11,64 +9,70 @@
           <div class="arrow"></div>
           <div class="popover-inner xmo-popover-inner">
             <div class="popover-content">
-              <p><a  href="javascript:void(0);" id="copy_button"><%= t("order.list.copy_label") %></a></p>
-                  <p><a  href="javascript:void(0);" id="delete_button"><%= t("order.form.delete_button") %></a></p>
+              <p><a href="javascript:void(0);" id="copy_button"><%= t("order.list.copy_label") %></a></p>
+
+              <p><a href="javascript:void(0);" id="delete_button"><%= t("order.form.delete_button") %></a></p>
             </div>
           </div>
         </div>
       </i>
   </span>
 </div>
-  <div>
-    <div class="row" style="font-size: 12px;"><%= @order.code.present? ? @order.code : ''%></br>
-    <div style="font-size: 14px;color: #336dc6;display:inline"><span id="title1"><%= @order.title.present? ? @order.title : ''%></span></div><div style="font-size: 12px;display:inline;margin-left: 3px;">(<%= t('order.list.budget1') %> : <span class="currency_unit"><%=@order.budget_currency%></span>&nbsp;<span id="budget1"><%= @order.budget.present? ? number_with_precision(@order.budget.to_f, :precision => 2, :delimiter => ",") : ''%></span>)</div></div>
+<div>
+  <div class="row" style="font-size: 12px;"><%= @order.code? ? @order.code : '' %></br>
+    <div style="font-size: 14px;color: #336dc6;display:inline">
+      <span id="title1"><%= @order.title? ? @order.title : '' %></span></div>
+    <div style="font-size: 12px;display:inline;margin-left: 3px;">(<%= t('order.list.budget1') %> :
+      <span class="currency_unit"><%= @order.budget_currency %></span>&nbsp;<span id="budget1"><%= @order.budget.present? ? number_with_precision(@order.budget.to_f, :precision => 2, :delimiter => ",") : '' %></span>)
+    </div>
   </div>
+</div>
 <div style="clear:both"></div>
 <!-- nav tab -->
-<ul class="nav nav-tabs sub-nav-tabs" id="myTab" >
+<ul class="nav nav-tabs sub-nav-tabs" id="myTab">
   <li class="list_order active">
-    <a data-toggle="tab" href="#tab-order"><%= t("order.order_detail")%></a>
+    <a data-toggle="tab" href="#tab-order"><%= t("order.order_detail") %></a>
   </li>
-  <%if @order.whether_service != true  %>
-  <li class="list_ads">
-    <a data-toggle="tab" href="#tab-ads"><%= t("order.advertisements")%></a>
-  </li>
-  <% end %>    
-  <% if @order_approval_flow["node_ids"].present? && @order.whether_service != true && ((@order_approval_flow["node_ids"].include? "2") || (@order_approval_flow["node_ids"].include? "3") || (@order_approval_flow["node_ids"].include? "7"))   %>
-  <li class="list_gp">
-    <a data-toggle="tab" href="#tab-gp"><%= t("order.media_gp")%></a>
-  </li>
-  <%end%>
+  <% if !@order.whether_service? %>
+      <li class="list_ads">
+        <a data-toggle="tab" href="#tab-ads"><%= t("order.advertisements") %></a>
+      </li>
+  <% end %>
+  <% if order_approval["node_ids"].present? && !@order.whether_service? && ((order_approval["node_ids"].include? "2") || (order_approval["node_ids"].include? "3") || (order_approval["node_ids"].include? "7")) %>
+      <li class="list_gp">
+        <a data-toggle="tab" href="#tab-gp"><%= t("order.media_gp") %></a>
+      </li>
+  <% end %>
   <li class="list_schedule">
     <a data-toggle="tab" href="#tab-schedule"><%= t("order.form.spot_plan") %></a>
   </li>
   <li class="approval_flow_tab" style="float:right">
 
-    <%= render :partial => "order_approval_flow",:locals => {:order_approval_flow =>@order_approval_flow} %>
+    <%= render 'order_approval_flow', order_approval_flow: order_approval %>
   </li>
 </ul>
 <!-- nav tab -->
 
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade active  in" id="tab-order">
-    <% if params[:action] == "edit"%>
-    <%= render :partial => "new_and_edit_form" %>
+    <% if params[:action] == "edit" %>
+        <%= render 'new_and_edit_form' %>
     <% else %>
-    <%= render :partial => "order_detail" %>
-    <% end%>
+        <%= render 'order_detail' %>
+    <% end %>
   </div>
-  <%if @order.whether_service != true  %>
-<div class="tab-pane fade" id="tab-ads" style="margin-left: -18px;">
-    <%= render :partial => "order_advertisements" %>
-  </div>
-   <% end %>
-  <% if @order_approval_flow["node_ids"].present? && @order.whether_service != true  && ((@order_approval_flow["node_ids"].include? "2") || (@order_approval_flow["node_ids"].include? "3") || (@order_approval_flow["node_ids"].include? "7"))   %>
-  <div class="tab-pane fade" id="tab-gp" style="margin-left: -18px;">
-    <%= render :partial => "gp_config" %>
-  </div>
-  <%end%>
+  <% if @order.whether_service != true %>
+      <div class="tab-pane fade" id="tab-ads" style="margin-left: -18px;">
+        <%= render 'order_advertisements' %>
+      </div>
+  <% end %>
+  <% if order_approval["node_ids"].present? && !@order.whether_service? && ((order_approval["node_ids"].include? "2") || (order_approval["node_ids"].include? "3") || (order_approval["node_ids"].include? "7")) %>
+      <div class="tab-pane fade" id="tab-gp" style="margin-left: -18px;">
+        <%= render 'gp_config' %>
+      </div>
+  <% end %>
   <div class="tab-pane fade" id="tab-schedule">
-    <%= render :partial => "schedule_plan_form" %>
+    <%= render 'schedule_plan_form' %>
   </div>
 </div>
 
@@ -77,22 +81,19 @@
         $("#myTab a").click(function () {
             current_tab = $(this).attr("href");
             highlight_current_tab();
-//            if (current_tab == "#tab-gp"){
-//                reset_tab_gp(<%#= @order.id %>);
-//            }
         });
         get_current_tab();
 
     });
 
     function get_current_tab() {
-        if (<%= @tab.present? && @tab == "tab-order" %>) {
+        if (<%= params[:tab].present? && params[:tab] == "tab-order" %>) {
             current_tab = "#tab-order"
-        } else if (<%= @tab == "tab-ads" %>) {
+        } else if (<%= params[:tab] == "tab-ads" %>) {
             current_tab = "#tab-ads"
-        } else if (<%= @tab == "tab-gp" %>) {
+        } else if (<%= params[:tab] == "tab-gp" %>) {
             current_tab = "#tab-gp"
-        } else if (<%= @tab == "tab-schedule" %>) {
+        } else if (<%= params[:tab] == "tab-schedule" %>) {
             current_tab = "#tab-schedule"
         } else {
             current_tab = $(this).attr("href");
@@ -110,8 +111,6 @@
             $("#tab-order").addClass("in active");
             $(".list_order").addClass("active");
 
-
-            // get_dsp_adgroup_list();
         } else if (current_tab == "#tab-ads") {
             $("#tab-order").removeClass("in active");
             $(".list_order").removeClass("active");
@@ -122,7 +121,7 @@
             $("#tab-ads").addClass("in active");
             $(".list_ads").addClass("active");
 
-        }else if(current_tab == "#tab-gp"){
+        } else if (current_tab == "#tab-gp") {
             $("#tab-order").removeClass("in active");
             $(".list_order").removeClass("active");
             $(".list_ads").removeClass("active");
@@ -132,7 +131,7 @@
             $("#tab-gp").addClass("in active");
             $(".list_gp").addClass("active");
 
-        }else if(current_tab == "#tab-schedule"){
+        } else if (current_tab == "#tab-schedule") {
             $("#tab-order").removeClass("in active");
             $(".list_order").removeClass("active");
             $(".list_ads").removeClass("active");
@@ -144,10 +143,10 @@
         }
     }
 
-    $("#delete_button").click(function(){
+    $("#delete_button").click(function () {
         var order_id = <%= @order.id %>;
         var data_cannot_edit = Order.data_cannot_edit(order_id);
-        var data_order_code = "<%= @order.code.present? ? @order.code : ''%>"
+        var data_order_code = "<%= @order.code? ? @order.code : ''%>"
         $.get("<%= ajax_get_campaign_code_orders_path%>", {code: data_order_code}, function (data) {
             if (data == "1") {
                 $('#order_detail_error1').addClass('error');
@@ -155,19 +154,23 @@
                 $("#order_detail_error1").show();
             } else if (data_cannot_edit && <%= @order.state != "examine_completed" %>) {
                 $('#order_detail_error1').addClass('error');
-                 $('#order_detail_error1').text("<%=t('order.form.order_under_examination3')%>")
+                $('#order_detail_error1').text("<%=t('order.form.order_under_examination3')%>")
                 $("#order_detail_error1").show();
             } else {
-                var nodeids = $(".xmo-progress-status [order_id = "+ order_id +"]").last().attr('node_ids').split(",");
-                var status = $(".xmo-progress-status [order_id = "+ order_id +"]").last().attr('status')
-                $.get("<%= ajax_get_operate_authority_orders_path %>", {id: order_id,node_ids: nodeids,status:status}, function (data) {
-                    var   authority = data.authority;
-                    if (jQuery.inArray("order_delete",authority) > -1){
+                var nodeids = $(".xmo-progress-status [order_id = " + order_id + "]").last().attr('node_ids').split(",");
+                var status = $(".xmo-progress-status [order_id = " + order_id + "]").last().attr('status')
+                $.get("<%= ajax_get_operate_authority_orders_path %>", {
+                    id: order_id,
+                    node_ids: nodeids,
+                    status: status
+                }, function (data) {
+                    var authority = data.authority;
+                    if (jQuery.inArray("order_delete", authority) > -1) {
                         $('#order_detail_error1').removeClass('error');
                         $('#order_detail_error1').text("");
                         $("#order_detail_error1").hide();
                         window.document.location.href = "<%= proceed_deleted_at_order_path(:id=> @order.id || 'test') %>"
-                    }else{
+                    } else {
                         $(".notice ").hide();
                         $('#order_detail_error').addClass('error');
                         $('#order_detail_error').html("<%=t('order.form.order_under_examination12')%>")
@@ -178,7 +181,7 @@
         })
     });
 
-    $("#copy_button").click(function(){
+    $("#copy_button").click(function () {
         window.document.location.href = "<%= clone_order_path(:id=>@order.id || 'test') %>"
     })
 
@@ -186,6 +189,6 @@
 </script>
 <script>
     $(document).ready(function () {
-        $("#chosen_origin_tag_chzn").css('width','332');
+        $("#chosen_origin_tag_chzn").css('width', '332');
     })
 </script>

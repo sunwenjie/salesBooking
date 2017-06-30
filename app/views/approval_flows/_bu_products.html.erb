@@ -1,5 +1,5 @@
-<%= select_tag "approval_flow_product_type", options_for_select(@products), {:style=>"width:380px;",:name=>"approval_flow[product_type][]",:class=>"chzn-select l_margin_0",:multiple=>true} %>
+<%= select_tag "approval_flow_product_type", options_for_select(products), {:style => "width:380px;", :name => "approval_flow[product_type][]", :class => "chzn-select l_margin_0", :multiple => true} %>
 <script type="text/javascript">
-  multiple_chosen("#approval_flow_product_type", ".approval_flow_products");
-  selectable_with_all("#approval_flow_product_type","ALL");
+    multiple_chosen("#approval_flow_product_type", ".approval_flow_products");
+    selectable_with_all("#approval_flow_product_type", "ALL");
 </script>

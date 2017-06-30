@@ -1,59 +1,58 @@
-
-    <div id="search-bar" class="search-bar hide_element">
-      <script src="/js/chosen.jquery.min.js?9120" type="text/javascript"></script>
-      <script type="text/javascript">$("#search_client").chosen();</script>
-    </div>
+<div id="search-bar" class="search-bar hide_element">
+</div>
 
 
 <div id="ajax-tabular"></div>
 <div style="clear:both"></div>
 <div class="container t_margin_0">
-	<form method="post" id="campaign_form" class="form-horizontal" action="/zh-cn/campaigns/3719">
-		<div class="control-group t_margin_20">
-		  <label class="control-label">
-		      <label for="campaign_campaignname" class="inline">排期表编号</label>
-		  </label>
-		  <div class="controls">
-				<div class="row">
-					<div class="span">
-				    <input type="text" readonly value="<%=@order.code%>" size="30" name="campaign[campaignname]" id="campaign_campaignname" disname="计划名称" class="required span5">
-					</div>
-				</div>
-		  </div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">
-				<label for="campaign_status">订单编号</label>
-			</label>
-			<div class="controls">
-				<div class="row">
-					<div class="span">
-				    <input type="text" readonly value="<%=@order.code%>" size="30" name="campaign[campaignname]" id="campaign_campaignname" disname="计划名称" class="required span5">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row t_margin_30">
-		    <!-- button area -->
-		    <div class="button_area">
-		    <div class="r_margin_20">
-		        <div class="pull-right">
-		          	<div class="outer_cancel">
-                                  <a href="<%= scheduling_orders(:id = > @order.id)%>" class="change_cancel_btn cancel cancel_pretargeting">
-                                     返回
-                                  </a>
-		          	</div>
-		            <div class="outer_submit">
-                              <a href="<%= download_orders(:id = > @order.id)%>">
-		                  <input type="button" value="下载" name="commit" class="submit_tag_button">
-                              </a>
-		             </div>
-		        </div>
-		        <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
-		            <img src="/images/pre-loading_small.gif">
-		        </div>
-		    </div>
-		    </div>
-		</div>
-	</form>
+  <form method="post" id="campaign_form" class="form-horizontal" action="/zh-cn/campaigns/3719">
+    <div class="control-group t_margin_20">
+      <label class="control-label">
+        <label for="campaign_campaignname" class="inline">排期表编号</label>
+      </label>
+
+      <div class="controls">
+        <div class="row">
+          <div class="span">
+            <input type="text" readonly value="<%= @order.code %>" size="30" name="campaign[campaignname]" id="campaign_campaignname" disname="计划名称" class="required span5">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">
+        <label for="campaign_status">订单编号</label>
+      </label>
+
+      <div class="controls">
+        <div class="row">
+          <div class="span">
+            <input type="text" readonly value="<%= @order.code %>" size="30" name="campaign[campaignname]" id="campaign_campaignname" disname="计划名称" class="required span5">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row t_margin_30">
+      <!-- button area -->
+      <div class="button_area">
+        <div class="r_margin_20">
+          <div class="pull-right">
+            <div class="outer_cancel">
+              <a href="<%= scheduling_orders(:id = > @order.id) %>" class="change_cancel_btn cancel cancel_pretargeting">
+                返回
+              </a>
+            </div>
+            <div class="outer_submit">
+              <a href="<%= download_orders(:id = > @order.id) %>">
+                <input type="button" value="下载" name="commit" class="submit_tag_button">
+              </a>
+            </div>
+          </div>
+          <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
+            <img src="/images/pre-loading_small.gif">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

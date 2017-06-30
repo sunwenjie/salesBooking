@@ -34,6 +34,7 @@ zh-cn:
       user_group: "对应用户群组"
       approve_group: "负责权限群组&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (例: 上级)"
       operation_am_group: "可分配用户群组&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (例: 下属)"
+      p_head_groups: "策划负责人群组"
       flow: "业务节点"
       new_flow: "新增用户权限"
       edit_flow: "编辑用户权限"

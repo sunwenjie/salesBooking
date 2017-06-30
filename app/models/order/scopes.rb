@@ -1,41 +1,41 @@
 class Order < Base
 
-  include Extract
+  include Concerns::Extract
 
-  include Condition
+  include Concerns::Condition
 
   def self.simple_scopes
     [
-      :ascend_by_updated_at,
-      :descend_by_updated_at,
-      :ascend_by_code,
-      :descend_by_code,
-      :ascend_by_state,
-      :descend_by_state
+        :ascend_by_updated_at,
+        :descend_by_updated_at,
+        :ascend_by_code,
+        :descend_by_code,
+        :ascend_by_state,
+        :descend_by_state
     ]
   end
 
   add_simple_scopes simple_scopes
 
   add_search_scope :not_deleted do
-      where("#{Order.quoted_table_name}.deleted_at IS NULL or #{Order.quoted_table_name}.deleted_at >= ?", Time.zone.now)
+    where("#{Order.quoted_table_name}.deleted_at IS NULL or #{Order.quoted_table_name}.deleted_at >= ?", Time.zone.now)
   end
 
   %w{id code}.each do |_|
-       eval %Q(
+    eval %Q(
           add_search_scope :with_#{_}s do |*#{_}s|
             where(#{_}: #{_}s)
           end
        )
   end
 
-  add_search_scope :with_orders do |user,date|
+  add_search_scope :with_orders do |user, date|
     range_condition = date_range_condition(date)
-    user =  User.find_by(user_conditions(user))
+    user = User.find_by(user_conditions(user))
     #user = User.find 1026
     return if user.nil?
     if user.administrator?
-     find_by_sql("select m.* from (select o.id,o.code,o.title,o.start_date,o.ending_date,o.user_id,o.budget,o.budget_currency,o.city,o.created_at,o.updated_at,o.regional,o.gp_commit_user,o.gp_commit_time,o.schedule_commit_user,o.schedule_commit_time,o.is_standard,o.have_admeasure_map,o.is_jast_for_gp,o.is_gp_finish,o.new_regions,o.last_update_user,o.last_update_time,o.is_gp_commit,o.whether_service,o.state,
+      find_by_sql("select m.* from (select o.id,o.code,o.title,o.start_date,o.ending_date,o.user_id,o.budget,o.budget_currency,o.city,o.created_at,o.updated_at,o.regional,o.gp_commit_user,o.gp_commit_time,o.schedule_commit_user,o.schedule_commit_time,o.is_standard,o.have_admeasure_map,o.is_jast_for_gp,o.is_gp_finish,o.new_regions,o.last_update_user,o.last_update_time,o.is_gp_commit,o.whether_service,o.state,
                  o.proof_state,o.third_monitor,'1,2,3,4,5,7' as node_ids,ifnull(t2.status,'0,0,0,0,0,0') as status,
                  c.id as client_id,c.clientname as client_name,c.created_user as client_user,u.id as userid,indu.id as instrucy_id,channel.id as channel_id,channel.channel_name
                   from orders o
@@ -72,16 +72,16 @@ class Order < Base
                 ")
 
     else
-    client_id = Client.with_sale_clients(user,nil,'all').map(&:id)
-    user_id =   user.id
-    order_id = ShareOrder.where("share_id = ?",user.id).map(&:order_id)
-    client_id = client_id.flatten.uniq.present? ?  client_id.flatten.uniq.join(",") : 'NULL'
-    order_id = order_id.flatten.uniq.present? ?  order_id.flatten.uniq.join(",") : 'NULL'
-    operator_orders = Order.where({"operator_id" => user.id}).map(&:id)
-    share_ams = Operation.where({"id"=> ShareAm.where({"user_id" => user.id}).map(&:operation_id)}).map(&:order_id)
-    operator_and_share_ams = (operator_orders + share_ams).present? ? (operator_orders + share_ams).uniq.join(",") : "NULL"
-    # operator_orders = Order.where("operator = ? ",user.name).map(&:id).present? ? Order.where("operator = ? ",user.name).map(&:id).join(',') : 'NULL'
-    find_by_sql("select m.* from ( select t2.id,t2.code,t2.title,t2.start_date,t2.ending_date,t2.user_id,t2.budget,t2.budget_currency,t2.city,t2.created_at,t2.updated_at,t2.regional,t2.gp_commit_user,t2.gp_commit_time,t2.schedule_commit_user,t2.schedule_commit_time,t2.is_standard,t2.have_admeasure_map,t2.is_jast_for_gp,t2.is_gp_finish,t2.new_regions,t2.last_update_user,t2.last_update_time,t2.is_gp_commit,t2.whether_service,t2.state,
+      client_id = Client.with_sale_clients(user, nil, 'all').map(&:id)
+      user_id = user.id
+      order_id = ShareOrder.where("share_id = ?", user.id).map(&:order_id)
+      client_id = client_id.flatten.uniq.present? ? client_id.flatten.uniq.join(",") : 'NULL'
+      order_id = order_id.flatten.uniq.present? ? order_id.flatten.uniq.join(",") : 'NULL'
+      operator_orders = Order.where({"operator_id" => user.id}).map(&:id)
+      share_ams = Operation.where({"id" => ShareAm.where({"user_id" => user.id}).map(&:operation_id)}).map(&:order_id)
+      operator_and_share_ams = (operator_orders + share_ams).present? ? (operator_orders + share_ams).uniq.join(",") : "NULL"
+      # operator_orders = Order.where("operator = ? ",user.name).map(&:id).present? ? Order.where("operator = ? ",user.name).map(&:id).join(',') : 'NULL'
+      find_by_sql("select m.* from ( select t2.id,t2.code,t2.title,t2.start_date,t2.ending_date,t2.user_id,t2.budget,t2.budget_currency,t2.city,t2.created_at,t2.updated_at,t2.regional,t2.gp_commit_user,t2.gp_commit_time,t2.schedule_commit_user,t2.schedule_commit_time,t2.is_standard,t2.have_admeasure_map,t2.is_jast_for_gp,t2.is_gp_finish,t2.new_regions,t2.last_update_user,t2.last_update_time,t2.is_gp_commit,t2.whether_service,t2.state,
 t2.proof_state,t2.third_monitor,ifnull(t2.node_ids,'') as node_ids,ifnull(t3.status,'0,0,0,0,0,0') as status,c.id as client_id,c.clientname as client_name,c.created_user as client_user,u.id as userid,indu.id as instrucy_id,channel.id as channel_id,channel.channel_name from
 (select t.id,t.code,t.title,t.start_date,t.ending_date,t.user_id,t.budget,t.budget_currency,t.city,t.created_at,t.updated_at,t.regional,t.gp_commit_user,t.gp_commit_time,t.schedule_commit_user,t.schedule_commit_time,t.is_standard,t.have_admeasure_map,t.is_jast_for_gp,t.is_gp_finish,t.new_regions,t.last_update_user,t.last_update_time,t.is_gp_commit,t.whether_service,t.state,t.proof_state,t.third_monitor,t.client_id,t.industry_id,t.channel_id, group_concat(t.node_id order by t.node_id asc) as node_ids from
 (select k.* from (select o.*,p.node_id
@@ -142,10 +142,9 @@ select 7 as num,'flag' as flag from dual
   end
 
 
-
-  add_search_scope :with_current_order do |user,order_id|
-    user =  User.find_by(user_conditions(user))
-   # user = User.find 1484
+  add_search_scope :with_current_order do |user, order_id|
+    user = User.find_by(user_conditions(user))
+    # user = User.find 1484
     return if user.nil?
     if user.administrator?
       find_by_sql("select o.*,'1,2,3,4,5,7' as node_ids,ifnull(t1.status,'0,0,0,0,0,0') as status from orders o left join
@@ -215,13 +214,12 @@ select 7 as num,'flag' as flag from dual
 
   # n个组里的user所创建的订单
   add_search_scope :with_groups do |*groups|
-    Order.where("user_id in (?)",User.with_groups(groups))
+    Order.where("user_id in (?)", User.with_groups(groups))
   end
 
   add_search_scope :by_message do |message_id|
-    joins("left outer join #{SendMenu::DbConnection}.examinations on orders.id = #{SendMenu::DbConnection}.examinations.examinable_id").where("#{Examination.table_name}.message_id = ? and #{Examination.table_name}.examinable_type = ?",message_id,'Order')
+    joins("left outer join #{SendMenu::DbConnection}.examinations on orders.id = #{SendMenu::DbConnection}.examinations.examinable_id").where("#{Examination.table_name}.message_id = ? and #{Examination.table_name}.examinable_type = ?", message_id, 'Order')
   end
-
 
 
 end

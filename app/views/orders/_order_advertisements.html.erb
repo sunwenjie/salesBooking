@@ -1,18 +1,26 @@
-
 <%= javascript_include_tag 'layer2.1/layer' %>
 
 <style>
-    .width_100 {width: 100% !important;}
-    .order_tip {margin-left: -5px;}
+    .width_100 {
+        width: 100% !important;
+    }
+
+    .order_tip {
+        margin-left: -5px;
+    }
 </style>
 
-<% key_word_update_flag = (defined? key_word_update).nil? ?  false : key_word_update %>
+<%
+   @order ||= @advertisement.order
+   advertisements = @order.advertisements.order(updated_at: :desc)
+   key_word_update_flag = (defined? key_word_update).nil? ? false : key_word_update
+%>
 
 <div class="table_white" id="advertisement_list" style="position: relative;margin-left: 20px;">
   <div class="row">
     <div class="plus-button" style="margin-top: -5px;margin-bottom: -5px;margin-left: 0px;">
-      <a href="javascript:void(0)" class="advertisements link" id = "advertisement_link">
-        <i class="plus-ico"></i><span><%= t("order.form.new_advertisement_button")%></span>
+      <a href="javascript:void(0)" class="advertisements link" id="advertisement_link">
+        <i class="plus-ico"></i><span><%= t("order.form.new_advertisement_button") %></span>
       </a>
     </div>
   </div>
@@ -20,90 +28,99 @@
   <% if flash[:error] %>
       <div class="error order_tip"><%= flash[:error] %></div>
   <% end %>
-  <%if flash[:notice] %>
+  <% if flash[:notice] %>
       <div class="notice order_tip"><%= flash[:notice] %></div>
   <% end %>
   <table id='advertisement_list_table' cellpadding="0" cellspacing="0" border="0" class='table table-striped table-bordered table-condensed  dataTable width_100'>
 
     <thead>
     <tr>
-      <th class="align_center align_top"><%= t('order.adlist.action')%></th>
-      <th class="align_left align_top init_t"><%= t('order.adlist.advertisement_name')%></th>
-      <th class="align_left align_top"><%= t('order.adlist.product_type')%></th>
-      <th class="align_left align_top"><%= t('order.adlist.budget_allocations')%></th>
-      <th class="align_left align_top"><%= t('order.adlist.budget_allocations_ratio')%></th>
-      <th class="align_left align_top"><%= t('order.adlist.product_est_gp')%></th>
-      <th class="align_left align_top"><%= t('order.adlist.cost_type')%></th>
+      <th class="align_center align_top"><%= t('order.adlist.action') %></th>
+      <th class="align_left align_top init_t"><%= t('order.adlist.advertisement_name') %></th>
+      <th class="align_left align_top"><%= t('order.adlist.product_type') %></th>
+      <th class="align_left align_top"><%= t('order.adlist.budget_allocations') %></th>
+      <th class="align_left align_top"><%= t('order.adlist.budget_allocations_ratio') %></th>
+      <th class="align_left align_top"><%= t('order.adlist.product_est_gp') %></th>
+      <th class="align_left align_top"><%= t('order.adlist.cost_type') %></th>
       <th class="align_left align_top"><%= t('order.adlist.cost') %></th>
-      <th class="align_left align_top"><%= t('order.adlist.discount')%></th>
-      <th class="align_left align_top"><%= t('order.adlist.geo_distribute')%></th>
-      <th class="align_left align_top"><%= t('order.adlist.allocation_cost_explan')%></th>
-      <th class="align_left align_top"><%= t('order.adlist.unnormal_kpi')%></th>
+      <th class="align_left align_top"><%= t('order.adlist.discount') %></th>
+      <th class="align_left align_top"><%= t('order.adlist.geo_distribute') %></th>
+      <th class="align_left align_top"><%= t('order.adlist.allocation_cost_explan') %></th>
+      <th class="align_left align_top"><%= t('order.adlist.unnormal_kpi') %></th>
     </tr>
     </thead>
     <tbody>
     <% ad_budget_sum = 0.0 %>
-    <% if @advertisements.present? %>
-    <% @advertisements.each_with_index do |ad,index| %>
-    <%# current_index = index +1 %>
-            <% ad_budget_sum += ad.budget_ratio.to_f%>
-    <tr class="<%= cycle("odd", "even") %>">
-      <%= hidden_field_tag "budget_ratio_ad",ad.budget_ratio.present? ? ad.budget_ratio("super") : 0.00, :ad_id => ad.id %>
+    <% if advertisements.present? %>
+        <% advertisements.includes(:product).each_with_index do |ad, index| %>
+            <%# current_index = index +1 %>
+            <% ad_budget_sum += ad.budget_ratio.to_f %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <%= hidden_field_tag "budget_ratio_ad", ad.budget_ratio.present? ? ad.budget_ratio("super") : 0.00, :ad_id => ad.id %>
 
-      <td class="align_center sorting_1">
+              <td class="align_center sorting_1">
                         <span data-position="right" data-offset="left_0" class="xmo-tooltip l_margin_0 l_padding_5" data-id="a07843974591232836">
                           <i class="icon-setup">
                             <div class="popover xmo-popover fade in">
                               <div class="arrow"></div>
                               <div class="popover-inner xmo-popover-inner">
                                 <div class="popover-content">
-                                  <p><a  href="javascript:void(0);" class="edit_click_btn" product_order_id = "<%= @order.id %>" ad_id = "<%= ad.id %>"><%= t("order.list.edit_label") %></a></p>
-                                  <p><a  href="javascript:void(0);" class="delete_click_btn" product_del_order_id = "<%= @order.id %>" ad_del_id = "<%= ad.id %>"><%= t("order.form.delete_button") %></a></p>
+                                  <p>
+                                    <a href="javascript:void(0);" class="edit_click_btn" product_order_id="<%= @order.id %>" ad_id="<%= ad.id %>"><%= t("order.list.edit_label") %></a>
+                                  </p>
+
+                                  <p>
+                                    <a href="javascript:void(0);" class="delete_click_btn" product_del_order_id="<%= @order.id %>" ad_del_id="<%= ad.id %>"><%= t("order.form.delete_button") %></a>
+                                  </p>
 
                                 </div>
                               </div>
                             </div>
                           </i>
                         </span>
-      </td>
-      <td><a class="blue-href align_left show_click_btn" href="javascript:void(0);" ad_id = <%= ad.id %>><%= ad.product.present? ? (I18n.locale.to_s == "en" ? (ad.product.en_name.present? ? ad.product.en_name : '')  + ' ('+ ad.product.sale_model + ')' : ad.product.name + ' ('+ ad.product.sale_model + ')') : ad.ad_type == "OTHERTYPE" ? t("order.list.other") : "" %></a></td>
-      <td class="align_left">
-        <%= ad.ad_type %>
-      </td>
-      <td class="align_right">
-        <%= currency_sign(@order.budget_currency) %><%= (ad.budget_ratio("super").present? ) ? number_with_precision( ad.budget_ratio("super"), :precision => 2, :delimiter => ",") : 0.00 %>
-      </td>
+              </td>
+              <td>
+                <a class="blue-href align_left show_click_btn" href="javascript:void(0);" ad_id= <%= ad.id %>><%= ad.product.present? ? (I18n.locale.to_s == "en" ? (ad.product.en_name.present? ? ad.product.en_name : '') + ' ('+ ad.product.sale_model + ')' : ad.product.name + ' ('+ ad.product.sale_model + ')') : ad.ad_type == "OTHERTYPE" ? t("order.list.other") : "" %></a>
+              </td>
+              <td class="align_left">
+                <%= ad.ad_type %>
+              </td>
+              <td class="align_right">
+                <%= currency_sign(@order.budget_currency) %><%= (ad.budget_ratio("super").present?) ? number_with_precision(ad.budget_ratio("super"), :precision => 2, :delimiter => ",") : 0.00 %>
+              </td>
 
-      <td class="align_right">
-        <%= ad.budget_ratio.present? ? number_with_precision(ad.budget_ratio, :precision => 2) : 0.00 %>&nbsp;
-      </td>
+              <td class="align_right">
+                <%= ad.budget_ratio.present? ? number_with_precision(ad.budget_ratio, :precision => 2) : 0.00 %>&nbsp;
+              </td>
 
 
-      <td class="align_right align_top " style="word-wrap:break-word;" id="gp_td_<%= ad.id%>" >
-        <div class="booking-tooltip-click  product_est_gp"  data-position="bottom" data-offset="left_0">
-              <a href="javascript:void(0);" class="blue-href gp_td_<%= ad.id%>"><%=  number_with_precision(ad.est_gp,:precision => 2,:delimiter=>",") %><span>%</span></a>
-              <div id="net_gp_form">
-              <%= render :partial => "orders/change_advertisement_gp", locals: { ad_id: ad.id,ad_gp:ad.est_gp}%>
-              </div>
-        </div>
-      </td>
+              <td class="align_right align_top " style="word-wrap:break-word;" id="gp_td_<%= ad.id %>">
+                <div class="booking-tooltip-click  product_est_gp" data-position="bottom" data-offset="left_0">
+                  <a href="javascript:void(0);" class="blue-href gp_td_<%= ad.id %>"><%= number_with_precision(ad.est_gp, :precision => 2, :delimiter => ",") %>
+                    <span>%</span></a>
 
-      <td class="align_left">
-        <%= ad.cost_type %>
-      </td>
+                  <div id="net_gp_form">
+                    <%= render :partial => "orders/change_advertisement_gp", locals: {ad_id: ad.id, ad_gp: ad.est_gp} %>
+                  </div>
+                </div>
+              </td>
 
-      <td class="align_right">
-       <%=ad.cost.present? ? number_with_precision(ad.cost, :precision => 2) : 0.00 %>
-      </td>
-      <td class="align_right">
-        <%= ad.discount.present? ? number_with_precision(ad.discount, :precision => 2) : 0.00 %> %
-      </td>
-      <td class="align_left">
+              <td class="align_left">
+                <%= ad.cost_type %>
+              </td>
+
+              <td class="align_right">
+                <%= ad.cost.present? ? number_with_precision(ad.cost, :precision => 2) : 0.00 %>
+              </td>
+              <td class="align_right">
+                <%= ad.discount.present? ? number_with_precision(ad.discount, :precision => 2) : 0.00 %> %
+              </td>
+              <td class="align_left">
         <span class="xmo-tooltip" data-position="right" data-width="200" data-wordbreak="break-all">
-          <% ad_measure = params[:locale] == "en" ? ad.admeasure_en : ad.admeasure  %>
-          <% ad_measure_array = ad_measure.present? ? ad_measure.map{|a| (a[0].present? ? a[0] : '') + " : " + (a[1].present? ? number_with_precision(a[1].to_f, :precision => 2, :delimiter => ",") : '0.00') } : [] %>
-          <%= ad_measure_array[0..2].join(",")%>
-          <% if ad_measure_array.size.to_i > 3%>
+          <% ad_measure = params[:locale] == "en" ? ad.admeasure_en : ad.admeasure %>
+          <% ad_measure_array = ad_measure.present? ? ad_measure.map { |a| (a[0].present? ? a[0] : '') + " : " + (a[1].present? ? number_with_precision(a[1].to_f, :precision => 2, :delimiter => ",") : '0.00') } : [] %>
+          <%= ad_measure_array[0..2].join(",") %>
+          <% if ad_measure_array.size.to_i > 3 %>
             <div class="popover xmo-popover fade in">
               <div class="arrow"></div>
               <div class="popover-inner xmo-popover-inner">
@@ -114,11 +131,11 @@
             </div>
            <% end %>
         </span>
-      </td>
-      <td class="align_left">
+              </td>
+              <td class="align_left">
        <span class="xmo-tooltip" data-position="right" data-width="200" data-wordbreak="break-all">
             <%= price_pres = ad.price_presentation %>
-           <% if price_pres.length > 11 %>
+         <% if price_pres.length > 11 %>
             <div class="popover xmo-popover fade in">
               <div class="arrow"></div>
               <div class="popover-inner xmo-popover-inner">
@@ -129,8 +146,8 @@
             </div>
            <% end %>
          </span>
-      </td>
-      <td class="align_left">
+              </td>
+              <td class="align_left">
         <span class="xmo-tooltip" data-position="right" data-width="200" data-wordbreak="break-all">
           <%= no_kpi = ad.nonstandard_kpi %>
           <% if no_kpi.length > 11 %>
@@ -144,245 +161,28 @@
             </div>
            <% end %>
         </span>
-      </td>
+              </td>
 
-    </tr>
-    <% end %>
+            </tr>
+        <% end %>
     <% end %>
     </tbody>
   </table>
   <div>
     <div class="row" style="margin-top: -35px;">
       <div style="font-size: 12px;display:inline">
-        <%= t('order.list.budget3') %>:&nbsp;<%= currency_sign(@order.budget_currency) %>&nbsp;<%= @order.budget.present? ? number_with_precision(@order.budget.to_f * ad_budget_sum/100, :precision => 2, :delimiter => ",") : ''%>
+        <%= t('order.list.budget3') %>
+        :&nbsp;<%= currency_sign(@order.budget_currency) %>&nbsp;<%= @order.budget.present? ? number_with_precision(@order.budget.to_f * ad_budget_sum/100, :precision => 2, :delimiter => ",") : '' %>
       </div>
-      <div style="font-size: 12px;display:inline;margin-left: 3px;">(<%= t('order.list.budget2') %> : <%= currency_sign(@order.budget_currency) %>  <%= @order.budget.present? ? number_with_precision(@order.budget.to_f, :precision => 2, :delimiter => ",") : ''%>)
-    </div>
+      <div style="font-size: 12px;display:inline;margin-left: 3px;">(<%= t('order.list.budget2') %>
+        : <%= currency_sign(@order.budget_currency) %>  <%= @order.budget.present? ? number_with_precision(@order.budget.to_f, :precision => 2, :delimiter => ",") : '' %>
+        )
+      </div>
     </div>
   </div>
 </div>
 
-
 <script type="text/javascript">
-
-
-      var ad_table = $('#advertisement_list_table').dataTable({
-            "oLanguage": {"sUrl": "/javascripts/i18n/dataTables-product.<%= I18n.locale.to_s%>.txt"},
-            // "scrollX": "110%",
-            // "sScrollXInner": "110%",
-            "bJQueryUI": false,
-            "bFilter": true,
-            "bAutoWidth": true,
-            "sDom": "<'row'<'pull-left'f><'table_pagin'p><'table_info'i>>t<'row table_bottom'<'table_pagin'p><'table_info'i>>",
-            "sPaginationType": "full_numbers",
-            "bPaginate": true,
-            "iDisplayLength": 10,
-            "columnDefs": [{orderable:false,
-                targets:[0]}],
-            "aaSorting": [],
-            "aoColumns": [
-                { "sType": "string","sWidth": "", "aTargets": [0]},
-                { "sType": "string","sWidth": "200px", "aTargets": [1]},
-                { "sType": "string","sWidth": "", "aTargets": [2]},
-                { "sType": "string","sWidth": "", "aTargets": [3]},
-                { "sType": "string","sWidth": "", "aTargets": [4]},
-                { "sType": "string","sWidth": "", "aTargets": [5]},
-                { "sType": "string","sWidth": "", "aTargets": [6]},
-                { "sType": "string","sWidth": "", "aTargets": [7]},
-                { "sType": "string","sWidth": "", "aTargets": [8]},
-                { "sType": "string","sWidth": "", "aTargets": [9]},
-                { "sType": "string","sWidth": "", "aTargets": [10]},
-                { "sType": "string","sWidth": "", "aTargets": [11]}
-            ]
-
-        });
-
-
-
-
-
-    function add_form_layer(){
-        var sum_budget_ratio = validate_budget_ratio();
-        var total_budget = <%= @order.budget.present? ? @order.budget : 0 %>
-        if (total_budget > 0) {
-            if (sum_budget_ratio >= total_budget) {
-                $(".notice").hide();
-                $(".error").hide();
-                $("#order_error").html("<div id='error_explanation' class='error sticker'> <%= t("order.form.budget_tip3")%></div>");
-                return false;
-            }
-        }
-        var url= '<%= new_advertisement_orders_path(:id=>@order.id) %>';
-        layer.open({
-            type: 2,
-            shadeClose: false,
-            title: false,
-            closeBtn: [1, true],
-            shade: [0.5, '#000'],
-            fix : false,
-            border: [6, 1, '#fff'],
-            area: ['800px',$(window).height() -100+ 'px'],
-            offset: ['66px'],
-            content: [url, 'yes'],
-            scrollbar: false,
-            zIndex : 999999999
-
-        });
-
-    }
-
-    function  edit_form_layer(id,flag){
-        var url= "/<%=I18n.locale %>/orders/edit_advertisement?flag="+flag+"&&ad_id="+id ;
-
-        layer.open({
-            type: 2,
-            shadeClose: false,
-            title: false,
-            closeBtn: [1, true],
-            shade: [0.5, '#000'],
-            fix : false,
-            border: [6, 1, '#fff'],
-            area: ['800px',$(window).height() - 100 + 'px'],
-            offset: ['66px'],
-            content: [url, 'yes'],
-            scrollbar: false,
-            zIndex : 999999999
-        });
-    }
-
-    $(".show_click_btn").click(function (){
-       ad_id = $(this).attr("ad_id")
-        edit_form_layer(ad_id,"show")
-    })
-
-    function delete_advertisement(id,order_id){
-        $.ajax({
-          type:"Get",
-          url: "/<%=I18n.locale %>/orders/delete_advertisement?ad_id="+id+"&&order_id="+order_id,
-          dataType: "text",
-          success: function(data){
-              $("#tab-ads").html(data);
-//              reset_tab_gp(<%#= @order.id%>);
-          },
-          error: function(msg){
-          }
-    })
-    }
-
-    var nodeids = $(".xmo-progress-status [order_id = "+ <%= @order.id %> +"]").last().attr('node_ids').split(",");
-    var current_order_statu = $(".xmo-progress-status [order_id = "+ <%= @order.id %> +"]").last().attr('status');
-    $('.edit_click_btn').click(function(){
-        var order_id = $(this).attr('product_order_id');
-        var data_cannot_edit = Order.data_cannot_edit(order_id);
-        var ad_id = $(this).attr('ad_id');
-//        var node_ids = $(".xmo-progress-status [order_id = "+ order_id +"]").last().attr('node_ids').split(",");
-        var status = current_order_statu.split(",");
-        if (jQuery.inArray("1",nodeids) > -1 && status[0] != "2" ){
-            $('#order_error').html("")
-            edit_form_layer(ad_id,"edit");
-        }else {
-            if (data_cannot_edit && <%= @order.state != "examine_completed" %>) {
-               $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination4')%></div>")
-                scroll(0,0);
-
-            } else {
-                $.get("<%= ajax_get_operate_authority_orders_path %>", {id: order_id,node_ids: nodeids,status:current_order_statu}, function (data) {
-                  var   authority = data.authority;
-                    if (jQuery.inArray("ad_edit",authority) > -1){
-                        $('#order_error').html("")
-                        edit_form_layer(ad_id,"edit");
-                    }else{
-                        $(".notice ").hide();
-                        $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination12')%></div>")
-                        scroll(0,0);
-
-                    }
-                })
-
-            }
-        }
-    });
-
-    $('.delete_click_btn').click(function(){
-        var order_id = $(this).attr('product_del_order_id');
-        var data_cannot_edit = Order.data_cannot_edit(order_id);
-        var ad_del_id = $(this).attr('ad_del_id');
-        if (data_cannot_edit && <%= @order.state != "examine_completed" %>){
-            $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination5')%></div>")
-            scroll(0,0);
-
-        }else{
-            $.get("<%= ajax_get_operate_authority_orders_path %>", {id: order_id,node_ids: nodeids,status:current_order_statu}, function (data) {
-                var   authority = data.authority;
-                if (jQuery.inArray("ad_delete",authority) > -1){
-                    $('#order_error').html("")
-                    delete_advertisement(ad_del_id,order_id);
-                }else{
-                    $(".notice ").hide();
-                    $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination12')%></div>")
-                    scroll(0,0);
-                }
-            })
-
-        }
-    });
-
-    $('#advertisement_link').click(function(){
-        var order_id = "<%= @order.id %>"
-        var data_cannot_edit = Order.data_cannot_edit(order_id);
-
-        if (data_cannot_edit && <%= @order.state != "examine_completed" %>){
-            $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination6')%></div>")
-            scroll(0,0);
-        }else{
-            $.get("<%= ajax_get_operate_authority_orders_path %>", {id: order_id,node_ids: nodeids,status:current_order_statu}, function (data) {
-                var   authority = data.authority;
-                if (jQuery.inArray("ad_create",authority) > -1){
-                    $('#order_error').html("")
-                    add_form_layer();
-                }else{
-                    $(".notice ").hide();
-                    $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination12')%></div>")
-                    scroll(0,0);
-                }
-            })
-        }
-    })
-
-
-
-    <% if @order.is_gp_commit  %>
-      var is_standard_v = <%= @order.is_standard %>
-      var arry_status = current_order_statu.split(",");
-      if((is_standard_v == false && arry_status[1] != "3")||(is_standard_v == true && arry_status[2] != "3")) {
-//          $(".booking-tooltip-click a").prop("disabled", true);
-//          $(".change_gp_submit").prop("disabled",true);
-          $(".booking-tooltip-click #net_gp_form").remove();
-      }
-    <% end%>
-
-    if (jQuery.inArray("7",nodeids) > -1){
-      }else if (jQuery.inArray("2",nodeids) > -1 || jQuery.inArray("3",nodeids) > -1){
-//        $(".booking-tooltip-click a").prop("disabled",true)
-//        $(".change_gp_submit").prop("disabled",true);
-        $(".booking-tooltip-click #net_gp_form").remove();
-      }else{
-        ad_table.fnSetColumnVis(5,false);
-    }
-
-
-
-    function validate_budget_ratio(){
-        var sum = 0;
-        $.each($("tbody #budget_ratio_ad"), function( index, value ) {
-            sum += parseFloat($(this).val());
-        });
-        return sum
-    }
-    $(document).ready(function() {
-                ChangeProductGp.init();
-    }
-    )
 
     var ChangeProductGp = {
         init: function () {
@@ -395,16 +195,16 @@
             $(document).on('blur', '.changed_product_gp', function () {
                 ChangeProductGp.ad_id = $(this).attr('ad_id');
                 var input_val = format_to_machine_number($(this).val());
-                if (input_val == ''){
+                if (input_val == '') {
                     input_val = '0.0'
-                }else if (parseFloat(input_val) > 100.0){
+                } else if (parseFloat(input_val) > 100.0) {
                     input_val = '100.0'
                 }
-                $("[name=changed_product_gp_"+ChangeProductGp.ad_id +"]").val(format_to_numeric(input_val));
+                $("[name=changed_product_gp_" + ChangeProductGp.ad_id + "]").val(format_to_numeric(input_val));
                 ChangeProductGp.change_gp = format_to_machine_number(input_val);
             });
 
-            $(document).on('click','.booking-tooltip-click.product_est_gp',function(){
+            $(document).on('click', '.booking-tooltip-click.product_est_gp', function () {
                 var that = $(this);
                 var dom = that.find('input[ad_id]')
                 ChangeProductGp.ad_id = dom.attr("ad_id");
@@ -414,44 +214,272 @@
 
 
         },
-        cancel_change_gp: function(){
-            $("[name=changed_product_gp_"+ChangeProductGp.ad_id+"]").val(ChangeProductGp.origin_gp);
+        cancel_change_gp: function () {
+            $("[name=changed_product_gp_" + ChangeProductGp.ad_id + "]").val(ChangeProductGp.origin_gp);
             $.hideTips();
         },
-        change_product_gp: function(){
+        change_product_gp: function () {
 
             var changed_product_gp_value = ChangeProductGp.change_gp;
 
-                    $.ajax({
-                    url: "<%= change_product_gp_orders_path %>",
-                    type: 'POST',
-                    data: {ad_id: ChangeProductGp.ad_id, change_gp: changed_product_gp_value},
-                    success: function (data) {
-                        console.log(data)
-                        $("[name=change_gp_tips_" + ChangeProductGp.ad_id + "]").html("");
-                        var numberic_change_gp = format_to_numeric(changed_product_gp_value);
-                        $(".gp_td_"+ChangeProductGp.ad_id).text(numberic_change_gp+"%");
-                        $("[name=changed_product_gp_"+ChangeProductGp.ad_id+"]").val(numberic_change_gp);
-                        ChangeProductGp.origin_gp = numberic_change_gp;
-                        $("#gp_evaluate").val(format_to_numeric(data.order_est_gp));
-                        $("#net_gp").val(gp_result());
-                        $.hideTips();
-                    },
-                    error: function () {
-                    }
-                    })
+            $.ajax({
+                url: "<%= change_product_gp_orders_path %>",
+                type: 'POST',
+                data: {ad_id: ChangeProductGp.ad_id, change_gp: changed_product_gp_value},
+                success: function (data) {
+                    console.log(data)
+                    $("[name=change_gp_tips_" + ChangeProductGp.ad_id + "]").html("");
+                    var numberic_change_gp = format_to_numeric(changed_product_gp_value);
+                    $(".gp_td_" + ChangeProductGp.ad_id).text(numberic_change_gp + "%");
+                    $("[name=changed_product_gp_" + ChangeProductGp.ad_id + "]").val(numberic_change_gp);
+                    ChangeProductGp.origin_gp = numberic_change_gp;
+                    $("#gp_evaluate").val(format_to_numeric(data.order_est_gp));
+                    $("#net_gp").val(gp_result());
+                    $.hideTips();
+                },
+                error: function () {
                 }
+            })
+        }
+    }
+
+    $(document).ready(function () {
+                ChangeProductGp.init();
             }
+    )
+    var ad_table = $('#advertisement_list_table').dataTable({
+        "oLanguage": {"sUrl": "/javascripts/i18n/dataTables-product.<%= I18n.locale.to_s%>.txt"},
+        // "scrollX": "110%",
+        // "sScrollXInner": "110%",
+        "bJQueryUI": false,
+        "bFilter": true,
+        "bAutoWidth": true,
+        "sDom": "<'row'<'pull-left'f><'table_pagin'p><'table_info'i>>t<'row table_bottom'<'table_pagin'p><'table_info'i>>",
+        "sPaginationType": "full_numbers",
+        "bPaginate": true,
+        "iDisplayLength": 10,
+        "columnDefs": [{
+            orderable: false,
+            targets: [0]
+        }],
+        "aaSorting": [],
+        "aoColumns": [
+            {"sType": "string", "sWidth": "", "aTargets": [0]},
+            {"sType": "string", "sWidth": "200px", "aTargets": [1]},
+            {"sType": "string", "sWidth": "", "aTargets": [2]},
+            {"sType": "string", "sWidth": "", "aTargets": [3]},
+            {"sType": "string", "sWidth": "", "aTargets": [4]},
+            {"sType": "string", "sWidth": "", "aTargets": [5]},
+            {"sType": "string", "sWidth": "", "aTargets": [6]},
+            {"sType": "string", "sWidth": "", "aTargets": [7]},
+            {"sType": "string", "sWidth": "", "aTargets": [8]},
+            {"sType": "string", "sWidth": "", "aTargets": [9]},
+            {"sType": "string", "sWidth": "", "aTargets": [10]},
+            {"sType": "string", "sWidth": "", "aTargets": [11]}
+        ]
+
+    });
+
+
+    function add_form_layer() {
+        var sum_budget_ratio = validate_budget_ratio();
+        var total_budget = <%= @order.budget.present? ? @order.budget : 0 %>
+        if (total_budget > 0) {
+            if (sum_budget_ratio >= total_budget) {
+                $(".notice").hide();
+                $(".error").hide();
+                $("#order_error").html("<div id='error_explanation' class='error sticker'> <%= t("order.form.budget_tip3")%></div>");
+                return false;
+            }
+        }
+        var url = '<%= new_order_advertisement_path(:order_id=>@order.id) %>';
+        layer.open({
+            type: 2,
+            shadeClose: false,
+            title: false,
+            closeBtn: [1, true],
+            shade: [0.5, '#000'],
+            fix: false,
+            border: [6, 1, '#fff'],
+            area: ['800px', $(window).height() - 100 + 'px'],
+            offset: ['66px'],
+            content: [url, 'yes'],
+            scrollbar: false,
+            zIndex: 999999999
+
+        });
+
+    }
+
+    function edit_form_layer(id, flag) {
+        var url = "/<%=I18n.locale %>/orders/<%= @order.id %>/advertisements/"+id+"/edit?flag=" + flag ;
+        layer.open({
+            type: 2,
+            shadeClose: false,
+            title: false,
+            closeBtn: [1, true],
+            shade: [0.5, '#000'],
+            fix: false,
+            border: [6, 1, '#fff'],
+            area: ['800px', $(window).height() - 100 + 'px'],
+            offset: ['66px'],
+            content: [url, 'yes'],
+            scrollbar: false,
+            zIndex: 999999999
+        });
+    }
+
+    $(".show_click_btn").click(function () {
+        ad_id = $(this).attr("ad_id")
+        edit_form_layer(ad_id, "show")
+    })
+
+    function delete_advertisement(id, order_id) {
+        $.ajax({
+            type: "Get",
+            url: "/<%=I18n.locale %>/orders/delete_advertisement?ad_id=" + id + "&&order_id=" + order_id,
+            dataType: "text",
+            success: function (data) {
+                $("#tab-ads").html(data);
+//              reset_tab_gp(<%#= @order.id%>);
+            },
+            error: function (msg) {
+            }
+        })
+    }
+
+    var nodeids = $(".xmo-progress-status [order_id = " + <%= @order.id %> +"]").last().attr('node_ids').split(",");
+    var current_order_statu = $(".xmo-progress-status [order_id = " + <%= @order.id %> +"]").last().attr('status');
+    $('.edit_click_btn').click(function () {
+        var order_id = $(this).attr('product_order_id');
+        var data_cannot_edit = Order.data_cannot_edit(order_id);
+        var ad_id = $(this).attr('ad_id');
+//        var node_ids = $(".xmo-progress-status [order_id = "+ order_id +"]").last().attr('node_ids').split(",");
+        var status = current_order_statu.split(",");
+        if (jQuery.inArray("1", nodeids) > -1 && status[0] != "2") {
+            $('#order_error').html("")
+            edit_form_layer(ad_id, "edit");
+        } else {
+            if (data_cannot_edit && <%= @order.state != "examine_completed" %>) {
+                $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination4')%></div>")
+                scroll(0, 0);
+            } else {
+                $.get("<%= ajax_get_operate_authority_orders_path %>", {
+                    id: order_id,
+                    node_ids: nodeids,
+                    status: current_order_statu
+                }, function (data) {
+                    var authority = data.authority;
+                    if (jQuery.inArray("ad_edit", authority) > -1) {
+                        $('#order_error').html("")
+                        edit_form_layer(ad_id, "edit");
+                    } else {
+                        $(".notice ").hide();
+                        $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination12')%></div>")
+                        scroll(0, 0);
+
+                    }
+                })
+
+            }
+        }
+    });
+
+    $('.delete_click_btn').click(function () {
+        var order_id = $(this).attr('product_del_order_id');
+        var data_cannot_edit = Order.data_cannot_edit(order_id);
+        var ad_del_id = $(this).attr('ad_del_id');
+        if (data_cannot_edit && <%= @order.state != "examine_completed" %>) {
+            $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination5')%></div>")
+            scroll(0, 0);
+
+        } else {
+            $.get("<%= ajax_get_operate_authority_orders_path %>", {
+                id: order_id,
+                node_ids: nodeids,
+                status: current_order_statu
+            }, function (data) {
+                var authority = data.authority;
+                if (jQuery.inArray("ad_delete", authority) > -1) {
+                    $('#order_error').html("")
+                    delete_advertisement(ad_del_id, order_id);
+                } else {
+                    $(".notice ").hide();
+                    $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination12')%></div>")
+                    scroll(0, 0);
+                }
+            })
+
+        }
+    });
+
+    $('#advertisement_link').click(function () {
+        var order_id = "<%= @order.id %>"
+        var data_cannot_edit = Order.data_cannot_edit(order_id);
+
+        if (data_cannot_edit && <%= @order.state != "examine_completed" %>) {
+            $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination6')%></div>")
+            scroll(0, 0);
+        } else {
+            $.get("<%= ajax_get_operate_authority_orders_path %>", {
+                id: order_id,
+                node_ids: nodeids,
+                status: current_order_statu
+            }, function (data) {
+                var authority = data.authority;
+                if (jQuery.inArray("ad_create", authority) > -1) {
+                    $('#order_error').html("")
+                    add_form_layer();
+                } else {
+                    $(".notice ").hide();
+                    $('#order_error').html("<div class='error'><%=t('order.form.order_under_examination12')%></div>")
+                    scroll(0, 0);
+                }
+            })
+        }
+    })
+
+
+    <% if @order.is_gp_commit  %>
+    var is_standard_v = <%= @order.is_standard %>
+    var arry_status = current_order_statu.split(",");
+    if ((is_standard_v == false && arry_status[1] != "3") || (is_standard_v == true && arry_status[2] != "3")) {
+//          $(".booking-tooltip-click a").prop("disabled", true);
+//          $(".change_gp_submit").prop("disabled",true);
+        $(".booking-tooltip-click #net_gp_form").remove();
+    }
+    <% end%>
+
+    if (jQuery.inArray("7", nodeids) > -1) {
+    } else if (jQuery.inArray("2", nodeids) > -1 || jQuery.inArray("3", nodeids) > -1) {
+//        $(".booking-tooltip-click a").prop("disabled",true)
+//        $(".change_gp_submit").prop("disabled",true);
+        $(".booking-tooltip-click #net_gp_form").remove();
+    } else {
+        ad_table.fnSetColumnVis(5, false);
+    }
+
+
+    function validate_budget_ratio() {
+        var sum = 0;
+        $.each($("tbody #budget_ratio_ad"), function (index, value) {
+            sum += parseFloat($(this).val());
+        });
+        return sum
+    }
+
 
     var node_object = $("[position = 'show_page']");
     <% if key_word_update_flag %>
-      node_object.attr("status","0,0,0,0,0,0");
-      node_object.attr("is_statndard_or_unstatnard",<%= @order.is_standard%>);
-      node_object.removeClass("status-submit");
-      node_object.removeClass("status-ready");
-      node_object.removeClass("status-error");
-      $(".statnard_or_unstatnard").attr("id","<%= @order.is_standard ? "#{@order.id}_non_standard_approval_message" : "#{@order.id}_order_approval_message" %>")
-      $("#" + <%= @order.id %> + "_unstandard_icon").html("");
+    node_object.attr("status", "0,0,0,0,0,0");
+    node_object.attr("is_statndard_or_unstatnard", <%= @order.is_standard%>);
+    node_object.removeClass("status-submit");
+    node_object.removeClass("status-ready");
+    node_object.removeClass("status-error");
+    $(".statnard_or_unstatnard").attr("id", "<%= @order.is_standard ? "#{@order.id}_non_standard_approval_message" : "#{@order.id}_order_approval_message" %>")
+    $("#" + <%= @order.id %> +"_unstandard_icon").html("");
     <% end %>
 
-    </script>
+</script>
+
+

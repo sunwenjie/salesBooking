@@ -1,11 +1,10 @@
-<%= javascript_include_tag "/js/jquery.xmo_tooltips" %>
 <%
    # order_approval_flow = Order.with_current_order(current_user.id,@order.id).last
 
    @options = Operation.all.group_by(&:order_id)
-    is_statndard_or_unstatnard =   @order.is_standard
-    status = order_approval_flow["status"]
-    node_ids = order_approval_flow["node_ids"]
+   is_statndard_or_unstatnard = @order.is_standard
+   status = order_approval_flow["status"]
+   node_ids = order_approval_flow["node_ids"]
    is_pre_check = Order.orders_by_pre_check(@order.id).map(&:id).present?
 %>
 
@@ -13,56 +12,62 @@
   <tr>
     <td style="padding: 5px;"><%= t("order.flow.submit_or_approval") %></td>
     <td class="v_align_middle approve_flows">
-      <div class="xmo-progress-status" >
+      <div class="xmo-progress-status">
 
 
-        <div class="xmo-progress-status-step no-mouseout xmo-tooltip-click    <%= @order.whether_service == true ? '' : order_approval_flow_status(status,0,is_statndard_or_unstatnard)%>" data-position="bottom" type="pre_check" order_id="<%= @order.id%>"  node_ids="<%= node_ids %>" status="<%= status %>" is_statndard_or_unstatnard="<%= is_statndard_or_unstatnard %>" url="<%= ajax_node_message_orders_path %>" is_pre_check="<%= is_pre_check %>" position="show_page" >
-          <span class="<%= (is_pre_check == false || @order.whether_service == true) ? "node_black" : "xmo-progress-status-round"   %> ">
+        <div class="xmo-progress-status-step no-mouseout xmo-tooltip-click    <%= @order.whether_service == true ? '' : order_approval_flow_status(status, 0, is_statndard_or_unstatnard) %>" data-position="bottom" type="pre_check" order_id="<%= @order.id %>" node_ids="<%= node_ids %>" status="<%= status %>" is_statndard_or_unstatnard="<%= is_statndard_or_unstatnard %>" url="<%= ajax_node_message_orders_path %>" is_pre_check="<%= is_pre_check %>" position="show_page">
+          <span class="<%= (is_pre_check == false || @order.whether_service == true) ? "node_black" : "xmo-progress-status-round" %> ">
             <%= t("order.flow.pre_sale_check") %>
           </span>
           <span class="xmo-progress-status-arrow"></span>
-          <div id="<%=@order.id.to_s%>_pre_check_message"></div>
+
+          <div id="<%= @order.id.to_s %>_pre_check_message"></div>
         </div>
 
-        <div  class="xmo-progress-status-step no-mouseout  xmo-tooltip-click  <%= @order.is_gp_commit == true ? 'status-ready' : order_approval_flow_status(status,4,is_statndard_or_unstatnard) %>" data-position="bottom" type="gp_control" order_id="<%= @order.id%>" node_ids="<%= node_ids %>" status="<%= status %>" url="<%= ajax_node_message_orders_path %>" position="show_page">
+        <div class="xmo-progress-status-step no-mouseout  xmo-tooltip-click  <%= @order.is_gp_commit == true ? 'status-ready' : order_approval_flow_status(status, 4, is_statndard_or_unstatnard) %>" data-position="bottom" type="gp_control" order_id="<%= @order.id %>" node_ids="<%= node_ids %>" status="<%= status %>" url="<%= ajax_node_message_orders_path %>" position="show_page">
           <span class="<%= @order.is_jast_for_gp == true ? 'xmo-progress-status-round' : 'node_black' %>"><%= t("order.flow.gp_control") %></span>
           <span class="xmo-progress-status-arrow"></span>
-          <div class="gp_part"  id="<%=@order.id.to_s%>_gp_control_message"></div>
+
+          <div class="gp_part" id="<%= @order.id.to_s %>_gp_control_message"></div>
         </div>
 
 
-        <div class="xmo-progress-status-step no-mouseout xmo-tooltip-click  no-mouseout  <%=order_approval_flow_status(status,1,is_statndard_or_unstatnard)%>" data-position="bottom" type="order_approval" order_id="<%= @order.id%>"  node_ids="<%= node_ids %>" status="<%= status %>" is_statndard_or_unstatnard="<%= is_statndard_or_unstatnard %>" url="<%= ajax_node_message_orders_path %>" position="show_page">
+        <div class="xmo-progress-status-step no-mouseout xmo-tooltip-click  no-mouseout  <%= order_approval_flow_status(status, 1, is_statndard_or_unstatnard) %>" data-position="bottom" type="order_approval" order_id="<%= @order.id %>" node_ids="<%= node_ids %>" status="<%= status %>" is_statndard_or_unstatnard="<%= is_statndard_or_unstatnard %>" url="<%= ajax_node_message_orders_path %>" position="show_page">
           <span class="xmo-progress-status-round"><%= t("order.flow.order_approve") %>
-            <span id="<%= @order.id.to_s %>_unstandard_icon" style="position: absolute;<%= I18n.locale.to_s == "en" ? 'margin-left:-3px' : 'margin-left:5px'%>">
-             <% if is_statndard_or_unstatnard  %>
-             <img src= "<%= I18n.locale.to_s == "en" ? '/images/flow/icon_specialapproval-e.png' : '/images/flow/icon_specialapproval-c.png'%>"  style="float: right;margin-top: -5px;margin-right: -1px;">
-             <% end %>
+            <span id="<%= @order.id.to_s %>_unstandard_icon" style="position: absolute;<%= I18n.locale.to_s == "en" ? 'margin-left:-3px' : 'margin-left:5px' %>">
+             <% if is_statndard_or_unstatnard %>
+                 <%= image_tag I18n.locale.to_s == 'en' ? 'flow/icon_specialapproval-e.png' : 'flow/icon_specialapproval-c.png', :style => "float: right;margin-top: -5px;margin-right: -1px;" %>
+              <% end %>
             </span>
 
           </span>
           <span class="xmo-progress-status-arrow"></span>
-          <div id="<%= @order.id.to_s %>_<%= is_statndard_or_unstatnard ? "non_standard_approval_message" :"order_approval_message" %>" class="statnard_or_unstatnard">
+
+          <div id="<%= @order.id.to_s %>_<%= is_statndard_or_unstatnard ? "non_standard_approval_message" : "order_approval_message" %>" class="statnard_or_unstatnard">
 
           </div>
         </div>
-        <div  data-position="bottom" class="no-mouseout xmo-progress-status-step   xmo-tooltip-click  <%= @order.schedule_status == t('order.flow.schedule_list_submit') ? 'status-ready' : '' %>" type="schedul_list" order_id="<%= @order.id%>" status="<%= status %>"  url="<%= ajax_node_message_orders_path %>" position="show_page">
-          <span class="xmo-progress-status-round"><%= t("order.flow.upload_schedule_list")%></span>
+        <div data-position="bottom" class="no-mouseout xmo-progress-status-step   xmo-tooltip-click  <%= @order.schedule_status == t('order.flow.schedule_list_submit') ? 'status-ready' : '' %>" type="schedul_list" order_id="<%= @order.id %>" status="<%= status %>" url="<%= ajax_node_message_orders_path %>" position="show_page">
+          <span class="xmo-progress-status-round"><%= t("order.flow.upload_schedule_list") %></span>
           <span class="xmo-progress-status-arrow"></span>
-          <div class="gp_part" id="<%=@order.id.to_s%>_schedul_list_message"></div>
+
+          <div class="gp_part" id="<%= @order.id.to_s %>_schedul_list_message"></div>
 
         </div>
 
-        <div class="xmo-progress-status-step no-mouseout xmo-tooltip-click  <%=order_approval_flow_status(status,2,is_statndard_or_unstatnard)%>" data-position="bottom" type="contract_check" order_id="<%= @order.id%>"  node_ids="<%= node_ids %>" status="<%= status %>" is_statndard_or_unstatnard="<%= is_statndard_or_unstatnard %>" url="<%= ajax_node_message_orders_path %>" position="show_page">
+        <div class="xmo-progress-status-step no-mouseout xmo-tooltip-click  <%= order_approval_flow_status(status, 2, is_statndard_or_unstatnard) %>" data-position="bottom" type="contract_check" order_id="<%= @order.id %>" node_ids="<%= node_ids %>" status="<%= status %>" is_statndard_or_unstatnard="<%= is_statndard_or_unstatnard %>" url="<%= ajax_node_message_orders_path %>" position="show_page">
           <span class="xmo-progress-status-round"><%= t("order.flow.contract_confirmation") %> </span>
           <span class="xmo-progress-status-arrow"></span>
-          <div id="<%=@order.id.to_s%>_contract_check_message">
+
+          <div id="<%= @order.id.to_s %>_contract_check_message">
 
           </div>
         </div>
-        <div data-position="left" class="xmo-progress-status-step no-mouseout xmo-tooltip-click  <%= color_class_for_distribute(@options[@order.id],status) %>" type="order_distribution" order_id="<%= @order.id%>" node_ids="<%= node_ids %>"  status="<%= status %>" is_statndard_or_unstatnard="<%= is_statndard_or_unstatnard %>"  url="<%= ajax_node_message_orders_path %>" position="show_page">
-          <span class="xmo-progress-status-round"><%= t("order.flow.operation_assignment")%></span>
+        <div data-position="left" class="xmo-progress-status-step no-mouseout xmo-tooltip-click  <%= color_class_for_distribute(@options[@order.id], status) %>" type="order_distribution" order_id="<%= @order.id %>" node_ids="<%= node_ids %>" status="<%= status %>" is_statndard_or_unstatnard="<%= is_statndard_or_unstatnard %>" url="<%= ajax_node_message_orders_path %>" position="show_page">
+          <span class="xmo-progress-status-round"><%= t("order.flow.operation_assignment") %></span>
           <span class="xmo-progress-status-arrow"></span>
-          <div id="<%=@order.id.to_s%>_order_distribution_message"></div>
+
+          <div id="<%= @order.id.to_s %>_order_distribution_message"></div>
         </div>
         <div style="padding-left: 2px;"></div>
       </div>
@@ -70,4 +75,4 @@
   </tr>
 </table>
 
-<%= render :partial => "submit_and_approval_js" %>
+<%= render 'submit_and_approval_js' %>

@@ -8,5 +8,5 @@ class ScheduleWorker
       ErrorMailer.send_error_message(RECIPIENTS, e.message.to_s).deliver
     end
   end
-  
+
 end

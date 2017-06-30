@@ -1,23 +1,23 @@
 <div style="padding-left: 20px">
-      <% if @order.jast_for_gp_advertisement?  %>
+  <% if @order.jast_for_gp_advertisement? %>
 
-          <div id="pv_config_form">
-            <% if flash[:error] %>
-                <div class="error " style="margin-top: -20px;"><%= raw flash[:error] %></div>
-            <% end %>
-            <%if flash[:notice] %>
-                <div class="notice" style="margin-top: -20px;"><%= flash[:notice] %></div>
-            <% end %>
-            <div id="gp_edit_error"></div>
-            <% if @order.id  %>
-                <% order_gp_rake = @order.gp_evaluate.nil_zero? ?   @order.est_gp : @order.gp_evaluate %>
-                <%#= hidden_field_tag "gp_evaluate_hidden",order_gp_rake %>
-                <%= render :partial => "orders/pv_config_data_form",:locals => {:order_gp_rake =>order_gp_rake}%>
-            <% end %>
-          </div>
-      <% else %>
-          <div class="control-group" >
-            <div class="notice"><%= t('order.form.order_estimate_gp') %></div>
-          </div>
-      <% end %>
+      <div id="pv_config_form">
+        <% if flash[:error] %>
+            <div class="error " style="margin-top: -20px;"><%= raw flash[:error] %></div>
+        <% end %>
+        <% if flash[:notice] %>
+            <div class="notice" style="margin-top: -20px;"><%= flash[:notice] %></div>
+        <% end %>
+        <div id="gp_edit_error"></div>
+        <% if @order.id %>
+            <% order_gp_rake = @order.gp_evaluate.nil_zero? ? @order.est_gp : @order.gp_evaluate %>
+            <%#= hidden_field_tag "gp_evaluate_hidden",order_gp_rake %>
+            <%= render :partial => "orders/pv_config_data_form", :locals => {:order_gp_rake => order_gp_rake} %>
+        <% end %>
+      </div>
+  <% else %>
+      <div class="control-group">
+        <div class="notice"><%= t('order.form.order_estimate_gp') %></div>
+      </div>
+  <% end %>
 </div>

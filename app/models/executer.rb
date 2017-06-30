@@ -1,5 +1,5 @@
 class Executer < Asset
-  belongs_to :order,inverse_of: :executer,touch:true
+  belongs_to :order, inverse_of: :executer, touch: true
 
   attr_accessor :uploader_secure_token
 

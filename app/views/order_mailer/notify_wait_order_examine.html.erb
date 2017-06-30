@@ -1,156 +1,166 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 
 <body>
 <% if @local_language == "en" %>
-<div>
-  <p>Dear Sir/Madam,</p>
+    <div>
+      <p>Dear Sir/Madam,</p>
 
-    <% if @node_id != 1 && @node_id != 5 %>
-      <% if @node_id == 7 %>
-          <p>If you do require to adjust the product est. GP % , kindly click on below URL to access the system.</p>
-          <p>If the order added with product - OTHER, you are require to click on below URL to adjust product est. GP% in the system.</p>
-      <% elsif @node_id == 4 %>
-          <p>Please login to the system using below link to review and process the contract approval.</p>
-      <% else %>
-          <p>If you need to amend the agency rebate / marketing cost, please login to the system using below link to adjust and process approval through the system.</p>
-      <% end %>
+      <% if @node_id != 1 && @node_id != 5 %>
+          <% if @node_id == 7 %>
+              <p>If you do require to adjust the product est. GP % , kindly click on below URL to access the system.</p>
 
-      <p>Link: http://<%= CURRENT_DOMAIN %>/en/orders/<%=@order.id%>?examination_id=<%= @examination_id %></p>
+              <p>If the order added with product - OTHER, you are require to click on below URL to adjust product est.
+                GP% in the system.</p>
+          <% elsif @node_id == 4 %>
+              <p>Please login to the system using below link to review and process the contract approval.</p>
+          <% else %>
+              <p>If you need to amend the agency rebate / marketing cost, please login to the system using below link to
+                adjust and process approval through the system.</p>
+          <% end %>
 
-      <p>Or you may process the approval by reply the email with YES / NO. (Case insensitive)</p>
-      <% if @node_id == 4 %>
-          <p>YES: You agree to approve this order.</p>
-      <% else %>
-          <p>YES: You agree to approve this order with relevant GP values</p>
-      <% end %>
+          <p>Link: http://<%= CURRENT_DOMAIN %>/en/orders/<%= @order.id %>?examination_id=<%= @examination_id %></p>
+
+          <p>Or you may process the approval by reply the email with YES / NO. (Case insensitive)</p>
+          <% if @node_id == 4 %>
+              <p>YES: You agree to approve this order.</p>
+          <% else %>
+              <p>YES: You agree to approve this order with relevant GP values</p>
+          <% end %>
           <p>NO: You reject this order</p>
-    <% else %>
-        <% if @node_id == 5 %>
-          <p>Please click below link to process job assignment. </p>
-        <% else %>
-          <p>Please click below link to process preliminary check. </p>
-          <p>* Not support email approval in preliminary check </p>
-        <% end %>
-
-      <p>Link: http://<%= CURRENT_DOMAIN %>/en/orders/<%=@order.id%>?examination_id=<%= @examination_id %></p>
-    <% end %>
-
-
-    <%if @order.order_standard_or_unstandard?%>
-      <p style="color:red;">
-        Note: This is non-standard order. (See below details)
-      </p>
-    <%end%>
-
-  <!--<%#if @order.jast_for_gp_advertisement? && (@node_id == 2 || @node_id == 3 || @node_id == 7)   %>-->
-
-        <!--<%# if @order.net_gp.present? %>-->
-          <!--<p style="color:red;margin-top: 30px;">GP Level: <%#= @order.return_gp_result("en") %></p>-->
-          <!--<p style="color:red;margin-top: 30px;">GP：<%#= sprintf("%.2f", @order.net_gp)%>%</p>-->
-        <!--<%# else %>-->
-            <!--<p style="color:red;margin-top: 30px;">GP Control Unsubmited。</p>-->
-        <!--<%# end %>-->
-  <!--<%# end %>-->
-
-
-  <%if !@order.jast_for_gp_advertisement? %>
-      <p style="margin-top: 30px;">
-        Product(s) in this order do not support GP estimation.
-      </p>
-  <% end %>
-
-  <div>
-    <%if @order.whether_service?%>
-        <%= render :partial => "service_order_template_en",:object=> @order %>
-    <%else %>
-        <%= render :partial => "order_template_en",:object=> @order %>
-        <%= render :partial => "advertisement_template_en",:locals=>{:order => @order,:node_id => @node_id} %>
-        <% if [2,3,7].include? @node_id %>
-
-       <%= render :partial => "gp_template_en",:locals=>{:order => @order,:node_id =>@node_id} %>
-        <% end %>
-    <% end %>
-    <p>If any enquiries, please contact: technology@i-click.com</p>
-    <p>Regards,</p>
-    <p>iClick Interactive Asia Limited</p>
-  </div>
-</div>
-
-<% else %>
-<div>
-  <p>您好:</p>
-
-    <% if @node_id != 1 && @node_id != 5 %>
-    <% if @node_id == 7 %>
-    <p>如需要修改个別产品的预估毛利, 请点击下方的链接登录系统。
-    <p>如订单上选择之产品为 - 其他, 亦请务必点击下方的链接登录系统进行该产品之毛利修改。</p>
-    <% elsif @node_id == 4 %>
-    <p>如需查看合同，请点击下方的链接登录系统以便查看。</p>
-    <% else %>
-    <p>如需修改代理返点 / 市场推广费用，请点击下方的链接登录系统。</p>
-    <% end %>
-
-    <p>链接：http://<%= CURRENT_DOMAIN %>/zh-cn/orders/<%=@order.id%>?examination_id=<%= @examination_id %></p>
-
-    <p>或可直接在此電郵回复YES或NO进行审批 (不区分大小写)</p>
-    <% if @node_id == 4 %>
-    <p>YES：您通过审批</p>
-    <% else %>
-    <p>YES：您就有关的GP值表示同意及通过审批</p>
-    <% end %>
-    <p>NO：您不通过审批</p>
-<% else %>
-      <% if @node_id == 5 %>
-        <p>请点击下方的链接登录系统进行运营分配。 </p>
       <% else %>
-        <p>请点击下方的链接登录系统进行预审。</p>
-        <p>*预审不支持邮件审批 </p>
+          <% if @node_id == 5 %>
+              <p>Please click below link to process job assignment. </p>
+          <% else %>
+              <p>Please click below link to process preliminary check. </p>
+
+              <p>* Not support email approval in preliminary check </p>
+          <% end %>
+
+          <p>Link: http://<%= CURRENT_DOMAIN %>/en/orders/<%= @order.id %>?examination_id=<%= @examination_id %></p>
       <% end %>
-      <p>链接：http://<%= CURRENT_DOMAIN %>/zh-cn/orders/<%=@order.id%>?examination_id=<%= @examination_id %></p>
-  <% end %>
 
-  <%if @order.order_standard_or_unstandard?%>
-      <p style="color:red;">
-        注：此订单为非标订单，需经待批（细节已在订单中标出）
-      </p>
-  <%end%>
 
-  <!--<%#if  @order.jast_for_gp_advertisement? && (@node_id == 2 || @node_id == 3 || @node_id == 7) %>-->
+      <% if @order.order_standard_or_unstandard? %>
+          <p style="color:red;">
+            Note: This is non-standard order. (See below details)
+          </p>
+      <% end %>
 
-        <!--<%# if @order.net_gp.present? %>-->
-          <!--<p style="color:red;margin-top: 30px;">订单毛利等级: <%#= @order.return_gp_result("zh-cn") %></p>-->
-          <!--<p style="color:red;margin-top: 30px;">净毛利：<%#= sprintf("%.2f", @order.net_gp )%>%</p>-->
-        <!--<%# else %>-->
-          <!--<p style="color:red;margin-top: 30px;">订单毛利未核算。</p>-->
-        <!--<%# end %>-->
-  <!--<%# end %>-->
+      <!--<%#if @order.jast_for_gp_advertisement? && (@node_id == 2 || @node_id == 3 || @node_id == 7)   %>-->
 
-  <%if !@order.jast_for_gp_advertisement? %>
-      <p style="margin-top: 30px;">
-        此订单产品暂不支持GP预估,请见谅。
-      </p>
-  <% end %>
+      <!--<%# if @order.net_gp.present? %>-->
+      <!--<p style="color:red;margin-top: 30px;">GP Level: <%#= @order.return_gp_result("en") %></p>-->
+      <!--<p style="color:red;margin-top: 30px;">GP：<%#= sprintf("%.2f", @order.net_gp)%>%</p>-->
+      <!--<%# else %>-->
+      <!--<p style="color:red;margin-top: 30px;">GP Control Unsubmited。</p>-->
+      <!--<%# end %>-->
+      <!--<%# end %>-->
 
-  <div>
-    <%if @order.whether_service?%>
-        <%= render :partial => "service_order_template",:object=> @order %>
-    <%else %>
-        <%= render :partial => "order_template",:object=> @order %>
-        <%= render :partial => "advertisement_template",:locals=>{:order => @order,:node_id => @node_id} %>
-        <% if [2,3,7].include? @node_id %>
-        <%= render :partial => "gp_template",:locals=>{:order => @order,:node_id => @node_id} %>
-        <% end%>
-  <% end %>
 
-    <p>如有问题，请联系: technology@i-click.com</p>
-    <p>谢谢</p>
-    <p>爱点击互动（北京）广告有限公司</p>
-  </div>
-</div>
+      <% if !@order.jast_for_gp_advertisement? %>
+          <p style="margin-top: 30px;">
+            Product(s) in this order do not support GP estimation.
+          </p>
+      <% end %>
+
+      <div>
+        <% if @order.whether_service? %>
+            <%= render 'service_order_template_en',object: @order %>
+        <% else %>
+            <%= render 'order_template_en',object: @order %>
+            <%= render 'advertisement_template_en',{order: @order,node_id: @node_id} %>
+            <% if [2, 3, 7].include? @node_id %>
+
+                <%= render 'gp_template_en', {order: @order,node_id: @node_id} %>
+            <% end %>
+        <% end %>
+        <p>If any enquiries, please contact: technology@i-click.com</p>
+
+        <p>Regards,</p>
+
+        <p>iClick Interactive Asia Limited</p>
+      </div>
+    </div>
+
+<% else %>
+    <div>
+      <p>您好:</p>
+
+      <% if @node_id != 1 && @node_id != 5 %>
+          <% if @node_id == 7 %>
+              <p>如需要修改个別产品的预估毛利, 请点击下方的链接登录系统。
+
+              <p>如订单上选择之产品为 - 其他, 亦请务必点击下方的链接登录系统进行该产品之毛利修改。</p>
+          <% elsif @node_id == 4 %>
+              <p>如需查看合同，请点击下方的链接登录系统以便查看。</p>
+          <% else %>
+              <p>如需修改代理返点 / 市场推广费用，请点击下方的链接登录系统。</p>
+          <% end %>
+
+          <p>链接：http://<%= CURRENT_DOMAIN %>/zh-cn/orders/<%= @order.id %>?examination_id=<%= @examination_id %></p>
+
+          <p>或可直接在此電郵回复YES或NO进行审批 (不区分大小写)</p>
+          <% if @node_id == 4 %>
+              <p>YES：您通过审批</p>
+          <% else %>
+              <p>YES：您就有关的GP值表示同意及通过审批</p>
+          <% end %>
+          <p>NO：您不通过审批</p>
+      <% else %>
+          <% if @node_id == 5 %>
+              <p>请点击下方的链接登录系统进行运营分配。 </p>
+          <% else %>
+              <p>请点击下方的链接登录系统进行预审。</p>
+
+              <p>*预审不支持邮件审批 </p>
+          <% end %>
+          <p>链接：http://<%= CURRENT_DOMAIN %>/zh-cn/orders/<%= @order.id %>?examination_id=<%= @examination_id %></p>
+      <% end %>
+
+      <% if @order.order_standard_or_unstandard? %>
+          <p style="color:red;">
+            注：此订单为非标订单，需经待批（细节已在订单中标出）
+          </p>
+      <% end %>
+
+      <!--<%#if  @order.jast_for_gp_advertisement? && (@node_id == 2 || @node_id == 3 || @node_id == 7) %>-->
+
+      <!--<%# if @order.net_gp.present? %>-->
+      <!--<p style="color:red;margin-top: 30px;">订单毛利等级: <%#= @order.return_gp_result("zh-cn") %></p>-->
+      <!--<p style="color:red;margin-top: 30px;">净毛利：<%#= sprintf("%.2f", @order.net_gp )%>%</p>-->
+      <!--<%# else %>-->
+      <!--<p style="color:red;margin-top: 30px;">订单毛利未核算。</p>-->
+      <!--<%# end %>-->
+      <!--<%# end %>-->
+
+      <% if !@order.jast_for_gp_advertisement? %>
+          <p style="margin-top: 30px;">
+            此订单产品暂不支持GP预估,请见谅。
+          </p>
+      <% end %>
+
+      <div>
+        <% if @order.whether_service? %>
+            <%= render 'service_order_template',object: @order %>
+        <% else %>
+            <%= render 'order_template',object: @order %>
+            <%= render 'advertisement_template',{order: @order,node_id: @node_id} %>
+            <% if [2, 3, 7].include? @node_id %>
+                <%= render 'gp_template', {order: @order,node_id:  @node_id} %>
+            <% end %>
+        <% end %>
+
+        <p>如有问题，请联系: technology@i-click.com</p>
+
+        <p>谢谢</p>
+
+        <p>爱点击互动（北京）广告有限公司</p>
+      </div>
+    </div>
 <% end %>
 </body>
 </html>

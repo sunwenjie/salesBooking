@@ -2,19 +2,21 @@ log = Logger.new("/opt/sales_booking/current/log/email.log")
 
 Mail.defaults do
   if Rails.env == "production"
-      retriever_method :imap, :address    => "outlook.office365.com",
-                              :port       => 993,
+      retriever_method :imap, :address    => "imap.i-click.com",
+                              :port       => 143,
                               :user_name  => 'sales_notification@i-click.com',
-                              :password   => 'Fuvo1200',
+                              :password   => 'sales1208',
                               :enable_ssl => false
   else
-      retriever_method :imap, :address    => "outlook.office365.com",
-                              :port       => 993,
+      retriever_method :imap, :address    => "imap.i-click.com",
+                              :port       => 143,
                               :user_name  => 'sales_notification_staging@i-click.com',
-                              :password   => 'Paqu7342',
+                              :password   => 'sales1208',
                               :enable_ssl => false
   end
 end
+
+
 
 EM.run {
   EM.add_periodic_timer(5) do
@@ -104,5 +106,3 @@ EM.run {
     end
   end
 }
-
-

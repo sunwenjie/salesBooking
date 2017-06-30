@@ -62,11 +62,11 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host:'sales.optimix.asia', port: '80' }
   config.action_mailer.smtp_settings = {
-    address:              'smtp.office365.com',
-    port:                 587,
-    # domain:               'sales.optimix.asia:80',
+    address:              'smtp.i-click.com',
+    port:                 25,
+    domain:               'sales.optimix.asia:80',
     user_name:            'sales_notification@i-click.com',
-    password:             'Fuvo1200',
+    password:             'sales1208',
     authentication:       :login,
     enable_starttls_auto: true  }
 

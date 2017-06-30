@@ -1,96 +1,96 @@
-<script src="/libs/datatables-1.10.4/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
-
-
 
 <% if flash[:error] %>
     <div class="error"><%= flash[:error] %></div>
 <% end %>
-<%if flash[:notice] %>
+<% if flash[:notice] %>
     <div class="notice "><%= flash[:notice] %></div>
 <% end %>
 <!--xmo-search-->
 <!-- <div class="clean_padding"></div> -->
 <!-- chart -->
-<div class= "table_white">
+<div class="table_white">
   <table class="table table-striped table-bordered table-condensed unlimited_width search_table" cellpadding="0" cellspaceing="0" border="0" id="flow_list">
     <thead>
-      <tr class='even'>
-        <th class="align_left align_top"><%=t(".action")%></th>
-        <th class="align_left align_top"><%=t(".name")%></th>
-        <th class="align_left align_top"><%=t(".flow")%></th>
-        <th class="align_left align_top"><%=t(".product")%></th>
-        <th class="align_left align_top"><%=t(".bu")%></th>
-        <th class="align_left align_top"><%=t(".user_group")%></th>
-        <th class="align_left v_align_middle"><%=t(".approve_group")%></th>
-      </tr>
+    <tr class='even'>
+      <th class="align_left align_top"><%= t(".action") %></th>
+      <th class="align_left align_top"><%= t(".name") %></th>
+      <th class="align_left align_top"><%= t(".flow") %></th>
+      <th class="align_left align_top"><%= t(".product") %></th>
+      <th class="align_left align_top"><%= t(".bu") %></th>
+      <th class="align_left align_top"><%= t(".user_group") %></th>
+      <th class="align_left v_align_middle"><%= t(".approve_group") %></th>
+    </tr>
     </thead>
     <tbody>
-      <%if @list.present?%>
-        <%@list.each do |item|%>
-        <tr class="<%= cycle("odd", "even") %>">
-          <td class="align_center sorting_1">
+    <% if @list.present? %>
+        <% @list.each do |item| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <td class="align_center sorting_1">
             <span data-position="right" data-offset="left_0" class="xmo-tooltip l_margin_0 l_padding_5" data-id="a07843974591232836">
                 <i class="icon-setup">
                   <div class="popover xmo-popover fade in">
                     <div class="arrow"></div>
                     <div class="popover-inner xmo-popover-inner">
                       <div class="popover-content">
-                       <p> <%=link_to  "#{t('order.list.edit_label')}",edit_approval_flow_path(:id=>item['id'])%></p>
-                        <p><%=link_to  "#{t('order.form.delete_button')}",delete_approval_flow_approval_flow_path(:id=>item['id'])%></p>
+                        <p> <%= link_to "#{t('order.list.edit_label')}", edit_approval_flow_path(:id => item['id']) %></p>
+
+                        <p><%= link_to "#{t('order.form.delete_button')}", delete_approval_flow_approval_flow_path(:id => item['id']) %></p>
                       </div>
                     </div>
                   </div>
                 </i>
             </span>
-          </td>
-          <td class="align_left align_top">
-            <%=item.name%>
-          </td>
+              </td>
+              <td class="align_left align_top">
+                <%= item.name %>
+              </td>
 
-          <td class="align_left align_top">
-            <%#= t("approval_flows.index.flow_#{item.node.actionname}")%>
-            <%= I18n.locale.to_s == "en" ?  item.node.enname : item.node.name %>
-          </td>
+              <td class="align_left align_top">
+                <%#= t("approval_flows.index.flow_#{item.node.actionname}")%>
+                <%= I18n.locale.to_s == "en" ? item.node.enname : item.node.name %>
+              </td>
 
-          <td class="align_left align_top">
-            <%=item.product_type ? item.product_type.reject{|r|r.blank?}.join(',') : "" %>
-          </td>
+              <td class="align_left align_top">
+                <%= item.product_type ? item.product_type.reject { |r| r.blank? }.join(',') : "" %>
+              </td>
 
-          <td class="align_left align_top">
-            <%=item.bu%>
-          </td>
+              <td class="align_left align_top">
+                <%= item.bu %>
+              </td>
 
-          <td class="align_left align_top">
-            <%=item.group.group_name%>
-          </td>
+              <td class="align_left align_top">
+                <%= item.group.group_name %>
+              </td>
 
-          <td class="align_left align_top">
-            <%=item.approver_group.group_name%>
-          </td>
-        </tr>
-        <%end%>
-      <%end%>
+              <td class="align_left align_top">
+                <%= item.approver_group.group_name %>
+              </td>
+            </tr>
+        <% end %>
+    <% end %>
     </tbody>
   </table>
 </div>
 <script type="text/javascript">
-  $(function () {
+    $(function () {
 
-    $("[data-toggle='tooltip']").tooltip();
-    $('#flow_list').dataTable({
-        "oLanguage": { "sUrl": "/javascripts/i18n/dataTables-new.<%= I18n.locale.to_s%>.txt" },
-        "bJQueryUI": false,
-        "bFilter": true,
-        "sDom": "<'row'<'pull-left'f><'table_pagin'p><'table_info'i>>t<'row table_bottom'<'table_pagin'p><'table_info'i>>",
-        "sPaginationType": "full_numbers",
-        "bPaginate": true,
-        "autoWidth": false,
-        "iDisplayLength": 10,
-        "columnDefs": [{orderable:false,
-                       targets:[0]}],
-        "aaSorting": []
-        
-      });
+        $("[data-toggle='tooltip']").tooltip();
+        $('#flow_list').dataTable({
+            "oLanguage": {"sUrl": "/javascripts/i18n/dataTables-new.<%= I18n.locale.to_s%>.txt"},
+            "bJQueryUI": false,
+            "bFilter": true,
+            "sDom": "<'row'<'pull-left'f><'table_pagin'p><'table_info'i>>t<'row table_bottom'<'table_pagin'p><'table_info'i>>",
+            "sPaginationType": "full_numbers",
+            "bPaginate": true,
+            "autoWidth": false,
+            "iDisplayLength": 10,
+            "columnDefs": [{
+                orderable: false,
+                targets: [0]
+            }],
+            "aaSorting": []
 
-  })
+        });
+
+    })
 </script>

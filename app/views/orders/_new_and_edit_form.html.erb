@@ -1,28 +1,28 @@
-<script type="text/javascript" src="/javascripts/underscore-min.js"></script>
-
 <div style="clear:both"></div>
 
-    <%= form_for(@order, :html=>{:id=>"order_form",:name=>"myform", :class=>"form-horizontal"}) do |f| %>
-        <div class="big_section">
-          <%= render :partial => "form",:locals=>{:f => f}%>
-          <div class="row t_margin_20">
-            <!-- button area -->
-            <div class="button_area">
-              <div class="r_margin_20">
-                <div class="pull-right">
-                  <div class="outer_cancel"><button type='button' onclick="back_to_left_tab()"><%= t("order.cancel_bth")%></button></div>
-                  <div class="outer_submit">
-                    <input type="submit" value="<%= t("order.save_and_continue_#{params[:action]}")%>" name="commit" onclick="doSub()" class="submit_tag_button">
-                  </div>
-                </div>
-                <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
-                  <img src="/images/pre-loading_small.gif">
-                </div>
+<%= form_for(@order, :html => {:id => "order_form", :name => "myform", :class => "form-horizontal"}) do |f| %>
+    <div class="big_section">
+      <%= render 'form', f: f %>
+      <div class="row t_margin_20">
+        <!-- button area -->
+        <div class="button_area">
+          <div class="r_margin_20">
+            <div class="pull-right">
+              <div class="outer_cancel">
+                <button type='button' onclick="back_to_left_tab()"><%= t("order.cancel_bth") %></button>
               </div>
+              <div class="outer_submit">
+                <input type="submit" value="<%= t("order.save_and_continue_#{params[:action]}") %>" name="commit" onclick="doSub()" class="submit_tag_button">
+              </div>
+            </div>
+            <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
+              <img src="/images/pre-loading_small.gif">
             </div>
           </div>
         </div>
-    <% end %>
+      </div>
+    </div>
+<% end %>
 
 
 <script type="text/javascript">
@@ -30,21 +30,21 @@
         window.location.href = "<%= orders_path%>"
     }
 
-    function getSelected(){
+    function getSelected() {
         var selected = city.getSelected();
         //console.log(selected);
         return selected;
     }
-    function doSub(){
-        var regions =getSelected();
-        if (regions!="[]" || regions!=""){
+    function doSub() {
+        var regions = getSelected();
+        if (regions != "[]" || regions != "") {
             $("#order_new_regions").val(JSON.stringify(regions));
         }
-        if($("#order_new_regions").val() == "[]"){
+        if ($("#order_new_regions").val() == "[]") {
             $("#order_new_regions").val("")
         }
 
         $("#order_form").submit();
-        $("#order_form [type = 'submit' ]").prop('disabled',true);
+        $("#order_form [type = 'submit' ]").prop('disabled', true);
     }
 </script>

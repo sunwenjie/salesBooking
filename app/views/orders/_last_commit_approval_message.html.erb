@@ -1,10 +1,10 @@
 <%
    node_status = status.split(",")
-   node_status.insert(1,order.is_jast_for_gp ?  order.is_gp_commit ? "1" : "0" : "2")
-   node_status.insert(4,order.proof_state == "0" ? "1" : "0")
+   node_status.insert(1, order.is_jast_for_gp ? order.is_gp_commit ? "1" : "0" : "2")
+   node_status.insert(4, order.proof_state == "0" ? "1" : "0")
    is_service_order = order.whether_service == true
 
-   if ["pre_check","order_approval","contract_check","gp_control"].include? type
+   if ["pre_check", "order_approval", "contract_check", "gp_control"].include? type
      tab1 = t("order.submit_label")
      tab2 = t("order.submit_approval_label")
      submit_btn = t("order.submit_label")
@@ -13,22 +13,22 @@
      case type
        when "pre_check"
          head = t("order.flow.pre_sale_check")
-         current_statu = status_label(0,node_status,order)
-         node_status =  node_status[0]
-         node_id = 1  if node_ids.include? "1"
-         detail_url = order_path(:id=>order.id)
+         current_statu = status_label(0, node_status, order)
+         node_status = node_status[0]
+         node_id = 1 if node_ids.include? "1"
+         detail_url = order_path(:id => order.id)
          show_node = 1
        when "order_approval"
          head = is_nonstandard ? t("order.status.approving04") : t("order.status.approving03")
-         detail_url = order_path(:id=>order.id)
+         detail_url = order_path(:id => order.id)
          if is_nonstandard
            type = "non_standard_approval"
-           current_statu = status_label(3,node_status,order)
+           current_statu = status_label(3, node_status, order)
            node_status = node_status[3]
            show_node = 3
          else
            type = "order_approval"
-           current_statu = status_label(2,node_status,order)
+           current_statu = status_label(2, node_status, order)
 
            node_status = node_status[2]
            show_node = 2
@@ -43,27 +43,27 @@
 
          head = t("order.status.contract_approving01")
 
-         current_statu =  status_label(5,node_status,order)
+         current_statu = status_label(5, node_status, order)
          node_status = node_status[5]
          node_id = 4 if node_ids.include? "4"
-         detail_url = order_path(:id=>order.id, :tab=>"tab-schedule")
+         detail_url = order_path(:id => order.id, :tab => "tab-schedule")
          show_node = 4
        when "gp_control"
-         head =  t("order.list.media_fenliang")
+         head = t("order.list.media_fenliang")
          gp_node_status = node_status[7]
-         current_statu = order.precheck_approval_node_state("gp_control") == "1" ? t("order.status.gp_in_check") :  status_label(1,node_status,order)
+         current_statu = order.order_approval_node_state("gp_control") == 1 ? t("order.status.gp_in_check") : status_label(1, node_status, order)
          node_status = gp_node_status
          node_id = 7 if node_ids.include? "7"
-         detail_url = order_path(:id=>order.id, :tab=>"tab-gp")
+         detail_url = order_path(:id => order.id, :tab => "tab-gp")
          show_node = 7
 
      end
      if show_node == 3
-       create_user,create_group,create_time,approval_user,approval_group,approval_time,comment = order.last_commit_and_approval(2)
-       create_user_sp,create_group_sp,create_time_sp,approval_user_sp,approval_group_sp,approval_time_sp,comment_sp = order.last_commit_and_approval(3)
-       comment = comment.present? ?  comment +";"+comment_sp : comment_sp
+       create_user, create_time, approval_user, approval_time, comment = order.last_commit_and_approval(2)
+       create_user_sp, create_time_sp, approval_user_sp, approval_time_sp, comment_sp = order.last_commit_and_approval(3)
+       comment = comment.present? ? comment +";"+comment_sp : comment_sp
      else
-       create_user,create_group,create_time,approval_user,approval_group,approval_time,comment = order.last_commit_and_approval(show_node)
+       create_user, create_time, approval_user, approval_time, comment = order.last_commit_and_approval(show_node)
 
      end
      comment = "" if node_status == "0"
@@ -84,12 +84,13 @@
 
 
     <div class="min_width popover xmo-progress-popover no-mouseout  xmo-popover fade in ">
-      <div class="arrow"></div>|
+      <div class="arrow"></div>
+      |
       <div class="popover-inner xmo-popover-inner popover_position">
         <div class="popover-content clearfix">
           <% if params[:position] != "show_page"
                detail_show = 'hide'
-               if  type == "gp_control"
+               if type == "gp_control"
                  if (node_ids.include? "7") || (node_ids.include? "2") || (node_ids.include? "3")
                    detail_show = 'show'
                  end
@@ -99,8 +100,8 @@
              end %>
 
           <label class="popover-head"><%= head %></label>
-          <% if (!is_pre_check  || is_service_order) && type == "pre_check" %>
-        <div class="tab-content">
+          <% if (!is_pre_check || is_service_order) && type == "pre_check" %>
+              <div class="tab-content">
                 <div>
 
                 </div>
@@ -121,7 +122,7 @@
                   <a href="<%= detail_url %>" class="blue-href"><%= t("order.list.view_detail") %></a>
                 </div>
                 <div class="popover-end">
-                  <label><%= t("order.flow.unsupport_gp")%></label>
+                  <label><%= t("order.flow.unsupport_gp") %></label>
                 </div>
               </div>
           <% else %>
@@ -134,118 +135,107 @@
                 </li>
               </ul>
               <div class="tab-content">
-                <div class="tab-pane active fade in" id="tab-submit"  style="padding:10px 0">
+                <div class="tab-pane active fade in" id="tab-submit" style="padding:10px 0">
                   <ul class="popover-detail">
                     <li>
                       <span class="popover-detail-title"><%= t("order.list.submiter") %></span>
                       <span class="popover-detail-result"><%= create_user %></span>
                     </li>
-                    <!--<li>-->
-                    <!--<span class="popover-detail-title"><%#= t("order.list.group") %></span>-->
-                    <!--&lt;!&ndash;<span class="popover-detail-result"><%#= create_group%></span>&ndash;&gt;-->
-                    <!--</li>-->
                     <li>
-                      <span class="popover-detail-title"><%=t("order.list.submit_time")%></span>
+                      <span class="popover-detail-title"><%= t("order.list.submit_time") %></span>
                       <span class="popover-detail-result"><%= create_time %></span>
                     </li>
                   </ul>
                   <hr>
                   <ul class="popover-detail">
                     <li>
-                      <span class="popover-detail-title"><%= t("order.status.approver")%></span>
-                      <span class="popover-detail-result"><%= approval_user%></span>
+                      <span class="popover-detail-title"><%= t("order.status.approver") %></span>
+                      <span class="popover-detail-result"><%= approval_user %></span>
                     </li>
-                    <!--<li>-->
-                    <!--<span class="popover-detail-title"><%#= t("order.list.group") %></span>-->
-                    <!--&lt;!&ndash;<span class="popover-detail-result"><%#= approval_group %></span>&ndash;&gt;-->
-                    <!--</li>-->
                     <li>
-                      <span class="popover-detail-title"><%=t("order.status.approve_time")%></span>
+                      <span class="popover-detail-title"><%= t("order.status.approve_time") %></span>
                       <span class="popover-detail-result"><%= approval_time %></span>
                     </li>
                     </li>
                   </ul>
                   <% if show_node == 3 %>
-                  <hr>
-                  <ul class="popover-detail">
-                    <li>
-                      <span class="popover-detail-title"><%= t("order.status.approver_sp")%></span>
-                      <span class="popover-detail-result"><%= approval_user_sp%></span>
-                    </li>
-                    <!--<li>-->
-                    <!--<span class="popover-detail-title"><%#= t("order.list.group") %></span>-->
-                    <!--&lt;!&ndash;<span class="popover-detail-result"><%#= approval_group %></span>&ndash;&gt;-->
-                    <!--</li>-->
-                    <li>
-                      <span class="popover-detail-title"><%=t("order.status.approve_time_sp")%></span>
-                      <span class="popover-detail-result"><%= approval_time_sp %></span>
-                    </li>
-                    </li>
-                  </ul>
+                      <hr>
+                      <ul class="popover-detail">
+                        <li>
+                          <span class="popover-detail-title"><%= t("order.status.approver_sp") %></span>
+                          <span class="popover-detail-result"><%= approval_user_sp %></span>
+                        </li>
+                        <li>
+                          <span class="popover-detail-title"><%= t("order.status.approve_time_sp") %></span>
+                          <span class="popover-detail-result"><%= approval_time_sp %></span>
+                        </li>
+                        </li>
+                      </ul>
                   <% end %>
                   <div style="text-align:center;">
 
-                    <div class="popover-commit <%= submit_class%>">
+                    <div class="popover-commit <%= submit_class %>">
                       <div class="outer_cancel">
                         <input class="cancel back_button" type="button" value="<%= t("order.cancel_bth") %>" onclick="go_back(this);">
                       </div>
                       <div class="outer_submit">
 
-                        <input name="commit"  type="button" value="<%= submit_btn %>" data_node_id="<%= node_id %>"  data_flowname="<%= type %>" data_params="no" data_order_id="<%= order.id %>" class="submit" onclick="go_approval(this);">
+                        <input name="commit" type="button" value="<%= submit_btn %>" data_node_id="<%= node_id %>" data_flowname="<%= type %>" data_params="no" data_order_id="<%= order.id %>" class="submit" onclick="go_approval(this);">
                       </div>
                     </div>
                   </div>
                   <% if current_user.administrator? && node_status == "1" %>
-                  <div class='row resend_button'>
-                    <div class='pull-left plus-button' style="margin-left: 50px;margin-top: 35px;">
-                      <a href="javaScript:void(0)" class="resend_email"><span style="position: relative;top: 10px;left: 5px;"><%= t("order.list.re_send_email")%></span></a>
-                    </div>
-                  </div>
-                  <div class='row resend_tip'></div>
+                      <div class='row resend_button'>
+                        <div class='pull-left plus-button' style="margin-left: 50px;margin-top: 35px;">
+                          <a href="javaScript:void(0)" class="resend_email"><span style="position: relative;top: 10px;left: 5px;"><%= t("order.list.re_send_email") %></span></a>
+                        </div>
+                      </div>
+                      <div class='row resend_tip'></div>
                   <% end %>
                   <div class="popover-ahref <%= detail_show %>">
-                    <a href="<%= detail_url %>" class="blue-href"><%= t("order.list.view_detail")%></a>
+                    <a href="<%= detail_url %>" class="blue-href"><%= t("order.list.view_detail") %></a>
                   </div>
 
                   <div class="popover-end">
-                    <label><%=current_statu%></label>
+                    <label><%= current_statu %></label>
                   </div>
 
                 </div>
-                <div class="tab-pane  fade " id="tab-docheck"  style="padding:10px 0">
+                <div class="tab-pane  fade " id="tab-docheck" style="padding:10px 0">
 
                   <div class="popover-group">
                     <label class="<%= show_node == 7 ? 'hide' : '' %>"><%= tab %></label>
+
                     <div class="popover-inputs" style="float:left;">
                       <!--xmo input-append-->
                       <div class="input-append">
 
-                       <% if show_node != 7 %>
-                        <label class="radio">
-                          <input type="radio" name="examine_state_<%= type %>_<%= order.id%>" value="0"  <%= (["1","2","0"].include? node_status) ? "checked" : ""  %>  <%= disable %> ><%=t("order.pass")%>
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="examine_state_<%= type %>_<%= order.id%>" value="-1"  <%= node_status == "3" ? "checked" : ""  %> <%= disable %>><%= t("order.unpass") %>
-                        </label>
+                        <% if show_node != 7 %>
+                            <label class="radio">
+                              <input type="radio" name="examine_state_<%= type %>_<%= order.id %>" value="0"  <%= (["1", "2", "0"].include? node_status) ? "checked" : "" %>  <%= disable %> ><%= t("order.pass") %>
+                            </label>
+                            <label class="radio">
+                              <input type="radio" name="examine_state_<%= type %>_<%= order.id %>" value="-1"  <%= node_status == "3" ? "checked" : "" %> <%= disable %>><%= t("order.unpass") %>
+                            </label>
                         <% else %>
                             <label class="radio hide">
-                              <input type="radio" name="examine_state_gp_control_<%= order.id%>" value="0"  <%= (["1","2","0"].include? node_status) ? "checked" : ""  %>  <%= disable %> ><%=t("order.pass")%>
+                              <input type="radio" name="examine_state_gp_control_<%= order.id %>" value="0"  <%= (["1", "2", "0"].include? node_status) ? "checked" : "" %>  <%= disable %> ><%= t("order.pass") %>
                             </label>
                         <% end %>
                       </div>
                     </div>
                   </div>
                   <div class="popover-group">
-                    <textarea id="<%=order.id %>_<%=type%>_msg" placeholder="<%=t("order.please_mark")%>" <%= disable %> style="width:100%;box-sizing:border-box;" cols="20" rows="8"><%= comment %></textarea>
+                    <textarea id="<%= order.id %>_<%= type %>_msg" placeholder="<%= t("order.please_mark") %>" <%= disable %> style="width:100%;box-sizing:border-box;" cols="20" rows="8"><%= comment %></textarea>
                   </div>
 
                   <div style="text-align:center;">
-                    <div class="popover-commit <%= approval_class%>">
+                    <div class="popover-commit <%= approval_class %>">
                       <div class="outer_cancel">
-                        <input class="cancel back_button" type="button" value="<%=t("order.cancel_bth")%>" onclick="go_back(this)">
+                        <input class="cancel back_button" type="button" value="<%= t("order.cancel_bth") %>" onclick="go_back(this)">
                       </div>
                       <div class="outer_submit">
-                        <input name="commit" type="button" value="<%=approval_submit_btn%>" data_node_id="<%=node_id%>"   data_flowname="<%=type%>" data_params="yes" data_order_id="<%= order.id %>" class="submit" onclick="go_approval(this)">
+                        <input name="commit" type="button" value="<%= approval_submit_btn %>" data_node_id="<%= node_id %>" data_flowname="<%= type %>" data_params="yes" data_order_id="<%= order.id %>" class="submit" onclick="go_approval(this)">
                       </div>
                     </div>
                   </div>
@@ -268,33 +258,29 @@
 
 <% elsif type == "schedul_list" %>
     <%
-       schedule_current_status = status_label(4,node_status,order)
-       schedule_create_user ,schedule_create_time  = order.schedule_node_message
+       schedule_current_status = status_label(4, node_status, order)
+       schedule_create_user, schedule_create_time = order.schedule_node_message
        show_node = 8
     %>
     <div class="min_width gp_item popover_position_left no-mouseout popover xmo-progress-popover xmo-popover fade in">
       <div class="arrow"></div>
       <div class="popover-inner xmo-popover-inner ">
         <div class="popover-content clearfix">
-          <label class="popover-head"><%= t("order.list.schedule_list_upload")%></label>
+          <label class="popover-head"><%= t("order.list.schedule_list_upload") %></label>
           <ul class="nav popover-nav" id="myTabs" style="margin-top:10px;">
             <!--<li class="active" style="width: 100%;">-->
-              <!--<a data-toggle="tab" href="#tab-submit"><%#= t("order.submit_label")%></a>-->
+            <!--<a data-toggle="tab" href="#tab-submit"><%#= t("order.submit_label")%></a>-->
             <!--</li>-->
           </ul>
           <div class="tab-content" style="padding:0;">
-            <div class="tab-pane active fade in" id="tab-submit"  style="padding:10px 0">
+            <div class="tab-pane active fade in" id="tab-submit" style="padding:10px 0">
               <ul class="popover-detail">
                 <li>
-                  <span class="popover-detail-title"><%= t("order.list.submiter")%></span>
+                  <span class="popover-detail-title"><%= t("order.list.submiter") %></span>
                   <span class="popover-detail-result"><%= schedule_create_user %></span>
                 </li>
-                <!--<li>-->
-                <!--<span class="popover-detail-title"><%#= t("order.list.group")%></span>-->
-                <!--&lt;!&ndash;<span class="popover-detail-result"><%#= schedule_create_group %></span>&ndash;&gt;-->
-                <!--</li>-->
                 <li>
-                  <span class="popover-detail-title"><%= t("order.list.submit_time")%></span>
+                  <span class="popover-detail-title"><%= t("order.list.submit_time") %></span>
                   <span class="popover-detail-result"><%= schedule_create_time %></span>
                 </li>
               </ul>
@@ -302,15 +288,15 @@
               <div style="text-align:center;">
                 <div class="popover-commit <%= order.proof_state == "0" ? 'hide' : 'show' %>">
                   <div class="outer_cancel">
-                    <input class="cancel back_button" type="button" value="<%=t("order.cancel_bth")%>" onclick="go_back(this)">
+                    <input class="cancel back_button" type="button" value="<%= t("order.cancel_bth") %>" onclick="go_back(this)">
                   </div>
                   <div class="outer_submit">
-                    <input name="commit" type="button" value="<%= t("order.proof_label")%>"  data_order_id="<%= order.id %>" class="submit" onclick="window.location.href = '<%= order_path(:id=> order.id,:tab=> "tab-schedule")%>'">
+                    <input name="commit" type="button" value="<%= t("order.proof_label") %>" data_order_id="<%= order.id %>" class="submit" onclick="window.location.href = '<%= order_path(:id=> order.id,:tab=> "tab-schedule")%>'">
                   </div>
                 </div>
               </div>
               <div class="popover-ahref ">
-                <a href="<%= order_path(:id=>order.id, :tab=>"tab-schedule")%>" class="blue-href"><%= t("order.list.view_detail")%></a>
+                <a href="<%= order_path(:id => order.id, :tab => "tab-schedule") %>" class="blue-href"><%= t("order.list.view_detail") %></a>
               </div>
               <div class="popover-end">
                 <label><%= schedule_current_status %></label>
@@ -324,9 +310,9 @@
 
 <% elsif type == "order_distribution" %>
     <%
-       last_operations = order.operations.last   if  order.operations.present?
+       last_operations = order.operations.last if order.operations.present?
        node_statu = node_status[6]
-       operations = order.order_operation_flow_users
+       operations = order.order_coordinate_groups_users(5)
 
        last_operations = order.operations.last if order.operations.present?
        order_operator = order.operator_id
@@ -340,78 +326,79 @@
       <div class="arrow"></div>
       <div class="popover-inner xmo-popover-inner ">
         <div class="popover-content clearfix">
-          <label class="popover-head"><%= t("order.flow.operation_assignment")%></label>
+          <label class="popover-head"><%= t("order.flow.operation_assignment") %></label>
+
           <div class="tab-content" style="padding:0;">
-            <div class="tab-pane active fade in" id="tab-submit"  style="padding:10px 0">
+            <div class="tab-pane active fade in" id="tab-submit" style="padding:10px 0">
 
               <div style="margin:5px;">
                 <div style="margin-bottom:5px;">
-                  <label style="padding:5px 0"><%= t("order.list.person")%></label>
-                  <select id = "<%= order.id%>_operator_id" tabindex="-1" style="width:100%"  onchange="select_change(this);" class="operator_filter chzn-select span5">
+                  <label style="padding:5px 0"><%= t("order.list.person") %></label>
+                  <select id="<%= order.id %>_operator_id" tabindex="-1" style="width:100%" onchange="select_change(this);" class="operator_filter chzn-select span5">
                     <% operations.each do |c| %>
-                        <%if last_operations && order_operator == c.id%>
-                            <option value="<%=c.id%>" selected="selected"><%=c.name + "("+c.agency.name+")"%></option>
-                        <%else%>
-                            <option value="<%=c.id%>"><%=c.name + "("+c.agency.name+")"%></option>
-                        <%end%>
+                        <% if last_operations && order_operator == c.id %>
+                            <option value="<%= c.id %>" selected="selected"><%= c.name + "("+c.agency.name+")" %></option>
+                        <% else %>
+                            <option value="<%= c.id %>"><%= c.name + "("+c.agency.name+")" %></option>
+                        <% end %>
                     <% end %>
                   </select>
                   <%= hidden_field_tag order.id.to_s+"_operator_id_h" %>
                 </div>
 
                 <div style="margin-bottom:5px;">
-                  <label style="padding:5px 0"><%= t("order.list.share_am")%></label>
-                  <select id = "<%= order.id%>_share_username" tabindex="-1" style="width:100%" multiple="" onchange="select_change(this);" class="operator_filter chzn-select span5">
-                    <%= option_for_share_ams(operations,last_operations) %>
+                  <label style="padding:5px 0"><%= t("order.list.share_am") %></label>
+                  <select id="<%= order.id %>_share_username" tabindex="-1" style="width:100%" multiple="" onchange="select_change(this);" class="operator_filter chzn-select span5">
+                    <%= option_for_share_ams(operations, last_operations) %>
                   </select>
 
                   <%= hidden_field_tag order.id.to_s+"_share_username_h" %>
                 </div>
 
                 <div style="margin-bottom:5px;">
-                  <label style="padding:5px 0"><%= t("order.list.setting_status")%></label>
+                  <label style="padding:5px 0"><%= t("order.list.setting_status") %></label>
 
-                  <select  id = "<%= order.id %>_operation"  style="width:100%" class="select" onchange="select_change(this);">
-                    <%Operation::ACTIONS.each do |a|%>
-                        <%if last_operations && last_operations.action == a%>
-                            <option value="<%=a%>" selected="selected"><%=t(a)%></option>
-                        <%else%>
-                            <option value="<%=a%>"><%=t(a)%></option>
-                        <%end%>
-                    <%end%>
+                  <select id="<%= order.id %>_operation" style="width:100%" class="select" onchange="select_change(this);">
+                    <% Operation::ACTIONS.each do |a| %>
+                        <% if last_operations && last_operations.action == a %>
+                            <option value="<%= a %>" selected="selected"><%= t(a) %></option>
+                        <% else %>
+                            <option value="<%= a %>"><%= t(a) %></option>
+                        <% end %>
+                    <% end %>
                   </select>
-                  <%= hidden_field_tag order.id.to_s+"_operation_h" %>
+                  <%= hidden_field_tag order.id.to_s+"_operation_h",last_operations ? last_operations.action : 'processing' %>
                 </div>
 
               </div>
 
 
               <div class="popover-group">
-                <textarea placeholder="<%= t("order.please_mark")%>" id="<%= order.id %>_comment" style="width:100%;box-sizing:border-box;"cols="20" rows="8"><%= comment %></textarea>
+                <textarea placeholder="<%= t("order.please_mark") %>" id="<%= order.id %>_comment" style="width:100%;box-sizing:border-box;" cols="20" rows="8"><%= comment %></textarea>
               </div>
               <div style="text-align:center;">
                 <div class="popover-commit">
                   <div class="outer_cancel">
-                    <input class="cancel back_button" type="button" value="<%= t("order.cancel_bth")%>" onclick="go_back(this);">
+                    <input class="cancel back_button" type="button" value="<%= t("order.cancel_bth") %>" onclick="go_back(this);">
                   </div>
                   <div class="outer_submit">
-                    <input name="commit" data_node_id="<%= node_id %>" data_order_id="<%= order.id%>"  data_flowname= "order_distribution" data_params="operation" type="button" value="<%= t("order.confirm_label")%>" class="submit" onclick="go_approval(this);">
+                    <input name="commit" data_node_id="<%= node_id %>" data_order_id="<%= order.id %>" data_flowname="order_distribution" data_params="operation" type="button" value="<%= t("order.confirm_label") %>" class="submit" onclick="go_approval(this);">
                   </div>
                 </div>
               </div>
               <% if current_user.administrator? && node_statu == "2" %>
-              <div class='row resend_button'>
-                <div class='pull-left plus-button' style="margin-left: 57px;margin-top: 25px;">
-                  <a href="javaScript:void(0)" class="resend_email"><span style="position: relative;top: 10px;left: 5px;"><%= t("order.list.re_send_email")%></span></a>
-                </div>
-              </div>
-              <div class='row resend_tip'></div>
+                  <div class='row resend_button'>
+                    <div class='pull-left plus-button' style="margin-left: 57px;margin-top: 25px;">
+                      <a href="javaScript:void(0)" class="resend_email"><span style="position: relative;top: 10px;left: 5px;"><%= t("order.list.re_send_email") %></span></a>
+                    </div>
+                  </div>
+                  <div class='row resend_tip'></div>
               <% end %>
               <div class="popover-ahref ">
-                <a href="<%= order_path(:id=>order.id) %>" class="blue-href"><%= t("order.list.view_detail")%></a>
+                <a href="<%= order_path(:id => order.id) %>" class="blue-href"><%= t("order.list.view_detail") %></a>
               </div>
               <div class="popover-end">
-                <label><%=status_label(6,node_status,order)%></label>
+                <label><%= status_label(6, node_status, order) %></label>
               </div>
             </div>
 
@@ -424,14 +411,14 @@
 <% end %>
 <script type="text/javascript">
 
-    $(function(){
+    $(function () {
         // $(".select").chosen();
-        var order_node_ids = $(".xmo-progress-status [order_id = "+ <%= order.id %> +"]").last().attr('node_ids').split(",");
+        var order_node_ids = $(".xmo-progress-status [order_id = " + <%= order.id %> +"]").last().attr('node_ids').split(",");
         if (order_node_ids == "" && <%= order.operator_and_share_opertor.include? current_user.id %>) {
             operation_select_change();
         }
-        $(".popover-nav").find("li").on("click",function(){
-            var id =$(this).find("a").attr("href");
+        $(".popover-nav").find("li").on("click", function () {
+            var id = $(this).find("a").attr("href");
             $(this).siblings("li").removeClass("active");
             $(this).addClass("active");
             $(this).parent().parent().find(".tab-pane").removeClass("active").removeClass("in");
@@ -440,11 +427,12 @@
 
         <% if params[:position] == "show_page" %>
         $(".popover-ahref").addClass("hide");
-        var order_node_ids = $(".xmo-progress-status [order_id = "+ <%= order.id %> +"]").last().attr('node_ids').split(",");
-        var for_gp = <%= order.jast_for_gp_advertisement? %>
-        if(for_gp && jQuery.inArray("7",order_node_ids) > -1){
+        var order_node_ids = $(".xmo-progress-status [order_id = " + <%= order.id %> +"]").last().attr('node_ids').split(",");
+        var for_gp =
+        <%= order.jast_for_gp_advertisement? %>
+        if (for_gp && jQuery.inArray("7", order_node_ids) > -1) {
             $("#gp_submit_button").addClass("show")
-        }else{
+        } else {
             $("#gp_submit_button").addClass("hide")
         }
         if (order_node_ids == "" && <%= order.operator_and_share_opertor.include? current_user.id %>) {
@@ -453,23 +441,23 @@
         <% end %>
     })
 
-    function order_examine_gp(saveflag){
-        var last_node = $(".xmo-progress-status [order_id = "+ <%= order.id %> +"]").last();
+    function order_examine_gp(saveflag) {
+        var last_node = $(".xmo-progress-status [order_id = " + <%= order.id %> +"]").last();
         var order_status = last_node.attr('status').split(",");
         $.get("<%= order_examine_orders_path%>", {
                     id:<%= order.id %>,
                     gp_evaluate: $("#gp_evaluate").val(),
-                    status:order_status,
+                    status: order_status,
                     saveflag: saveflag
                 }, function (data) {
                     $("#tab-gp").html(data);
-                    $(".booking-tooltip-click a").prop("disabled",true);
+                    $(".booking-tooltip-click a").prop("disabled", true);
                     to_tab_gp();
-                    scroll(0,0);
+                    scroll(0, 0);
                 }
         )
     }
-    function to_tab_gp(){
+    function to_tab_gp() {
         $("#tab-order").removeClass("in active");
         $(".list_order").removeClass("active");
         $(".list_ads").removeClass("active");
@@ -479,26 +467,30 @@
         $("#tab-gp").addClass("in active");
         $(".list_gp").addClass("active");
     }
-    function operation_select_change(){
+    function operation_select_change() {
         var order_id = <%= order.id %>;
         var operation_node_id = '<%= node_id.present? ? node_id.to_s : '' %>'
 //         console.log("========operation_node_id ",operation_node_id );
-        if (operation_node_id != "5"){
+        if (operation_node_id != "5") {
             $("#" + order_id + "_operator_id").attr("disabled", "disabled");
             $("#" + order_id + "_share_username").attr("disabled", "disabled");
-        }else{
+        } else {
             $("#" + order_id + "_operator_id").attr("disabled", false);
             $("#" + order_id + "_share_username").attr("disabled", false);
         }
-    };
+    }
+    ;
 
-    $(".resend_email").click(function(){
-        $.post("<%= resend_approval_email_orders_path%>", {id: <%= order.id %>,node_id: <%= show_node %>},function (data) {
+    $(".resend_email").click(function () {
+        $.post("<%= resend_approval_email_orders_path%>", {
+            id: <%= order.id %>,
+            node_id: <%= show_node %>
+        }, function (data) {
             $(".resend_button").hide();
-            if(data.success == true){
-            $(".resend_tip").html("<div style='margin-left: 65px;margin-top: 35px;'><img src='/images/icon_tick.png'/><span style='position:relative;margin-left: 5px;top: -3px;'><%= t('order.list.send_success')%></span></div");
-            }else{
-            $(".resend_tip").html("<div style='margin-left: 65px;margin-top: 35px;'><img src='/images/login/asset_error.png'/><span style='position:relative;margin-left: 5px;top: -3px;'><%= t('order.list.send_failed')%></span></div");
+            if (data.success == true) {
+                $(".resend_tip").html("<div style='margin-left: 65px;margin-top: 35px;'><img src='/images/icon_tick.png'/><span style='position:relative;margin-left: 5px;top: -3px;'><%= t('order.list.send_success')%></span></div");
+            } else {
+                $(".resend_tip").html("<div style='margin-left: 65px;margin-top: 35px;'><img src='/images/login/asset_error.png'/><span style='position:relative;margin-left: 5px;top: -3px;'><%= t('order.list.send_failed')%></span></div");
             }
         })
     })

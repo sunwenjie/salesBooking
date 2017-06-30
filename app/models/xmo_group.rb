@@ -1,5 +1,5 @@
 class XmoGroup < Base
-  establish_connection "xmo_production".to_sym
+  establish_connection :xmo_production
   self.table_name = "groups"
   serialize :childrengroups
 

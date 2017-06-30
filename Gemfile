@@ -59,8 +59,6 @@ group :development do
   gem 'pry-nav'
   gem 'pry-rails'
 end
-gem 'pry' , group: :development
-gem 'pry-nav' , group: :development
 gem 'cancan'
 
 gem 'axlsx'
@@ -91,6 +89,25 @@ end
 gem 'capistrano-rails', group: :development
 gem 'capistrano-chruby', group: :development
 
+
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+
+
+
+# Use bullet for deployment
+# Use bullet for deployment
+group :development do
+  gem 'bullet'
+  gem 'ruby-growl'
+  gem 'airbrake'
+  gem 'honeybadger'
+  gem 'rollbar'
+  gem 'slack-notifier'
+  gem 'uniform_notifier'
+  gem 'ruby_gntp'
+end
+
+#Use gem 'traceroute'
+gem 'traceroute', group: :development

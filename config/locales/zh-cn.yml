@@ -390,6 +390,7 @@ zh-cn:
         node_id: "业务节点"
         user_group: "对应用户群组"
         approval_group: "负责权限群组"
+        coordinate_groups: "协调群组(可分配用户群组或策划负责人群组)"
     errors:
       models:
           user:
@@ -508,6 +509,8 @@ zh-cn:
               user_group:
                 blank: "为必填项，不能为空"
               approval_group:
+                blank: "为必填项，不能为空"
+              coordinate_groups:
                 blank: "为必填项，不能为空"
               min:
                 blank: "为必填项，不能为空"

@@ -31,7 +31,7 @@ zh-cn:
       channel_person_email: "联系人邮箱*"
       channel_rebate_date: "返点适用日期"
       channel_company_adress: "公司地址*"
-      channel_rebate_name: "代理返点*"
+      channel_rebate_name: "代理返点"
       other_rebate: "其它代理返点"
       channel_valid_begin_date: "返点适用开始日期"
       channel_valid_end_date: "返点适用结束日期"

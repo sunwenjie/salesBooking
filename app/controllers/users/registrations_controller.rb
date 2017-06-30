@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-before_filter :configure_sign_up_params, only: [:create]
-before_filter :configure_account_update_params, only: [:update]
-skip_before_filter :require_no_authentication, :only => [:new, :create]
+  before_filter :configure_sign_up_params, only: [:create]
+  before_filter :configure_account_update_params, only: [:update]
+  skip_before_filter :require_no_authentication, :only => [:new, :create]
   # GET /resource/sign_up
   def new
     super
@@ -13,7 +13,7 @@ skip_before_filter :require_no_authentication, :only => [:new, :create]
     super
     sign_out current_user
     sign_in admin
-    
+
   end
 
   # GET /resource/edit
@@ -40,31 +40,31 @@ skip_before_filter :require_no_authentication, :only => [:new, :create]
   #   super
   # end
 
-   protected
-   
-   def require_no_authentication
-      if current_user.administrator?
-          return true
-      else
-          return super
-      end
+  protected
+
+  def require_no_authentication
+    if current_user.administrator?
+      return true
+    else
+      return super
+    end
   end
 
   # You can put the params you want to permit in the empty array.
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up){ |u| u.permit(:username, :email, :real_name, :tel, :role, :password, :password_confirmation, :group_ids => []) }
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :real_name, :tel, :role, :password, :password_confirmation, :group_ids => []) }
   end
 
   # You can put the params you want to permit in the empty array.
   def configure_account_update_params
-    devise_parameter_sanitizer.for(:account_update){ |u| u.permit(:password, :password_confirmation, :current_password) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:password, :password_confirmation, :current_password) }
   end
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
     admins_path
   end
-  
+
   def after_account_update_path_for(resource)
     admins_path
   end

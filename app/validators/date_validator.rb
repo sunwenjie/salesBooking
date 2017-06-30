@@ -2,10 +2,21 @@ class DateValidator < ActiveModel::EachValidator
 
   attr_accessor :computed_options
 
-  def before(a, b);       a < b;  end
-  def after(a, b);        a > b;  end
-  def on_or_before(a, b); a <= b; end
-  def on_or_after(a, b);  a >= b; end
+  def before(a, b)
+    ; a < b;
+  end
+
+  def after(a, b)
+    ; a > b;
+  end
+
+  def on_or_before(a, b)
+    ; a <= b;
+  end
+
+  def on_or_after(a, b)
+    ; a >= b;
+  end
 
   def checks
     %w(before after on_or_before on_or_after)
@@ -13,15 +24,15 @@ class DateValidator < ActiveModel::EachValidator
 
   def message_limits
     needs_and =
-        (computed_options[:on_or_after]  || computed_options[:after]) &&
-        (computed_options[:on_or_before] || computed_options[:before])
+        (computed_options[:on_or_after] || computed_options[:after]) &&
+            (computed_options[:on_or_before] || computed_options[:before])
 
     result = ['must be a date']
-    result.push('on or after',  computed_options[:on_or_after])  if computed_options[:on_or_after]
-    result.push('after',        computed_options[:after])        if computed_options[:after]
-    result.push('and')                                           if needs_and
+    result.push('on or after', computed_options[:on_or_after]) if computed_options[:on_or_after]
+    result.push('after', computed_options[:after]) if computed_options[:after]
+    result.push('and') if needs_and
     result.push('on or before', computed_options[:on_or_before]) if computed_options[:on_or_before]
-    result.push('before',       computed_options[:before])       if computed_options[:before]
+    result.push('before', computed_options[:before]) if computed_options[:before]
     result.join(' ')
   end
 
@@ -48,7 +59,7 @@ class DateValidator < ActiveModel::EachValidator
 
     return unless options
     compute_options(record) # do not cache this
-                            # otherwise all the 'compute' thing is useless... #
+    # otherwise all the 'compute' thing is useless... #
     computed_options.each do |key, val|
       unless self.send(key, value, val)
         record.errors[attribute] << (computed_options[:message] || message_limits)

@@ -1,10 +1,10 @@
 <script type="text/javascript">
 
-    $(function(){
+    $(function () {
         $("[data-toggle='tooltip']").tooltip();
         // $(".select").chosen();
-        $(".popover-nav").find("li").on("click",function(){
-            var id =$(this).find("a").attr("href");
+        $(".popover-nav").find("li").on("click", function () {
+            var id = $(this).find("a").attr("href");
             $(this).siblings("li").removeClass("active");
             $(this).addClass("active");
             $(this).parent().parent().find(".tab-pane").removeClass("active").removeClass("in");
@@ -13,185 +13,188 @@
     })
 
 
-    function select_change(obj){
-        $("#"+$(obj).attr("id")+"_h").val($(obj).val());
+    function select_change(obj) {
+        $("#" + $(obj).attr("id") + "_h").val($(obj).val());
     }
 
-    function go_approval(obj){
-            $(obj).attr("disabled","disabled");
-            var node_id = $(obj).attr("data_node_id");
-            var order_id = $(obj).attr("data_order_id");
-            var flowname = $(obj).attr("data_flowname");
-            var is_params = $(obj).attr("data_params");
-            var position  = $(".xmo-tooltip-click").last().attr("position")
-            var status = '1'
-            var msg_id = order_id + "_" + flowname + "_msg_clone";
-            var radio_name = "examine_state_" + flowname + "_" + order_id + "_clone";
-            var is_ok = $("input[name='" + radio_name + "']:checked").val()
-            var msg = $("#" + msg_id).val();
-            var base_param = {id: order_id, status: status, node_id: node_id, nodename: flowname,position: position}
-            if (is_params == "yes") {
-                base_param["comment"] = msg
-                base_param["status"] = is_ok == "0" ? "2" : "3";
+    function go_approval(obj) {
+        $(obj).attr("disabled","disabled");
+        var node_id = $(obj).attr("data_node_id");
+        var order_id = $(obj).attr("data_order_id");
+        var flowname = $(obj).attr("data_flowname");
+        var is_params = $(obj).attr("data_params");
+        var position = $(".xmo-tooltip-click").last().attr("position")
+        var status = '1'
+        var msg_id = order_id + "_" + flowname + "_msg_clone";
+        var radio_name = "examine_state_" + flowname + "_" + order_id + "_clone";
+        var is_ok = $("input[name='" + radio_name + "']:checked").val()
+        var msg = $("#" + msg_id).val();
+        var base_param = {id: order_id, status: status, node_id: node_id, nodename: flowname, position: position}
+        if (is_params == "yes") {
+            base_param["comment"] = msg
+            base_param["status"] = is_ok == "0" ? "2" : "3";
+        }
+
+        if (is_params == "operation") {
+            base_param["comment"] = $("#" + order_id + "_comment_clone").val();
+            base_param["operator_id"] = $("#" + order_id + "_operator_id_h").val();
+            base_param["operation"] = $("#" + order_id + "_operation_h").val();
+            base_param["operation_share_ams"] = $("#" + order_id + "_share_username_h").val();
+            base_param["status"] = "2"
+        }
+
+        $.post("<%=send_approve_orders_url%>", {list: base_param}, function (data) {
+            $.hideTips();
+            $("#order_error").html(data.msg)
+            if (data.msg != "") {
+                scroll(0, 0);
+                $(".notice").addClass("hide")
+            }
+            var color_div = $("#" + order_id + "_" + flowname + "_message").parents(".xmo-tooltip-click");
+            var nodes = $(".xmo-tooltip-click[order_id = '" + order_id + "']");
+            if ((node_id != "" || base_param["status"] == "1" || flowname == "order_distribution") && data.msg == "") {
+                var origin_status = color_div.attr("status").split(",");
+                var operate_node = parseInt(data.operate_node);
+                var change_unstandard = data.change_unstandard;
+                var change_standard = data.change_standard;
+                var language = data.local_language;
+                console.log("=======change_unstandard:" + change_unstandard);
+                if (change_unstandard == true) {
+                    origin_status[operate_node - 1] = base_param["status"];
+                    origin_status[2] = "1";
+                    $(".statnard_or_unstatnard").attr("id", order_id + "_non_standard_approval_message")
+                    nodes.attr("is_statndard_or_unstatnard", "true")
+                    if (language == "en") {
+                        $("#" + order_id + "_unstandard_icon").html("<img src= '/images/flow/icon_specialapproval-e.png'  style='float: right;margin-top: -5px;margin-right: -1px;'>")
+                    } else {
+                        $("#" + order_id + "_unstandard_icon").html("<img src= '/images/flow/icon_specialapproval-c.png'  style='float: right;margin-top: -5px;margin-right: -1px;'>")
+                    }
+                } else if (change_standard == true) {
+                    //毛利预估通过，订单审批不通过重置订单节点状态
+                    origin_status[operate_node - 1] = base_param["status"];
+                    origin_status[1] = "0";
+                    origin_status[2] = "0";
+                    $(".xmo-tooltip-click[type = 'order_approval'][order_id= '" + order_id + "']").removeClass('status-error');
+                    $(".statnard_or_unstatnard").attr("id", order_id + "_order_approval_message")
+                    nodes.attr("is_statndard_or_unstatnard", "false")
+                    $("#" + order_id + "_unstandard_icon").html("");
+                } else if (operate_node == 1 && base_param["status"] == "1") {
+                    origin_status[operate_node - 1] = base_param["status"];
+                    origin_status[5] = "1";
+                    //预审提交,毛利预估变蓝色
+                    var gp_control = $(".xmo-tooltip-click[type = 'gp_control'][order_id= '" + order_id + "']");
+                    if (!(gp_control.hasClass('status-ready') || gp_control.hasClass('status-submit'))) {
+                        gp_control.addClass('status-submit');
+                    }
+                }
+                else {
+                    origin_status[operate_node - 1] = base_param["status"];
+                }
+
+                //大区经理审批通过后不能修改代理返点和市推费用
+                if (operate_node == 2 && base_param["status"] == "2") {
+                    $("#agency_rebate").prop("disabled", true);
+                    $("#market_cost").prop("disabled", true);
+                }
+                //订单审批不通过，重置毛利预估节点颜色
+                if ((operate_node == 2 || operate_node == 3) && base_param["status"] == "3") {
+                    origin_status[5] = "0";
+                    $(".xmo-tooltip-click[type = 'gp_control'][order_id= '" + order_id + "']").removeClass("status-ready");
+                }
+
+                //毛利预估节点提交，传给当前订单id数组便于计算订单当前状态
+                var current_gp_submit = new Array
+                if (operate_node == 6 && base_param["status"] == "1") {
+                    current_gp_submit[0] = order_id
+                }
+                nodes.attr("status", origin_status.join(","));
+
+                var is_statndard_or_unstatnard = nodes.last().attr("is_statndard_or_unstatnard");
+                $.ajax({
+                    type: "POST",
+                    url: "<%= ajax_order_state_orders_url%>",
+                    async: false,
+                    data: {
+                        order_id: order_id,
+                        is_statndard_or_unstatnard: is_statndard_or_unstatnard,
+                        status: origin_status,
+                        gp_submit_orders: current_gp_submit
+                    },
+                    dataType: "json",
+                    success: function (msg) {
+                        var order_state = msg.order_state;
+                        $("#" + order_id + "_order_state").text(order_state);
+                    }
+                });
+                color_div.removeClass("status-submit");
+                color_div.removeClass("status-ready");
+                color_div.removeClass("status-error");
+                color_div.addClass(data.color_class);
             }
 
-            if (is_params == "operation") {
-                base_param["comment"] = $("#" + order_id + "_comment_clone").val();
-                base_param["operator_id"] = $("#" + order_id + "_operator_id_h").val();
-                base_param["operation"] = $("#" + order_id + "_operation_h").val();
-                base_param["operation_share_ams"] = $("#" + order_id + "_share_username_h").val();
-                base_param["status"] = "2"
+            $("#tab-order").removeClass("in active");
+            $(".list_order").removeClass("active");
+            if ($("#tab-ads").length > 0) {
+                $("#tab-gp").removeClass("in active");
+                $(".list_gp").removeClass("active");
+                $("#tab-schedule").removeClass("in active");
+                $(".list_schedule").removeClass("active");
+                $("#tab-ads").addClass("in active");
+                $(".list_ads").addClass("active");
+            } else {
+                $("#tab-schedule").addClass("in active");
+                $(".list_schedule").addClass("active");
             }
 
-            $.post("<%=send_approve_orders_url%>", {list: base_param}, function (data) {
-                $.hideTips();
-                $("#order_error").html(data.msg)
-                if (data.msg != "") {
-                    scroll(0,0);
-                    $(".notice").addClass("hide")
-                }
-                var color_div = $("#" + order_id + "_" + flowname + "_message").parents(".xmo-tooltip-click");
-                var nodes =  $(".xmo-tooltip-click[order_id = '" + order_id + "']");
-                if ((node_id != "" || base_param["status"] == "1" || flowname == "order_distribution") && data.msg == "") {
-                    var origin_status = color_div.attr("status").split(",");
-                    var operate_node = parseInt(data.operate_node);
-
-                    var change_unstandard = data.change_unstandard;
-                    var change_standard  = data.change_standard;
-                    var language = data.local_language;
-                    console.log("=======change_unstandard:"+change_unstandard);
-                    if(change_unstandard== true){
-                        origin_status[operate_node - 1] = base_param["status"];
-                        origin_status[2] = "1";
-                        $(".statnard_or_unstatnard").attr("id",order_id+"_non_standard_approval_message")
-                        nodes.attr("is_statndard_or_unstatnard","true")
-                        if (language == "en") {
-                            $("#" + order_id + "_unstandard_icon").html("<img src= '/images/flow/icon_specialapproval-e.png'  style='float: right;margin-top: -5px;margin-right: -1px;'>")
-                        }else{
-                            $("#" + order_id + "_unstandard_icon").html("<img src= '/images/flow/icon_specialapproval-c.png'  style='float: right;margin-top: -5px;margin-right: -1px;'>")
-                        }
-                    }else if(change_standard == true){
-                     //毛利预估通过，订单审批不通过重置订单节点状态
-                        origin_status[operate_node - 1] = base_param["status"];
-                        origin_status[1] = "0";
-                        origin_status[2] = "0";
-                        $(".xmo-tooltip-click[type = 'order_approval'][order_id= '"+order_id+"']").removeClass('status-error');
-                        $(".statnard_or_unstatnard").attr("id",order_id+"_order_approval_message")
-                        nodes.attr("is_statndard_or_unstatnard","false")
-                        $("#" + order_id + "_unstandard_icon").html("");
-                    }else if(operate_node == 1 && base_param["status"] == "1" ){
-                        origin_status[operate_node - 1] = base_param["status"];
-                        origin_status[5] = "1";
-                        //预审提交,毛利预估变蓝色
-                        var gp_control = $(".xmo-tooltip-click[type = 'gp_control'][order_id= '"+order_id+"']");
-                        if( !(gp_control.hasClass('status-ready') || gp_control.hasClass('status-submit')) ){
-                            gp_control.addClass('status-submit');
-                        }
-                    }
-                    else{
-                        origin_status[operate_node - 1] = base_param["status"];
-                    }
-
-                    //大区经理审批通过后不能修改代理返点和市推费用
-                    if(operate_node == 2 && base_param["status"] == "2"){
-                        $("#agency_rebate").prop("disabled",true);
-                        $("#market_cost").prop("disabled",true);
-                    }
-                    //订单审批不通过，重置毛利预估节点颜色
-                    if((operate_node == 2 || operate_node == 3) && base_param["status"] == "3"){
-                        origin_status[5] = "0";
-                        $(".xmo-tooltip-click[type = 'gp_control'][order_id= '"+order_id+"']").removeClass("status-ready");
-                    }
-
-                    //毛利预估节点提交，传给当前订单id数组便于计算订单当前状态
-                    var current_gp_submit = new Array
-                    if (operate_node == 6 && base_param["status"] == "1"){
-                        current_gp_submit[0] = order_id
-                    }
-                    nodes.attr("status", origin_status.join(","));
-
-                    var is_statndard_or_unstatnard = nodes.last().attr("is_statndard_or_unstatnard");
-                    $.ajax({
-                        type: "POST",
-                        url: "<%= ajax_order_state_orders_url%>",
-                        async: false,
-                        data: {
-                            order_id: order_id,
-                            is_statndard_or_unstatnard: is_statndard_or_unstatnard,
-                            status: origin_status,
-                            gp_submit_orders:current_gp_submit
-                        },
-                        dataType: "json",
-                        success: function (msg) {
-                            var order_state = msg.order_state;
-                            $("#" + order_id + "_order_state").text(order_state);
-                        }
-                    });
-                    color_div.removeClass("status-submit");
-                    color_div.removeClass("status-ready");
-                    color_div.removeClass("status-error");
-                    color_div.addClass(data.color_class);
-                }
-
-                $("#tab-order").removeClass("in active");
-                $(".list_order").removeClass("active");
-                if ($("#tab-ads").length > 0) {
-                    $("#tab-gp").removeClass("in active");
-                    $(".list_gp").removeClass("active");
-                    $("#tab-schedule").removeClass("in active");
-                    $(".list_schedule").removeClass("active");
-                    $("#tab-ads").addClass("in active");
-                    $(".list_ads").addClass("active");
-                }else{
-                    $("#tab-schedule").addClass("in active");
-                    $(".list_schedule").addClass("active");
-                }
-
-            }, "json")
+        }, "json")
 
     }
 
 
-    function go_back(obj){
+    function go_back(obj) {
         $.hideTips();
     }
-    $(".gp_part .pg_item").live("mouseover",function(){
+    $(".gp_part .pg_item").live("mouseover", function () {
         $(this).show();
         return false;
     })
-    $(".gp_part .pg_item").live("mouseout",function(){
+    $(".gp_part .pg_item").live("mouseout", function () {
         $.hideTips();
         return false;
     })
 
     var Order = {
-        data_cannot_edit: function(id){
-            var node_div = $(".xmo-progress-status [order_id = "+ id +"]")
+        data_cannot_edit: function (id) {
+            var node_div = $(".xmo-progress-status [order_id = " + id + "]")
             var order_status = node_div.last().attr('status').split(",");
             var is_statndard_or_unstatnard = node_div.last().attr('is_statndard_or_unstatnard')
-            order_status.splice(4,1);
-            var include_three = _.some(order_status, function (i) {return ["3"].indexOf(i) > -1});
-            var all_zero =  _.every(order_status, function(i) {  return parseInt(i) < 1});
+            order_status.splice(4, 1);
+            var include_three = _.some(order_status, function (i) {
+                return ["3"].indexOf(i) > -1
+            });
+            var all_zero = _.every(order_status, function (i) {
+                return parseInt(i) < 1
+            });
 
             var node_ids = node_div.last().attr("node_ids").split(",")
             var status = node_div.last().attr("status").split(",")
-            var is_precheck = (jQuery.inArray("1",node_ids) > -1)
-            var is_contract = (jQuery.inArray("4",node_ids) > -1)
+            var is_precheck = (jQuery.inArray("1", node_ids) > -1)
+            var is_contract = (jQuery.inArray("4", node_ids) > -1)
 
 
-            if (is_precheck || is_contract ) {
-                return !(include_three || all_zero )  && ((is_precheck && status[0] == "2") || (is_contract && status[3] == "2"))
-            }else{
+            if (is_precheck || is_contract) {
+                return !(include_three || all_zero ) && ((is_precheck && status[0] == "2") || (is_contract && status[3] == "2"))
+            } else {
                 return !(include_three || all_zero )
             }
         }
     }
 
-   function reset_tab_gp(order_id){
-       $.get("<%= ajax_render_gp_config_orders_path%>",{id:order_id},function(data){
-           $("#tab-gp").html(data);
-       })
-   }
+    function reset_tab_gp(order_id) {
+        $.get("<%= ajax_render_gp_config_orders_path%>", {id: order_id}, function (data) {
+            $("#tab-gp").html(data);
+        })
+    }
 
 
 </script>
