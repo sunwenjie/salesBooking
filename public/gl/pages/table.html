@@ -1,0 +1,2852 @@
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready( function () {
+        $('#example_1').dataTable( { 
+          // "iDisplayLength": -1,
+          "bFilter": false,
+          "bInfo": false,
+          "bPaginate": false,
+          "bLengthChange": false,
+          "sScrollY": "209px",
+          "sDom": "frtiS",
+          "bDeferRender": true,
+        } );
+
+        var oTable = $('#example_2').dataTable( {
+          "bFilter": false,
+          "bInfo": false,
+          "bPaginate": false,
+          "bLengthChange": false,
+          "sScrollX": "100%",
+          "sScrollXInner": "150%",
+          "bScrollCollapse": true
+        } );
+
+        new FixedColumns( oTable, {
+          "iLeftColumns": 1,
+          "iRightColumns": 0
+        });
+      } );
+    </script>
+<header class="jumbotron subhead">
+        <h1>六，表格（Table）</h1>
+</header>
+<div class="big_section">
+<div class="center_doc">
+<header class="jumbotron subhead">
+        <p class="lead subNavItem" id="table_1">6.1-上下固定中间滚动（Fix Top and Last Row）</p>
+</header>
+<div class="table_gray">
+<!-- <table class="table table-striped table-bordered table-condensed unlimited_width search_table dataTable" cellpadding="0" cellspacing="0" border="0" class="display" id="">
+  <thead>
+<tr>
+    <th class="align_left align_top">USER<ul class="nav inline">
+        <li class="dropdown">
+        <a data-toggle="dropdown" href="#" class="tab_choice dropdown-toggle">报告<b class="caret"></b></a>
+          
+          <ul class="dropdown-menu">
+  <li>
+  <div class="white_pointer pointer_wide zh-cn"> </div>
+       
+           <a href="http://xmo.optimix.asia/zh-cn/media_plan_groups/23/standard_report">标准报告</a>
+     
+  </li>
+  <li>
+     
+        <a href="/zh-cn/report/conversion_transaction_report?media_plan_group_id=23">审核报告</a>
+     
+  </li>
+  
+    <li class="nav-header">
+      进阶报告
+    </li>
+    
+        <a href="/zh-cn/report/audience_report?media_plan_group_id=23">人群报告</a>
+      
+    
+    <li>
+     
+        <a href="/zh-cn/report/adx_hourly_report?media_plan_group_id=23">每小时转化</a>
+      
+    </li>
+    
+        
+    <li>
+      
+        <a href="/zh-cn/report/adx_day_of_week_report?media_plan_group_id=23">每周转化</a>
+      
+    </li>
+</ul>
+        </li>
+      </ul></th>
+    <th class="align_left align_top">DATE</th>
+    <th class="align_left align_top">MARKET</th>
+    <th class="align_left align_top">ACTION</th>
+    <th class="align_left align_top">AD NAME</th>
+    <th class="align_left align_top">PLACEMENT NAME</th>
+    <th class="align_left align_top">TAG LINE</th>
+    <th class="align_left align_top">SEARCH ENGINE</th>
+    <th class="align_left align_top">SEARCH QUERY</th>
+</tr>
+  </thead>
+<tbody>
+    <tr class="even">
+      <td class="align_center">
+        49310358
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:16
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>  
+</tbody>
+</table> -->
+
+
+<table class="table table-striped table-bordered table-condensed unlimited_width search_table dataTable" cellpadding="0" cellspacing="0" border="0" class="display" id="example_1">
+  <thead>
+<tr>
+    <th class="align_left align_top">USER</th>
+    <th class="align_left align_top">DATE</th>
+    <th class="align_left align_top">MARKET</th>
+    <th class="align_left align_top">ACTION</th>
+    <th class="align_left align_top">AD NAME</th>
+    <th class="align_left align_top">PLACEMENT NAME</th>
+    <th class="align_left align_top">TAG LINE</th>
+    <th class="align_left align_top">SEARCH ENGINE</th>
+    <th class="align_left align_top">SEARCH QUERY</th>
+</tr>
+  </thead>
+
+<tbody>
+    <tr class="even">
+      <td class="align_center">
+        49310358
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:16
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>  
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:19
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:19
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:19
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:19
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:20
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:23
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:24
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:24
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:25
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:28
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:29
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:31
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:32
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:33
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:36
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:36
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:37
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:39
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:42
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:43
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:44
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:46
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:54
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:55
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:56
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:57
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    
+    <tr class='final_row odd even'>
+      <td class="align_left l_padding_20" rowspan="1" colspan="1">
+          <b> - TOTAL -</b>
+      </td>
+      <td class="align_left">
+      </td>
+      <td class="align_left ">
+      </td>
+      <td class="align_left ">
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+
+
+<pre class="prettyprint linenums">
+$('#example_1').dataTable({ 
+  "bFilter": false,
+  "bInfo": false,
+  "bPaginate": false,
+  "bLengthChange": false,
+  "sScrollY": "200px",
+  "sDom": "frtiS",
+  "bDeferRender": true,
+});
+</pre>
+
+
+
+<header class="jumbotron subhead">
+        <p class="lead subNavItem" id="table_1">6.2-左边列固定（Fix Left）</p>
+</header>
+<div class="table_gray">
+<table class="table table-striped table-bordered table-condensed unlimited_width search_table dataTable" cellpadding="0" cellspacing="0" border="0" class="display" id="example_2">
+  <thead>
+    <tr>
+        <th class="align_left align_top">USER</th>
+        <th class="align_left align_top">DATE</th>
+        <th class="align_left align_top">MARKET</th>
+        <th class="align_left align_top">ACTION</th>
+        <th class="align_left align_top">AD NAME</th>
+        <th class="align_left align_top">PLACEMENT NAME</th>
+        <th class="align_left align_top">TAG LINE</th>
+        <th class="align_left align_top">SEARCH ENGINE</th>
+        <th class="align_left align_top">SEARCH QUERY</th>
+    </tr>
+  </thead>
+
+<tbody>
+    <tr class="even">
+      <td class="align_center">
+        49310358
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:16
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>  
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:19
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:19
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:19
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:19
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:20
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:23
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:24
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:24
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:25
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:28
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:29
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:31
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:32
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:33
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:36
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:36
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:37
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:39
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:42
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:43
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:44
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:46
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:54
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:55
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="odd">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:56
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+    
+  
+    
+    <tr class="even">
+      <td class="align_center">
+         
+      </td>
+      <td class="align_left">
+        2013-07-01 14:18:57
+      </td>
+      <td class="align_left ">
+        Search
+      </td>
+      <td class="align_left ">
+        Click
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+        Google
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    
+    <tr class='final_row odd even'>
+      <td class="align_left l_padding_20" rowspan="1" colspan="1">
+          <b> - TOTAL -</b>
+      </td>
+      <td class="align_left">
+      </td>
+      <td class="align_left ">
+      </td>
+      <td class="align_left ">
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center ">
+        
+      </td>
+      <td class="align_center">
+        
+      </td>   
+      <td class="align_center">
+      </td>
+      <td class="aligncenter">
+        
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<pre class="prettyprint linenums">
+var oTable = $('#example_2').dataTable({
+  "bFilter": false,
+  "bInfo": false,
+  "bPaginate": false,
+  "bLengthChange": false,
+  "sScrollX": "100%",
+  "sScrollXInner": "150%",
+  "bScrollCollapse": true
+});
+
+new FixedColumns( oTable, {
+  "iLeftColumns": 1,
+  "iRightColumns": 0
+});
+</pre>
+</div>
+
+<header class="jumbotron subhead">
+        <p class="lead subNavItem" id="table_1">6.3-左右固定（Fix Left&Right）</p>
+</header>
+<div>
+
+  <!-- <div class='row'>
+    <div class='remark' style='color: #504F4F'><span class='font_10'>搜索竞价</span> | <span class='font_11'>自然搜索</span> |  <span  class='font_15'>广告联盟</span> | <span  class='font_13'>广告交易平台</span><br/><span  class='font_14'>移动平台</span> | <span  class='font_12'>独立网站</span> | <span  class='font_16'>社交网络</span></div>
+  </div> -->
+
+
+
+
+  <h3  class="highchart2_title">跨媒体交互分析</h3>
+<div class='row' id='header_channel'> <div class=' header_channel'>媒体</div></div>
+<!-- <table class='datatables ' > -->
+<div class='row'>
+<table class="table cta_table-striped cta_table-bordered table-condensed width_100 cta_table" cellspacing="0" cellpadding="0" border="0">
+  <thead>
+    <tr>
+    <th class="left_head_channel" >辅助媒体</th>
+    
+  <th class=" normal_header left_name_channel">Google Adx <br />(Ad Exchange)</th>
+    
+  <th class=" normal_header center_name_channel">Other <br />(Display Network)</th>
+    
+  <th class=" normal_header center_name_channel">Youbuyibuy.com <br />(Individual Portal)</th>
+    
+  <th class=" normal_header center_name_channel">Baidu <br />(Paid Search)</th>
+    
+  <th class=" normal_header center_name_channel">Pricecompare.com <br />(Individual Portal)</th>
+    
+  <th class=" normal_header center_name_channel">Google <br />(Paid Search)</th>
+    
+    <th class=" right_name_channel">总辅助</th>
+    </tr>
+
+  </thead>
+  
+  <tbody>
+    
+    <tr class="even ">
+      <td class="align_left  left_head_top_channel l_padding_20">
+        Other <br />(Display Network)
+      </td>
+      
+        
+        <td class="align_center ">
+        
+          2.28%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.43%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          2.15%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.65%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.15%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.67%
+          
+        </td>
+      
+      <td class="align_center total">
+        8.33%
+        
+      </td>
+    </tr>
+    
+    <tr class="odd ">
+      <td class="align_left  left_head_channel l_padding_20">
+        Google Adx <br />(Ad Exchange)
+      </td>
+      
+        
+        <td class="align_center ">
+        
+          0.32%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          2.01%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          2.11%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.69%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.25%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.83%
+          
+        </td>
+      
+      <td class="align_center total">
+        8.21%
+        
+      </td>
+    </tr>
+    
+    <tr class="even ">
+      <td class="align_left  left_head_channel l_padding_20">
+        Youbuyibuy.com <br />(Individual Portal)
+      </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          2.42%
+          
+        </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          2.13%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.62%
+          
+        </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          2.67%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+      <td class="align_center total">
+        7.84%
+        
+      </td>
+    </tr>
+    
+    <tr class="odd ">
+      <td class="align_left  left_head_channel l_padding_20">
+        Baidu <br />(Paid Search)
+      </td>
+      
+        
+        <td class="align_center ">
+        
+          1.54%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.50%
+          
+        </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          2.63%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.29%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+      <td class="align_center total">
+        5.96%
+        
+      </td>
+    </tr>
+    
+    <tr class="even ">
+      <td class="align_left  left_head_channel l_padding_20">
+        Pricecompare.com <br />(Individual Portal)
+      </td>
+      
+        
+        <td class="align_center ">
+        
+          1.11%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.25%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.30%
+          
+        </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          1.42%
+          
+        </td>
+      
+      <td class="align_center total">
+        4.07%
+        
+      </td>
+    </tr>
+    
+    <tr class="odd final_row">
+      <td class="align_left  left_head_bottom_channel l_padding_20">
+        Google <br />(Paid Search)
+      </td>
+      
+        
+        <td class="align_center ">
+        
+          0.95%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.76%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          1.41%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.18%
+          
+        </td>
+      
+      <td class="align_center total">
+        3.29%
+        
+      </td>
+    </tr>
+    
+  </tbody>
+  
+  <tfoot>
+    <tr>
+      <td class='l_padding_20'><b>总计</b></td>
+      
+      <td class="align_center total">
+        <b>
+          8.61%
+          
+        </b>
+      </td>
+      
+      <td class="align_center total">
+        <b>
+          8.07%
+          
+        </b>
+      </td>
+      
+      <td class="align_center total">
+        <b>
+          7.51%
+          
+        </b>
+      </td>
+      
+      <td class="align_center total">
+        <b>
+          6.30%
+          
+        </b>
+      </td>
+      
+      <td class="align_center total">
+        <b>
+          4.10%
+          
+        </b>
+      </td>
+      
+      <td class="align_center total">
+        <b>
+          3.10%
+          
+        </b>
+      </td>
+      
+      <td></td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+<div class='row b_border tb_padding_10'>
+  <div class='span'><span class='red_mark_total r_margin_20'>红字：</span></div>
+  <div class='span'>最佳辅助媒体</div>
+</div>
+<script>
+function init_cta_table(){
+var show_table = false;
+  var cta_Table1 = 
+    $('.cta_table').dataTable({
+      "bJQueryUI": false,
+        "bRetrieve": false,
+        "sScrollX": "100%",
+      "bScrollCollapse": true,
+        "bSort": false,
+      "bFilter": false,
+      "bInfo": false,
+      "bPaginate": false,
+      "bLengthChange": false,
+      // "sDom": '<"clear">RTrtip'
+    });
+    
+    new FixedColumns( cta_Table1, {
+        "iLeftColumns": 1,
+        "iRightColumns": 1,
+        "iLeftWidth": 150,
+        "iRightWidth": 100
+      } );
+      $('#header_channel').insertBefore($('#header_channel').parent().find('.DTFC_ScrollWrapper'));
+      $('.header_channel').width($('.DTFC_ScrollWrapper').width()-150);
+      $('.header_channel').css('margin-left',150);
+}
+$(function(){init_cta_table();});
+</script>
+
+
+
+<pre class="prettyprint linenums">
+<div class='row'>
+<table class="table cta_table-striped cta_table-bordered table-condensed width_100 cta_table" cellspacing="0" cellpadding="0" border="0">
+  <thead>
+    <tr>
+    <th class="left_head_channel" >辅助媒体</th>
+    
+  <th class=" normal_header left_name_channel">Google Adx <br />(Ad Exchange)</th>
+    
+  <th class=" normal_header center_name_channel">Other <br />(Display Network)</th>
+    
+  <th class=" normal_header center_name_channel">Youbuyibuy.com <br />(Individual Portal)</th>
+    
+  <th class=" normal_header center_name_channel">Baidu <br />(Paid Search)</th>
+    
+  <th class=" normal_header center_name_channel">Pricecompare.com <br />(Individual Portal)</th>
+    
+  <th class=" normal_header center_name_channel">Google <br />(Paid Search)</th>
+    
+    <th class=" right_name_channel">总辅助</th>
+    </tr>
+
+  </thead>
+  
+  <tbody>
+    
+    <tr class="even ">
+      <td class="align_left  left_head_top_channel l_padding_20">
+        Other <br />(Display Network)
+      </td>
+      
+        
+        <td class="align_center ">
+        
+          2.28%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.43%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          2.15%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.65%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.15%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.67%
+          
+        </td>
+      
+      <td class="align_center total">
+        8.33%
+        
+      </td>
+    </tr>
+    
+    <tr class="odd ">
+      <td class="align_left  left_head_channel l_padding_20">
+        Google Adx <br />(Ad Exchange)
+      </td>
+      
+        
+        <td class="align_center ">
+        
+          0.32%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          2.01%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          2.11%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.69%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.25%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.83%
+          
+        </td>
+      
+      <td class="align_center total">
+        8.21%
+        
+      </td>
+    </tr>
+    
+    <tr class="even ">
+      <td class="align_left  left_head_channel l_padding_20">
+        Youbuyibuy.com <br />(Individual Portal)
+      </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          2.42%
+          
+        </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          2.13%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.62%
+          
+        </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          2.67%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+      <td class="align_center total">
+        7.84%
+        
+      </td>
+    </tr>
+    
+    <tr class="odd ">
+      <td class="align_left  left_head_channel l_padding_20">
+        Baidu <br />(Paid Search)
+      </td>
+      
+        
+        <td class="align_center ">
+        
+          1.54%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.50%
+          
+        </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          2.63%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.29%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+      <td class="align_center total">
+        5.96%
+        
+      </td>
+    </tr>
+    
+    <tr class="even ">
+      <td class="align_left  left_head_channel l_padding_20">
+        Pricecompare.com <br />(Individual Portal)
+      </td>
+      
+        
+        <td class="align_center ">
+        
+          1.11%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          1.25%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.30%
+          
+        </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          1.42%
+          
+        </td>
+      
+      <td class="align_center total">
+        4.07%
+        
+      </td>
+    </tr>
+    
+    <tr class="odd final_row">
+      <td class="align_left  left_head_bottom_channel l_padding_20">
+        Google <br />(Paid Search)
+      </td>
+      
+        
+        <td class="align_center ">
+        
+          0.95%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.76%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0%
+          
+        </td>
+      
+        
+        <td class="align_center red_mark">
+        
+          1.41%
+          
+        </td>
+      
+        
+        <td class="align_center ">
+        
+          0.18%
+          
+        </td>
+      
+      <td class="align_center total">
+        3.29%
+        
+      </td>
+    </tr>
+    
+  </tbody>
+  
+  <tfoot>
+    <tr>
+      <td class='l_padding_20'><b>总计</b></td>
+      
+      <td class="align_center total">
+        <b>
+          8.61%
+          
+        </b>
+      </td>
+      
+      <td class="align_center total">
+        <b>
+          8.07%
+          
+        </b>
+      </td>
+      
+      <td class="align_center total">
+        <b>
+          7.51%
+          
+        </b>
+      </td>
+      
+      <td class="align_center total">
+        <b>
+          6.30%
+          
+        </b>
+      </td>
+      
+      <td class="align_center total">
+        <b>
+          4.10%
+          
+        </b>
+      </td>
+      
+      <td class="align_center total">
+        <b>
+          3.10%
+          
+        </b>
+      </td>
+      
+      <td></td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+
+function init_cta_table(){
+var show_table = false;
+  var cta_Table1 = 
+    $('.cta_table').dataTable({
+      "bJQueryUI": false,
+        "bRetrieve": false,
+        "sScrollX": "100%",
+      "bScrollCollapse": true,
+        "bSort": false,
+      "bFilter": false,
+      "bInfo": false,
+      "bPaginate": false,
+      "bLengthChange": false,
+      // "sDom": '<"clear">RTrtip'
+    });
+    
+    new FixedColumns( cta_Table1, {
+        "iLeftColumns": 1,
+        "iRightColumns": 1,
+        "iLeftWidth": 150,
+        "iRightWidth": 100
+      } );
+      $('#header_channel').insertBefore($('#header_channel').parent().find('.DTFC_ScrollWrapper'));
+      $('.header_channel').width($('.DTFC_ScrollWrapper').width()-150);
+      $('.header_channel').css('margin-left',150);
+}
+$(function(){init_cta_table();});
+</pre>
+</div>
+
+</div>
+
+</div>

@@ -1,0 +1,171 @@
+<header class="subNavList">
+<ul>
+
+</ul>
+</header>
+
+
+<header class="jumbotron subhead">
+        <h1>四，按钮（Button）</h1>
+</header>
+<div class="big_section">
+<div class="sub_section_white">
+
+<form class="form-horizontal">
+
+<div class="control-group">
+	<div class="span2 margin_0">
+	<div class="outer_submit">
+		<input type="button" value="Submit" class="submit">
+	</div>
+	<div class="outer_submit">
+		<input type="button" value="CREATE" class="submit">
+	</div>
+	<div class="outer_submit">
+		<input type="button" value="UPDATE" class="submit">
+	</div>
+	<div class="outer_submit">
+		<input type="button" value="SAVE" class="submit">
+	</div>
+	<div class="outer_submit">
+		<input type="button" value="CONTINUE" class="submit">
+	</div>
+	</div>
+
+		<div style="float:right;display: inline-block;width: 690px;" class="span5">
+<pre class="prettyprint linenums">
+<div class="outer_submit">
+	<input type="button" value="Submit" class="submit">
+</div>
+<div class="outer_submit">
+	<input type="button" value="CREATE" class="submit">
+</div>
+<div class="outer_submit">
+	<input type="button" value="UPDATE" class="submit">
+</div>
+<div class="outer_submit">
+	<input type="button" value="SAVE" class="submit">
+</div>
+<div class="outer_submit">
+	<input type="button" value="CONTINUE" class="submit">
+</div>
+</pre>
+	</div>
+</div>
+<div class="control-group">
+		<div class="outer_cancel">
+			<input type="button" value="Cancel" class="cancel">
+		</div>
+		<div style="float:right;display: inline-block;width: 690px;" class="span5">
+<pre class="prettyprint linenums">
+<div class="outer_cancel">
+<input class="cancel" value="Cancle" type="button">
+</div>
+</pre>
+	</div>
+</div>
+
+<div class="control-group">
+		<div class="outer_other">
+			<input type="button" value="Other" class="other">
+		</div>
+		<div style="float:right;display: inline-block;width: 690px;" class="span5">
+<pre class="prettyprint linenums">
+<div class="outer_other">
+<input class="other" value="Other" type="button">
+</div>
+</pre>
+	</div>
+</div>
+
+<div class="control-group">
+<a href="#browse_analysis" class="btn-x-mkt-analysis-en pull-left" id="browse_link"></a>
+		<div style="float:right;display: inline-block;width:100%" class="span5">
+<pre class="prettyprint linenums">
+<a href="#browse_analysis" class="btn-x-mkt-analysis-en pull-left" id="browse_link"></a>
+</pre>
+	</div>
+</div>
+
+
+<div class="control-group">
+		<div class="outer_other_thin">
+			<input type="button" value="Other Thin" class="other_thin">
+		</div>
+		<div style="float:right;display: inline-block;width: 690px;" class="span5">
+<pre class="prettyprint linenums">
+<div class="outer_other_thin">
+<input class="other_thin" value="Other" type="button">
+</div>>
+</pre>
+	</div>
+</div>
+
+
+<div class="control-group">
+<div class="on-off-btn pull-left" id="on-off-btn-test" status="on"></div>
+<script type="text/javascript">
+$('#on-off-btn-test').onOffBtn();
+</script>
+<div style="float:right;display: inline-block;width: 690px;" class="span5">
+<pre class="prettyprint linenums">
+<div class="on-off-btn" status="on" id="on-off-btn"></div>
+<!-- js代码 -->
+$('#on-off-btn').onOffBtn();
+</pre>
+</div>
+<div class="row cle">
+<span class="label label-important">说明：onOffBtn效果依赖  <%= javascript_include_tag "jquery.on-off-btn.js"%> <%= stylesheet_link_tag 'on_off_button/on-off-btn'%> 请在 &lt;head&gt;&lt;/head&gt; 之间引用这个js</span>
+</div>
+</div>
+
+
+
+
+
+<div class="row datil-intro">
+<div class="span8">
+<h3>General Usage</h3>
+
+<h3>Rollover Effect on buttons</h3>
+<ol>
+<li>All buttons have the save rollover effect.</li>
+</ol>
+
+<h3>Function of Buttons</h3>
+<h3>CANCEL</h3>
+<ol>
+<li>Return to where user enters the page</li>
+<li>No action has been taken on any of the changed information</li>
+</ol>
+
+<h3>CREATE</h3>
+<ol>
+<li>Direct user back to where he/she enters the page from</li>
+<li>After creation, on the enter page, a flash message will be displayed</li>
+</ol>
+
+<h3>SAVE</h3>
+<ol>
+<li>Direct user back to where he/she enters the page from</li>
+<li>After saving, on the enter page, a flash message will be displayed</li>
+</ol>
+
+<h3>SAVE & CONTINUE</h3>
+<ol>
+<li>Direct user to the next page to continue with the editing</li>
+</ol>
+
+<h3>ON/OFF</h3>
+<ol>
+<li>Activate/Deactivate the media plan</li>
+</ol>
+
+
+</div>
+</div>
+
+
+</form>
+</div>
+</div>

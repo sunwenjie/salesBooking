@@ -1,0 +1,5 @@
+.on-off-btn{width: 89px;height: 51px; background: url(../../images/on-off-btn-bg.png) no-repeat;cursor: pointer;}
+.btn-on-en{background-position:-89px -51px;}
+.btn-off-en{background-position:-89px -1px;}
+.btn-on-cn{background-position:0 -51px;}
+.btn-off-cn{background-position:0 -1px;}

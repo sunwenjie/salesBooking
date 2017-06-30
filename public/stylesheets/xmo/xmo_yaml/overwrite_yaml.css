@@ -1,0 +1,22 @@
+/************************************** application *************************************/
+
+#col3_content {
+    padding: 0;
+}
+/************************************ breadcrumb & search bar ***********************************/
+ul.breadcrumb  {
+	margin: 10px;
+	background-color: #ffffff;
+	margin-left: 0;
+}
+
+/****************************************** page title ***************************************/
+.client-row h1, .client-row h2, .media-row h1, .media-row h2, .media-plan-row h1, .media-plan-row h2{
+	margin: 0;
+	display: inline;
+}
+.yform .type-button input[type="submit"] {
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}

@@ -1,0 +1,53 @@
+<%= javascript_include_tag "/js/jquery.xmo_tooltips" %>
+<%= javascript_include_tag 'layer2.1/layer' %>
+
+<style>
+  .width_100 {width: 100% !important;}
+</style>
+<div id="order_error"></div>
+<% if flash[:error] %>
+    <div class="error"><%= flash[:error] %></div>
+<% end %>
+<%if flash[:notice] %>
+    <div class="notice "><%= flash[:notice] %></div>
+<% end %>
+
+<div class="search_filter_wraper">
+    <div class="row" style="margin-bottom: 10px">
+      <div class="filter_div">
+        <span class="relative_t_7 r_margin_10 l_margin_10"><%= t("order.status_label")%></span>
+        <select class="select required"  id="chosen_test" disname="chosen下拉">
+              <%= option_for_order_status %>
+        </select>
+
+        <span class="relative_t_7 r_margin_10 l_margin_10"><%= t("order.view_lable")%></span>
+        <select class="select required"  id="date_range" disname="chosen下拉" style="width: 280px;">
+          <%= option_for_date %>
+        </select>
+
+      </div>
+    </div>
+  </div>
+
+ <div class="clean_padding"></div>
+ <div id="all_orders"> 
+    <div style="text-align:center;margin-top:20px">
+      <img src="/images/ajax-loader.gif" class="loading_img">
+    </div> 
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function(){$("#date_range").trigger("change")});
+    $(".order_href").click(function(){
+        $(".order_href").attr('href',"<%= download_orders_orders_path%>"+"?date_range="+$("#date_range").val()+"");
+    })
+    $("#date_range").change(function(){
+        $("#all_orders").html("<div style='text-align:center;margin-top:20px'> <img src='/images/ajax-loader.gif' class='loading_img'> </div>");
+        $.get("<%= loading_all_orders_path%>", {date_range:  $("#date_range").val()}, function (data) {
+            $("#all_orders").html(data);
+            $("#chosen_test").val("");
+        })
+    });
+  </script>
+  
+
+    

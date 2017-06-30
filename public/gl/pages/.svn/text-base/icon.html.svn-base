@@ -1,0 +1,177 @@
+<header class="jumbotron subhead">
+        <h1>三，图标（Icons）</h1>
+</header>
+<div class="big_section">
+<div class="sub_section_white">
+<form class="form-horizontal">
+
+			<div class="control-group">
+				<label class="control-label">code icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-code"></i>Code</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-code"></i>Code</a>
+</pre>
+					
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Add new icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-add-new"></i>Add new something</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-add-new"></i>Add new something</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Previous icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-previous"></i>Previous</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-previous"></i>Previous</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Remove icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-remove"></i>Remove</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-remove"></i>Remove</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Calendar icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-calendar"></i>Calendar</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-calendar"></i>Calendar</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Help icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-help"></i>Help</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-help"></i>Help</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Preview icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-preview"></i>Preview</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-preview"></i>Help</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Arrow icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-arrow"></i>Arrow</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-arrow"></i>Help</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Refresh icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-refresh"></i>Help</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-refresh"></i>Help</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Play icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-play"></i>Play</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-play"></i>Play</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Pause icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-pause"></i>Pause</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-pause"></i>Pause</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Download icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-download"></i>Download</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-download"></i>Download</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Export icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-export-to-nc"></i>Export</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-export-to-nc"></i>Export</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">active-float icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-active-float"></i>active-float</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-active-float"></i>active-float</a>
+</pre>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">inactive-float icon</label>
+				<div class="controls">
+					<a href="#"><i class="icon-inactive-float"></i>inactive-float</a>
+					<div style="float:right;display: inline-block;width: 490px;" class="span5">
+<pre class="prettyprint linenums">
+<a href="#"><i class="icon-inactive-float"></i>inactive-float</a>
+</pre>
+					</div>
+				</div>
+			</div>
+		</form>
+
+				</div>
+			</div>

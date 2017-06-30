@@ -1,0 +1,212 @@
+<%= javascript_include_tag "chosen.jquery.min" %>
+<%= render :partial => "channel_js"%>
+
+<% if @channel.errors.any? %>
+    <div id="error_explanation" class="error sticker">
+      <h2><%= t('clients.form.client_errors_message_tip') %></h2>
+      <ul>
+        <% @channel.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
+
+<div  class ="big_section big_section_book">
+
+  <%= form_for(@channel,:html=>{:id=>"channel_form", :class=>"form-horizontal"}) do |f| %>
+  
+  <%#= hidden_field_tag "user_id", @user.id %>
+  
+  <div class="control-group">
+    <%= f.label :name , t('products.index.channel_name'), :class => "control-label" %>
+    <div class="controls">
+      <div class='row'>
+        <div class='item_one'>
+          <div class='span'>
+            <%= f.text_field :channel_name %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--代理公司资质名称qualification_name -->
+   <div class="control-group">
+     <label class="control-label">
+       <label for="qualification_name" class="inline"><%= t("products.index.channel_qualification_name")%></label>
+     </label>
+     <div class="controls">
+        <div class="row">
+          <div class="item_one">
+            <div class="span">
+                <%= f.text_field :qualification_name %>
+            </div>
+          </div>
+        </div>
+     </div>
+   </div>
+
+  <div class="control-group">
+    <label class="control-label">
+      <label for="currency_id" class="inline"><%= t("products.index.channel_currency_name")%></label>
+    </label>
+    <div class="controls">
+      <div class="row">
+        <div class="span">
+          <%= f.select :currency_id, options_for_currency(@channel.currency_id), {:class => "required select span5 proof_ready_unmodify"},:style => "width:390px;" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">
+      <label for="contact_person" class="inline"><%= t("products.index.channel_contact_person")%></label>
+    </label>
+    <div class="controls">
+      <div class="row">
+        <div class="item_one">
+          <div class="span">
+            <%= f.text_field :contact_person %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">
+      <label for="position" class="inline"><%= t("products.index.channel_person_position")%></label>
+    </label>
+    <div class="controls">
+      <div class="row">
+        <div class="item_one">
+          <div class="span">
+            <%= f.text_field :position %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">
+      <label for="phone" class="inline"><%= t("products.index.channel_phone_number")%></label>
+    </label>
+    <div class="controls">
+      <div class="row">
+        <div class="item_one">
+          <div class="span">
+            <%= f.text_field :phone %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">
+      <label for="email" class="inline"><%= t("products.index.channel_person_email")%></label>
+    </label>
+    <div class="controls">
+      <div class="row">
+        <div class="item_one">
+          <div class="span">
+            <%= f.text_field :email %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">
+      <label for="company_adress" class="inline"><%= t("products.index.channel_company_adress")%></label>
+    </label>
+    <div class="controls">
+      <div class="row">
+        <div class="item_one">
+          <div class="span">
+            <%= f.text_field :company_adress %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+      <%= render partial: 'rebate_date_form', :object=>@channel %>
+
+    <div class="control-group" style="display: none">
+    <%= f.label :name , t('products.index.channel_status'), :class => "control-label" %>
+    <div class="controls">
+      <div class='row'>
+        <div class='item_one'>
+          <div class='span'>
+            <select id="cancel_examine" class="select" data-id="<%=@channel.id%>"  name="channel[is_cancel_examine]">
+              <option value="0" selected="selected" ><%= t('products.index.channel_blacklist') %></option>
+              <!--<%#if params[:action]=='new'%>-->
+                  <!--<option value="1" ><%#= t('products.index.channel_whitelist') %></option>-->
+                  <!--<option value="0" selected="selected" ><%#= t('products.index.channel_blacklist') %></option>-->
+              <!--<%#elsif @channel.is_cancel_examine == false %>-->
+                  <!--<option value="1" ><%#= t('products.index.channel_whitelist') %></option>-->
+                  <!--<option value="0" selected="selected" ><%#= t('products.index.channel_blacklist') %></option>-->
+              <!--<%#else%>-->
+                  <!--<option value="1" selected="selected" ><%#= t('products.index.channel_whitelist') %></option>-->
+                  <!--<option value="0" ><%#= t('products.index.channel_blacklist') %></option>-->
+              <!--<%#end%>-->
+              </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+      <div class="control-group">
+        <label class="control-label" for=""><%= t("products.index.channel_users") %></label>
+        <div class="controls">
+          <div class='row'>
+            <div class='span'>
+              <select id="user_ids" name="channel[user_ids][]" multiple data-placeholder="<%= t('order.form.please_select') %>" style="width:390px" class="chzn-select l_margin_0">
+                <%= options_for_channel_users(@channel) %>
+              </select>
+            </div>
+            <div class="span l_margin_10 t_margin_5">
+              <a class="selection_icon selection_trigger user_ids" data-target="#user_ids" href="javascript:void(0);"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  <div class="row big_section_b_book">
+  <div class="button_area">
+        <div class="r_margin_20">
+            <div class="pull-right">
+               <div class="outer_cancel"><button type='button' onclick='window.history.back();'><%= t('products.new.cancel') %></button></div>
+               <div class="outer_submit">
+                   <input type="submit" value="<%= t('products.new.commit') %>" name="commit" class="submit_tag_button" confirm='<%= t('products.new.confirm_msg') %>'>
+               </div>
+            </div>
+            <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
+                 <img src="/images/pre-loading_small.gif">
+            </div>
+       </div>
+       </div>
+  </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    multiple_chosen("#user_ids", ".user_ids");
+    $(document).on('blur', '.rebate_radio',function(){
+        format_rebate();
+    })
+
+    function format_rebate(){
+        $('.rebate_radio').each(function(){
+            $(this).val(format_to_numeric(this.value));
+        })
+    }
+    $("#channel_currency_id").chosen();
+    $("#channel_form").submit(function(){
+        $(":submit",this).attr("disabled","disabled");
+    });
+</script>

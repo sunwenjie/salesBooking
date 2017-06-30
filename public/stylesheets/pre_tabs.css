@@ -1,0 +1,176 @@
+/*---------tab -------*/
+.nav.nav-tabs  a.gnb,.nav.nav-tabs  a.ab, .nav.nav-tabs  a.mi, .nav.nav-tabs  a.ac {
+	text-align: right;
+	background:url('../images/shared/components/goal.png') no-repeat  bottom left;
+	padding-left:46px;
+	color:#4f4f4f;
+	border:0;
+}
+
+
+
+.nav.nav-tabs  a.ab{
+	padding-left: 39px;
+	background:url('../images/shared/components/audience.png') no-repeat  bottom left;
+} 
+.nav.nav-tabs  a.mi{
+	padding-left: 54px;
+	background:url('../images/shared/components/media.png') no-repeat  bottom left;
+}
+.nav.nav-tabs  a.ac{
+	padding-left: 49px;
+	background:url('../images/shared/components/creative.png') no-repeat  bottom left;
+}
+
+.nav.nav-tabs  a:hover.gnb, .nav.nav-tabs  > .tab-active > a.gnb{
+	background:url('../images/shared/components/goal_rollover.png') no-repeat  bottom left;
+}
+
+.nav.nav-tabs  a:hover.ab, .nav.nav-tabs  > .tab-active > a.ab{
+	padding-left: 39px;
+	background:url('../images/shared/components/audience_rollover.png') no-repeat  bottom left;
+} 
+.nav.nav-tabs  a:hover.mi, .nav.nav-tabs  > .tab-active > a.mi{
+	padding-left: 54px;
+	background:url('../images/shared/components/media_rollover.png') no-repeat  bottom left;
+}
+.nav.nav-tabs  a:hover.ac, .nav.nav-tabs > .tab-active > a.ac{
+	padding-left: 49px;
+	background:url('../images/shared/components/creative_rollover.png') no-repeat  bottom left;
+}
+
+.nav.nav-tabs  a:hover.gnb, .nav.nav-tabs  > .tab-active > a.gnb,
+.nav.nav-tabs  a:hover.ab, .nav.nav-tabs  > .tab-active > a.ab,
+.nav.nav-tabs  a:hover.mi, .nav.nav-tabs  > .tab-active > a.mi,
+.nav.nav-tabs  a:hover.ac, .nav.nav-tabs > .tab-active > a.ac
+{
+	
+	color:#E83828;
+}
+.nav.nav-tabs  a .underline_txt{
+	text-decoration: underline;
+	
+}
+.nav.nav-tabs  li.arrow{
+	content:'';
+	background:url('../images/shared/components/arrow-tab.png') no-repeat center;
+	width:9px;
+	height:53px;
+	margin: 0 4px;
+	background-position-y: 30px;
+}
+
+
+.nav.nav-tabs li.nothing{
+    content: '';
+    background: white  no-repeat center;
+    width: 0px;
+    height: 53px;
+    margin: 0 5px;
+    background-position-y: 30px;
+}
+
+.nav-tabs {
+border-bottom: 0px solid  #DDD;
+}
+
+.nav-tabs > .tab-active > a, .nav-tabs > .tab-active > a:hover {
+
+
+border: 0px solid #DDD;
+
+}
+.slider{
+	top: 7px;
+}
+
+.nav-tabs > li{
+	padding-top:0;
+	padding-bottom: 5px;
+
+}
+
+.nav-tabs > li:hover, .nav-tabs > li.tab-active{
+	background-color: #F1F1F2;
+	border-radius: 5px;
+}
+.nav-tabs > li.tab{
+	background-color: #F1F1F2;
+	border-radius: 5px;
+	padding-left: 20px;
+	padding-right: 15px;
+}
+
+/*---------slider -------*/
+.ui-slider a.ui-slider-handle {
+position: absolute;
+z-index: 2;
+width: 25px;
+height: 25px;
+cursor: default;
+background-image: url('../images/shared/components/slider-knob.png');
+background-color: transparent;
+border: 0;
+-moz-box-shadow: none;
+-webkit-box-shadow: none;
+box-shadow: none;
+top: -.5em;
+margin-left: -.6em;
+}
+
+
+.tip {
+	width: 52px;
+	padding-top: 10px;
+	display: none;
+	position: absolute;
+	background: transparent url('../images/shared/components/tooltip-top.png') no-repeat top;}
+
+.tipMid {background: transparent url('../images/shared/components/tooltip-middle.png') repeat-y center center;height: 17px; }
+.tipBtm {background: transparent url('../images/shared/components/tooltip-bottom.png') no-repeat center top ;height: 17px; }
+
+
+.slider_result{
+	text-align:center;
+}
+
+.ui-slider a.ui-slider-handle:active{
+     color:#fff;
+	outline: 0;
+}
+
+
+
+
+.tab-content > .tab-active, .pill-content > .active {
+display: block;
+}
+
+/*****minmaxbox start****/
+
+.minmaxbox > .btn:first-child{
+	-webkit-border-radius: 8px 0 0 8px;
+	-moz-border-radius: 8px 0 0 8px;
+	border-radius: 8px 0 0 8px;
+	width: 30px;
+}
+.minmaxbox > input[type='text'] {
+	margin-bottom: 0;
+	margin-left: -5px;
+	margin-right: -4px;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	width: 40px;
+	text-align: center;
+}
+.minmaxbox > .btn:last-child{
+	-webkit-border-radius: 0 8px 8px 0;
+	-moz-border-radius: 0 8px 8px 0;
+	border-radius: 0 8px 8px 0;
+	width: 30px;
+	margin-left: -1px;
+}
+
+
+/******End ********/

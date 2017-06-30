@@ -1,0 +1,7 @@
+<select id="share_order_group_list" name="share_order_group[]" multiple data-placeholder="请选择" style="width:380px" class="chzn-select l_margin_0" >
+   <%= options_for_order_group(@order,@share_sales_order,@share_order_group) %>
+</select>
+
+<script type="text/javascript">
+  multiple_chosen("#share_order_group_list", ".share_order_group_list");
+</script>

@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <link rel="shortcut icon" href="/images/favicon.ico?v=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <META name="Author" Content="Optimix Technology" />
+    <meta name="copyright" content="Copyright &copy; 2014 OPTIMIX" />
+    <meta name="Robots" contect="none,noindex,nofollow,noarchive" />
+    <title> page1</title>
+    <!-- add your meta tags here -->
+<!-- 
+https://www.fontfont.com/how-to-use-ff-chartwell#chartwell-web
+ -->
+    <link href="http://xmo.optimix.asia/bootstrap/css/bootstrap.css?91013" media="all" rel="stylesheet" type="text/css" />
+    <link href="http://xmo.optimix.asia/stylesheets/chosen.css?91013" media="all" rel="stylesheet" type="text/css" />
+    <link href="http://xmo.optimix.asia/stylesheets/xmo/application.css?91013" media="all" rel="stylesheet" type="text/css" />
+    <link href="http://xmo.optimix.asia/stylesheets/xmo/xmo_components.css?91013" media="all" rel="stylesheet" type="text/css" />
+    <link href="http://xmo.optimix.asia/stylesheets/css/redmond/jquery-ui-1.8.17.custom.css?91013" media="all" rel="stylesheet" type="text/css" />
+    <!-- include javascripts -->
+    <script src="http://xmo.optimix.asia/javascripts/js/jquery-1.7.1.min.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/jquery-ui-1.8.21.custom.min.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/jquery.linkselect.min.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/jquery.tooltip.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/bootstrap/js/bootstrap-tooltip.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/jquery.xmo_tooltips.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/bootstrap/js/bootstrap-popover.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/js/component.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/jquery.sticky.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/jquery.defaultvalue.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/bootstrap/js/bootstrap-dropdown.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/bootstrap/js/bootstrap.min.js?91013" type="text/javascript"></script>
+    <!-- for page {-->
+    <script src="js/chart/chartwell.min.js" type="text/javascript"></script>
+    <script src="js/chart/chartwell_radar.min.js" type="text/javascript"></script>
+    <script src="js/d3.v2.min.js" type="text/javascript"></script>
+    <script src="js/donut_chart.js" type="text/javascript"></script>
+    <script src="js/raphael-min.js" type="text/javascript"></script>   
+    <script src="js/raphael.makeBubble.js" type="text/javascript"></script>
+    <script src="js/ajax_data.js" type="text/javascript"></script>
+    <script src="js/bubble.js" type="text/javascript"></script>
+    <script src="js/config.js" type="text/javascript"></script>
+    <script src="js/brand.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <script type="text/javascript">
+      $(function (argument) {
+        // body...
+        bubble_init(ajax_data);
+      })
+    </script>
+    <!--} for page -->
+  </head>
+  <body>
+    
+    <div class="container container-brand">
+      <form>
+        <input type="hidden" id="brand-id" name="brand-id">
+    <div class="row">
+      <div class="brand-left pull-left">
+          <ul id="listBubble" class="clearfix"></ul>
+          <div class="cle"></div>
+          <div id="bubble_content" style="margin:0 auto;">
+            <div style="position:relative; z-index:0;" id="bubbles_wrapper">
+              <div style="position:relative; z-index:10;" class="bubbletexts" id="bubbletexts"></div>
+              <div id="bubbles" style="position:relative; z-index:0;"></div>
+            </div>
+          </div>
+          <div class="brand-tips">**点击上图可选区域，以获取相关人群更多详情。</div>
+      </div>
+      <div class="brand-right pull-right" id="bubble-data-show">
+        <div class="brand-info">
+          <strong>人群信息：</strong></br>
+          <span class="brand-info-label"> 所选人群：</span><span id="audience-name" class="audience-box"></span></br>
+          <div class="cle"></div>
+          <span class="brand-info-label">数量：</span><span id="audience-total"></span></br>
+        </div>
+        <div class="xmo-tab-brand radius-5">
+          <div class="xtb-nav-list">
+            <ul class="">
+              <li class="active" href="#gender" data-toggle="tab">GENDER</li>
+              <li href="#age" data-toggle="tab">AGE</li>
+              <!-- <li href="#income" data-toggle="tab">INCOME</li> -->
+              <li href="#interests" data-toggle="tab">INTERESTS</li>
+              <li href="#location" data-toggle="tab">LOCATION</li>
+              <li class="last" href="#device" data-toggle="tab">DEVICE</li>
+            </ul>
+          </div>
+          <div class="tab-content">
+              <div class="tab-pane active" id="gender">
+                <div id="gender-content"></div>
+              </div>
+              <div class="tab-pane" id="age">
+                <div id="age-content"></div>
+              </div>
+              <div class="tab-pane" id="income">
+                <div id="income-content"></div>
+              </div>
+              <div class="tab-pane" id="interests">
+                <div id="interests-content"></div>
+              </div>
+              <div class="tab-pane" id="location">
+                <div id="location-content"></div>
+              </div>
+              <div class="tab-pane" id="device">
+                <div id="device-content"></div>
+              </div>
+          </div>
+          <div class="cle"></div>
+
+        </div>
+        <div class="row">
+          <div class="button_area">
+              <div class="r_margin_0 t_margin_10">
+                  <div class="outer_cancel"><input type="submit" value="CANCEL" name="commit"></div>
+                  <div class="outer_submit"><input type="submit" value="SAVE" name="commit"></div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </form>
+    </div>
+  </body>
+</html>

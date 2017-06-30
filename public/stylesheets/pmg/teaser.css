@@ -1,0 +1,150 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  height:100%;
+  font-family: Arial;
+}
+#header {
+  position: relative;
+  width: 960px;
+  height: 120px;
+  margin: 0 auto;
+  padding-botom: 30px;
+  background: white;
+  z-index: 2;
+}
+#logo {
+  width: 196px;
+  height: 88px;
+}
+#footer {
+  position: relative;
+  width:100%;
+  height:166px;
+  font-size: 10px;
+  z-index: 3;
+}
+#red-footer {
+  position: relative;
+  padding-top: 30px;
+  width:100%;
+  height: 136px;
+  z-index: 3;
+}
+#copyright {
+  background: url('/images/shared/Footer/footer-bkg.jpg') no-repeat scroll center top transparent;
+  background-color: #C33925;
+  width: 100%;
+  height: 136px;
+}
+#copyright-text {
+  width: 960px;
+  padding-top: 20px;
+  margin: 0 auto;
+  font-size: 10px;
+  text-align: right;
+  color: white;
+}
+#container {
+  display: table;
+  border: 0;
+  padding: 0;
+  margin: -286px auto 0;
+  height: 100%;
+  min-height:100%;
+  width: 100%;
+}
+#content {
+  display: table-cell;
+  position: relative;
+  vertical-align: middle;
+  padding-top: 286px;
+  width: 100%;
+}
+#content-box {
+  width: 100%;
+  background-color: #F1F1F2;
+}
+#pad-row {
+  clear: both;
+  min-height: 144px;
+  height: 30px;
+}
+.box {
+  width: 960px;
+  margin: 0 auto;
+  /*min-height: 425px;
+  height: 425px;*/
+}
+#feature-box-row {
+}
+.feature-box {
+  width: 320px;
+  height: 175px;
+  float: left;
+	padding-top: 15px;
+}
+.start-now-button {
+	font-family: Arial;
+	font-size: 13px;
+}
+label{
+    font-size: 13px;
+    margin-bottom: 0;
+    padding-top: 2px;
+}
+#feature-title-row {
+}
+.feature-title {
+  width: 320px;
+  height: 30;
+  color: #504F4F;
+  font-size: 24px;
+  float: left;
+  font-family: Arial;
+  font-weight: 800;
+  text-align: center;
+}
+.feature-title-not-bold {
+  font-size: 20px;
+  font-weight: 500;
+}
+#feature-desc-row {
+  padding-top: 15px;
+}
+.feature-desc {
+  width: 280px;
+  height: 30px;
+  float: left;
+  text-align: center;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -opre-wrap;
+  word-wrap: break-word;
+  padding: 0 20px;
+  font-size: 11px;
+}
+#button-row {
+  text-align: center;
+}
+#do-not-show-again-checkbox-row {
+  padding-top: 30px;
+}
+#do-not-show-again-checkbox {
+  float: right;
+  height: 20px;
+}
+.clear_both {
+  clear: both;
+}
+.pad-top-large {
+  padding-top: 40px;
+}
+.pad-top-small {
+  padding-top: 20px;
+}
+.pad-top {
+  padding-top: 30px;
+}

@@ -1,0 +1,257 @@
+@charset "UTF-8";
+html,body{height:100%;max-height:100%;padding:0;margin: 0;font-family:  Arial, sans-serif;}
+/*login*/
+.bg { min-width: 1220px;min-height:700px;position:relative;width: 100%;height: 100%; background: #FFFFFF url(../../images/login/bg.jpg) no-repeat left top scroll; }
+@media (min-width: 1290px) {
+  .bg {
+    background-size: cover; 
+  }
+}
+@media (min-height:  800px) {
+  .bg {
+    background-size: cover;
+  }
+}
+.clear {
+    clear: both;
+    height: 0;
+    overflow: hidden;
+    line-height: 0;
+    font-size: 0;
+}
+.x-link {
+    color: #424242;
+}
+.f-24 { font-size: 24px; }
+.x-lang a{text-decoration: none;}
+.x-lang a:hover{color:#333}
+.x-lang a:hover.selected{color:#fff}
+.x-container{height: 100%;}
+.x-login{float: right;margin-top: 35%;text-align: center;margin-right: 10%;}
+
+#loginForm .form-group { overflow: hidden; }
+#loginForm .form-group .input-group input, #loginForm .form-group .btn { width: 258px; float: left; }
+#loginForm .form-group label.error { display: inline-block; margin-left: 10px; vertical-align: top; width: 10px; height: 40px; line-height: 40px; }
+#loginForm .form-group label.error .glyphicon { color: #336dc6; margin-top: 10px; }
+#loginForm .form-group .input-group .input-account {margin-left: -5px;border-left: 0;}
+#loginForm .form-group .input-group .input-password {margin-left: -5px;border-left: 0;}
+#loginForm .login-ico{
+  background: url(../../images/login/icon_accountsettings.png) no-repeat scroll center #fff;
+  height: 22px;
+  width: 20px;
+  padding: 8px;
+  float: left;
+  border: 1px solid #ACB0BC;
+  border-radius: 5px 0 0 5px;
+  border-right: 0;
+}
+#loginForm .password-ico{
+  background: url(../../images/login/icon_password.png) no-repeat scroll center #fff;
+  height: 22px;
+  width: 20px;
+  padding: 8px;
+  float: left;
+  border: 1px solid #ACB0BC;
+  border-radius: 5px 0 0 5px;
+  border-right: 0;
+}
+#loginForm .form-group .input-group input{ width: 230px; float: left; }
+.x-logo { height: 66px; line-height: 50px; }
+.x-logo span {color: #333; }
+
+.x-logo-img{ background:  url(../images/login/logo_iclick.png) no-repeat center center; height: 66px; line-height: 50px; margin: auto;}
+
+.x-login-warp { clear: both; }
+.x-login-warp .input-group-addon:first-child { color: #acb0bc; background-color: #fff; }
+.x-login-warp .form-control { border: 1px solid #acb0bc; height: 40px; box-sizing:border-box;}
+.x-login-warp .input-group-addon { border: 1px solid #acb0bc; border-right: 0px none; }
+.x-login-warp .btn-danger { width: 100%; background-color: #336dc6; height: 40px; }
+
+.x-login-warp .glyphicon { width: 14px; height: 14px; }
+
+.login-footer {
+    font-size: 12px;
+    text-align: right;
+    line-height: 14px;
+    color: #999999;
+    background-color: transparent;
+    float: right;
+    position: absolute;
+    right: 0px;
+    margin-right: 10px;
+    bottom: 10px;
+}
+.login-footer p{margin: 0;padding: 0;font-size: 12px;line-height: 14px;}
+
+.login-title{
+  width: 30%;
+  min-height: 100%;
+  height: 100%;
+  float: left;
+  position: relative;
+}
+.login-title .login-description{
+  position: relative;
+  z-index: 999999;
+  height: 300px;
+  top: 50%;
+  margin-top: -120px;
+  font-size: 16px;
+  color: #fff;
+  width: 900px;
+}
+.login-title .login-description p{padding: 10px 0;font-size: 50px;color:#fff;font-weight: bold;line-height: 30px;}
+.login-title .login-description label{line-height: 30px; font-size: 20px;color: #fff;width: 820px;}
+.login-box {
+    width: 50%;
+    min-height: 100%;
+    float: right;
+    background: transparent url(../../images/login/bg_white.png) no-repeat right top;
+    position: relative;
+}
+.note, .important, .warning {
+    border-width: 1px;
+}
+.warning_msg{
+  color:#e83828;
+  position: relative;
+  display: inline-block;
+  padding-left: 20px;
+}
+.warning_icon{
+  position: absolute;
+  left: 0px;
+}
+ /*langauage ch or en*/
+.x-lang {
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    z-index: 99999;
+}
+.x-lang-en{
+    width: 24px;
+    height: 24px;
+    border: 1px solid #acb0bc;
+    display: inline-block;
+    background-color: #acb0bc;
+    border-radius: 24px;
+    text-align: center;
+    color: #434343;
+    vertical-align: middle;
+    cursor: pointer;
+    line-height: 24px;
+    box-sizing:border-box;
+}
+.x-lang-en:after{content: "E"}
+
+.x-lang-ch{
+    width: 24px;
+    height: 24px;
+    border: 1px solid #acb0bc;
+    display: inline-block;
+    background-color: #acb0bc;
+    border-radius: 24px;
+    text-align: center;
+    color: #434343;
+    vertical-align: middle;
+    cursor: pointer;
+    line-height: 24px;
+    box-sizing:border-box;
+}
+.x-lang-ch:after{content: "中"}
+
+.x-lang-ch.selected,.x-lang-en.selected{background-color: #336dc6;color: white}
+input { box-shadow: none!important; outline:none; }
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+/*button*/
+.btn {
+    display: inline-block;
+    padding: 6px 15px;
+    margin-bottom: 0;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid #dfdfdf;
+    border-radius: 4px 4px;
+    min-height: 30px;
+}
+.btn-danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #194e83;
+}
+.btn-danger:focus,
+.btn-danger.focus {
+  color: #fff;
+  background-color: #2459ab;
+  border-color: #194e83;
+}
+.btn-danger:hover {
+  color: #fff;
+  background-color: #2459ab;
+  border-color: #194e83;
+}
+.btn-danger:active,
+.btn-danger.active,
+.open > .dropdown-toggle.btn-danger {
+  color: #fff;
+  background-color: #2459ab;
+  border-color: #194e83;
+}
+.btn-danger:active:hover,
+.btn-danger.active:hover,
+.open > .dropdown-toggle.btn-danger:hover,
+.btn-danger:active:focus,
+.btn-danger.active:focus,
+.open > .dropdown-toggle.btn-danger:focus,
+.btn-danger:active.focus,
+.btn-danger.active.focus,
+.open > .dropdown-toggle.btn-danger.focus {
+  color: #fff;
+  background-color: #2459ab;
+  border-color: #761c19;
+}
+.btn-danger:active,
+.btn-danger.active,
+.open > .dropdown-toggle.btn-danger {
+  background-image: none;
+}
+.btn-danger.disabled,
+.btn-danger[disabled],
+fieldset[disabled] .btn-danger,
+.btn-danger.disabled:hover,
+.btn-danger[disabled]:hover,
+fieldset[disabled] .btn-danger:hover,
+.btn-danger.disabled:focus,
+.btn-danger[disabled]:focus,
+fieldset[disabled] .btn-danger:focus,
+.btn-danger.disabled.focus,
+.btn-danger[disabled].focus,
+fieldset[disabled] .btn-danger.focus,
+.btn-danger.disabled:active,
+.btn-danger[disabled]:active,
+fieldset[disabled] .btn-danger:active,
+.btn-danger.disabled.active,
+.btn-danger[disabled].active,
+fieldset[disabled] .btn-danger.active {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.btn-danger .badge {
+  color: #d9534f;
+  background-color: #fff;
+}

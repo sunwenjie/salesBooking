@@ -1,0 +1,132 @@
+<style type="text/css">
+    .table_wraper{width: 960px;}
+    .email_table{border: 0;width: 960px;}
+    .email_table tr{width: 960px;}
+    .email_table td{border:1px solid black;padding: 3px;}
+
+    .email_table .t_info{text-align: center;}
+    .email_table tr.t_noborder td{border-top: 0;}
+    .email_table tr.t_noborder td:first-child{border-right: 0;width: 298px;}
+    .email_table tr.t_noborder td:last-child{text-align: center;width: 648px;}
+    .ad_item div{border-top: 1px solid black;}
+    .ad_item div:first-child{border-top: 0;}
+    .font_red{color: red;}
+</style>
+
+<div class="table_wraper" style="width:960px;">
+  <table style="border: 0;width: 960px;" class="email_table table table-striped table-bordered table-condensed width_100" cellpadding="0" cellspacing="0" border="0">
+    <tbody>
+    <tr style="width:960px;">
+      <td colspan='3' class="t_info" style="background:#FF9933;width:960px;text-align:center;">Products</td>
+    </tr>
+
+    <!--<tr class="t_noborder" style="width:960px;">-->
+    <!--<td style="border:1px solid black;padding: 3px;border-top: 0;width:297px;border-right: 0;">-->
+    <!--广告形式-->
+    <!--</td>-->
+    <!--<td colspan='2' style="border:1px solid black;padding: 3px;border-top: 0;width:649px;text-align:center;">投放指标</td>-->
+    <!--</tr>-->
+
+    <% order.advertisements.each_with_index  do |advertisement,i|%>
+        <%td_size = 6 %>
+        <%td_size = td_size+1 if advertisement.diff_ctr? %>
+        <%td_size = td_size+1 if advertisement.planner_clicks.present? && advertisement.planner_clicks > 0 %>
+        <%td_size = td_size+1 if [2,3,7].include? node_id %>
+        <%#td_size = td_size+advertisement.admeasure[0..-2].size if advertisement.admeasure.present? && advertisement.admeasure_state %>
+        <tr class="t_noborder" style="width:960px;">
+          <td rowspan="<%= td_size %>" style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;text-align:center;">
+            Product<%= i+ 1%></br>
+            <!--<span style="color:#FF9933"><%#= advertisement.other_product? ? "*此销售选择了非标产品。" : ""  %></span>-->
+          </td>
+          <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
+            Ad format
+          </td>
+          <td style="border:1px solid black;padding: 3px;border-top: 0;width:421px;">
+            <%= advertisement.product.present? ? advertisement.product.product_type : "-" %>
+          </td>
+        </tr>
+
+        <tr class="t_noborder" style="width:960px;">
+          <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
+            Product
+          </td>
+          <td style="border:1px solid black;padding: 3px;border-top: 0;width:421px;">
+            <%= advertisement.product.present? ? advertisement.product.en_name : "-"  %>
+          </td>
+        </tr>
+
+        <tr class="t_noborder" style="width:960px;">
+          <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
+            Total Budget（<%= order.budget_currency%>）
+          </td>
+          <td style="border:1px solid black;padding: 3px;border-top: 0;color:red;width:421px;">
+            <%= number_with_precision(advertisement.budget, :precision => 2, :delimiter => ",") %>
+          </td>
+        </tr>
+       <% if [2,3,7].include? node_id %>
+        <tr class="t_noborder" style="width:960px;">
+          <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
+            Est. GP of Product
+          </td>
+          <td style="border:1px solid black;padding: 3px;border-top: 0;color:red;width:421px;">
+            <%= number_with_precision(advertisement.est_gp_value, :precision => 2, :delimiter => ",")+" ("+advertisement.est_gp.to_s+"%)" %>
+          </td>
+        </tr>
+        <% end %>
+
+        <tr class="t_noborder" style="width:960px;">
+          <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
+            Sell Price（<%= order.budget_currency%>）
+          </td>
+          <td style="border:1px solid black;padding: 3px;border-top: 0;width:421px;">
+            <%= advertisement.cost_type %>: <%= number_with_precision(advertisement.cost, :precision => 2, :delimiter => ",") %>
+          </td>
+        </tr>
+
+        <%if advertisement.diff_ctr? %>
+            <tr class="t_noborder" style="width:960px;">
+              <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;color:red;width:220px">
+                CTR
+              </td>
+              <td style="border:1px solid black;padding: 3px;border-top: 0;color:red;width:421px;">
+                <%=number_with_precision(advertisement.planner_ctr, :precision => 2, :delimiter => ",") + "%" %>
+              </td>
+            </tr>
+        <% end %>
+
+        <tr class="t_noborder" style="width:960px;">
+          <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
+            Non-standard KPI(IMP/CLICKS/CTR)
+          </td>
+          <td style="border:1px solid black;padding: 3px;border-top: 0;width:421px;">
+            <%= advertisement.nonstandard_kpi.present? ? advertisement.nonstandard_kpi : "-" %>
+          </td>
+        </tr>
+
+        <%if advertisement.planner_clicks.present? && advertisement.planner_clicks>0%>
+            <tr class="t_noborder" style="width:960px;">
+              <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;color:red;width:220px">
+                Bonus Clicks
+              </td>
+              <td style="border:1px solid black;padding: 3px;border-top: 0;color:red;width:421px;">
+                <%= advertisement.planner_clicks%>
+              </td>
+            </tr>
+        <%end%>
+
+        <tr class="t_noborder" style="width:960px;">
+          <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:220px">
+            Price Remarks
+          </td>
+          <td style="border:1px solid black;padding: 3px;border-top: 0;width:421px;">
+            <%= advertisement.price_presentation.present? ? advertisement.price_presentation : "-" %>
+          </td>
+        </tr>
+
+    <%end%>
+
+    </tbody>
+  </table>
+</div>
+
+

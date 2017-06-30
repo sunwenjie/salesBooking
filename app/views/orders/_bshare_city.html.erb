@@ -1,0 +1,68 @@
+<div class="item_two selection">
+  <div class="span ">
+    <select id="pretargeting_mainland" name="order[city][]" data-placeholder="<%= t('order.form.multi_select') %>" class="chzn-select select span5" multiple >
+      <option value="all_cities" <%= %q|selected="selected"| if (mainlands.to_a.include?("all_cities") || (select_all_flag && !mainlands.present? )) %> ><%= t('order.form.all_country') %></option>
+      <% province_and_cities.each do |province, cities| %>
+        <optgroup label="<%= province -%>">
+        <% cities.each do |city| %>
+          <option value="<%= city[1] %>" <%= %q|selected="selected"| if (mainlands.to_a.include?(city[1]) ) %> ><%= city[0] -%></option>
+        <% end %>
+        </optgroup>
+      <% end %>
+    </select>
+  </div>
+  <div class="span">
+    <a href="javascript:void(0);" class="selection_icon mainlanded"></a>
+  </div>
+</div>
+<script type="text/javascript">
+multiple_chosen("#pretargeting_mainland", ".mainlanded");
+selectable_with_all("#pretargeting_mainland", "all_cities");
+$("#pretargeting_mainland_chzn").css("width", "380px").trigger("liszt:updated");
+show_parent_text();
+$("#pretargeting_mainland").change(function(){
+    show_parent_text();
+    check_type_message_all();
+    return false;
+  })
+function show_parent_text(){
+  $('#pretargeting_mainland_chzn ul.chzn-choices li.search-choice').each( function(i) {
+      if ($(this).children().length > 0) {
+        var SubcityNodeId = '#' + $(this).attr('id').replace('_c_', '_o_');
+        var CityNode = $(SubcityNodeId).prevAll('li[id^="pretargeting_mainland_chzn_g_"]')[0];
+        var CityName = $(CityNode).text();
+        if(CityName != ""){
+          $(this).children(':last-child').before('<br><span class="chzn-item-note">[' + CityName + ']</span>');
+        }
+        
+      }
+    });
+}
+function selectable_with_all(ele_id, all_val){
+  var option_all_selected = true;
+  $(ele_id).change(function(){
+    var is_all = false;
+    $(ele_id + " option:selected").each(function(i , l){
+        if($(l).val() == all_val) is_all = true;
+    });
+
+    if($(ele_id + " option:selected").length == 1){
+        $(ele_id).trigger("liszt:updated");
+        option_all_selected = is_all;
+        return false;
+    }
+
+    if(option_all_selected && is_all){
+      $(ele_id +" option[value=" + all_val + "]").removeAttr('selected');
+        option_all_selected = false;
+      }else if(!option_all_selected && is_all){
+          $(ele_id + " option:selected").each(function(i, l) {
+              if ($(l).val() != all_val) { $(l).removeAttr('selected'); }
+          });
+          option_all_selected = true;
+      }
+      $(ele_id).trigger("liszt:updated");
+      //$(ele_id).valid();
+  });
+}
+</script>

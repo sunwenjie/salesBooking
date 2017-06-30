@@ -1,0 +1,82 @@
+table .float_left{margin-right:2px;}
+table a.button{margin-bottom:0;margin-right:2px;}
+.yform div.type-button input[type="reset"]{padding:10px;background:none;display:block;}
+.yform div.type-button input[type="reset"]:hover{background:#555;}
+
+.yform div.type-button input[type="button"]{padding:10px;background:none;display:block;}
+.yform div.type-button input[type="button"]:hover{background:#555;}
+
+.form-wrapper{width:630px; position:relative;}
+.yform .form-wrapper div.type-button{padding-left:0px;}
+
+.yform div.type-select select.auto-width{width:auto;}
+.yform div.type-text button.right-button{margin-left:10px;padding:1px;font-weight:bolder;}
+
+.yform .type-button input.button-right{float: right; margin-right: 6%;}
+a.outer-button-right{text-decoration:none;float:right;margin-right:10px;}
+.yform .type-button .inner-button-right{padding:10px;display:block;background:transparent;}
+a.button-width{width:70px;}
+.yform .type-button input{background: none;}
+.yform .type-text input.date{display:inline-block; width:58.5%;}
+
+/*-------------------
+ *yform table 
+-------------------*/
+table .float_left{margin-right:2px;}
+table a.button{margin-bottom:0;margin-right:2px;}
+.yform div.type-button input[type="reset"]{padding:10px;background:none;display:block;}
+.yform div.type-button input[type="reset"]:hover{background:#555;}
+
+.yform div.type-button input[type="button"]{padding:10px;background:none;display:block;}
+.yform div.type-button input[type="button"]:hover{background:#555;}
+
+.yform fieldset div.type-button input[type="submit"]{background:white;}
+.yform fieldset div.type-button input[type="reset"]{background:white;}
+.yform fieldset div.type-button input[type="button"]{background:white;}
+.yform fieldset div.type-button input:hover{background:#555;}
+
+.form-wrapper{width:630px; position:relative;}
+.yform .form-wrapper div.type-button{padding-left:0px;}
+
+.yform div.type-select select.auto-width{width:auto;}
+.yform div.type-select select.w200{width:200px;}
+.yform div.type-text input.w200{width:200px;}
+.yform div.type-text button.right-button{margin-left:10px;padding:1px;font-weight:bolder;}
+
+.manage-button{position:absolute;right:20px;top:10px;}
+#show_code.manage-button {position: relative; float: right; }
+.inline-block{display:inline-block;*display:inline;*zoom:1;}
+.inline-button-block{float:left;display:inline-block;padding:20px 0 0;margin:0;}
+.button-field{height:80px; overflow:hidden;}
+.ml-20{margin-left:20px;}
+
+.yform-style-button{padding:10px;background:none;display:block;margin-left:10px;font-weight:bolder;font-family: Arial,Helvetica,sans-serif;font-size: 100%;font-weight: 700;}
+.yform-style-button:hover{background:#555;color:white;}
+
+.temp-fieldset{display:none;}
+
+a.btn{top:-1px;vertical-align:middle;padding:11px;cursor:pointer;font-size:100%;font-family:Arial,Helvetica,sans-serif;font-weight:700;position:relative;color:#000;background:transparent;display:block;text-decoration:none;border-color: #DDDDDD #444444 #444444 #DDDDDD;border-style: solid;border-width: 1px;overflow:visible;}
+a.btn:hover , a.btn:focus,a.btn:active{background:#555;color:white;border-color:#444,#ddd,#ddd,#444;}
+.form-wrapper .yform div.chosen-container select.w320 { clear: left; display: none;height: 150px;margin-left: 80px;max-width: 405px;width: 320px; }
+.form-wrapper div.overflow-visible {overflow:visible}
+.datatable button{white-space:nowrap;min-width:10px;}
+.datatable a.btn-wrapper{text-decoration:none;}
+.yform .overflow-visible{overflow:visible}
+
+.yform .type-text label.error{margin-left:31.5%; text-indent:1em}
+.yform .type-text input.defaultvalue.error{color:#2F2F2F;}
+.yform.columnar  .temp-fieldset-child .type-select label.error{margin-left:31.5%; text-indent:1em}
+
+.yform .type-text a.fright{ float:right}
+.yform div.small-height { margin:0px; height:30px;}
+
+#select{ text-align:left;margin:5px 0; width:540px ;}
+#select label{font-style:normal; }
+#select label.select{margin:5px; margin-right:20px; display:inline-block; font-family:Arial,Helvetica,sans-serif;}
+#select select#sites{ width:140px;padding:2px;}
+#radio_div input{width:20px;float:left;display:inline-block;margin-left:10px;}
+#radio_div label.radio_label{width:100px;margin-left:20px;float:left;}
+span.id {color:#777;}
+a.setting_link{text-decoration:underline;}
+a.button_right{float:right;margin-left:10px;}
+.top9{margin-top:9px;}

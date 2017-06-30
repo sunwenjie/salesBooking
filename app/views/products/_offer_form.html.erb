@@ -1,0 +1,190 @@
+<% offer ||= Offer.new %>
+
+<input type="text" id="<%=index%>" style="display:none;" class='align_right current_index' />
+<div class="control-group t_margin_20" id="offer_<%=index%>_zone">
+  <label class="sub_adv inline control-label align_right" data-target="#offer_<%=index%>_setting" data-toggle="collapse">汇率<span id="offer_<%=index%>"><%=index%></span><i class= "icon-arrow-right <%= offer.new_record? ? 'icon-arrow-down' : 'icon-arrow-down'%>"></i></label>
+  <% if ["new", "create", "edit", "update","add_offer_form"].include?(params[:action]) %>
+  <div class="controls">
+    <div class=" first_row">
+      <div class="span table_cell add_button_div l_padding_0" id="offer_<%=index%>_add_row">
+        <a href="javascript:void(0)" id="offer_<%=index%>_add" class="row_add table_cell link" onclick="add_offer_row(<%=index%>)"><i class="icon-add-big"></i>添加
+        </a>
+      </div>
+      <div class="span table_cell" id="offer_<%=index%>_delete_row">
+        <% if index > 1%>
+        <a href="javascript:void(0)" id="offer_<%=index%>_delete" class="row_del l_margin_25 link" onclick="delete_offer_row(<%=index%>)"><i class="icon-remove-new"></i>删除</a>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+  <% if offer.id.present? %>
+    <%= hidden_field "offer_#{index}", :id, :value => offer.id %>
+  <% end %>
+
+  <div id="offer_<%=index%>_setting" class="offer_setting_sub collapse <%= offer.new_record? ? 'in' : 'in'%>">
+    <div class="l_padding_0 t_padding_5">
+      <div class="section t_padding_10 b_padding_10">
+        <!-- 投放地域 -->
+        <div class="row t_margin_10">
+          <div class='item_four'>
+            <div class="span2">
+              <label class='sub_txt2'>投放地域*</label>
+            </div>
+            <div class="span" id="offer_<%=index%>_regional">
+              <%= select "offer_#{index}", :regional,[], {:select=>offer.regional.present? ? offer.regional : ""},{:name=>"offer_#{index}[regional]",:class => "select span5",:style=>"width:340px;"} %>
+            </div>
+
+          </div>
+        </div>
+        <!-- 刊例价 -->
+        <div class="row t_margin_10">
+          <div class='item_four'>
+            <div class="span2 ">
+              <label class='sub_txt2'>刊例价*</label>
+            </div>
+            <div class="span" id="offer_<%=index%>_public_price">
+              <%= text_field "offer_#{index}", :public_price, :disname=>"刊例价", :class=>"number novalidate",:value=> offer.public_price ,:size=>30,:style=>"width:328px;" %>
+            </div>
+          </div>
+        </div>
+
+        <!-- 建议折扣 -->
+        <div class="row t_margin_10">
+          <div class='item_four'>
+            <div class="span2">
+              <label class='sub_txt2'>建议折扣*</label>
+            </div>
+            <div class="span">
+              <div class="input-append" id="offer_<%=index%>_general_discount">
+                <%= text_field "offer_#{index}", :general_discount,:disname=>"建议卖价", :class=>"number novalidate" ,:value => offer.general_discount,:size=>30,:style=>"width:328px;" %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 最低折扣 -->
+        <div class="row t_margin_10">
+          <div class='item_four'>
+            <div class="span2">
+              <label class='sub_txt2'>最低折扣*</label>
+            </div>
+            <div class="span">
+              <div class="input-append" id="offer_<%=index%>_floor_discount">
+                <%= text_field "offer_#{index}", :floor_discount,:disname=>"最低折扣", :class=>"number novalidate" ,:value => offer.floor_discount,:size=>30,:style=>"width:328px;" %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 标准CTR -->
+        <div class="row t_margin_10">
+          <div class='item_four'>
+            <div class="span2">
+              <label class='sub_txt2'>标准CTR*</label>
+            </div>
+            <div class="span">
+              <div class="input-append" id="offer_<%=index%>_ctr_prediction">
+                <%= text_field "offer_#{index}", :ctr_prediction,:disname=>"标准CTR", :class=>"number novalidate" ,:value => offer.ctr_prediction,:size=>30,:style=>"width:328px;" %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- 推荐货币 -->
+        <div class="row t_margin_10">
+          <div class='item_four'>
+            <div class="span2">
+              <label class='sub_txt2'>推荐货币*</label>
+            </div>
+              <div class="span" id="offer_<%=index%>_currency">
+                <%= select "offer_#{index}", :currency,[["RMB","RMB"],["HKD","KHD"]], {:select=>offer.currency.present? ? offer.currency : "RMB"},{:name=>"offer_#{index}[currency]",:class => "select span5",:style=>"width:340px;"} %>
+              </div>
+          </div>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+
+    function add_offer_row(index){
+        var current_index = parseInt(index);
+        total_row = $(".row_add").length;
+        if(current_index < total_row){
+            var start_row = current_index + 1
+            var total_row = $(".row_add").length;
+            add_offer_zone(start_row,total_row);
+            replace_id = "#offer_" + (current_index + 2) + "_zone"
+        }else{
+            replace_id =".arm";
+        }
+        $("#offer_size").val(total_row + 1);
+
+        $.ajax({
+            type: 'post',
+            data: {current_index:(current_index + 1)},
+            url: "<%= add_offer_form_products_path %>",
+            success: function(data) {
+                $(replace_id).before(data);
+            },
+            error: function(data) {}
+        });
+    }
+
+
+
+    function delete_offer_row(index){
+        var delete_zone_id = "#offer_" + index + "_zone";
+        var current_index = parseInt(index);
+        var total_row = $(".row_add").length;
+        $("#offer_size").val(total_row - 1);
+        $(delete_zone_id).remove();
+        if(current_index < total_row){
+            alert("current_index:"+current_index);
+            var start_row = current_index + 1
+            var total_row = $(".row_add").length + 1;
+            delete_offer_zone(start_row,total_row);
+        }
+    }
+
+    function add_offer_zone(start_row,total_row){
+        for ( var i = total_row; i >= start_row; i-- ) {
+            change_offer_zone(i, (i+1))
+        }
+    }
+
+    function delete_offer_zone(start_row,total_row){
+        alert(start_row);
+        alert(total_row);
+        for ( var i = start_row; i <= total_row; i++ ) {
+            change_offer_zone(i, (i-1))
+        }
+    }
+
+    function change_offer_zone(i, change_i){
+        $("[id*='offer_" + i + "']").each(function(){
+            $("#offer_" + i).text(change_i);
+            add_link_html = "<a href='javascript:void(0);' id='offer_" + (change_i) + "_add' class='row_add table_cell link' onclick='add_offer_row(" + (change_i) + ")'><i class='icon-add-big'></i>添加</a>"
+            delete_link_html = "<a href='javascript:void(0);' id='offer_" + (change_i) + "_delete' class='row_del table_cell link' onclick='delete_offer_row(" + (change_i) + ")'><i class='icon-remove-new'></i>删除</a>"
+            current_id = $(this).attr("id");
+            $(this).attr("id", current_id.replace(i,change_i));
+            $("#offer_"+ (change_i) + "_add_row").html(add_link_html);
+            $("#offer_"+ (change_i) + "_delete_row").html(delete_link_html);
+
+        })
+
+        $("[name*='offer_" + i + "']").each(function(){
+            current_name = $(this).attr("name");
+            $(this).attr("name", current_name.replace(i,change_i));
+        })
+
+        $("[data-target*='offer_" + i + "']").each(function(){
+            current_data_target = $(this).attr("data-target");
+            $(this).attr("data-target", current_data_target.replace(i,change_i));
+        })
+
+    }
+</script>

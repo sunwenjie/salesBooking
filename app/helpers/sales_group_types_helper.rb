@@ -1,0 +1,4 @@
+module SalesGroupTypesHelper
+
+
+end

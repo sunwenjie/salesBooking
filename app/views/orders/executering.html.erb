@@ -1,0 +1,113 @@
+<!-- body start -->
+<script type="text/javascript" src="/js/xmo-calendar.js"></script>
+<script src="/js/chosen.jquery.min.js?9120" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/css/css/xmo-calendar.css">
+<div class="big_section">
+<% if flash[:notice] %>
+  <div class="notice"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:error] %>
+  <div class="error"><%= flash[:error] %></div>
+<% end %>
+<%= form_for(@order, :url => import_executer_order_path(@order),:html=>{:id=>@order.id, :class=>"form-horizontal",:name=>"myform", :multipart => true }) do |f| %>
+  <div class="control-group">
+      <div class="sub_title ">执行表详情</div>
+    </div>
+  <div class="control-group t_margin_20">
+    <label class="control-label">
+        <label for="campaign_campaignname" class="inline">执行表编号</label>
+    </label>
+    <div class="controls">
+      <div class="row">
+        <div class="span">
+          <input type="text" readonly value="<%=@order.code%>" size="30" name="order[code]"  disname="计划名称" class="required span5">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">
+      <label for="campaign_status">订单编号</label>
+    </label>
+    <div class="controls">
+      <div class="row">
+        <div class="span">
+                <input type="text" readonly value="<%=@order.code%>" size="30" name="order[code]"  disname="计划名称" class="required span5">
+        </div>
+        <div class="span">
+                                   <a id="browse_link" class="btn-x-mkt-analysis-cn btn-book-download pull-right" href="<%= download_executer_orders_url(:id => @order.id) %>"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- sub_section_white start -->
+  <div class="sub_section_white">
+
+  <div class="control-group t_margin_30">
+    <label class="control-label">
+      <label for="campaign_status">上传执行表</label>
+    </label>
+    <div class="controls">
+      <div class="row" style="width:605px;">
+        <div class="span6">
+           <div>
+            <%if @order.draft_attachment.url %>已上传有执行表，是否重新上传
+            <%end%>上传执行表
+           </div>
+              <%= file_field_tag "executer_img"%>
+              格式：XLS,XLSX
+        </div>
+        <div class="span pull-right">
+            <a id="download_link" class="btn-x-mkt-analysis-cn btn-book-upload pull-right" herf="" onclick="document.forms[0].submit();"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group t_margin_30">
+    <label class="control-label">
+      <label for="campaign_status"><%if @order.draft_attachment.url %>已上传文件<%else%>等待上传文件<%end%></label>
+    </label>
+    <div class="controls">
+      <div class="row">
+        <div class="span">
+          <table class="table_style_1 t_margin_0" style="width:588px;">
+            <thead>
+              <th>执行表编号</th>
+              <th>上传时间</th>
+            </thead>
+            <%if @order.draft_attachment.url%>
+              <tbody>
+                <td class="blue"><a href="<%= download_draft_orders_url(:id => @order.id) %>"><%= @order.code %></a></td>
+                <td class="font_11"><%= @order.draft_attachment.model.updated_at.localtime.strftime("%Y/%m/%d %H:%M:%S") %></td>
+              </tbody>
+            <%end%>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+<%end%>
+    
+    <!-- sub_section_white end -->
+    <%= render :partial => "proofshow"%>
+    <%if current_user.is?(["sale","team_head"]) %>
+      <div class="row t_margin_30">
+        <!-- button area -->
+        <div class="button_area">
+        <div class="r_margin_20">
+            <div class="pull-right">
+                <div class="outer_cancel">
+                  <a href="<%=session[:left_tab]%>">
+                    <input type="button" class="cancel cancel_pretargeting" value="返回">
+                  </a>
+                </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    <%end%>
+</div>  

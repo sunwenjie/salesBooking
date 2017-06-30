@@ -1,0 +1,57 @@
+      <div class="control-group t_margin_20">
+         <label class="control-label">
+            <label for="campaign_campaignname" class="inline">添加第三方监测</label>
+         </label>
+         <div class="controls">
+             <div class="row">
+                   <div class="span">
+                    <label class="radio">
+                      <%= radio_button("order", "whether_monitor",1,:onclick=>"add_third_monitor('true')",:checked=>(@order.whether_monitor==true ? "checked" : ""),:disabled=>true )%>
+                      是
+                    </label>
+                   </div>
+                 <div class="span" style="margin-left:100px;">
+                  <label class="radio">
+                      <%= radio_button("order", "whether_monitor",0,:onclick=>"add_third_monitor('false')",:checked=>(@order.whether_monitor==false ? "checked" : ""),:disabled=>true )%>
+                      否
+                    </label>
+                 </div>
+             </div>
+        </div>
+       </div>
+
+       <div class="control-group t_margin_20 <%= (@order.whether_monitor&&@order.whether_monitor==true) ? '' : 'hide' %>" id="add_third_monitor" >
+         <label class="control-label">
+            <label for="campaign_campaignname" class="inline">选择第三方监测服务商</label>
+         </label>
+         <div class="controls">
+             <div class="row">
+                   <div class="span">
+                    <label class="radio">
+                      <%= radio_button("order", "third_monitor", "AdMaster",:disabled=>true,:checked=>"checked")%>
+                      Admster
+                    </label>
+                   </div>
+                 <div class="span" style="margin-left:68px;">
+                  <label class="radio">
+                      <%= radio_button("order", "third_monitor", "other",:disabled=>true)%>
+                      其他：
+                    </label>
+                 </div>
+                 <div class="span l_margin_5">
+                  <%= f.text_field :description,:disname=>"选择第三方监测服务商",:style=>"width:284px;",:placeholder=>"请列明服务商名称.并需经产品部门审批",:readonly=>true%>
+                </div>
+             </div>
+        </div>
+       </div>
+
+       <div class="control-group <%= (@order.whether_monitor&&@order.whether_monitor==true) ? '' : 'hide' %>" id="add_third_code">
+        <label class="control-label" for="">第三方监测代码</label>
+        <div class="controls">
+          <div class="row">
+              <div class="span">
+                <%= f.text_area :third_monitor_code,:rows =>"6",:class=>"span5",:readonly=>true %>
+              </div>
+          </div>
+        </div>
+      </div>

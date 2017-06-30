@@ -1,0 +1,223 @@
+<html>
+	<head>
+		<title>Bubbles</title>
+    	<meta charset="utf-8">
+		<style type="text/css">
+			body { background: #f5f5f5 url(bubbles-bg.png) left top; padding:0; margin:0;}
+			#bubbles{background: #fff;}
+			.fonta {font-family: 'Coustard', serif;}
+			.fontb {font-family: 'Carter One', sans-serif;}
+			.fontc {font-family: 'Comfortaa', cursive;}
+			.fontd {font-family: 'Open Sans', sans-serif;}
+			.bubbledata,
+			.bubblelabel { color:#000; position:absolute; text-align:center; line-height:1em;}
+			.fontb.bubbledata { margin-top:-10px;}
+			#tips{position: absolute;top: 100px;right:10px;width: 200px;height: 200px;background: #fff;
+			-webkit-box-shadow:4px 4px 4px black;
+			-moz-box-shadow:4px 4px 4px black;
+					padding: 10px;
+					color: #666;
+					display: none;
+			}
+		</style>
+		<script src="raphael-min.js" type="text/javascript"></script>		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+		<script	src="raphael.makeBubble.js" type="text/javascript"></script>		
+		
+	</head>
+	<body>
+		<div id="content" style="width:800px; margin:0 auto;">
+			<div style="position:relative; z-index:10;" class="bubbletexts" id="bubbletexts"></div>
+			<div id="bubbles" style="width:100%; position:relative; z-index:0;"></div>
+		</div>
+		
+		<script type="text/javascript">	
+	// function getAngle(x1, y1,  x2, y2){
+ //       	var x = Math.abs(x1 - x2);
+ //       	var y = Math.abs(y1 - y2);
+ //       	var z = Math.sqrt(x*x + y*y);
+ //       	return  Math.round((Math.asin(y / z) / Math.PI*180));
+ //    }
+
+			 function format_number(n){
+			   var b=parseInt(n).toString();
+			   var len=b.length;
+			   if(len<=3){return b;}
+			   var r=len%3;
+			   return r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{3}/g).join(","):b.slice(r,len).match(/\d{3}/g).join(",");
+			 }
+
+
+			var centerX = 400;
+			var centerY = 300;
+			var data = [
+				["信用卡",31000,null],
+				["信用卡优惠",25600,20100],
+				["免息分期",2300,1900],
+				["开支票里数",5300,2100],
+				["信用卡积分",29800,23500],
+				["現金回贈",6500,3600],
+				["飞行里数",21000,15000],
+				["海外簽賬",2100,1200],
+				["免年费",30500,20500],
+				["换取里数",23100,18900],
+				["黑卡",4300,2300],
+			];
+			var data_total = 0;
+			var data_total2 = 0;
+			var angle_total = 0;
+			var paper = Raphael(document.getElementById('bubbles'), 800, 600);
+			paper.bubbleDefaults.labelClass += ' fontb';
+			// paper.ellipse(50, 50, 40, 20);
+			// 半径 半径 与X轴夹角 大小角度弧线1表示大角度。 绕中心的方向，1表示顺时针，0表示逆时针。
+			// paper.path("M200,100 A20 20 0 0 0 100 10").attr('stroke','red');
+			// paper.path('M20,120 L100,10 L180,90');  
+			// paper.path('M0,0 Q100,0 100,100').attr('stroke','red');  
+			// paper.path("M20,20s20,50,60,20");
+			// paper.path("M60,20s20,20,20,50z");
+			var data_0 = data[0][1];
+			var fontAry = ['fonta','fontb','fontc','fontd','fonta','fontb','fontc','fontd']
+			var __path;
+			function showTips(data1,data2,data3){
+				$('#tips').fadeIn();
+				$('#tips h3').html(data1);
+				$('#tips strong').eq(0).html(format_number(data2));
+				$('#tips strong').eq(1).html(format_number(data3));
+			}
+			function clickFunc(circle){
+				for (var i = xmo_circles.length - 1; i >= 1; i--) {
+					var item = xmo_circles[i];
+					item.attr("stroke-width",0);
+				};
+				var data = circle.data("data");
+				circle.attr("stroke-width", Raphael.fn.bubbleDefaults.stroke);
+				if(!data.item){
+					$('#tips').fadeOut();
+					return;
+				}
+				showTips(data.item[0],data.item[1],data.item[2])
+				var path = [
+					"M",data.point_1.x,data.point_1.y,
+					"Q",data.point_2.x,data.point_2.y,data.point_3.x,data.point_3.y,
+					// "M",data.point_3.x,data.point_3.y,
+					"Q",data.point_4.x,data.point_4.y,data.point_1.x,data.point_1.y,
+					"Z"
+				]
+				return
+				// var path = 'M'+data.point_1.x+','+data.point_1.y+' Q'+data.point_2.x+','+data.point_2.y+' '+data.point_3.x+','+data.point_3.y;
+				__path&&__path.remove();
+				__path = paper.path(path).attr({"stroke-width":0,'fill':'#fff000','opacity':0.6});  
+				__path.mouseover(function(ele){
+					__path.attr('opacity',0.9)
+					showTips(data.item[0],data.item[1],data.item[2])
+				})
+				__path.mouseout(function(ele){
+					__path.attr('opacity',0.6)
+					showTips(data.item[0],data.item[1],data.item[2])
+				})
+			}
+			for(var i = 1; i < data.length; i++){
+				data_total += data[i][1];
+			}
+			var per_0 = data[0][1]/data_total;
+			for(var i = 1; i < data.length; i++){
+				var item = data[i];
+				var per = item[1]/data[0][1];
+				var radius = per*100;
+				radius  = radius < 40 ? 40 : radius;
+				// var per_this = item[1]/data_total;
+				// var per = Math.abs(per_0-per_0);
+				// if(per_0/per)
+				// var radius = 40;
+				// if(per > 0.2) radius = 80;
+				// else if(per > 0.12) radius = 70
+				// else if(per > 0.08) radius = 60
+				// else if(per > 0.05) radius = 50
+				// else if(per_this > 0.05) radius = 50
+				// radius = per
+				data[i].push(radius);
+				data_total2 += radius;
+			}
+
+			/*
+				1，计算分布角度
+				2，计算位置
+				3，计算重合点
+			*/ 
+			for(var i = 0; i < data.length; i++){
+				var item = data[i];
+				var dataObj = {};
+				if(i == 0){
+					paper.makeBubble(dataObj,centerX, centerY, 100, 0, i+5, item[1], item[0], fontAry[i]);
+					continue;
+				}
+				// 求公共部分占用比例
+				var per = item[3]/data_total2;
+				// 求面积比例   
+				var per_common = item[2]/data[0][1];
+				var angleThis = 360*per;
+				angle_total += angleThis;
+				var radius = item[3];
+				var radiusCommon = radius*per_common*2;//per_common//*Math.sqrt(radius*radius/10000);
+				// console.info(radiusCommon)
+				var halfAngleThisNew = angleThis/2;
+				var l1 = 100*Math.cos(halfAngleThisNew*Math.PI/180);
+				var l2 = radius*Math.cos(50*Math.PI/180);
+				// var len = l1 + l2;
+				var len = radius+100 - radiusCommon;
+				// console.info(len)
+				// len = len*0.8
+				var l3 = radius*Math.sin(50*Math.PI/180);
+				var l4 = len - radius/(Math.cos(50*Math.PI/180));
+				var halfAngleThis = Math.atan(l3/l1)/Math.PI*180;
+				var re = (angle_total-halfAngleThis)*Math.PI/180;
+				var re_all = (angle_total)*Math.PI/180;
+				var re_pre = (angle_total - halfAngleThis*2)*Math.PI/180;
+				var x = Math.cos(re)*len;
+				var y = Math.sin(re)*len;
+				var len_middle = Math.cos(halfAngleThis*Math.PI/180)*radius;
+				var CEN_x = x+centerX;
+				var CEN_y = centerY-y;
+				var r_out = 110;
+				if(item[3] == 80) r_out = 116;
+				if(item[3] == 70) r_out = 112;
+				if(item[3] == 60) r_out = 108;
+				if(item[3] == 50) r_out = 106;
+				if(item[3] == 40) r_out = 104;
+				var r_in = 20;
+				if(item[3] == 80) r_in = 40;
+				if(item[3] == 70) r_in = 48;
+				if(item[3] == 60) r_in = 90;
+				if(item[3] == 50) r_in = 40;
+				if(item[3] == 40) r_in = 70;
+				dataObj.point_1 = {
+					x : centerX + Math.cos(re_all)*100,
+					y : centerY - Math.sin(re_all)*100,
+				}
+				dataObj.point_2 = {
+					x : centerX + Math.cos(re)*r_out,
+					y : centerY - Math.sin(re)*r_out,
+				}
+				dataObj.point_3 = {
+					x : centerX + Math.cos(re_pre)*100,
+					y : centerY - Math.sin(re_pre)*100,
+				}
+				dataObj.point_4 = {
+					x : centerX + Math.cos(re)*r_in,
+					y : centerY - Math.sin(re)*r_in,
+				}
+				dataObj.index = i;
+				dataObj.item = item;
+				paper.makeBubble(dataObj,CEN_x,CEN_y, radius, i, i+8, item[1], item[0], fontAry[i]);
+			}
+			
+		</script>	
+		<div id="tips">
+			<h3>信用卡优惠</h3>
+			<div>受众数量：</div>
+			<div><strong>20000</strong></div>
+			<div>重合数量:</div>
+			<div><strong>1000</strong></div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,1266 @@
+
+<header class="jumbotron subhead">
+        <h1>二，表单（Form）</h1>
+        <p class="lead subNavItem">2.1－表单中的输入框（Fields）</p>
+</header>
+
+<div class="big_section">
+<form class="form-horizontal">
+
+
+<div class="sub_section_white">
+<div class="control-group t_margin_20">
+  <label class="control-label">
+  	<label for="requiredField" class="inline">required field*</label>
+  </label>
+  <div class="controls">
+		<div class="row">
+			<div class="span">
+		    <input type="text" name="campaign[campaignname]" id="requiredField" disname="required field" class="required span5">
+			</div>
+		</div>
+  </div>
+</div>
+
+<div class="row">
+<span class="label label-important">说明：请在必须项上加 ＊ </span>
+</div>
+
+<pre class="prettyprint linenums">
+<div class="control-group t_margin_20">
+  <label class="control-label">
+    <label for="requiredField" class="inline">required field*</label>
+  </label>
+  <div class="controls">
+	<div class="row">
+	<div class="span">
+          <input type="text" name="" id="" disname="" class="required span5">
+	</div>
+	</div>
+  </div>
+</div>
+</pre>
+</div>
+
+
+
+<div class="sub_section_gray">
+<div class="control-group">
+<label for="subportfolio_subportfolioname" class="control-label">Short field
+<br/>(Short width input)</label>
+  <div class="controls">
+    <div class="row">
+      <div class="item_two_column">
+        <div class="span">
+          <input type="text" name="subportfolio[subportfolioname]" id="subportfolio_subportfolioname" disname="Strategy Name" class="required">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<pre class="prettyprint linenums">
+<div class="control-group">
+<label for="subportfolio_subportfolioname" class="control-label">Short field
+<br/>(Short width input)</label>
+  <div class="controls">
+    <div class="row">
+      <div class="item_two_column">
+        <div class="span">
+          <input type="text" name="subportfolio[subportfolioname]" id="subportfolio_subportfolioname" disname="Strategy Name" class="required span4">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</pre>
+
+</div>
+
+
+
+
+<div class="sub_section_white">
+<div class="control-group t_margin_20">
+  <label class="control-label">
+    <label for="requiredField" class="inline">Disabled field (Disable field input)</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="span">
+        <input type="text" name="" id="" disname="required field" disabled="disabled" class="required span5">
+      </div>
+    </div>
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group t_margin_20">
+  <label class="control-label">
+    <label for="requiredField" class="inline">Disabled field (Disable field input)</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="span">
+        <input type="text" name="" id="" disname="required field" disabled="disabled" class="required span5">
+      </div>
+    </div>
+  </div>
+</pre>
+</div>
+<div class="sub_section_gray">
+<div class="control-group">
+  <label for="client_lead_sale" class="control-label">
+    Field with Tool Tip
+  </label>
+  <div class="controls">
+    <div class="row">
+        <div class="item_one_w_help">
+            <div class="span">
+              <input name="" id="" disname="" class="required span5" type="text">
+            </div>
+            <div class="span">
+            <img id="p10" src="./images/shared/components/help-icon.png">
+            <div class='tooltip_class'>这是提示信息</div>    
+            <script type="text/javascript">
+            //&lt;![CDATA[
+            $('#p10').tooltip({
+                  position: 'top right',
+                  //relative: true,
+                  tipClass: 'tooltip_class',
+                  onBeforeShow: function(event, position) {
+                    this.getTip().appendTo(document.body);
+                    return true;
+                  }
+                }) .dynamic({ bottom: { direction: 'down', bounce: true } });
+            //]]&gt;
+            </script>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label for="" class="control-label">Field with Tool Tip</label>
+  <div class="controls">
+    <div class="row">
+        <div class="item_one_w_help">
+            <div class="span">
+              <input name="" id="" disname="" class="required span5" type="text">
+            </div>
+            <div class="span">
+            <img id="p10" src="/images/shared/components/help-icon.png">
+            <div class='tooltip_class'>这是提示信息</div>    
+            //相关js 代码 请使项目中用helper的写法
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+</pre>
+
+
+<div class="sub_section_white">
+<div class="control-group t_margin_20">
+  <label class="control-label">
+    <label for="requiredField" class="inline">Budget field (Total budget)</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="span">
+        <div class="input-append bigger">
+          <input type="text" id="budget_dis_val" class="number_validate number numeric valid">
+          <input type="text" value="10000.0" style="display:none" name="searchengine[budget]" id="budget_dis_val_hide" class="">
+          <span class="add-on budget_price">RMB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<pre class="prettyprint linenums">
+<div class="control-group t_margin_20">
+  <label class="control-label">
+    <label for="" class="inline">Budget field (Total budget)</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="span">
+        <div class="input-append bigger">
+          <input type="text" id="" class="number_validate number numeric valid">
+          <input type="text" value="" style="display:none" name="" id="" class="">
+          <span class="add-on budget_price">RMB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</pre>
+</div>
+
+
+ <div class="sub_section_gray">
+
+<div class="control-group">
+  <label class="control-label" for="">% or currency field</label>
+  <div class="controls">
+    <div class="input-append">
+      <input type="text" class="span2 number" id="" size="16">
+      <span class="add-on">%</span>
+    </div>
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label" for="">% or currency field</label>
+  <div class="controls">
+    <div class="input-append">
+      <input type="text" class="span2 number" id="" size="16">
+      <span class="add-on">%</span>
+    </div>
+  </div>
+</div>
+</pre>
+</div>
+
+
+
+ <div class="sub_section_white">
+
+<div class="control-group">
+  <label class="control-label" for="">Date selection</label>
+<div class="controls">
+  <div class="row">
+    <div class="item_two">
+    <div class="span">
+      <input type="text" class="dateISO required" disname="dateISO" id="Form_dateISO" readonly="readonly" name="form-dateISO">
+    </div>
+    <div class="span"><i class="icon-calendar l_margin_0"></i></div>
+    </div>
+  </div>
+</div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label" for="">Date selection</label>
+<div class="controls">
+  <div class="row">
+    <div class="item_two">
+    <div class="span">
+      <input type="text" class="dateISO required span5" disname="dateISO" id="Form_dateISO" readonly="readonly" name="form-dateISO">
+    </div>
+    <div class="span"><i class="icon-calendar l_margin_0"></i></div>
+    </div>
+  </div>
+</div>
+</div>
+js 代码如下：
+$("#Form_dateISO").datepicker({dateFormat:"yy-mm-dd",onSelect: function(dateText, inst) { $(this).trigger("blur") }});
+$(".icon-calendar,#Form_dateISO").click(function(){
+    $("#Form_dateISO").datepicker("show")
+});
+</pre>
+<script type="text/javascript">
+$(function(){
+    var datapicker = $("#Form_dateISO").datepicker({dateFormat:"yy-mm-dd",onSelect: function(dateText, inst) { $(this).trigger("blur") }});
+    $(".icon-calendar,#Form_dateISO").click(function(){
+        $("#Form_dateISO").datepicker("show")
+    });
+})
+
+</script>
+</div>
+
+
+
+<div class="sub_section_gray">
+<div class="control-group">
+  <label class="control-label" for="">Slider</label>
+  <div class="controls">
+    <div id="slider-range-min" class='span5 slider'></div>  <div class='span1'><input class='slider_result span1'  type='text'/></div>
+
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label" for="">Slider</label>
+  <div class="controls">
+    <div id="slider-range-min" class='span5 slider'></div>  <div class='span1'><input class='slider_result span1'  type='text'/></div>
+  </div>
+</div>
+</pre>
+<div class="row">
+<span class="label label-important">说明：Slider效果依赖 public/javascripts/slider_2.js 请在页面最下面引用这个js</span>
+</div>
+<script src="http://xmo.optimix.asia/javascripts/slider_2.js" type="text/javascript"></script>
+</div>
+
+<div class="sub_section_white">
+<div class="control-group">
+  <label class="control-label" for="">Bulk upload</label>
+  <div class="controls">
+    <div class='minmaxbox'>
+      <button class='btn minus'>-</button>
+      <input type='text'class='value'/>
+      <button class='btn plus'>+</button>
+    </div>
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label" for="">Bulk upload</label>
+  <div class="controls">
+    <div class='minmaxbox'>
+      <button class='btn minus'>-</button>
+      <input type='text'class='value'/>
+      <button class='btn plus'>+</button>
+    </div>
+  </div>
+</div>
+</pre>
+<div class="row">
+<span class="label label-important">说明：Bulk upload效果依赖 public/javascripts/minmaxbox.js 请在 &lt;head&gt;&lt;/head&gt; 之间引用这个js</span>
+</div>
+<script type='text/javascript'>
+$(function(){
+  $('.minmaxbox').minmaxbox({max:5,overMax:function(a,b){alert("you are over Max: "+a +" current: "+b);}});
+})
+</script>
+</div>
+
+
+<div class="sub_section_gray">
+<div class="control-group">
+  <label class="control-label" for="">Text field</label>
+  <div class="controls">
+    <div id="slider-range-min" class='span5 slider'></div>  <div class='span1'><textarea class="span5"></textarea></div>
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label" for="">Text field</label>
+  <div class="controls">
+    <div id="slider-range-min" class='span5 slider'></div>  <div class='span1'><textarea class="span5"></textarea></div>
+  </div>
+</div>
+</pre>
+</div>
+
+
+
+<div class="row datil-intro">
+<div class="span8">
+<h3>General Usage</h3>
+
+<h3>Mandatroy fields</h3>
+<ol>
+<li>All mandatory fields should be indicated with the “ * ”. For example: Name*</li>
+</ol>
+
+
+<h3>Field lengh</h3>
+<ol>
+<li>Length of input fields should communicate the intended content.</li>
+<li>
+• Fields don’t need to all be the same length. Mix long and short field length according to the content it is used for • You can override input field widths if you have specific character length requirements for the field (eg. IP)
+</li>
+</ol>
+
+<h3>Notice(Green)</h3>
+<ol>
+<li>Use if it is successful updated or created</li>
+</ol>
+
+<h3>Text alignment</h3>
+<ol>
+<li>“Budget field” or “% or currency field” – Right align “Slider” or “Bulk upload” – Center align</li>
+<li>All other fields – Left align</li>
+</ol>
+
+
+
+</div>
+</div>
+</div>
+
+
+
+</form>
+
+</div>
+
+
+<header class="jumbotron subhead">
+        <p class="lead subNavItem">2.2－表单中的下拉框（Drop Down）</p>
+</header>
+
+
+
+<div class="big_section">
+<form class="form-horizontal">
+
+<div class="sub_section_white">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">Status</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="span">    
+        <select name="" id="" class="required select span5 valid">
+          <option selected="selected" value="Active">Active</option>
+          <option value="On Hold">On Hold</option>
+          <option value="Completed">Completed</option></select>
+      </div>
+    </div>
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">Status</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="span">    
+        <select name="" id="" class="required select span5 valid">
+          <option selected="selected" value="Active">Active</option>
+          <option value="On Hold">On Hold</option>
+          <option value="Completed">Completed</option></select>
+      </div>
+    </div>
+  </div>
+</div>
+</pre>
+</div>
+
+
+
+<div class="sub_section_white">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">search-bar</label>
+  </label>
+  <div class="controls search-bar pull-left l-margin-0" style="margin-left:0">
+    <div class="row chzn-container chzn-container-single">
+      <div class="span">    
+      <select name="clients[]" data-placeholder="Search client..." id="search_client">
+          <option value=""></option>
+          <option value="6">(Void)eMoney</option>
+          <option value="352">1626buy</option>
+          <option value="341">1号店DSP</option>
+          <option value="237">3HK</option>
+          <option value="21">5173</option>
+          <option value="598">88DB</option>
+          <option value="391">8SL Securities Limited</option>
+          <option value="335">ACE Insurance Limited</option>
+          <option value="592">AME Group Limited</option>
+          <option value="438">AMEX Casual Dining RC</option>
+          <option value="328">AMEX Corporate Card</option>
+      </select>
+      <script type="text/javascript">$("#search_client").chosen();</script>
+      </div>
+    </div>
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">Status</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="span">    
+        <select name="" id="" class="required select span5 valid">
+          <option selected="selected" value="Active">Active</option>
+          <option value="On Hold">On Hold</option>
+          <option value="Completed">Completed</option></select>
+      </div>
+    </div>
+  </div>
+</div>
+</pre>
+</div>
+
+
+<div class="sub_section_gray">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">Single selection with search option</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="span">    
+
+          <select class="select span4 required" id="chosen_test" disname="chosen下拉">
+            <option value="">请选择</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+      </div>
+    </div>
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">chosen</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="span">    
+          <select class="select span4 required" id="chosen_test" disname="chosen下拉">
+            <option value="">请选择</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+      </div>
+    </div>
+  </div>
+</div>
+js代码：
+$("#chosen_test").chosen();
+</pre>
+<script type="text/javascript">
+$("#chosen_test").chosen();
+</script>
+<div class="row">
+<span class="label label-important">说明：chosen效果依赖 public/javascripts/chosen.jquery.min.js 请在 &lt;head&gt;&lt;/head&gt; 之间引用这个js</span>
+<span class="label label-important">API：http://harvesthq.github.io/chosen/</span>
+</div>
+</div>
+
+
+
+
+
+<div class="">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">Multi-Select</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="item_two">
+      <div class="span">    
+      <select tabindex="-1" id="chosen_multiple_test" multiple class="chzn-select span6" data-placeholder="请选择">
+                <option value=""></option>
+                <optgroup label="NFC EAST">
+                  <option selected="true">Lookalike Dallas Cowboys</option>
+                  <option selected="true">Lookalike New York Giants</option>
+                  <option selected="true">Baidu Automobile</option>
+                  <option>Philadelphia Eagles</option>
+                  <option>Washington Redskins</option>
+                </optgroup><optgroup>
+                </optgroup><optgroup label="NFC NORTH">
+                  <option>Chicago Bears</option>
+                  <option>Detroit Lions</option>
+                  <option>Green Bay Packers</option>
+                  <option>Minnesota Vikings</option>
+                </optgroup>
+                <optgroup label="NFC SOUTH">
+                  <option>Atlanta Falcons</option>
+                  <option>Carolina Panthers</option>
+                  <option>New Orleans Saints</option>
+                  <option>Tampa Bay Buccaneers</option>
+                </optgroup>
+                <optgroup label="NFC WEST">
+                  <option>Arizona Cardinals</option>
+                  <option>St. Louis Rams</option>
+                  <option>San Francisco 49ers</option>
+                  <option>Seattle Seahawks</option>
+                </optgroup>
+                <optgroup label="AFC EAST">
+                  <option>Buffalo Bills</option>
+                  <option>Miami Dolphins</option>
+                  <option>New England Patriots</option>
+                  <option>New York Jets</option>
+                </optgroup>
+                <optgroup label="AFC NORTH">
+                  <option>Baltimore Ravens</option>
+                  <option>Cincinnati Bengals</option>
+                  <option>Cleveland Browns</option>
+                  <option>Pittsburgh Steelers</option>
+                </optgroup>
+                <optgroup label="AFC SOUTH">
+                  <option>Houston Texans</option>
+                  <option>Indianapolis Colts</option>
+                  <option>Jacksonville Jaguars</option>
+                  <option>Tennessee Titans</option>
+                </optgroup>
+                <optgroup label="AFC WEST">
+                  <option>Denver Broncos</option>
+                  <option>Kansas City Chiefs</option>
+                  <option>Oakland Raiders</option>
+                  <option>San Diego Chargers</option>
+                </optgroup>
+        </select>
+      </div>
+      <div class="span">
+           <a class="selection_icon selection_trigger" data-target="#chosen_multiple_test" href="javascript:void(0);"></a>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$('.selection_trigger').click(function(){
+  var target = $(this).attr('data-target') + '_chzn';
+  $(target).mousedown();
+  return false;
+})
+</script>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">Multi-Select</label>
+  </label>
+  <div class="controls">
+    <div class="row">
+      <div class="item_two">
+      <div class="span">    
+      <select tabindex="-1" id="chosen_multiple_test" multiple class="chzn-select span5" data-placeholder="请选择">
+                <option value=""></option>
+                <optgroup label="NFC EAST">
+                  <option>Dallas Cowboys</option>
+                  <option>New York Giants</option>
+                  <option>Philadelphia Eagles</option>
+                  <option>Washington Redskins</option>
+                </optgroup><optgroup>
+                </optgroup><optgroup label="NFC NORTH">
+                  <option>Chicago Bears</option>
+                  <option>Detroit Lions</option>
+                  <option>Green Bay Packers</option>
+                  <option>Minnesota Vikings</option>
+                </optgroup>
+                <optgroup label="NFC SOUTH">
+                  <option>Atlanta Falcons</option>
+                  <option>Carolina Panthers</option>
+                  <option>New Orleans Saints</option>
+                  <option>Tampa Bay Buccaneers</option>
+                </optgroup>
+                <optgroup label="NFC WEST">
+                  <option>Arizona Cardinals</option>
+                  <option>St. Louis Rams</option>
+                  <option>San Francisco 49ers</option>
+                  <option>Seattle Seahawks</option>
+                </optgroup>
+                <optgroup label="AFC EAST">
+                  <option>Buffalo Bills</option>
+                  <option>Miami Dolphins</option>
+                  <option>New England Patriots</option>
+                  <option>New York Jets</option>
+                </optgroup>
+                <optgroup label="AFC NORTH">
+                  <option>Baltimore Ravens</option>
+                  <option>Cincinnati Bengals</option>
+                  <option>Cleveland Browns</option>
+                  <option>Pittsburgh Steelers</option>
+                </optgroup>
+                <optgroup label="AFC SOUTH">
+                  <option>Houston Texans</option>
+                  <option>Indianapolis Colts</option>
+                  <option>Jacksonville Jaguars</option>
+                  <option>Tennessee Titans</option>
+                </optgroup>
+                <optgroup label="AFC WEST">
+                  <option>Denver Broncos</option>
+                  <option>Kansas City Chiefs</option>
+                  <option>Oakland Raiders</option>
+                  <option>San Diego Chargers</option>
+                </optgroup>
+        </select>
+      </div>
+      <div class="span">
+           <a class="selection_icon selection_trigger" data-target="#chosen_multiple_test" href="javascript:void(0);"></a>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+js代码：
+$("#chosen_multiple_test").chosen();
+//右边触发js
+$('.selection_trigger').click(function(){
+  var target = $(this).attr('data-target') + '_chzn';
+  $(target).mousedown();
+  return false;
+})
+</pre>
+<script type="text/javascript">
+$("#chosen_multiple_test").chosen();
+</script>
+<div class="row">
+<span class="label label-important">说明：chosen效果依赖 public/javascripts/chosen.jquery.min.js 请在 &lt;head&gt;&lt;/head&gt; 之间引用这个js</span>
+<span class="label label-important">API：http://harvesthq.github.io/chosen/</span>
+</div>
+</div>
+
+
+<div class="sub_section_gray">
+<div class="control-group">
+  <label class="control-label">
+    <label for="" style="width:140px;font-size:14px;position:relative; top:17px;">Drop down with icon</label>
+  </label>
+  <div class="controls">
+<div class="row">
+  <div class="span8">
+    <img class="align_middle_to_img" src="http://xmo.optimix.asia/images/shared/components/goal-en.png">
+    <select name="event_id" id="event_id" class="">
+      <option value="1851">填写核对订单信息页</option>
+      <option selected="selected" value="1852">提交订单成功</option>
+      <option value="1849">注册成功</option>
+      <option value="1850">购物车</option>
+      <option value="1946">首页</option>
+      <option value="1947">首页</option>
+    </select>
+  </div>
+</div>
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">Drop down with icon</label>
+  </label>
+  <div class="controls">
+<div class="row">
+  <div class="span8">
+    <img class="align_middle_to_img" src="http://xmo.optimix.asia/images/shared/components/goal-en.png">
+    <select name="event_id" id="event_id" class="">
+      <option value="1851">填写核对订单信息页</option>
+      <option selected="selected" value="1852">提交订单成功</option>
+      <option value="1849">注册成功</option>
+      <option value="1850">购物车</option>
+      <option value="1946">首页</option>
+      <option value="1947">首页</option>
+    </select>
+  </div>
+</div>
+  </div>
+</div>
+js:
+$("#event_id").chosen();
+$('#event_id_chzn').addClass("align_middle_to_img");
+
+</pre>
+
+<script type="text/javascript">
+$("#event_id").chosen();
+$('#event_id_chzn').addClass("align_middle_to_img");
+</script>
+<div class="row">
+<span class="label label-important">说明：chosen效果依赖 public/javascripts/chosen.jquery.min.js 请在 &lt;head&gt;&lt;/head&gt; 之间引用这个js</span>
+<span class="label label-important">API：http://harvesthq.github.io/chosen/</span>
+</div>
+</div>
+</form>
+</div>
+
+<header class="jumbotron subhead">
+        <p class="lead subNavItem">2.3－表单中的上传（Upload File）</p>
+</header>
+<div class="big_section">
+<form class="form-horizontal">
+<div class="sub_section_white">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">Upload File</label>
+  </label>
+  <div class="controls">
+<div class="row">
+<input type='file' />
+</div>
+  </div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+  <label class="control-label">
+    <label for="">Upload File</label>
+  </label>
+  <div class="controls">
+<div class="row">
+<input type='file' />
+</div>
+  </div>
+</div>
+</pre>
+</div>
+</form>
+</div>
+
+
+<header class="jumbotron subhead">
+        <p class="lead subNavItem">2.4－复选框 & 单选框（CheckBoxes & RaidoButtons）</p>
+</header>
+<div class="big_section">
+<form class="form-horizontal">
+<div class="sub_section_white">
+<div class="control-group">
+<label class="control-label">
+CheckBoxes
+</label>
+<div class="controls">
+  <div class="row ">
+    <div class="span">
+      <label>
+        <label for="">CheckBoxes</label>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div id="" class="span6">
+      <label class="checkbox">
+        <input type="checkbox">Doubleclick AdX (AdX)
+      </label>
+      <label class="checkbox">
+        <input type="checkbox">TANX
+      </label>
+      <label class="checkbox">
+        <input type="checkbox">Adsvana
+      </label>
+      <label class="checkbox">
+        <input type="checkbox">Allyes
+      </label>
+    </div>
+  </div>
+</div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+<label class="control-label">
+CheckBoxes
+</label>
+<div class="controls">
+  <div class="row ">
+    <div class="span">
+      <label>
+        <label for="">CheckBoxes</label>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div id="" class="span6">
+      <label class="checkbox">
+        <input type="checkbox">Doubleclick AdX (AdX)
+      </label>
+      <label class="checkbox">
+        <input type="checkbox">TANX
+      </label>
+      <label class="checkbox">
+        <input type="checkbox">Adsvana
+      </label>
+      <label class="checkbox">
+        <input type="checkbox">Allyes
+      </label>
+    </div>
+  </div>
+</div>
+</div>
+</pre>
+</div>
+
+<div class="sub_section_white">
+<div class="control-group">
+<label class="control-label">
+Radio
+</label>
+<div class="controls">
+  <div class="row ">
+    <div class="span">
+      <label>
+        <label for="">Radio</label>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div id="" class="span6">
+      <label class="radio">
+        <input type="radio" name="radio">Doubleclick AdX (AdX)
+      </label>
+      <label class="radio">
+         <input type="radio" name="radio">TANX
+      </label>
+      <label class="radio">
+         <input type="radio" name="radio">Adsvana
+      </label>
+      <label class="radio">
+         <input type="radio" name="radio">Allyes
+      </label>
+    </div>
+  </div>
+</div>
+</div>
+<pre class="prettyprint linenums">
+<div class="control-group">
+<label class="control-label">
+Radio
+</label>
+<div class="controls">
+  <div class="row ">
+    <div class="span">
+      <label>
+        <label for="">Radio</label>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div id="" class="span6">
+      <label class="radio">
+        <input type="radio" name="radio">Doubleclick AdX (AdX)
+      </label>
+      <label class="radio">
+         <input type="radio" name="radio">TANX
+      </label>
+      <label class="radio">
+         <input type="radio" name="radio">Adsvana
+      </label>
+      <label class="radio">
+         <input type="radio" name="radio">Allyes
+      </label>
+    </div>
+  </div>
+</div>
+</div>
+</pre>
+</div>
+
+
+</form>
+</div>
+
+
+
+
+
+
+<header class="jumbotron subhead">
+        <p class="lead subNavItem">2.5－表单中的交互流程（Flow）</p>
+</header>
+
+<div class="big_section">
+<form class="form-horizontal">
+<div class="sub_section_white">
+<div class="row section_header">
+    <div class="span l_margin_5 ">
+      <h3>Add (Single Page)</h3>
+    </div>
+</div>
+  <div class="row">
+    <div class="span">
+      <img src="images/flow01.png">
+    </div>
+    <div class="pull-left span4">
+      <div class="row datil-intro">
+      <h3>General Usage</h3>
+
+      <h3><strong>Buttons</strong></h3>
+
+      <h3>CANCEL</h3>
+      <ol>
+      <li>Return to where user enters the page</li>
+      <li>No action has been taken on any of the changed information</li>
+      </ol>
+
+      <h3>CREATE</h3>
+      <ol>
+      <li>Direct user back to where he/she enters the page from</li>
+      <li>On the enter page, a flash message will be displayed either the creation was successful or not.</li>
+      </ol>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height:30px;"></div>
+<div class="sub_section_white">
+<div class="row section_header">
+    <div class="span l_margin_5 ">
+      <h3>Edit（Single Page）</h3>
+    </div>
+</div>
+  <div class="row">
+    <div class="span">
+      <img src="images/flow02.png">
+    </div>
+    <div class="pull-left span4">
+      <div class="row datil-intro">
+      <h3>General Usage</h3>
+
+
+      <h3><strong>Buttons</strong></h3>
+
+      <h3>CANCEL</h3>
+      <ol>
+      <li>Return to where user enters the page</li>
+      <li>No action has been taken on any of the changed information</li>
+      </ol>
+
+      <h3>CREATE</h3>
+      <ol>
+      <li>Direct user back to where he/she enters the page from</li>
+      <li>On the enter page, a flash message will be displayed either the creation was successful or not.</li>
+      </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height:30px;"></div>
+
+<div class="sub_section_white">
+<div class="row section_header">
+    <div class="span l_margin_5 ">
+      <h3>Add (MULTI-PAGE, FORM CAN BE INCOMPLETE WHEN CREATING, WITH ON/OFF BUTTON)</h3>
+    </div>
+</div>
+  <div class="row">
+    <div class="span7">
+      <img src="images/flow03.png">
+      <img src="images/flow04.png">
+    </div>
+    <div class="pull-left span4">
+      <div class="row datil-intro">
+      <h3>General Usage</h3>
+
+
+      <h3><strong>Buttons</strong></h3>
+
+      <h3>CANCEL</h3>
+      <ol>
+      <li><strong>Present on all pages of the form</strong></li>
+      <li>Return to where user enters the page</li>
+      <li>No action has been taken on any of the changed information</li>
+      </ol>
+
+      <h3>CREATE</h3>
+      <ol>
+      <li><strong>Present only on the last page of the form</strong></li>
+      <li>Direct user back to where he/she enters the page from</li>
+      <li>On the enter page, a flash message will be displayed in either one of the following options:
+          <ul>
+              <li>a) Media plan was successfully created. however the setup is incomplete, please complete the setup for approval.</li>
+              <li>b) Media plan was successfully created and is waiting for activation.</li>
+          </ul>
+      </li>
+      </ol>
+
+      <h3>ON/OFF</h3>
+      <ol>
+        <li>Maintain to be OFF</li>
+      </ol>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="height:30px;"></div>
+
+<div class="sub_section_white">
+<div class="row section_header">
+    <div class="span l_margin_5 ">
+      <h3>Edit (MULTI-PAGE, FORM CAN BE INCOMPLETE WHEN CREATING, WITH ON/OFF BUTTON)</h3>
+    </div>
+</div>
+  <div class="row">
+    <div class="span7">
+      <img src="images/flow05.png">
+    </div>
+    <div class="pull-left span4">
+      <div class="row datil-intro">
+      <h3>General Usage</h3>
+
+
+      <h3><strong>Buttons</strong></h3>
+
+      <h3>CANCEL</h3>
+      <ol>
+      <li><strong>Present on all pages of the form</strong></li>
+      <li>Return to where user enters the page</li>
+      <li>No action has been taken on any of the changed information</li>
+      </ol>
+
+      <h3>SAVE</h3>
+      <ol>
+      <li>Direct user back to where he/she enters the page from</li>
+      <li>On the enter page, a flash message will be displayed either the creation was successful or not.</li>
+      </ol>
+      <h3>SAVE & CONTINUE</h3>
+      <ol>
+      <li>Direct user to the next page to continue with the ediiting</li>
+      </ol>
+
+      <h3>ON/OFF</h3>
+      <ol>
+        <li>Maintain to be OFF</li>
+      </ol>
+
+      </div>
+    </div>
+  </div>
+<div style="height:30px;"></div>
+  
+  <div class="row">
+    <h3 class="l_margin_20 b_margin_10"><strong>Status Conditions for ON/OFF Button</strong></h3>
+    <table class="table-doc l_margin_20">
+        <thead>
+          <th>APPROVED STATUS</th>
+          <th>ON/OFF BUTTON</th>
+          <th style="width:100px">STATUS ON DAShBOARD</th>
+          <th>CONDITIONS</th>
+          <th>MESSAGE BESIDES BUTTON</th>
+          <th>COLOUR</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>NO</td>
+            <td class="red">OFF</td>
+            <td>Setup not ready</td>
+            <td>
+              when anyone of required field is empty</br>
+              AND</br>
+              when filled fields passed logical validation
+            </td>
+            <td>To turn on media plan, fill out all the required fields first.</td>
+            <td class="yellow">Yellow</td>
+          </tr>
+          <tr class="even">
+            <td>NO</td>
+            <td class="red">OFF</td>
+            <td>waiting for activation</td>
+            <td>when all mandatory fields are filled and correct</br>
+              AND</br>
+when filled fields passed logical validation</br>
+              AND</br>
+when user stopped during “waiting for Approval” status, should automatically change status back to “waiting for Activation”</td>
+            <td>Setup completed. Ready to be turned on for approval.</td>
+            <td class="yellow">Yellow</td>
+          </tr>
+          <tr>
+            <td>NO</td>
+            <td class="green">On (User must turn it on)</td>
+            <td>waiting for approval</td>
+            <td>when all mandatory fields are filled and correct
+              AND</br>
+when filled fields passed logical validation </br>
+              AND</br>
+when user turns ON/OFF button to “ON”</br>
+              AND</br>
+when the approval is not approved</td>
+            <td>Media plan is waiting for approval.</td>
+            <td class="yellow">Yellow</td>
+          </tr>
+          <tr>
+            <td>NO</td>
+            <td class="green">On</td>
+            <td>Ready</td>
+            <td>when the approval is approved </br>
+              AND</br>
+when today date is before start date </br>
+              AND</br>
+when the ON/OFF button is “ON”</td>
+            <td>Media plan is ready for running when reaches the start date.</td>
+            <td class="green">Green</td>
+          </tr>
+          <tr>
+            <td>NO</td>
+            <td class="green">On</td>
+            <td>Running</td>
+            <td>when the approval is approved </br>
+              AND</br>
+when the today date is between the start date and end date</br>
+              AND</br>
+when the ON/OFF button is “ON”</td>
+            <td>Media plan is approved.</td>
+            <td class="green">Green</td>
+          </tr>
+          <tr>
+            <td>NO</td>
+            <td><span class="red">On</span>/<span class="green">OFF</span></td>
+            <td>Stopped</td>
+            <td>
+              when the approval is approved </br>
+              AND</br>
+(when the today date after end date </br>
+OR</br>
+when the ON/OFF button is “OFF”)</td>
+            <td>Media plan is stopped.</td>
+            <td class="green">Green</td>
+          </tr>
+
+
+        </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <h3 class="l_margin_20 b_margin_10"><strong>Status Conditions for ON/OFF Button</strong></h3>
+    <table class="table-doc l_margin_20">
+        <thead>
+          <th></th>
+          <th>STATUS ON DASHBOARD</th>
+          <th>FLASh MESSAGE ON DASHBOARD</th>
+          <th>FLASh MESSAGE COLOUR</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>add</td>
+            <td>Setup not ready</td>
+            <td>Media plan was successfully created. however, the setup is incomplete, please complete the setup for approval.</td>
+            <td class="yellow">Yellow</td>
+          </tr>
+          <tr>
+            <td>Edit</td>
+            <td>Setup not ready</td>
+            <td>Media plan was successfully updated. however, the setup is incomplete, please complete the setup for approval.</td>
+            <td class="yellow">Yellow</td>
+          </tr>
+          <tr>
+            <td>add</td>
+            <td>waiting for activation</td>
+            <td>Media plan was successfully created and is waithg for activation.</td>
+            <td class="yellow">Yellow</td>
+          </tr>
+          <tr>
+            <td>Edit</td>
+            <td>waiting for activation</td>
+            <td>Media plan was successfully updated and is waithg for activation.</td>
+            <td class="yellow">Yellow</td>
+          </tr>
+          <tr>
+            <td>add</td>
+            <td>waiting for activation</td>
+            <td>Media plan was successfully created and is waiting for approval. will be approved within 3 days.</td>
+            <td class="yellow">Yellow</td>
+          </tr>
+          <tr>
+            <td>Edit</td>
+            <td>waiting for activation</td>
+            <td>Media plan was successfully updated and is waiting for approval. will be approved within 3 days.</td>
+            <td class="yellow">Yellow</td>
+          </tr>
+          <tr>
+            <td>Edit</td>
+            <td>
+Ready</br>
+Or</br>
+Running</br> 
+Or</br>
+Stopped
+            </td>
+            <td>Media plan was successfully updated.</td>
+            <td class="green">Green</td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+
+
+</div>
+</form>
+</div>

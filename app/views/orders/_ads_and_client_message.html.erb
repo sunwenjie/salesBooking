@@ -1,0 +1,141 @@
+<% if type == "ad_message"
+ad = order.advertisements.preload(:product)
+
+%>
+
+<div class="popover xmo-popover fade in">
+  <div class="arrow"></div>
+  <div class="popover-inner xmo-popover-inner">
+    <div class="popover-content">
+      <ul class="popover-detail clearfix">
+        <li>
+          <span class="popover-detail-title"><%= t("order.form.order_id") %></span>
+          <span class="popover-detail-result"><%= order.code.present? ? order.code : '' %></span>
+        </li>
+        <li>
+          <span class="popover-detail-title"><%= t("order.list.order") %></span>
+          <span class="popover-detail-result"><%= order.title? ? order.title : '' %></span>
+        </li>
+        <li>
+          <span class="popover-detail-title"><%= t("order.form.create_date") %></span>
+          <span class="popover-detail-result"><%= order.created_at.localtime.strftime("%Y/%m/%d %H:%M") %></span>
+        </li>
+        <li>
+          <span class="popover-detail-title"><%= t("order.form.free_tag") %></span>
+          <span class="popover-detail-result"><%= order.free_tag == "1" ? t("order.form.yes_lable") : t("order.form.no_lable") %></span>
+        </li>
+        <li>
+          <span class="popover-detail-title"><%= t("order.form.launch_date") %></span>
+          <span class="popover-detail-result"><%= order.start_date.present? ? order.start_date.strftime("%Y/%m/%d") : "" %> ~ <%= order.ending_date.present? ? order.ending_date.strftime("%Y/%m/%d"):"" %> </span>
+        </li>
+        <!--<li>-->
+          <!--<span class="popover-detail-title"><%#= t("order.list.budget1")%></span>-->
+          <!--<span class="popover-detail-result"><%#= number_with_precision( order.budget, :precision => 2, :delimiter => ",") %>&nbsp<%#=order["budget_currency"]%></span>-->
+        <!--</li>-->
+        <li>
+          <span class="popover-detail-title"><%= t("order.list.geo")%></span>
+          <%city_datas = order.map_city.present? ? order.map_city.split(",") : [] %>
+          <%country_datas = order.map_country.present? ? order.map_country.split() : [] %>
+
+          <span class="popover-detail-result city_show"><p><%= order.china_region_all? ? (country_datas[0..2].join(",") + (country_datas.size.to_i > 3 ? '...' : '')) : (country_datas[0..2].join(",") + (country_datas.size.to_i > 3 ? '...' : '') + " " +(order.china_regional? ? city_datas[0..2].join(",") + (city_datas.size.to_i > 3 ? '...' : '') : "")) %></p></span>
+        </li>
+        <!--<li>-->
+          <!--<span class="popover-detail-title"><%#= t("order.list.geo_distribute")%></span>-->
+          <!--<span class="popover-detail-result"><%#= order.have_admeasure_map ? "#{t("order.list.have")}" : "#{t("order.list.none")}" %></span>-->
+        <!--</li>-->
+
+        <li>
+          <span class="popover-detail-title"><%= t("order.form.order_owner") %></span>
+          <span class="popover-detail-result"><%= order.share_order_user.present? ? order.share_order_user : "" %></span>
+        </li>
+
+        <li>
+          <span class="popover-detail-title"><%= t("order.form.business_num") %></span>
+          <span class="popover-detail-result"><%= order.business_opportunity_code %></span>
+        </li>
+
+        <!--<li>-->
+          <!--<span class="popover-detail-title"><%#= t("order.form.order_groups") %></span>-->
+          <!--<span class="popover-detail-result"><%#= Group.where(Group.group_conditions(order.share_order_groups.pluck(:share_id))).pluck(:group_name).join(",") %></span>-->
+        <!--</li>-->
+      </ul>
+      <hr>
+      <%if ad.present?%>
+          <% ad.each_with_index do |a,index|%>
+              <%current_index = index+1%>
+              <ul class="popover-detail clearfix">
+                <li>
+                  <span class="popover-detail-title bold"><%= t("order.list.pre_sale_product")%><%=current_index%></span>
+                </li>
+                <!--<li>-->
+                  <!--<span class="popover-detail-title"><%#= t("order.adlist.product_type")%></span>-->
+                  <!--<span class="popover-detail-result"><%#= a.product.present? ? (I18n.locale.to_s == "en" ?  a.product.product_type_en : a.product.product_type_cn) : "" %></span>-->
+                <!--</li>-->
+                <li>
+                  <span class="popover-detail-title"><%= t("order.adlist.advertisement")%></span>
+                  <span class="popover-detail-result"><%= a.product.present? ? (I18n.locale.to_s == "en" ?  (a.product.en_name.present? ? a.product.en_name : '') : a.product.name) : "" %></span>
+                </li>
+                <li>
+                  <span class="popover-detail-title"><%= t("order.list.budget1")%></span>
+                  <span class="popover-detail-result"><%= (a.budget_ratio.present? && order.budget.present?) ? number_with_precision( order.budget * a.budget_ratio / 100, :precision => 2, :delimiter => ",") : 0.00 %>&nbsp<%=order["budget_currency"]%></span>
+                </li>
+                <!--<li>-->
+                  <!--<span class="popover-detail-title"><%#= t("order.list.settle_amount")%></span>-->
+                  <!--<span class="popover-detail-result"><%#=a.cost_type%>&nbsp<%#=a.cost.present? ? number_with_precision(a.cost, :precision => 2) : 0.00 %></span>-->
+                <!--</li>-->
+                <!--<li>-->
+                  <!--<span class="popover-detail-title">CTR</span>-->
+                  <!--<span class="popover-detail-result"><%#= (a.offer.nil? || a.forecast_ctr.nil?) ? "0.00" : number_with_precision(a.forecast_ctr, :precision => 2) %>%</span>-->
+                <!--</li>-->
+                <div class="t_margin_15"></div>
+              </ul>
+
+          <%end%>
+      <%end%>
+      <div class="popover-ahref ">
+        <a href="<%= order_path(:id=>order.id) %>" class="blue-href"><%= t("order.list.view_detail")%></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% else %>
+<div class="popover xmo-popover fade in">
+  <div class="arrow"></div>
+  <div class="popover-inner xmo-popover-inner">
+    <div class="popover-content">
+      <ul class="popover-detail">
+        <li>
+          <span class="popover-detail-title"><%= t("order.list.logo")%></span>
+          <span class="popover-detail-result"><%=order.client.present? ? order.client.clientname : ""%></span>
+        </li>
+        <li>
+          <span class="popover-detail-title"><%= t("order.list.channel")%></span>
+          <span class="popover-detail-result"><%=(order.client.present? && order.client.client_channel.present?) ? order.client.client_channel.channel_name : ""%></span>
+        </li>
+        <li>
+          <span class="popover-detail-title"><%= t("order.list.client_owner")%></span>
+          <span class="popover-detail-result"><%=order.client.present? ? order.client.share_client_user : ""%></span>
+        </li>
+        <!--<li>-->
+          <!--<span class="popover-detail-title"><%#= t("order.list.share_sale")%></span>-->
+          <!--<span class="popover-detail-result"><%#= order.client.id.present? ? get_client_share_sale(order.client.id) : "" %></span>-->
+        <!--</li>-->
+      </ul>
+      <div class="popover-ahref ">
+        <a href="<%= client_path(:id=>order.client.id) %>" class="blue-href"><%= t("order.list.view_detail")%></a>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+<script>
+//限制字符个数
+$(".city_show").each(function(){
+var maxwidth=81;
+if($(this).text().length>maxwidth){
+$(this).text($(this).text().substring(0,maxwidth));
+$(this).html($(this).html()+'...');
+}
+});
+</script>

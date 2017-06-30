@@ -1,0 +1,2 @@
+      invoke  active_record
+      create    db/migrate/20151027075119_add_is_delete_to_products.rb

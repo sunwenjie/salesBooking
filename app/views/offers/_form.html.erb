@@ -1,0 +1,180 @@
+<!-- body start -->
+<script type="text/javascript" src="/js/xmo-calendar.js"></script>
+<script src="/js/chosen.jquery.min.js?9120" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/css/css/xmo-calendar.css">
+ <style>
+  .ui-autocomplete {
+    max-height:200px; 
+    max-width: 380px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    width: 380px;
+  }
+  </style>
+
+<div  class ="big_section">
+  <% if @offer.errors.any? %>
+    <div class="big_section">
+
+    <div id="error_explanation" class="error sticker">
+      <h2><%= @offer.errors.count %>个错误导致汇率不能保存成功 :</h2>
+      <ul>
+      <% @offer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+    </div>
+<% end %>
+
+<% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+<% end %>
+<%= form_for(@offer ,:html=>{:id=>"offer_form", :class=>"form-horizontal"}) do |f| %>
+
+
+  <div class="sub_section_white">
+
+    <div class="control-group t_margin_20">
+      <label class="control-label">
+        <label for="campaign_campaignname" class="inline">地域</label>
+      </label>
+      <div class="controls">
+        <div class="row">
+          <div class="span">
+            <%= f.select :regional,options_for_offer_regional,{}, {:class => "required select span5 proof_ready_unmodify"} %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  	<div class="control-group t_margin_20">
+  	  <label class="control-label">
+  	      <label for="campaign_campaignname" class="inline">广告平台</label>
+  	  </label>
+      <div class="controls">
+        <div class="row">
+               <div class="span">
+                 <%= f.select :ad_platform,options_for_offer_ad_platform,{}, {:class => "required select span5 proof_ready_unmodify"} %>
+               </div>
+        </div>
+      </div>
+  	</div>
+    
+      <div class="control-group t_margin_20">
+        <label class="control-label">
+            <label for="campaign_campaignname" class="inline">产品类型</label>
+        </label>
+        <div class="controls">
+          <div class="row">
+            <div class="span">
+              <%= f.select :ad_type,options_for_offer_ad_type,{}, {:class => "required select span5 proof_ready_unmodify"} %>
+            </div>
+            <div class="span ">
+              <% if ["new", "create", "edit", "update"].include?(params[:action]) %>
+                  <div class="t_margin_0 header_add_new_link " style="top:0">
+                    <%=link_to "新增产品类型",:controller=>"product_types",:action=>"new",:id=>@offer.id %>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  	<div class="control-group t_margin_20">
+  	  <label class="control-label">
+  	      <label for="campaign_campaignname" class="inline">刊例价</label>
+  	  </label>
+  	  <div class="controls">
+    	  <div class="row">
+      		<div class="span">
+      	   <%= f.text_field :public_price, :disname=>"刊例价", :class=>"required span5",:size=>30 %>
+      		</div>
+    	  </div>
+  	  </div>
+  	</div>
+    
+    <div class="control-group t_margin_20">
+      <label class="control-label">
+          <label for="campaign_campaignname" class="inline">建议折扣</label>
+      </label>
+      <div class="controls">
+        <div class="row">
+          <div class="span">
+             <%= f.text_field :general_discount, :disname=>"建议折扣", :class=>"required span5",:size=>30 %>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  	<div class="control-group t_margin_20">
+  	  <label class="control-label">
+  	      <label for="campaign_campaignname" class="inline">最大折扣</label>
+  	  </label>
+  	  <div class="controls">
+    	  <div class="row">
+      		<div class="span">
+      		   <%= f.text_field :floor_discount, :disname=>"最大折扣", :class=>"required span5",:size=>30 %>
+      		</div>
+    	  </div>
+  	  </div>
+  	</div>
+    
+    <div class="control-group t_margin_20">
+      <label class="control-label">
+          <label for="campaign_campaignname" class="inline">标准CTR</label>
+      </label>
+      <div class="controls">
+        <div class="row">
+          <div class="span">
+             <%= f.text_field :ctr_prediction, :disname=>"标准CTR", :class=>"required span5",:size=>30 %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group t_margin_20">
+      <label class="control-label">
+        <label for="campaign_campaignname" class="inline">货币单位</label>
+      </label>
+      <div class="controls">
+        <div class="row">
+          <div class="span">
+            <%= f.text_field :currency, :disname=>"货币单位", :class=>"required span5",:size=>30,:value=>"RMB",:disabled=>true %>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+    <!-- sub_section_white end -->
+    <div class="row t_margin_30">
+        <!-- button area -->
+        <div class="button_area">
+        <div class="r_margin_20">
+            <div class="pull-right">
+               <div class="outer_cancel"><button type='button' href='/offers'>返回</button></div>
+              <% if ["edit", "update"].include?(params[:action]) %>
+                  <div class="outer_cancel"><button type='button' href='<%= delete_offer_offer_path(:id=>@offer.id) %>'>删除</button></div>
+              <%end%>
+
+               <div class="outer_submit">
+                   <input type="submit" value="提交" name="commit" class="submit_tag_button" confirm='您确定要提交吗？'>
+               </div>
+            </div>
+            <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
+                 <img src="/images/pre-loading_small.gif">
+            </div>
+       </div>
+       </div>
+   </div>
+<%end%>
+</div>

@@ -1,0 +1,174 @@
+<style type="text/css">
+    .table_wraper{width: 960px;}
+    .email_table{border: 0;width: 960px;}
+    .email_table tr{width: 960px;}
+    .email_table td{border:1px solid black;padding: 3px;}
+
+    .email_table .t_info{text-align: center;}
+    .email_table tr.t_noborder td{border-top: 0;}
+    .email_table tr.t_noborder td:first-child{border-right: 0;width: 298px;}
+    .email_table tr.t_noborder td:last-child{text-align: center;width: 648px;}
+    .ad_item div{border-top: 1px solid black;}
+    .ad_item div:first-child{border-top: 0;}
+    .font_red{color: red;}
+</style>
+
+<div class="table_wraper" style="width:960px;">
+  <table style="border: 0;width: 960px;" class="email_table table table-striped table-bordered table-condensed width_100" cellpadding="0" cellspacing="0" border="0">
+    <tbody>
+
+    <tr style="width:960px;">
+      <td colspan='2' class="t_info" style="background:#FF9933;width:960px;text-align:center;">广告主</td>
+
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">广告主</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @client.present? ? @client.clientname : "-"%></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">品牌</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= Client.display_item_class(@client.brand) %></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">代理公司</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= Client.display_item_class(@client.channel_name)%></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">行业</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @client.industry.present? ? @client.industry.name_cn : "-" %> </td>
+    </tr>
+
+    <tr style="height:20px;"><td colspan='2' style="border:0"></td></tr>
+
+    <tr style="width:960px;">
+      <td colspan='2' class="t_info" style="background:#FF9933;width:960px;text-align:center;">订单详情</td>
+
+    </tr>
+
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">商机编号</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= Order.display_item_class @order.business_opportunity_number%></td>
+    </tr>
+
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">订单编号</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%=@order.code%></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">订单名称</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.title.present? ? @order.title : "-" %></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">订单类型</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;">执行类</td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">销售人员</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.share_order_user.present? ? @order.share_order_user : "-" %></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">订单共享群组</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= Group.where(Group.group_conditions(@order.share_order_groups.pluck(:share_id))).pluck(:group_name).join(",") %></td>
+    </tr>
+
+    <tr style="height:20px;"><td colspan='2' style="border:0"></td></tr>
+    <tr style="width:960px;">
+      <td colspan='2' class="t_info" style="text-align:center;background:#FF9933;width:960px;">基本信息</td>
+
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">总预算（<%=@order.budget_currency%>）</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;color:red;" class="font_red"><%= number_with_precision(@order.budget, :precision => 2, :delimiter => ",") %> </td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">配送单</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;color:red;"><%=  @order.free_tag == "1" ?  @order.free_notice.present? ?  "是(原因:#{@order.free_notice})" : "是" : "-" %></td>
+    </tr>
+    <!--<tr class="t_noborder" style="width:960px;">-->
+      <!--<td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">代理返点</td>-->
+      <!--<td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%#=  Order.display_item_class(@order.rebate) %></td>-->
+    <!--</tr>-->
+    <!--<tr class="t_noborder" style="width:960px;">-->
+      <!--<td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">市推费用</td>-->
+      <!--<td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%#= Order.display_item_class(@order.market_cost) %></td>-->
+    <!--</tr>-->
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">计划开始日期</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.start_date.to_s(:db) %></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">计划结束日期</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.ending_date.to_s(:db) %></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">排除日期</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.exclude_date.length==0 ? '-' : @order.exclude_date.join(',') %></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">总天数</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.period %>天</td>
+    </tr>
+
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">投放地域</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: left;width: 648px;max-width: 648px;">
+        <%= @order.china_region_all? ? (@order.map_country("zh-cn").to_s) : (@order.map_country("zh-cn").to_s + ' ' +(@order.china_regional? ? @order.map_city("zh-cn").to_s : "")) %>&nbsp;&nbsp;&nbsp;&nbsp;
+        <!--<span style="color:#FF9933"><%#= @order.unnstandard_country? ? "*此销售选择了以上非标国家组合。" : ""  %></span>-->
+      </td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">MSA合同编号</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= (@order.whether_msa == true && @order.msa_contract.present?) ? @order.msa_contract : '-' %></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">目标人群</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.interest_crowd.present? ? @order.interest_crowd : "-" %></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">转化目标</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.convert_goal.present? ? @order.convert_goal : "-" %></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">第三方检测</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.whether_monitor ? @order.third_monitor : "-" %></td>
+    </tr>
+    <tr class="t_noborder" style="width:960px;">
+      <td style="border:1px solid black;padding: 3px;border-top: 0;width: 298px;border-right: 0;">网站黑名单</td>
+      <td style="border:1px solid black;padding: 3px;border-top: 0;text-align: center;width: 648px;"><%= @order.blacklist_website.present? ? @order.blacklist_website : "-" %></td>
+    </tr>
+    <%if @order.whether_nonuniform == false && @order.order_nonuniforms.present? %>
+        <tr style="height:20px;"><td colspan='2' style="border:0"></td></tr>
+        <tr style="width:960px;">
+          <td colspan='3' class="t_info" style="text-align:center;background:#FF9933;width:960px;">非匀速投放</td>
+        </tr>
+        <tr class="t_noborder" style="width:960px;">
+          <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;text-align:center;">
+            开始时间
+          </td>
+          <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:320px">
+            结束时间
+          </td>
+          <td style="border:1px solid black;padding: 3px;border-top: 0;width:321px;">
+            分配预算
+          </td>
+        </tr>
+        <% @order.order_nonuniforms.each do |nonuniform| %>
+            <tr class="t_noborder" style="width:960px;">
+              <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;text-align:center;">
+                <%= nonuniform.start_date.try(:strftime, '%Y/%m/%d') %>
+              </td>
+              <td style="border:1px solid black;padding: 3px;border-top: 0;border-right: 0;width:320px">
+                <%= nonuniform.end_date.try(:strftime, '%Y/%m/%d') %>
+              </td>
+              <td style="border:1px solid black;padding: 3px;border-top: 0;width:321px;">
+                <%= number_with_precision(nonuniform.nonuniform_budget, :precision => 2, :delimiter => ",")%>
+              </td>
+            </tr>
+        <% end %>
+    <% end %>
+    <tr style="height:20px;"><td colspan='2' style="border:0"></td></tr>
+
+    </tbody>
+  </table>
+</div>
+

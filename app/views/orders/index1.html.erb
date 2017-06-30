@@ -1,0 +1,984 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>客户管理</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1"/>
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link rel="stylesheet" type="text/css" href="http://xmostg.optimix.asia/stylesheets/xmo/application.css?9350">
+  <link rel="stylesheet" type="text/css" href="http://xmostg.optimix.asia/stylesheets/xmo/xmo_components.css?9350">
+  <link rel="stylesheet" type="text/css" href="stylesheets/chosen/chosen.css">
+  <link rel="stylesheet" type="text/css" href="js/layer/skin/layer.css">
+  <link rel="stylesheet" type="text/css" href="css/my_layer.css">
+
+
+  <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.tooltip.js"></script>
+  <script type="text/javascript" src="bootstrap/js/bootstrap-tooltip.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script type="text/javascript" src="js/chosen.jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery.dataTables.1.9.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery.xmo_tooltips.js"></script>
+  <!--<script type="text/javascript" src="js/layer/layer.min.js"></script>-->
+
+</head>
+<body>
+<div class="container">
+  <!--头部-->
+  <div class="myheading">
+    <nav class="navbar navbar-inverse">
+      <div class="x-navbar">
+        <div class="container-fluid">
+          <div class="navbar-header">
+
+            <a href="#" class="navbar-brand" data-toggle="offcanvas">
+              <img src="images/logo1.png" alt="" style="width:118px">
+            </a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <!-- Single button -->
+            <div class="x-user-main x-search">
+
+              <label class="x-main-title">订单管理系统</label>
+
+            </div>
+
+            <div class="x-top-menu" >
+              <ul class="nav navbar-nav">
+
+                <li class="selected"><a href="./index.html">我的订单</a></li>
+                <li><a href="./Campaigns.html">我的客户</a></li>
+                <li><a href="./Campaigns.html">售前预览</a></li>
+                <li>
+                  <a href="#">后台管理</a>
+
+                  <ul class="dropdown-top-menu" aria-labelledby="dropdownMenu1">
+                    <span class="nav-arrow"></span>
+                    <li><a href="./Tracking.html">产品</a>
+
+                    </li>
+                    <li><a href="./Tracking.html">渠道</a>
+
+                    </li>
+                    <li><a href="./AdCreative.html">流程通知</a></li>
+                    <li><a href="./Audience.html">用户</a>
+                      <ul class="sub-top-menu ">
+                        <li><a href="#">用户</a></li>
+                        <li><a href="#">用户群组</a></li>
+                      </ul>
+                      <span class="caret-right"></span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+
+            </div>
+            <!-- Single button -->
+            <div class="x-user-main  navbar-right ">
+              <div class="x-user-con">
+                <!--
+                    <img class="x-user " src="https://git.bznx.net/assets/logo-white-ed4a8c29c69c582954818a833b737e7a.png">
+                -->
+                <span class="x-user-dis">Admin:&nbsp;&nbsp;Shirely.admin<br/> </span>
+                <span class="x-user-arrow icon-dropdown"></span>
+              </div>
+
+              <ul class="x-user-list">
+                <span class="nav-arrow"></span>
+                <li >
+                  <a class="x-user-config" href="./Platform_setting.html">
+                    <span class="icon_accountsetting icon_setting"></span>
+                    Platform Setting</a>
+                </li>
+                <li >
+
+                  <a class="x-user-config" href="./Account_setting.html">
+                    <span class="icon_password icon_setting"></span>Account Settings</a>
+                </li>
+                <li >
+
+                  <a class="x-user-config" href="#">
+                    <span class="icon_logout icon_setting"></span>
+                    Logout</a>
+                </li>
+              </ul>
+            </div>
+
+
+
+            <div class="navbar-form navbar-right" >
+
+
+              <span class="x-lang-en selected"></span>
+              <span class="x-lang-ch"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!--左边栏-->
+  <div class="page_title">
+    <div id="breadcrumb" class="row">
+      <!-- Top left headings and links -->
+      <div class="client-row">
+
+        <span class="content_name_12">订单 > </span>
+        <span class="content_name_12">新增订单</span>
+      </div>
+
+
+    </div>
+
+    <!-- Page title -->
+
+    <div class="row"><div class="client-row"><h1>新增订单</h1></div></div>
+  </div>
+
+  <div class="row">
+    <div class="pull-left plus-button" style="margin-left:0px;">
+      <a href="http://xmostg.optimix.asia/en/pretargetings/new_campaign?client_id=42"><i class="plus-ico"></i><span>订单</span></a>
+    </div>
+  </div>
+
+
+
+
+  <!--xmo-search-->
+  <style type="text/css">
+      .search_filter_wraper{
+          border: 2px solid #eee;height: auto;
+          webkit-border-radius: 10px;padding: 5px;
+          -moz-border-radius: 10px;
+          border-radius: 10px;
+          margin-top: 20px;
+      }
+      .height_0 {
+          height: 0 !important;
+      }
+      #chosen_list_filter_chzn{margin-right: 80px;}
+  </style>
+
+  <div class="search_filter_wraper">
+
+
+    <div class="row">
+      <div class="filter_div">
+        <span class="relative_t_7 r_margin_40">流程及状态</span>
+        <select class="select required"  id="chosen_test" disname="chosen下拉">
+          <option value="">请选择</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+  <!--xmo-search-->
+  <div class="clean_padding"></div>
+  <!-- chart -->
+  <div class= "table_white">
+    <table class="table table-striped table-bordered table-condensed unlimited_width search_table" cellpadding="0" cellspaceing="0" border="0" id="paid_search_data">
+      <thead>
+      <tr class='even'>
+        <th class="align_left align_top">操作</th>
+        <th class="align_left align_top">订单编号</th>
+        <th class="align_left align_top">订单</th>
+        <th class="align_left align_top">客户</th>
+        <th class="align_left align_top">订单所有者</th>
+        <th class="align_left align_top">提交日期</th>
+        <th class="align_left v_align_middle">流程及状态.</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="odd">
+
+        <td class="align_center sorting_1">
+					              <span data-position="right" data-offset="left_0" class="xmo-tooltip l_margin_0 l_padding_5" data-id="a07843974591232836">
+					                <i class="icon-setup">
+                                      <div class="popover xmo-popover fade in">
+                                        <div class="arrow"></div>
+                                        <div class="popover-inner xmo-popover-inner">
+                                          <div class="popover-content">
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </i>
+					              </span>
+        </td>
+        <td class="align_left align_top">
+          <a href="javascript:history();" class="blue-href">B81234567890</a>
+        </td>
+        <td class="align_left">
+          <a href="#" class="blue-href">妞妞奶糖(15秒 11月10日 - 11月30日)</a>
+        </td>
+        <td class="align_left"><a href="#" class="blue-href">X_social Group Limited</a></td>
+        <td class="align_left">Alan.Xu</td>
+        <td class="align_left">2015-11-30</td>
+
+        <td class="v_align_middle">
+          <div class="xmo-progress-status" >
+            <div class="xmo-progress-status-step xmo-tooltip" data-position="bottom">
+              <span class="xmo-progress-status-round">核</span>
+              <span class="xmo-progress-status-arrow"></span>
+              <div class="popover xmo-progress-popover xmo-popover fade in">
+                <div class="arrow"></div>
+                <div class="popover-inner xmo-popover-inner">
+                  <div class="popover-content clearfix">
+                    <label class="popover-head">售前核对</label>
+                    <ul class="nav popover-nav" id="myTabs" style="margin-top:10px;">
+                      <li class="active">
+                        <a data-toggle="tab" href="#tab-submit">提交核对</a>
+                      </li>
+                      <li>
+                        <a data-toggle="tab" href="#tab-docheck">进行核对</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active fade in" id="tab-submit"  style="padding:10px 0">
+                        <ul class="popover-detail">
+                          <li>
+                            <span class="popover-detail-title">审批人</span>
+                            <span class="popover-detail-result">Cindi Li</span>
+                          </li>
+                          <li>
+                            <span class="popover-detail-title">群组</span>
+                            <span class="popover-detail-result">OptAim 售前审批团队</span>
+                          </li>
+                          <li>
+                            <span class="popover-detail-title">审批时间</span>
+                            <span class="popover-detail-result">2015-12-15 15:45</span>
+                          </li>
+                        </ul>
+                        <div class="popover-commit">
+                          <div class="outer_cancel">
+                            <input class="cancel back_button" type="button" value="取消" onclick="Budget.cancel()">
+                          </div>
+                          <div class="outer_submit">
+                            <input name="commit" type="button" value="提交售前核对" class="submit" onclick="Budget.update()">
+                          </div>
+                        </div>
+                        <div class="popover-ahref ">
+                          <a href="javascript:;" class="blue-href">查看详情</a>
+                        </div>
+                        <div class="popover-end">
+                          <label>等待提交核对</label>
+                        </div>
+                      </div>
+                      <div class="tab-pane  fade " id="tab-docheck"  style="padding:10px 0">
+                        <div class="popover-group">
+                          <label>核对</label>
+                          <div class="popover-inputs" style="float:left;">
+                            <!--xmo input-append-->
+                            <div class="input-append">
+                              <label class="radio">
+                                <input checked="checked" type="radio" value="1">通过
+                              </label>
+                              <label class="radio">
+                                <input  type="radio" value="1">不通过
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="popover-group">
+                          <textarea placeholder="请填写备注" style="width:100%;box-sizing:border-box;"cols="20" rows="8"></textarea>
+                        </div>
+                        <div class="popover-commit">
+                          <div class="outer_cancel">
+                            <input class="cancel back_button" type="button" value="取消" onclick="Budget.cancel()">
+                          </div>
+                          <div class="outer_submit">
+                            <input name="commit" type="button" value="提交售前核对" class="submit" onclick="Budget.update()">
+                          </div>
+                        </div>
+                        <div class="popover-ahref ">
+                          <a href="javascript:;" class="blue-href">查看详情</a>
+                        </div>
+                        <div class="popover-end">
+                          <label>等待提交核对</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="xmo-progress-status-step status-error xmo-tooltip"
+                 data-position="bottom">
+              <span class="xmo-progress-status-round">GP</span>
+              <span class="xmo-progress-status-arrow"></span>
+              <div class="popover xmo-progress-popover xmo-popover fade in">
+                <div class="arrow"></div>
+                <div class="popover-inner xmo-popover-inner">
+                  <div class="popover-content clearfix">
+                    <label class="popover-head">售前核对</label>
+                    <ul class="nav popover-nav" id="myTabs" style="margin-top:10px;">
+                      <li class="active">
+                        <a data-toggle="tab" href="#tab-submit">提交核对</a>
+                      </li>
+                      <li>
+                        <a data-toggle="tab" href="#tab-docheck">进行核对</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active fade in" id="tab-submit"  style="padding:10px 0">
+                        <ul class="popover-detail">
+                          <li>
+                            <span class="popover-detail-title">审批人</span>
+                            <span class="popover-detail-result">Cindi Li</span>
+                          </li>
+                          <li>
+                            <span class="popover-detail-title">群组</span>
+                            <span class="popover-detail-result">OptAim 售前审批团队</span>
+                          </li>
+                          <li>
+                            <span class="popover-detail-title">审批时间</span>
+                            <span class="popover-detail-result">2015-12-15 15:45</span>
+                          </li>
+                        </ul>
+                        <hr>
+                        <ul class="popover-detail">
+                          <li>
+                            <span class="popover-detail-title">审批人</span>
+                            <span class="popover-detail-result">Cindi Li</span>
+                          </li>
+                          <li>
+                            <span class="popover-detail-title">群组</span>
+                            <span class="popover-detail-result">OptAim 售前审批团队</span>
+                          </li>
+                          <li>
+                            <span class="popover-detail-title">审批时间</span>
+                            <span class="popover-detail-result">2015-12-15 15:45</span>
+                          </li>
+                        </ul>
+
+                        <div class="popover-commit">
+                          <div class="outer_cancel">
+                            <input class="cancel back_button" type="button" value="取消" onclick="Budget.cancel()">
+                          </div>
+                          <div class="outer_submit">
+                            <input name="commit" type="button" value="提交售前核对" class="submit" onclick="Budget.update()">
+                          </div>
+                        </div>
+                        <div class="popover-ahref ">
+                          <a href="javascript:;" class="blue-href">查看详情</a>
+                        </div>
+                        <div class="popover-end">
+                          <label>等待提交核对</label>
+                        </div>
+                      </div>
+                      <div class="tab-pane  fade " id="tab-docheck"  style="padding:10px 0">
+                        <div class="popover-group clearfix">
+                          <p>指定人员</p>
+                          <div class="popover-inputs" style="float:left;width:100%">
+                            <select class="select" style="width: 220px; ">
+                              <option value="">123</option>
+                              <option value="">321</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="popover-group clearfix">
+                          <p>配置状态</p>
+                          <div class="popover-inputs" style="float:left;width:100%">
+                            <select class="select" style="width: 220px; ">
+                              <option value="">123</option>
+                              <option value="">321</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="popover-group">
+                          <textarea placeholder="请填写备注" style="width:100%;box-sizing:border-box;"cols="20" rows="8"></textarea>
+                        </div>
+                        <div class="popover-commit">
+                          <div class="outer_cancel">
+                            <input class="cancel back_button" type="button" value="取消" onclick="Budget.cancel()">
+                          </div>
+                          <div class="outer_submit">
+                            <input name="commit" type="button" value="提交售前核对" class="submit" onclick="Budget.update()">
+                          </div>
+                        </div>
+                        <div class="popover-ahref ">
+                          <a href="javascript:;" class="blue-href">查看详情</a>
+                        </div>
+                        <div class="popover-end">
+                          <label>等待提交核对</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">批</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">法</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">SAP</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">营</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="even">
+        <td class="align_center sorting_1">
+					              <span data-position="right" data-offset="left_0" class="xmo-tooltip l_margin_0 l_padding_5" data-id="a07843974591232836">
+					                <i class="icon-setup">
+                                      <div class="popover xmo-popover fade in">
+                                        <div class="arrow"></div>
+                                        <div class="popover-inner xmo-popover-inner">
+                                          <div class="popover-content">
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </i>
+					              </span>
+        </td>
+        <td class="align_left align_top">
+          B81234567890
+        </td>
+        <td class="align_left">
+          <a href="#" class="blue-href">中国银行(15秒 11月10日 - 11月30日)</a>
+        </td>
+        <td class="align_left"><a href="#" class="blue-href">中国银行</a></td>
+        <td class="align_left">Shirley.Au</td>
+        <td class="align_left">2015-11-30</td>
+
+        <td class="v_align_middle">
+          <div class="xmo-progress-status" >
+            <div class="xmo-progress-status-step xmo-tooltip" data-position="bottom">
+              <span class="xmo-progress-status-round">核</span>
+              <span class="xmo-progress-status-arrow"></span>
+              <div class="popover xmo-progress-popover xmo-popover fade in">
+                <div class="arrow"></div>
+                <div class="popover-inner xmo-popover-inner">
+                  <div class="popover-content">
+                    <ul class="popover-detail">
+                      <li>
+                        <span class="popover-detail-title">审批人</span>
+                        <span class="popover-detail-result">Cindi Li</span>
+                      </li>
+                      <li>
+                        <span class="popover-detail-title">群组</span>
+                        <span class="popover-detail-result">OptAim 售前审批团队</span>
+                      </li>
+                      <li>
+                        <span class="popover-detail-title">审批时间</span>
+                        <span class="popover-detail-result">2015-12-15 15:45</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="xmo-progress-status-step status-error">
+              <span class="xmo-progress-status-round">GP</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">批</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">法</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">SAP</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">营</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="odd">
+        <td class="align_center sorting_1">
+					              <span data-position="right-bottom" data-offset="top_-10" class="xmo-tooltip l_margin_0 l_padding_5" data-id="a07843974591232836">
+					                <i class="icon-setup">
+                                      <div class="popover xmo-popover fade in">
+                                        <div class="arrow" style="top:5%;"></div>
+                                        <div class="popover-inner xmo-popover-inner">
+                                          <div class="popover-content" style="padding:5px;">
+                                            <div class="popover-act-list">
+                                              <label>订单</label>
+                                              <ul>
+                                                <li><a href="javascript:;">订单</a>
+                                                </li>
+                                                <li><a href="javascript:;">提交售前审批</a></li>
+                                                <li><a href="javascript:;">牛栏奶粉</a></li>
+                                                <li><a href="javascript:;">济南底层</a></li>
+                                                <li><a href="javascript:;">克尔瑞济南底层</a></li>
+                                                <li><a href="javascript:;">库克</a></li>
+                                                <li><a href="javascript:;">按皮饮信息科技（北京）有些公司</a></li>
+
+                                              </ul>
+                                              <div class="t_margin_20"></div>
+                                              <label>媒体分量</label>
+                                              <ul>
+                                                <li><a href="javascript:;">提交媒体分量</a>
+                                                </li>
+                                                <li><a href="javascript:;">编辑媒体分量</a></li>
+
+                                              </ul>
+                                              <div class="t_margin_20"></div>
+                                              <label>合同</label>
+                                              <ul>
+                                                <li><a href="javascript:;">提交合同核对(上传排期表)</a>
+                                                </li>
+                                                <li><a href="javascript:;">进行合同核对</a></li>
+                                                <li><a href="javascript:;">下载执行表</a></li>
+                                              </ul>
+                                              <div class="t_margin_20"></div>
+                                              <label>SAP</label>
+                                              <ul>
+                                                <li><a href="javascript:;">提交SAP同步</a>
+                                                </li>
+                                                <li><a href="javascript:;">确认SAP同步</a></li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </i>
+					              </span>
+        </td>
+        <td class="align_left align_top">
+          B81234567890
+        </td>
+        <td class="align_left">
+          <a href="#" class="blue-href xmo-tooltip" data-position="bottom">中国银行(15秒 11月10日 - 11月30日)
+            <div class="popover xmo-popover fade in">
+              <div class="arrow"></div>
+              <div class="popover-inner xmo-popover-inner">
+                <div class="popover-content">
+                  <ul class="popover-detail clearfix">
+                    <li>
+                      <span class="popover-detail-title">总预算</span>
+                      <span class="popover-detail-result">100,000 USD</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">地域定向</span>
+                      <span class="popover-detail-result">北京,上海,广州,深圳,浙江,宁波,绍兴,德州,青岛,济南</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">地域预算分配</span>
+                      <span class="popover-detail-result">有</span>
+                    </li>
+                  </ul>
+                  <hr>
+                  <ul class="popover-detail clearfix">
+                    <li>
+                      <span class="popover-detail-title bold">售前产品1</span>
+                      <span class="popover-detail-result bold">定向欧洲OTV</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">预算</span>
+                      <span class="popover-detail-result">80,000USD</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">单价</span>
+                      <span class="popover-detail-result">CPM 10USD</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">CTR</span>
+                      <span class="popover-detail-result">1%</span>
+                    </li>
+                  </ul>
+                  <div class="t_margin_15"></div>
+                  <ul class="popover-detail clearfix">
+                    <li>
+                      <span class="popover-detail-title bold">售前产品2</span>
+                      <span class="popover-detail-result bold">定向美国OTV</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">预算</span>
+                      <span class="popover-detail-result">80,000USD</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">单价</span>
+                      <span class="popover-detail-result">CPM 10USD</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">CTR</span>
+                      <span class="popover-detail-result">1%</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">第三方检测</span>
+                      <span class="popover-detail-result">Nelson</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a>
+        </td>
+        <td class="align_left">
+          <a href="#"  class="blue-href xmo-tooltip" data-position="bottom">资生堂
+            <div class="popover xmo-popover fade in">
+              <div class="arrow"></div>
+              <div class="popover-inner xmo-popover-inner">
+                <div class="popover-content">
+                  <ul class="popover-detail">
+                    <li>
+                      <span class="popover-detail-title">品牌</span>
+                      <span class="popover-detail-result">康师傅绿茶</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">渠道</span>
+                      <span class="popover-detail-result">MediaV</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">客户所有者</span>
+                      <span class="popover-detail-result">Ken.yao</span>
+                    </li>
+                    <li>
+                      <span class="popover-detail-title">分享销售</span>
+                      <span class="popover-detail-result">Stacy.wang</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a>
+        </td>
+        <td class="align_left">Shirley.Au</td>
+        <td class="align_left">2015-11-30</td>
+
+        <td class="v_align_middle">
+          <div class="xmo-progress-status" >
+            <div class="xmo-progress-status-step xmo-tooltip" data-position="bottom">
+              <span class="xmo-progress-status-round">核</span>
+              <span class="xmo-progress-status-arrow"></span>
+              <div class="popover xmo-progress-popover xmo-popover fade in">
+                <div class="arrow"></div>
+                <div class="popover-inner xmo-popover-inner">
+                  <div class="popover-content">
+                    <ul class="popover-detail">
+                      <li>
+                        <span class="popover-detail-title">审批人</span>
+                        <span class="popover-detail-result">Cindi Li</span>
+                      </li>
+                      <li>
+                        <span class="popover-detail-title">群组</span>
+                        <span class="popover-detail-result">OptAim 售前审批团队</span>
+                      </li>
+                      <li>
+                        <span class="popover-detail-title">审批时间</span>
+                        <span class="popover-detail-result">2015-12-15 15:45</span>
+                      </li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="xmo-progress-status-step status-error">
+              <span class="xmo-progress-status-round">GP</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">批</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">法</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">SAP</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+            <div class="xmo-progress-status-step status-ready">
+              <span class="xmo-progress-status-round">营</span>
+              <span class="xmo-progress-status-arrow"></span>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+
+
+    </table>
+  </div>
+
+</div>
+
+<div class="clearfooter"></div>
+<div class="myfooter">
+  <label class="x-footer">
+    Copyright © 2015  iClick Interactive Asia Limited. All Rights Reserved.
+			        <span>| <a target="_blank" href="/zh-cn/admin/send_file_upload_release_notes">产品更新日志
+                    </a></span>
+    <span>| <a target="_blank" href="/templates/xmo_help.pdf" onclick="_xmoIstag1();">幫助中心</a></span>
+    <span>| <a href="/zh-cn/privacy_policy">隐私声明</a></span>
+  </label>
+  <label class="x-footer">10.1.1.63 v9.26.0(建议采用浏览器: Internet Explorer 8.0 and 9.0, Chrome 8.0+, Firefox 3.5+, Safari 1.0+, Opera V11+.)</label>
+</div>
+
+
+<div id="upload_layer_parent">
+  <div id="upload-box" style="display:none">
+    <form class="form-horizontal">
+      <div class="row font_28">订单历史</div>
+      <div class="table_white" style="padding:20px 20px 20px 0 ">
+        <table id="yusuan" class="table table-striped table-bordered table-condensed t_padding_0" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <thead>
+          <tr class="even">
+            <th class="align_left align_top">用户</th>
+            <th class="align_left align_top">操作</th>
+            <th class="align_left align_top">状态变更</th>
+            <th class="align_left align_top">备注</th>
+            <th class="align_left align_top">操作日期</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="odd">
+            <td>ken yao</td>
+            <td class="align_left">提交售前核对</td>
+            <td class="align_left">提交售前核对</td>
+            <td class="align_left">--</td>
+            <td class="align_left">2015-12-29 14:46</td>
+          </tr>
+          <tr class="even">
+            <td>ken yao</td>
+            <td class="align_left">提交售前核对</td>
+            <td class="align_left">提交售前核对</td>
+            <td class="align_left">--</td>
+            <td class="align_left">2015-12-29 14:46</td>
+          </tr>
+          <tr class="odd">
+            <td>ken yao</td>
+            <td class="align_left">提交售前核对</td>
+            <td class="align_left">提交售前核对</td>
+            <td class="align_left">--</td>
+            <td class="align_left">2015-12-29 14:46</td>
+          </tr>
+          <tr class="even">
+            <td>ken yao</td>
+            <td class="align_left">提交售前核对</td>
+            <td class="align_left">提交售前核对</td>
+            <td class="align_left">--</td>
+            <td class="align_left">2015-12-29 14:46</td>
+          </tr>
+          <tr class="odd">
+            <td>ken yao</td>
+            <td class="align_left">提交售前核对</td>
+            <td class="align_left">提交售前核对</td>
+            <td class="align_left">--</td>
+            <td class="align_left">2015-12-29 14:46</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+
+    $(function(){
+        $("[data-toggle='tooltip']").tooltip();
+        // $(".select").chosen();
+        $(".popover-nav").find("li").on("click",function(){
+            var id =$(this).find("a").attr("href");
+            $(this).siblings("li").removeClass("active");
+            $(this).addClass("active");
+            $(this).parent().parent().find(".tab-pane").removeClass("active").removeClass("in");
+            $(this).parent().parent().find(id).addClass("active").addClass("in");
+        })
+
+
+        $('#paid_search_data').dataTable({
+            "oLanguage":{
+                "sProcessing":   "处理中...",
+                "sLengthMenu":   "显示 _MENU_ 项结果",
+                "sZeroRecords":  "没有匹配结果",
+                "sInfo":         "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty":    "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix":  "",
+                "sSearch":       "寻找:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "&nbsp;",
+                    "sPrevious": "&nbsp;",
+                    "sNext":     "&nbsp;",
+                    "sLast":     "&nbsp;"
+                }
+            },
+            "bJQueryUI": false,
+            "bFilter": false,
+            "sDom": "<'row'<'pull-left'f><'table_pagin'p><'table_info'i>>t<'row table_bottom'<'table_pagin'p><'table_info'i>>",
+            "sPaginationType": "full_numbers",
+            "bPaginate": false,
+            "iDisplayLength": 10,
+            "aaSorting": []
+
+        });
+
+    })
+    var Bshare_Advertisement = {
+        init : function(){
+            this.init_event_bind();
+            this.init_table();
+            $("#bshare_img_advertisement_list").show();
+        },
+        close_layer:function(dom){
+            $("body").removeClass("layer_hidden");
+            $(".xubox_shade").hide();
+            $("#"+dom).removeClass("layer_parent_div");
+        },
+        open_layer:function(dom){
+            $("body").addClass("layer_hidden");
+            if($("#"+dom) && $("#"+dom).length>0){
+                $("#"+dom).addClass("layer_parent_div")
+            }else{
+                $(".xubox_layer").wrap('<div id = "'+dom+'" class = "layer_parent_div"></div>')
+            }
+
+            $(".xubox_shade").hide();
+        },
+        init_event_bind : function(){
+
+            $(document).on('click.edit_click','.edit_click_btn',function(){
+                $.layer({
+                    type: 1,
+                    title: false, //不显示默认标题栏
+                    shade: [0.5, '#000'],
+                    border: [6, 1, '#fff'],
+                    area: ['800px', ($(window).height()-100)+'px'],
+                    success : bshare_error_stick,
+                    page: {dom:'#get-creatives-box'},
+                    close: function(index){
+                        Bshare_Advertisement.close_layer("ad_layer_parent");
+                    }
+                });
+                Bshare_Advertisement.open_layer("ad_layer_parent");
+                $("#select_xmo_ad_serving").attr("checked",true).change();
+                var obj = this;
+                ad_id = $(obj).attr("data_ad_id");
+
+                landing_url = $('#full_land_url_' + ad_id).text();
+                display_url = $("#full_display_url_" + ad_id).text();
+                ad_name = $("#full_ad_name_" + ad_id).text();
+                ad_size = $("#full_ad_size_" + ad_id).text();
+                ad_code = $("#full_ad_code_" + ad_id).text();
+                $("#advertisement_image_edit").val("").change();
+                ad_image_type = $("#full_ad_image_type_" + ad_id).text();
+                is_only_h5_browser = $("#is_only_h5_browser_" + ad_id).text() == 'true';
+
+                $('#upload_ad_div_edit').show();
+                $("#upload_ad_div_add").hide();
+                $('#ad_name_edit').val(ad_name);
+                $("#redirect_url_edit").val(landing_url);
+                $("#display_url_edit").val(display_url);
+                $("#upload_ad_edit ").change();
+                $("#ad_edit_id").val(ad_id);
+                $("#advertisement_xmo_code_edit").val(ad_code);
+
+                if((/\.(swf|zip)$/i).test(ad_image_type)){
+                    $("#flash_size_select_edit").show();
+                    $("#ad_size_edit").find("select").val(ad_size);
+                    $("#ad_size_edit").find("select").addClass("required");
+                }else{
+                    $("#flash_size_select_edit").hide();
+                    $("#ad_size_edit").find("select").removeClass("required");
+                }
+                (/\.zip$/i).test(ad_image_type) && $("#ad_type").val() == 'true' ? $("#h5_browser_select_edit").show() : $("#h5_browser_select_edit").hide();
+                $("#h5_browser_select_edit input").prop("checked", is_only_h5_browser);
+                $("#ad_size_edit").find("select").attr("disabled", (/\.(zip)$/i).test(ad_image_type));
+                $(".sub_txt").css("color","black");
+                return false;
+            })
+
+        },
+        init_table:function(){
+            $("#yusuan").dataTable({
+                "oLanguage":{
+                    "sProcessing":   "处理中...",
+                    "sLengthMenu":   "显示 _MENU_ 项结果",
+                    "sZeroRecords":  "没有匹配结果",
+                    "sInfo":         "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "sInfoEmpty":    "显示第 0 至 0 项结果，共 0 项",
+                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "sInfoPostFix":  "",
+                    "sSearch":       "寻找:",
+                    "sUrl":          "",
+                    "oPaginate": {
+                        "sFirst":    "&nbsp;",
+                        "sPrevious": "&nbsp;",
+                        "sNext":     "&nbsp;",
+                        "sLast":     "&nbsp;"
+                    }
+                },
+                "bJQueryUI": false,
+                "bFilter": false,
+                "sDom": "<'row'<'pull-left'f><'table_pagin'p><'table_info'i>>t<'table_bottom'<'table_pagin'p><'table_info'i>>",
+                "bPaginate": false,
+                "aaSorting": []
+
+            });
+        }
+    }
+
+    function bshare_error_stick(){
+        $('.xubox_page').on('scroll',function(){
+            var box = $('.bshare_error',$(this));
+            var wrapper = $('.error_wrapper',$(this));
+            var topMin = parseInt(box.attr('data-top')) || 0;
+            var top = $(this).scrollTop();
+            top = top > topMin ? top : topMin+top;
+            box.css({top:top});
+            var InnerHeight = box.height();
+            InnerHeight+=40;
+            if($('.bshare_error:visible',$(this)).length == 0){InnerHeight=0;}
+            wrapper.height(InnerHeight);
+        })
+    }
+    function history(){
+        $.layer({
+            type: 1,
+            title: false, //不显示默认标题栏
+            shade: [0.5, '#000'],
+            border: [6, 1, '#fff'],
+            area: ['800px', ($(window).height()-100)+'px'],
+            success : bshare_error_stick,
+            page: {dom:'#upload-box'},
+            close: function(index){
+                Bshare_Advertisement.close_layer("upload_layer_parent");
+            }
+        });
+        Bshare_Advertisement.open_layer("upload_layer_parent");
+        return false;
+    }
+
+</script>
+</html>

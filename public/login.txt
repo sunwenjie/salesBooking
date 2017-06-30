@@ -1,0 +1,10 @@
+登录映射:
+（用以下用户名登录进入相关页面，任意密码即可）
+销售部门--一般销售     =》  sales
+销售部门--销售总监     =》  sales_director
+媒体部门              =》   media
+产品部门              =》   product
+运营部门--一般运营     =》   operating
+运营部门--运营总监     =》   operating_director
+系统管理员            =》   admin
+/sales|sales_director|media|product|operating|operating_director|admin/

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+ <html>
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+ <title>无标题文档</title>
+ </head>
+ <script language="javascript">
+ function setWeekTime(weekTime){
+ var time=new Array();
+ 
+ if(weekTime=='last'){
+ 
+ time=getLastWeekDate();
+ }
+ if(weekTime=='this'){
+ 
+ time=getThisWeekDate(); 
+
+ }
+ if(weekTime=='next'){
+ 
+ time=getNextWeekDate(); 
+
+ }
+ form1.monday.value=time[0];
+ form1.tuesday.value=time[1];
+ form1.wednesday.value=time[2];
+ form1.thursday.value=time[3];
+ form1.friday.value=time[4];
+ form1.saturday.value=time[5];
+ form1.sunday.value=time[6];
+
+}
+ //获得本周的周一和周末
+ function getThisWeekDate(){
+ var now = new Date();
+ var week=new Array();
+ var currentWeek = now.getDay();
+ if ( currentWeek == 0 )
+    {
+   currentWeek = 7;
+    }
+
+ var monday = now.getTime() - (currentWeek-1)*24*60*60*1000;   //星期一
+ var tuesday  = now.getTime() - (currentWeek-2)*24*60*60*1000; //星期二
+ var wednesday = now.getTime() - (currentWeek-3)*24*60*60*1000; //星期三
+ var thursday = now.getTime() - (currentWeek-4)*24*60*60*1000; //星期四
+ var friday  = now.getTime() - (currentWeek-5)*24*60*60*1000; //星期五
+ var saturday = now.getTime() - (currentWeek-6)*24*60*60*1000; //星期六
+ var sunday = now.getTime() + (7-currentWeek)*24*60*60*1000;      //星期日
+     console.info(sunday);
+ 
+ week=weektoday(monday,tuesday,wednesday,thursday,friday,saturday,sunday);
+ 
+ return week;
+ 
+ }
+ //获得上周的周一和周末
+ function getLastWeekDate(){
+     var now = new Date();
+     var week=new Array();
+     var currentWeek = now.getDay();
+     if ( currentWeek == 0 )
+        {
+       currentWeek = 7;
+        }
+     var monday  = now.getTime() - (currentWeek+6)*24*60*60*1000; //星期一
+     var tuesday  = now.getTime() - (currentWeek+5)*24*60*60*1000; //星期二
+     var wednesday = now.getTime() - (currentWeek+4)*24*60*60*1000; //星期三
+     var thursday = now.getTime() - (currentWeek+3)*24*60*60*1000; //星期四
+     var friday  = now.getTime() - (currentWeek+2)*24*60*60*1000; //星期五
+     var saturday = now.getTime() - (currentWeek+1)*24*60*60*1000; //星期六
+     var sunday  = now.getTime() - (currentWeek)*24*60*60*1000;   //星期日
+     console.info(sunday);
+     week=weektoday(monday,tuesday,wednesday,thursday,friday,saturday,sunday);
+     console.info(week);
+     return week;
+ }
+ //获得下周的周一至周末
+ function getNextWeekDate(){
+ var now = new Date();
+ var week=new Array();
+ 
+ var currentWeek = now.getDay();
+ 
+ if ( currentWeek == 0 )
+    {
+   currentWeek = 7;
+    }
+ var monday = now.getTime() - (currentWeek-8)*24*60*60*1000;  //星期一
+ var tuesday= now.getTime() - (currentWeek-9)*24*60*60*1000;  //星期二
+ var wednesday = now.getTime() - (currentWeek-10)*24*60*60*1000; //星期三
+ var thursday = now.getTime() - (currentWeek-11)*24*60*60*1000; //星期四
+ var friday= now.getTime() - (currentWeek-12)*24*60*60*1000; //星期五
+ var saturday = now.getTime() - (currentWeek-13)*24*60*60*1000; //星期六
+ var sunday = now.getTime() - (currentWeek-14)*24*60*60*1000; //星期日
+
+
+ week=weektoday(monday,tuesday,wednesday,thursday,friday,saturday,sunday);
+
+ 
+ return week;
+ 
+ }
+function weektoday(monday,tuesday,wednesday,thursday,friday,saturday,sunday){
+
+ var days=new Array();
+
+ var monday1 = new Date(monday).toLocaleDateString();//星期一
+ var tuesday1= new Date(tuesday).toLocaleDateString(); //星期二
+ var wednesday1 = new Date(wednesday).toLocaleDateString(); //星期三
+ var thursday1 = new Date(thursday).toLocaleDateString(); //星期四
+ var friday1= new Date(friday).toLocaleDateString(); //星期五
+ var saturday1 =new Date(saturday).toLocaleDateString();//星期六
+ var sunday1 = new Date(sunday).toLocaleDateString();//星期日
+ 
+
+ 
+ var new_monday=changeTime(monday1);
+ var new_tuesday=changeTime(tuesday1);
+ var new_wednesday=changeTime(wednesday1);
+ var new_thursday=changeTime(thursday1);
+ var new_friday=changeTime(friday1);
+ var new_saturday=changeTime(saturday1);
+ var new_sunday=changeTime(sunday1);
+
+ days[0]=new_monday;
+ days[1]=new_tuesday;
+ days[2]=new_wednesday;
+ days[3]=new_thursday;
+ days[4]=new_friday;
+ days[5]=new_saturday;
+ days[6]=new_sunday;
+ 
+ return days;
+
+}
+
+//日期转换(2005年1月1日===>2005-1-01)
+function changeTime(str){
+  var curYear = str.substring(0,str.indexOf('年'));
+  var curMonth =str.substring(str.indexOf('年')+1,str.indexOf('月'));
+  var curDay =str.substring(str.indexOf('月')+1,str.indexOf('日'));
+  
+  if (curMonth<10){
+  curMonth="0"+curMonth;
+  }
+  if(curDay<10){
+  curDay="0"+curDay;
+  }
+  var returnDate = curYear+"-"+curMonth+"-"+curDay;
+ return returnDate;
+}
+ </script>
+ <body>
+ <form name="form1">
+ <table>
+  <tr>
+   <td>星期一</td>
+   <td><input type="text" value="" name="monday"></td>
+   <td>星期二</td>
+   <td><input type="text" value="" name="tuesday"></td>
+   <td>星期三</td>
+   <td><input type="text" value="" name="wednesday"></td>
+  </tr>
+  <tr>
+   <td>星期四</td>
+   <td><input type="text" value="" name="thursday"></td>
+   <td>星期五</td>
+   <td><input type="text" value="" name="friday"></td>
+   <td>星期六</td>
+   <td><input type="text" value="" name="saturday"></td>
+  </tr>
+  <tr> 
+   <td>星期日</td>
+   <td><input type="text" value="" name="sunday"></td>
+  </tr>
+ </table>
+ <table>
+  <tr>
+   <td><input type="button" value="本周" onClick="setWeekTime('this')"></td>
+   <td><input type="button" value="上周" onClick="setWeekTime('last')"></td>
+   <td><input type="button" value="下周" onClick="setWeekTime('next')"></td>
+
+  </tr>
+ </table>
+ </form>
+ </body>
+ </html>

@@ -1,0 +1,102 @@
+ <div class="span">
+    <%@send_city = @send_city ? @send_city : "NATION"%>
+    <%= hidden_field_tag "send_city",@send_city %>
+    <%=  select_tag 'order[city][]',send("options_for_"+@send_city.downcase),:selected =>"",:multiple => true,:class => "chzn-select span5",:tabindex=>"-1",:id=>"chosen_multiple_test"%>
+ </div>
+ <div class="span">
+    <a class="selection_icon selection_trigger" data-target="#chosen_multiple_test" href="javascript:void(0);"></a>
+ </div>
+
+<script type="text/javascript">
+
+    function city_me(n){
+       $.ajax({
+          type: "GET",
+          url:  "/<%= I18n.locale.to_s%>/orders/op?city="+n,
+          dataType:"text",
+          success: function(msg){
+           $("#city_change").empty();
+           $("#city_change").append(msg);
+           var state = $("#send_city").val();
+           if ($("#send_country").val() == "CHINA") $("#order_regional").val(state);
+           if ($("#send_country").val()== "CHINA") check_type_message_all();
+          },
+          error: function(msg){
+          }
+        });
+    }
+
+
+              $("#chosen_multiple_test").chosen();
+		//右边触发js
+		$('.selection_trigger').click(function(){
+		var target = $(this).attr('data-target') + '_chzn';
+		$(target).mousedown();
+		return false;
+		})
+
+                function buget_currency_show(currency){
+                $("#currency_show").text(currency);
+                }
+                buget_currency_show($("#order_budget_currency").find("option:selected").text());
+
+                $("#order_budget_currency").change(function(){
+                        var currency = $(this).find("option:selected").text();
+                        buget_currency_show(currency);
+                })
+
+                selectable_with_all("#chosen_multiple_test", "all_cities");
+                function selectable_with_all(ele_id, all_val){
+                  var option_all_selected = true;
+                  var option_other_selected = true;
+                  $(ele_id).change(function(){
+                    var is_all = false;
+                    var is_otherall = false;
+
+                    if ($("#send_country").val()== "CHINA") check_type_message_all();
+
+                    $(ele_id + " option:selected").each(function(i , l){
+                        if($(l).val() == all_val) is_all = true;
+                        if($(l).val() == "otherall") is_otherall = true;
+                        if($(l).val() == "other") city_me("OTHER");
+                        if($(l).val() == "BSGS") city_me("SPECIAL");
+                        if($(l).val() == "SPECIAL_CITY") city_me("SPECIAL_CITY");
+                        if($(l).val() == all_val) city_me("NATION");
+                    });
+
+                    if($(ele_id + " option:selected").length == 0){
+                        $("#order_regional").val("")
+                    };
+
+                    if($(ele_id + " option:selected").length == 1){
+                        $(ele_id).trigger("liszt:updated");
+                        option_all_selected = is_all;
+                        return false;
+                    }
+
+                    if($(ele_id + " option:selected").length > 1 && is_otherall && option_other_selected) {
+                      $(ele_id +" option[value=" + "otherall" + "]").removeAttr('selected');
+                      option_other_selected = false;
+                    }else if (!option_other_selected && $(ele_id + " option:selected").length > 1 && is_otherall){
+                      $(ele_id + " option:selected").each(function(i, l) {
+                              if ($(l).val() != "otherall") { $(l).removeAttr('selected'); }
+                          });
+                          option_other_selected = true;
+                    }
+
+                    if(option_all_selected && is_all){
+                      $(ele_id +" option[value=" + all_val + "]").removeAttr('selected');
+                        option_all_selected = false;
+                      }else if(!option_all_selected && is_all){
+                          $(ele_id + " option:selected").each(function(i, l) {
+                              if ($(l).val() != all_val) { $(l).removeAttr('selected'); }
+                          });
+                          option_all_selected = true;
+                      }
+                      $(ele_id).trigger("liszt:updated");
+                  });
+                }
+
+
+
+</script>

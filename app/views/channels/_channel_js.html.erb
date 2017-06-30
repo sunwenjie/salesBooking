@@ -1,0 +1,72 @@
+<%= javascript_include_tag "underscore-min.js" %>
+<script type="text/javascript">
+    $.fn.extend({
+        numeric: function(options){
+            var jq_dis = $(options['dis']);
+            var that = this;
+            jq_dis.val(format_to_numeric($(this).val()));
+            $(["focus" , "blur" ]).each(function(i , ele){
+                jq_dis.bind(ele , function(){
+                    $(this).val( format_to_numeric(jq_dis.val()));
+                    $(that).val(format_to_machine_number(jq_dis.val()));
+                    $(that).trigger(ele);
+                })
+            })
+        }
+    });
+
+    function format_to_numeric(str){
+        str = format_to_machine_number(str);
+        if(/^-?\d+(?:\.\d+)?/.test(str)){
+            digitalGroup = /(\d)((\d{3}?)+)$/;
+            var zhengshu = Math.floor(parseFloat(str)) + '';
+            var xiaoshu = Math.floor(Math.round(parseFloat(str) * 100) % 100) + '';
+            while (digitalGroup.test(zhengshu)) {
+                zhengshu = zhengshu.replace(digitalGroup, '$1' + "," + '$2');
+            };
+            if(parseInt(xiaoshu) < 10){
+                xiaoshu = '0' + xiaoshu
+            };
+            str = zhengshu + "." + xiaoshu;
+
+            while (digitalGroup.test(str)) {
+                str = str.replace(digitalGroup, '$1' + "," + '$2');
+            };
+            if(/\.\d$/.test(str)){
+                str += '0';
+            }else if(/^[^\.]+$/.test(str)){
+                str += '.00';
+            }
+        }
+        return str;
+    }
+
+    function format_to_number(str){
+        str = format_to_machine_number(str);
+        if(/^-?\d+(?:\.\d+)?/.test(str)){
+            digitalGroup = /(\d)((\d{3}?)+)$/;
+            var zhengshu = Math.floor(parseFloat(str)) + '';
+            while (digitalGroup.test(zhengshu)) {
+                zhengshu = zhengshu.replace(digitalGroup, '$1' + "," + '$2');
+            };
+            while (digitalGroup.test(str)) {
+                str = str.replace(digitalGroup, '$1' + "," + '$2');
+            };
+        }
+        return str;
+    }
+
+
+    function format_to_machine_number(str){
+        str += '';
+        str = str.replace(/[^\d\.\,\-]/g,"");
+        if(/^-?(?:\d+|\d{1,3}(?:,\d{3})*)(?:\.\d+)?/.test(str)){
+            str = str.replace(/,/g,"").replace(/^0+/g,"0").replace(/^0(\d)/g, "$1");
+            str = Math.round( parseFloat(str) * 100 )/ 100 + "";
+            return str;
+        }else{
+            return str
+        }
+    }
+
+</script>

@@ -1,0 +1,137 @@
+<%= stylesheet_link_tag  "chosen", "xmo/application", "xmo/xmo_components", :media => "all"%>
+<%= stylesheet_link_tag  "css/redmond/jquery-ui-1.8.17.custom.css" , :media => "all"%>
+<%= stylesheet_link_tag "chosen" %>
+<%= javascript_include_tag "chosen.jquery.min" %>
+<div  class ="big_section">
+<%= form_for @group, :html=> {:class=> "form-horizontal"} do |f| %>
+    <% if @group.errors.any? %>
+        <div id="error_explanation" class="error sticker">
+          <h2><%= @group.errors.count %>个错误导致群组不能更新成功 :</h2>
+          <ul>
+          <% @group.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
+        
+        <div class="control-group">
+            <%= f.label :group_name, "用户群组名称" %>
+            <div class="controls">
+                <div class='row'>
+                    <div class='item_one'>
+                        <div class='span'>
+                            <%= f.text_field :group_name %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <%= f.label :childrengroups, "群组" %>  
+            <div class="controls">
+                           <div class="row">
+                              <div class='span' style="width:390px;" >
+                               <select id="childrengroups_list" name="group[childrengroups][]" multiple data-placeholder="请选择"  style="width:390px"   class="chzn-select l_margin_0" >
+                                <%= options_for_childrengroups_list %>
+                              </select>
+                              </div>
+                              <div class="span l_margin_10 t_margin_5">
+                                  <a class="selection_icon selection_trigger" data-target="#childrengroups_list" href="javascript:void(0);"></a>
+                              </div>
+                           </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <%= f.label :select_users, "群组人员" %>
+            <div class="controls">
+                           <div class="row">
+                              <div class='span' style="width:390px;" >
+                               <select id="select_users_list" name="group[select_users][]" multiple data-placeholder="请选择"  style="width:390px"   class="chzn-select l_margin_0" >
+                                <%= options_for_select_users_list %>
+                              </select>
+                              </div>
+                              <div class="span l_margin_10 t_margin_5">
+                                  <a class="selection_icon selection_trigger" data-target="#select_users_list" href="javascript:void(0);"></a>
+                              </div>
+                           </div>
+            </div>
+        </div>
+        
+        <div class="row ">
+        <div class='button_area'>
+          <div class="">
+            <div class="outer_cancel"><button type='button' href='<%= groups_path %>'>返回</button></div>
+            <!-- <div class="outer_submit"><%#= f.submit "保存" %></div> -->
+          </div>
+        </div>
+      </div>
+    <% end %>
+</div>
+<script type="text/javascript">
+$("input,textarea,select").prop('disabled', true);
+multiple_chosen("#childrengroups_list", ".childrengroups_list");
+
+$('.selection_trigger').click(function(){
+var target = $(this).attr('data-target') + '_chzn';
+$(target).mousedown();
+return false;
+});
+
+  $("#childrengroups_list").change(function(){
+  if (($(this).val()==null)){
+    $(this).append("<option id='null_option' value='' selected='selected'></option>")
+  }
+  else{
+    $(this).find("#null_option").remove();
+  }
+  })
+
+
+
+  // multiple_chosen("#except_groups_list", ".except_groups_list");
+
+  // $("#except_groups_list").change(function(){
+  // if (($(this).val()==null)){
+  //   $(this).append("<option id='null_option' value='' selected='selected'></option>")
+  // }
+  // else{
+  //   $(this).find("#null_option").remove();
+  // }
+  // })
+
+
+
+  multiple_chosen("#select_users_list", ".select_users_list");
+
+  $("#select_users_list").change(function(){
+  if (($(this).val()==null)){
+    $(this).append("<option id='null_option' value='' selected='selected'></option>")
+  }
+  else{
+    $(this).find("#null_option").remove();
+  }
+  })
+
+
+
+  // multiple_chosen("#except_users_list", ".except_users_list");
+
+  // $("#except_users_list").change(function(){
+  // if (($(this).val()==null)){
+  //   $(this).append("<option id='null_option' value='' selected='selected'></option>")
+  // }
+  // else{
+  //   $(this).find("#null_option").remove();
+  // }
+  // })
+
+
+$(document).ready(function() {
+  $('.field_with_errors').parent().removeClass('have_error');
+  $('.field_with_errors').parent().find(".span").addClass("have_error")
+});
+</script>
+

@@ -1,0 +1,82 @@
+<html>
+<head>
+	<title>progress</title>
+  <!-- 从线上系统引入css -->
+  <link href="http://xmo.optimix.asia/bootstrap/css/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="http://xmo.optimix.asia/stylesheets/chosen.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="http://xmo.optimix.asia/stylesheets/xmo/application.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="http://xmo.optimix.asia/stylesheets/xmo/xmo_components.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="http://xmo.optimix.asia/stylesheets/css/redmond/jquery-ui-1.8.17.custom.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="http://xmo.optimix.asia/stylesheets/on_off_button/on-off-btn.css" media="all" rel="stylesheet" type="text/css" />
+  <!-- 从线上系统引入js -->
+  <script src="http://xmo.optimix.asia/javascripts/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+  <script src="http://xmo.optimix.asia/bootstrap/js/bootstrap.min.js?7362" type="text/javascript"></script>
+	<style type="text/css">
+	.xmo-progress{width:264px;margin: 0 auto;text-align: center;}
+	.xmo-progress .progress{
+		-moz-border-radius: 8px; 
+		-webkit-border-radius: 8px; 
+		border-radius:8px;;
+	}
+	.xmo-progress .progress-striped .bar{
+		-moz-border-radius: 8px; 
+		-webkit-border-radius: 8px; 
+		border-radius:8px;
+		background-color:#fd3b32;
+		background-image:linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 75%, transparent 75%, transparent);
+		background-image:url(data:image/PEG;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABkAAD/4QNxaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6MDE4MDExNzQwNzIwNjgxMTlFRDBEQTE5Rjg5RjFFM0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDlDQzdDNTc1MDRFMTFFNEExQkE4RTUzM0ZEQTFCNzQiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDlDQzdDNTY1MDRFMTFFNEExQkE4RTUzM0ZEQTFCNzQiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkRDNjU1MTdFNEM2ODExRTQ4MjRFRDBDMzBERjg1OTA5IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkRDNjU1MTdGNEM2ODExRTQ4MjRFRDBDMzBERjg1OTA5Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4AJkFkb2JlAGTAAAAAAQMAFQQDBgoNAAAFOQAABWUAAAWdAAAFyP/bAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQECAQECAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD/8IAEQgAEQABAwERAAIRAQMRAf/EAJMAAAMAAAAAAAAAAAAAAAAAAAcICQEBAQAAAAAAAAAAAAAAAAAACAYQAAEEAwAAAAAAAAAAAAAAABAAEgMUBAUWEQAABwEAAAAAAAAAAAAAAAAAEDLTBJQFNRIAAQMFAAAAAAAAAAAAAAAAEAGR0QIykgMzEwABAwIHAAAAAAAAAAAAAAAQAPARAVFxgaHB0eHx/9oADAMBAAIRAxEAAAE3G12qtL1Ne0sIv//aAAgBAQABBQJ24XQj/9oACAECAAEFAr05/9oACAEDAAEFAqGGmj//2gAIAQICBj8Cvqc//9oACAEDAgY/AuWvFIP/2gAIAQEBBj8C6unflOhRf//aAAgBAQMBPyFWMTUf/9oACAECAwE/IfRqaj//2gAIAQMDAT8hP7//2gAMAwEAAhEDEQAAENh//9oACAEBAwE/EETj3ch//9oACAECAwE/EGbub//aAAgBAwMBPxBGo2o8x//Z);
+		background-position: center center;
+		/*background-repeat: */
+	}
+	.xmo-progress .progress{
+		margin-bottom:0;
+
+	}
+	.xmo-progress-t{
+		font-size: 14px;
+		padding-bottom: 6px;
+	}
+	.xmo-progress-b{
+		color: #d85a2a;
+		font-size: 16px;
+		font-weight: 600;
+		padding-top: 8px;
+	}
+
+	</style>
+</head>
+<body>
+	<div class="xmo-progress">
+		<div class="xmo-progress-t">We are processing your request...</div>
+	    <div class="progress progress-striped active">
+	    	<div class="bar" style="width: 0%;"></div>
+	    </div>
+		<div class="xmo-progress-b">0%</div>
+	</div>
+	<script type="text/javascript">
+	var XMO_Processing = {
+		time : 8000,
+		progress : 0,
+		maxPregress : 90,
+		interval : null,
+		init : function (){
+			var _this = this;
+			this.interval = setInterval(function(){
+				_this.setProcess();
+			},1000)
+		},
+		setProcess : function(){
+			this.progress<this.maxPregress?this.progress++ : '';
+			$('.xmo-progress .xmo-progress-b').html(this.progress+'%');
+			$('.xmo-progress .bar').css({width:this.progress+'%'});
+		},
+		over : function(url){
+			this.progress=100;
+			this.setProcess();
+			location.href = url;
+		}
+	}
+	XMO_Processing.init()
+	</script>
+</body>
+</html>

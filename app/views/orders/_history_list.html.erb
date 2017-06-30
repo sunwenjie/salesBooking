@@ -1,0 +1,68 @@
+<%= stylesheet_link_tag "/bootstrap/css/bootstrap.min" %>
+<%= stylesheet_link_tag "xmo/xmo_components" %>
+<%= stylesheet_link_tag "/css/index" %>
+<%= javascript_include_tag "/js/jquery-1.7.1.min" %>
+<%= javascript_include_tag "/libs/datatables-1.10.4/media/js/jquery.dataTables.min" %>
+<%= javascript_include_tag "/libs/datatables-1.10.4/extensions/Scroller/js/dataTables.scroller" %>
+
+<style>
+  #history_list_wrapper tbody td{
+      font-size: 12px;
+  }
+</style>
+<div class="lr_margin_20 tb_margin_30">
+  <div class="row font_28"><%= t("order.list.layer_heading")%></div>
+  <div class= "table_white">
+    <table class="table table-striped table-bordered table-condensed width_100 search_table" cellpadding="0" cellspaceing="0" border="0" id="history_list">
+      <thead>
+      <tr class='even'>
+        <th class="align_left align_top"><%= t("order.list.approve_handle")%></th>
+        <th class="align_left align_top"><%= t("order.list.act")%></th>
+        <th class="align_left align_top"><%= t("order.list.submiter")%></th>
+        <th class="align_left align_top"><%= t("order.list.submit_date")%></th>
+        <th class="align_left align_top"><%= t("order.list.approver")%></th>
+        <th class="align_left align_top"><%= t("order.list.approver_date")%></th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <%if items.present?%>
+          <% items.each do |o|%>
+              <tr class="<%= cycle("odd", "even") %>">
+                <td class="align_left"><%= t("order.history.node_#{o.node_id}")%></td>
+                <td class="align_left"><%= t("order.history.status_#{o.status}")%></td>
+                <td class="align_left"><%= (o.status == '1' || o.status == '0') ? o.created_user : '--'%></td>
+                <td class="align_left"><%= (o.status == '1' || o.status == '0') ? o.created_at.strftime("%Y/%m/%d %H:%M") : '--'%></td>
+                <td class="align_left"><%= ['2','3'].include?(o.status) ? o.created_user : '--'%></td>
+                <td class="align_left"><%= ['2','3'].include?(o.status) ? o.created_at.strftime("%Y/%m/%d %H:%M") : '--'%></td>
+              </tr>
+          <%end%>
+      <%end%>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#history_list').dataTable({
+            "oLanguage": {"sUrl": "/javascripts/i18n/dataTables-new.<%= I18n.locale.to_s%>.txt"},
+            "autoWidth": false,
+            "bJQueryUI": false,
+            "bFilter": true,
+            "sDom": "<'row'<'pull-left'f><'table_pagin'p><'table_info'i>>t<'row table_bottom'<'table_pagin'p><'table_info'i>>",
+            "sPaginationType": "full_numbers",
+            "bPaginate": true,
+            "iDisplayLength": 10,
+            "aaSorting": [],
+            "aoColumns": [
+                {"sType": "string", "sWidth": "20%", "aTargets": [0]},
+                {"sType": "string", "sWidth": "15%", "aTargets": [1]},
+                {"sType": "string", "sWidth": "15%", "aTargets": [2]},
+                {"sType": "string", "sWidth": "20%", "aTargets": [3]},
+                {"sType": "string", "sWidth": "15%", "aTargets": [4]},
+                {"sType": "string", "sWidth": "20%", "aTargets": [5]}
+            ]
+        });
+    });
+</script>
+

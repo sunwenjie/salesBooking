@@ -1,0 +1,2 @@
+var Base = {}
+var DataApi = {};

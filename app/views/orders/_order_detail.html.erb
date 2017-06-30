@@ -1,0 +1,128 @@
+<div id="order_detail_error" class="order_tip"></div>
+<div class="big_section">
+  <% if flash[:notice] %>
+      <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+  <% if flash[:messages] %>
+      <div class="warning warning-book">
+        <h2><%= t("order.form.need_update_tip")%></h2>
+        <ul>
+          <% flash[:messages].each do |d| %>
+              <li><%= d %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+
+  <% @url = {:action => "update"} %>
+  <%= form_for(@order, :url => @url, :html => {:id => @order.id, :class => "form-horizontal", :id => "order_form"}) do |f| %>
+      <%= render :partial => "form", :locals => {:f => f} %>
+      <!-- order delete and copy -->
+      <%#= render :partial => "delete_and_copy" #if @user_for_order_edit
+      %>
+      <!--end menigment -->
+      <div class="row t_margin_20">
+        <!-- button area -->
+        <div class="button_area">
+          <div class="r_margin_20">
+            <div class="pull-right">
+              <div class="outer_cancel"><a href="<%= orders_path%>"><button type="button"><%= t("order.cancel_bth")%></button></a></div>
+              <div class="outer_submit">
+                <input type="button" id="order_detail_edit" value="<%= t("order.modify")%>" name="commit" class="submit_tag_button">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  <% end %>
+
+
+  <script type="text/javascript">
+      // disabled
+      $("input,textarea,select").prop('disabled', true);
+      $(":button").prop('disabled', false);
+      $(":submit").prop('disabled', false);
+      $(".approval_radio").prop('disabled', false);
+      $("#approval_comment").prop('disabled', false);
+      $(".admeasure_show").prop('disabled', false);
+      $(".admeasure_first").prop('disabled', true);
+
+      $("#setting_con_custom select").prop('disabled', false);
+
+      $("#exclude_dates").prop('disabled', false);
+      $("#chosen_multiple_test").attr('disabled', true).trigger("liszt:updated");
+      $("#chosen_multiple_country").attr('disabled', true).trigger("liszt:updated");
+      $("#order_delivery_province").attr('disabled', true).trigger("liszt:updated");
+      $("#order_delivery_city_level").attr('disabled', true).trigger("liszt:updated");
+      $("#pretargeting_mainland").attr('disabled', true).trigger("liszt:updated");
+      $("#chosen_multiple_country_special").attr('disabled', true).trigger("liszt:updated");
+      $("#user_share_operater_list").attr('disabled', true).trigger("liszt:updated");
+      $("#share_order_group_list").attr('disabled', true).trigger("liszt:updated");
+      $("#add_pl").click(function(){return false;});
+
+      <% if  @send_country == "CHINA" %>
+//      $(".adv_planner_clicks").prop('disabled', false);
+//      $(".planner_click").show();
+      <%end%>
+//      $("#interest_crowd").prop("disabled", true);
+//      $('.adv_planner_clicks_input').prop('disabled', false);
+//      $(".planner_ctr").show();
+//      $('.adv_planner_ctr').prop('disabled', true);
+
+      <!--<%# if @order.jast_for_gp_advertisement? && @order.need_ask_for_gp_rake.size > 0 && !@order.all_order_gp_finish? %>-->
+//      $("#planner_hide").hide();
+      <!--<%# end %>-->
+
+      $("#setting_con_custom input").prop('disabled', false);
+      $("#setting_con_custom textarea").prop('disabled', false);
+      $("#setting_con_custom select").prop('disabled', false);
+
+
+      $("#setting_con_custom input").prop('disabled', false);
+      $("#addPv").parent().parent().show();
+      //清空删除隐藏域值
+      $("#delete_pvs").val("");
+
+
+      $("#setting_con_custom input").prop('disabled', false);
+      $("#setting_con_custom textarea").prop('disabled', false);
+      $("#setting_con_custom select").prop('disabled', false);
+
+      $("#setting_con_custom input").prop('disabled', false);
+      $("#addPv").parent().parent().show();
+
+      //清空删除隐藏域值
+      $("#delete_pvs").val("");
+
+      $('#order_detail_edit').click(function(){
+          var order_id = <%= @order.id %>;
+          var data_cannot_edit = Order.data_cannot_edit(order_id);
+          if (data_cannot_edit && <%= @order.state != "examine_completed" %> ){
+              $('#order_detail_error').addClass('error');
+              $('#order_detail_error').text("<%=t('order.form.order_under_examination2')%>")
+              $("#order_detail_error").show();
+              scroll(0,0);
+          }else{
+              var nodeids = $(".xmo-progress-status [order_id = "+ <%= @order.id %> +"]").last().attr('node_ids').split(",");
+              var status = $(".xmo-progress-status [order_id = "+ <%= @order.id %> +"]").last().attr('status');
+              $.get("<%= ajax_get_operate_authority_orders_path %>", {id: order_id,node_ids: nodeids,status:status}, function (data) {
+                  var   authority = data.authority;
+                  if (jQuery.inArray("order_edit",authority) > -1){
+                      $('#order_detail_error').removeClass('error');
+                      $('#order_detail_error').text("");
+                      $("#order_detail_error").hide();
+                      window.location.href = "<%= edit_order_path(@order)%>"
+                  }else{
+                      $(".notice ").hide();
+                      $('#order_detail_error').addClass('error');
+                      $('#order_detail_error').html("<%=t('order.form.order_under_examination12')%>")
+                      $("#order_detail_error").show();
+                      scroll(0,0);
+                  }
+              })
+
+          }
+      })
+
+  </script>

@@ -1,0 +1,99 @@
+                                       <div class="span">
+                                         <%@send_city = @send_city ? @send_city : "options_for_bshare_mainland0"%>
+                                         <%= hidden_field_tag "send_city",@send_city %>
+                                         <%if @send_city=="options_for_bshare_mainland0" %>
+                                          <%=  select_tag 'order[city][]',send(@send_city),:selected =>"all_cities",:multiple => true,:class => "chzn-select span5",:tabindex=>"-1",:id=>"chosen_multiple_test"%>
+				  	 <%elsif @send_city=="options_for_bshare_mainland1" %>
+                                          <%=  select_tag 'order[city][]',send(@send_city),:selected =>["BJ","SH","GZ31","SZ14"],:multiple => true,:class => "chzn-select span5",:tabindex=>"-1",:id=>"chosen_multiple_test"%>
+                                         <%elsif @send_city=="options_for_bshare_mainland2" %>
+                                          <%=  select_tag 'order[city][]',send(@send_city),:selected =>["TJ","CQ","TW","HK","MO","SJZ"],:multiple => true,:class => "chzn-select span5",:tabindex=>"-1",:id=>"chosen_multiple_test"%>
+                                         <%end%>
+                                        </div>
+				  	<div class="span">
+				          <a class="selection_icon selection_trigger" data-target="#chosen_multiple_test" href="javascript:void(0);"></a>
+				  	</div>
+
+<script type="text/javascript">
+
+    function city_me(n){
+       $.ajax({
+          type: "GET",
+          url:  "/<%= I18n.locale.to_s%>/orders/check_city?city="+n,
+          dataType:"text",
+          success: function(msg){
+           $("#city_change").empty();
+           $("#city_change").append(msg);
+          },
+          error: function(msg){
+          }
+        });
+    }
+
+    $(function(){
+		$('#order_product_type').change(function(){
+			if($(this).val() == "ANDIENCE_BUYING"){
+				$('.type-audience').show();
+				$('.type-media').hide();
+                                $('#extra_website').val("");
+			}else{
+                                $('#interest_crowd').val("");
+				$('.type-audience').hide();
+				$('.type-media').show();
+			}
+		}).change();
+	})
+
+
+
+    $("#chosen_multiple_test").chosen();
+		//右边触发js
+		$('.selection_trigger').click(function(){
+		var target = $(this).attr('data-target') + '_chzn';
+		$(target).mousedown();
+		return false;
+		})
+
+                function buget_currency_show(currency){
+                $("#currency_show").text(currency);
+                }
+                buget_currency_show($("#order_budget_currency").find("option:selected").text());
+
+                $("#order_budget_currency").change(function(){
+                        var currency = $(this).find("option:selected").text();
+                        buget_currency_show(currency);
+                })
+
+                selectable_with_all("#chosen_multiple_test", "all_cities");
+                function selectable_with_all(ele_id, all_val){
+                  var option_all_selected = true;
+                  $(ele_id).change(function(){
+                    var is_all = false;
+                    $(ele_id + " option:selected").each(function(i , l){
+                        if($(l).val() == all_val) is_all = true;
+                        if($(l).val() == "other") city_me(2);
+                        if($(l).val() == "BSGS") city_me(1);
+                        if($(l).val() == all_val) city_me(0);
+                    });
+
+                    if($(ele_id + " option:selected").length == 1){
+                        $(ele_id).trigger("liszt:updated");
+                        option_all_selected = is_all;
+                        return false;
+                    }
+
+                    if(option_all_selected && is_all){
+                      $(ele_id +" option[value=" + all_val + "]").removeAttr('selected');
+                        option_all_selected = false;
+                      }else if(!option_all_selected && is_all){
+                          $(ele_id + " option:selected").each(function(i, l) {
+                              if ($(l).val() != all_val) { $(l).removeAttr('selected'); }
+                          });
+                          option_all_selected = true;
+                      }
+                      $(ele_id).trigger("liszt:updated");
+                  });
+                }
+
+
+
+</script>

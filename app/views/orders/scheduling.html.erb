@@ -1,0 +1,421 @@
+<!-- body start -->
+<script type="text/javascript" src="/js/xmo-calendar.js"></script>
+<script src="/js/chosen.jquery.min.js?9120" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/css/css/xmo-calendar.css">
+
+<div class="big_section">
+<% if flash[:notice] %>
+  <div class="notice"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:error] %>
+  <div class="error"><%= flash[:error] %></div>
+<% end %>
+
+<%= form_for(@order, :url => import_proof_order_path(@order),:html=>{:id=>@order.id, :class=>"form-horizontal",:name=>"myform", :multipart => true }) do |f| %>
+
+	<div class="control-group">
+		<label class="control-label">
+			<label for="campaign_status"><%= t('order.form.order_id') %></label>
+		</label>
+		<div class="controls">
+			<div class="row">
+				<div class="span">
+			     <input type="text" readonly value="<%=@order.code%>" size="30" name="order[code]"  disname="计划名称" class="required span5">
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- sub_section_white start -->
+  <div class="sub_section_white">
+    <div class="control-group">
+      <div class="sub_title "><%= t('order.form.spot_plan_settings') %></div>
+    </div>
+
+    <div class="control-group t_margin_30">
+    <label class="control-label">
+      <label for="campaign_status"><%= t('order.form.download_spot_plan') %></label>
+    </label>
+    <div class="controls">
+      <div class="row" style="width:605px;">
+        <div class="span">
+
+          <label class="checkbox ">
+            <input class="check_download_item" id="impression_attr" type="checkbox" data-key="impression" data-id="<%=@order.id%>" <%=@order.check_download_attr['impression']=='true' ? 'checked' : ''%>/>
+            <%= t('order.form.impressions_column') %>
+          </label>
+        </div>
+        <div class="span">
+          <label class="checkbox">
+            <input id="ctr_attr" data-key="ctr" class="check_download_item" type="checkbox" data-id="<%=@order.id%>" <%=@order.check_download_attr['ctr']=='true' ? 'checked' : ''%>/>
+            <%= t('order.form.ctr_column') %>
+          </label>
+        </div>
+        <div class="span">
+          <label class="checkbox">
+            <input id="click_attr" data-key ="click" data-id="<%=@order.id%>" class="check_download_item" type="checkbox" <%=@order.check_download_attr['click']=='true' ? 'checked' : ''%>/>
+            <%= t('order.form.clicks_column') %>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <div class="span">
+           <a id="browse_book_link" class="btn-x-mkt-analysis-cn <%= I18n.locale.to_s == "en" ? 'btn-book-download-en' : 'btn-book-download-cn' %> pull-right" style="width:103px" href="<%= download_orders_url(:id => @order.id)%>"></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="control-group t_margin_30">
+    <label class="control-label">
+      <label for="campaign_status"><%= t('order.form.upload') %></label>
+    </label>
+    <div class="controls">
+      <div class="row" style="width:605px;">
+           <div class="span">
+              <label class="radio">
+                <input type="radio" name="examine_state" value="0" checked onclick="change_input(0)" >
+                <%= t('order.form.spot_plan') %>
+              </label>
+           </div>
+           <div class="span" style="margin-left:100px;">
+              <label class="radio">
+                <input type="radio" name="examine_state" value="1" onclick="change_input(1)" >
+                <%= t('order.form.client_confirmation') %>
+              </label>
+           </div>
+           <div class="span6" id="pqb">
+             <% if @order.proof_attachment.url %><div style="color:#ff9900"><%= t('order.form.upload_spot_plan_description1') %></div><% end %>
+             <%= file_field_tag "proof_img"%>
+             <%=t('order.form.upload_file_format')  %> PDF,JPG,JPEG,PNG,XLS,XLSX
+             <br/><br/>
+             <div class="outer_submit">
+                <input type="submit" class="submit_tag_button" name="commit"  value="<%= t('order.form.upload') %>" >
+             </div>
+           </div>
+
+           <div class="span6 hide" id="zm">
+             <% if @order.proof_attachment.url %><div style="color:#ff9900"><%= t('order.form.upload_spot_plan_description2') %></div><% end %>
+             <%= file_field_tag "executer_img"%>
+             <%=t('order.form.upload_file_format')  %> PDF,JPG,JPEG,PNG
+             <br/><br/>
+             <div class="outer_submit">
+                <input type="submit" class="submit_tag_button" name="commit"  value="<%= t('order.form.upload') %>" >
+             </div>
+           </div>
+      </div>
+    </div>
+  </div>
+
+      <%if @order.proof_attachment.url || @order.draft_attachment.url %>
+        <div class="control-group t_margin_30">
+          <label class="control-label">
+            <label for="campaign_status"><%= t('order.form.already_upload') %></label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <table class="table_style_1 t_margin_0" style="width:588px;">
+                  <thead>
+                    <th style="height: 30px;"><%= t('order.form.filename') %></th>
+                    <th><%= t('order.form.file_state') %></th>
+                  </thead>
+                    <tbody>
+                      <%if @order.proof_attachment.url %>
+                        <tr>
+                          <td class="blue" style="height: 30px;"><a href="<%= download_proof_orders_url(:id => @order.id) %>"><%= t('order.form.spot_plan') %></a></td>
+                          <td class="font_11 <%= "green" if @order.proof_state == '0' %>"><%= @order.proof_state == '0' ? t('order.form.already_submit') : t('order.form.already_upload') %></td>
+                        </tr>
+                      <% end %>
+                      <%if @order.draft_attachment.url %>
+                        <tr>
+                          <td class="blue" style="height: 30px;"><a href="<%= download_draft_orders_url(:id => @order.id) %>"><%= t('order.form.client_confirmation') %></a></td>
+                          <td class="font_11 <%= "green" if @order.proof_state == '0' %>"><%= @order.proof_state == '0' ?  t('order.form.already_submit') : t('order.form.already_upload') %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                </table>
+                <%if  @order.proof_state == "1"  %>
+              <div class="outer_submit">
+                      <input type="submit" class="submit_tag_button" name="commit"  value="<%= t('order.form.submit_button') %>" >
+                   </div>
+              </div>
+               <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="control-group">
+        <div class="sub_title "><%= t('order.form.execution_plan_settings') %></div>
+      </div>
+
+      <%# if @order.executer_attachment.url %>
+        <!--<div class="control-group t_margin_30">-->
+          <!--<label class="control-label">-->
+            <!--<label for="campaign_status"><%#= t('order.form.download_spot_plan') %></label>-->
+          <!--</label>-->
+          <!--<div class="controls">-->
+            <!--<div class="row" style="width:605px;">-->
+              <!--<div class="span">-->
+                 <!--<a id="browse_executer_link" class="btn-x-mkt-analysis-cn <%#= I18n.locale.to_s == "en" ? 'btn-executer-download-en' : 'btn-executer-download-cn' %> pull-right" href="<%= download_executer_orders_url(:id => @order.id) %>"></a>-->
+              <!--</div>-->
+
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <%#end%>
+
+    <% @readonly,@disabled = false,false %>
+
+    <div class="row">
+
+       <div class="control-group t_margin_20">
+         <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%= t('order.form.landing_url') %></label>
+         </label>
+         <div class="controls">
+           <div class="row">
+             <div class="span">
+               <%= f.text_field :landing_page,:class=>"required span5",:size=>"30",:readonly=>@readonly %>
+             </div>
+           </div>
+         </div>
+       </div>
+
+       <div class="control-group">
+          <label class="control-label">
+            <%= t('order.form.frequency_cap') %>
+          </label>
+          <div class="controls">
+            <div class="row">
+                <div class='span'>
+                  <label class="checkbox">
+                  <%= f.check_box :frequency_limit , {:checked => f.object.frequency_limit, :disabled => @disabled}%><%= t('order.form.enable_button') %>
+                </label>
+                </div>
+            </div>
+            <div class="row" id="show_frequency" >
+                <div class="span">
+                     <%= f.text_field :frequency,:disname=>"频次上限", :class=>"number novalidate",:style=>"width:104px;",:readonly=>@readonly%> <%= t('order.form.display_frequency_cap') %>
+                     <input type="text" id="frequency1" style="width:104px;" readonly class=' numeric' name='discount' placeholder=<%= t('order.form.every_day') %>/>
+                     <input type="text" id="frequency2" style="width:104px;" readonly class=' numeric' name='discount' placeholder=<%= t('order.form.current_campaign') %>/>
+                </div>
+            </div>
+          </div>
+       </div>
+
+       <div class="control-group">
+        <label class="control-label" for=""><%= t('order.form.keywords') %></label>
+           <div class="controls">
+             <div class="row">
+               <div class="item_two">
+                 <div class="span">
+                   <div class="span1">
+                     <%= f.text_area :keywords,:rows =>"6",:class=>"span5",:readonly=>@readonly %>
+                   </div>
+                 </div>
+                 <div class="span l_padding_0">
+                   <span data-width="350" data-position="right" class="xmo-tooltip" data-id="a07469988342172363">
+                      <img style="margin-left:8px" src="/images/shared/components/help-icon.png">
+                      <div class="popover xmo-popover fade in">
+                        <div class="arrow"></div>
+                        <div class="popover-inner xmo-popover-inner">
+                          <div class="popover-content">
+                            <%= t('order.form.keywords_description') %>
+                          </div>
+                        </div>
+                      </div>
+                    </span>
+                 </div>
+                </div>
+             </div>
+           </div>
+      </div>
+
+      <div class="control-group t_margin_20">
+         <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%= t('order.form.xmo_tracking_code') %></label>
+         </label>
+         <div class="controls">
+             <div class="row">
+                   <div class="span">
+                    <label class="radio">
+                         <%= radio_button("order", "xmo_code", 1,:checked=>(@order.xmo_code==true ? "checked" : ""), :disabled => @disabled)%>
+                      <%= t('order.form.radio_yes') %>
+                    </label>
+                   </div>
+                 <div class="span" style="margin-left:100px;">
+                  <label class="radio">
+                        <%= radio_button("order", "xmo_code", 0,:checked=>(@order.xmo_code==false ? "checked" : ""), :disabled => @disabled)%>
+                    <%= t('order.form.radio_no') %>
+                    </label>
+                 </div>
+             </div>
+        </div>
+       </div>
+
+       <div class="control-group t_margin_20">
+         <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%= t('order.form.creatives_provided_by_client') %></label>
+         </label>
+         <div class="controls">
+             <div class="row">
+                   <div class="span">
+                    <label class="radio">
+                      <%= radio_button("order", "client_material", 1,:checked=>(@order.client_material==true ? "checked" : ""), :disabled => @disabled)%>
+                      <%= t('order.form.radio_yes') %>
+                    </label>
+                   </div>
+                 <div class="span" style="margin-left:100px;">
+                    <label class="radio">
+                      <%= radio_button("order", "client_material", 0,:checked=>(@order.client_material==false ? "checked" : ""), :disabled => @disabled)%>
+                      <%= t('order.form.radio_no') %>
+                    </label>
+                 </div>
+             </div>
+        </div>
+       </div>
+
+       <div class="control-group t_margin_20">
+         <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%= t('order.form.report_template') %></label>
+         </label>
+         <div class="controls">
+             <div class="row">
+                   <div class="span">
+                    <label class="radio">
+                      <%= radio_button("order", "report_template", "standard", :disabled => @disabled)%>
+                      <%= t('order.form.standard_template') %>
+                    </label>
+                   </div>
+                   <div class="span" style="margin-left:75px;">
+                    <label class="radio">
+                      <%= radio_button("order", "report_template", "client", :disabled => @disabled)%>
+                      <%= t('order.form.client_template') %>
+                    </label>
+                   </div>
+             </div>
+        </div>
+       </div>
+
+       <div class="control-group t_margin_20">
+         <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%= t('order.form.report_period') %></label>
+         </label>
+         <div class="controls">
+             <div class="row">
+                   <div class="span">
+                    <label class="checkbox">
+                    <%= check_box_tag "report_period_daliy", 'yes', f.object.report_period_show.to_a.include?("daliy"), {:id => "report_period_daliy", :class => "report_period_check", :disabled => @disabled} %>
+                      <%= t('order.form.day_report') %>
+                    </label>
+                   </div>
+                   <div class="span" style="margin-left:90px;">
+                     <label class="checkbox">
+                    <%= check_box_tag "report_period_month", 'yes', f.object.report_period_show.to_a.include?("month"), {:id => "report_period_month", :class => "report_period_check", :disabled => @disabled}%>
+                      <%= t('order.form.week_report') %>
+                    </label>
+                  </div>
+                  <div class="span" style="margin-left:90px;">
+                     <label class="checkbox">
+                    <%= check_box_tag "report_period_closure", 'yes', f.object.report_period_show.to_a.include?("closure"), {:id => "report_period_closure",:class => "report_period_check", :disabled => @disabled}%>
+                      <%= t('order.form.final_report') %>
+                    </label>
+                  </div>
+             </div>
+        </div>
+       </div>
+
+       <%= f.hidden_field "report_period" %>
+
+      <div class="control-group">
+       <label class="control-label" for=""><%= t('order.form.special_requirements') %></label>
+        <div class="controls">
+          <div class="row">
+              <div class="span">
+                <%= f.text_area :screenshot,:rows =>"6",:class=>"span5" ,:readonly=>@readonly%>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group <%= @readonly ? 'hide' : '' %> ">
+        <div class="controls">
+          <div class="row">
+              <div class="span">
+                <div class="outer_submit">
+                 <input type="submit" class="submit_tag_button" name="commit" value="<%= t('order.form.generate_spot') %>">
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <%if (@order.executer_attachment.url) %>
+      <div class="row">
+        <div class="control-group t_margin_30">
+              <label class="control-label">
+                <label for="campaign_status"><%= t('order.form.already_generate_execution_plan') %></label>
+              </label>
+              <div class="controls">
+                <div class="row">
+                  <div class="span">
+                    <table class="table_style_1 t_margin_0" style="width:588px;">
+                      <thead>
+                        <th style="height: 30px;"><%= t('order.form.execution_plan_code') %></th>
+                        <th><%= t('order.form.generate_time') %></th>
+                      </thead>
+                        <tbody>
+                          <td class="blue" style="height: 30px;"><a href="<%= download_executer_orders_url(:id => @order.id) %>"><%= @order.code %></a></td>
+                          <td class="font_11"><%= @order.executer_attachment.model.updated_at.localtime.strftime("%Y/%m/%d %H:%M:%S") %></td>
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    <% end %>
+    
+    <% end %>
+
+ </div>
+    <!-- sub_section_white end -->
+    <%#= render :partial => "proofshow"%>
+</div>
+
+<script type="text/javascript">
+$(".admeasure_show").prop('disabled', true);
+$("#user_share_operater_list").attr('disabled', true).trigger("liszt:updated");
+$("#share_order_group_list").attr('disabled', true).trigger("liszt:updated");
+$(document).on('click','.check_download_item',function(){
+  var key = $(this).attr("data-key");
+  var id = $(this).attr("data-id");
+  var value = $(this).attr("checked") == "checked" ? "true" : "false";
+  $.post("<%= check_download_attr_orders_path %>",{key:key,value:value,order_id:id},function(data){
+    // console.log(data)
+  })
+});
+function change_input(n){
+  if (n=="0"){
+    $("#pqb").show();
+    $("#zm").hide();
+  }else{
+    $("#pqb").hide();
+    $("#zm").show();
+  }
+}
+
+$("#order_frequency_limit").change(function(){toggle_frequency_capping();}).change();
+function toggle_frequency_capping(){
+    if($("#order_frequency_limit").is(':checked')){
+        $("#show_frequency").show();
+    }else{
+        $("#show_frequency").hide();
+    }
+}
+</script>

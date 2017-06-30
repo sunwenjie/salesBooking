@@ -1,0 +1,66 @@
+<div class="page_title">
+  <div class="row"><div class="client-row"><h1>更新账户资料</h1></div></div>
+</div>
+<div  class ="big_section">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, :class=> "form-horizontal" }) do |f| %>
+
+  <% if devise_error_messages! != "" %>
+    <div class="error sticker"><%= devise_error_messages! %></div>
+  <% end %>
+  
+<div class="control-group">
+  <%= f.label :current_password,"当前密码", :class => "control-label" %>
+  <div class="controls">
+    <div class='row'>
+      <div class='item_one'>
+        <div class='span'>
+        <%= f.password_field :current_password, autocomplete: "off" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :current_password,"密码", :class => "control-label" %>
+  <div class="controls">
+    <div class='row'>
+      <div class='item_one'>
+        <div class='span'>
+        <%= f.password_field :password, autocomplete: "off" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= f.label :password_confirmation,"密码确认", :class => "control-label" %>
+  <div class="controls">
+    <div class='row'>
+      <div class='item_one'>
+        <div class='span'>
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row ">
+    <div class='button_area'>
+      <div class="">
+        <div class="outer_cancel"><button type='button' href='<%= orders_path %>'>取消</button></div>
+        <div class="outer_submit"><%= f.submit "更新" %></div>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>
+ <script type="text/javascript">
+$(document).ready(function() {
+  $('.field_with_errors').parent().removeClass('have_error');
+  $('.field_with_errors').parent().find(".span").addClass("have_error");
+});
+//]]>
+</script>

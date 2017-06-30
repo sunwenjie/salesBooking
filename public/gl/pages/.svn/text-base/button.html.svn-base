@@ -1,0 +1,59 @@
+<header class="jumbotron subhead">
+        <h1>四，按钮（Button）</h1>
+</header>
+<div class="big_section">
+<div class="sub_section_white">
+
+<form class="form-horizontal">
+
+<div class="control-group">
+	<div class="outer_submit">
+		<input type="button" value="Submit" class="submit">
+	</div>
+		<div style="float:right;display: inline-block;width: 690px;" class="span5">
+<pre class="prettyprint linenums">
+<div class="outer_submit">
+<input class="submit" value="Submit" type="button">
+</div>
+</pre>
+	</div>
+</div>
+<div class="control-group">
+		<div class="outer_cancel">
+			<input type="button" value="Cancel" class="cancel">
+		</div>
+		<div style="float:right;display: inline-block;width: 690px;" class="span5">
+<pre class="prettyprint linenums">
+<div class="outer_cancel">
+<input class="cancel" value="Cancle" type="button">
+</div>
+</pre>
+	</div>
+</div>
+<div class="control-group">
+		<div class="outer_other">
+			<input type="button" value="Other" class="other">
+		</div>
+		<div style="float:right;display: inline-block;width: 690px;" class="span5">
+<pre class="prettyprint linenums">
+<div class="outer_other">
+<input class="other" value="Other" type="button">
+</div>
+</pre>
+	</div>
+</div>
+<div class="control-group">
+		<div class="outer_other_thin">
+			<input type="button" value="Other Thin" class="other_thin">
+		</div>
+		<div style="float:right;display: inline-block;width: 690px;" class="span5">
+<pre class="prettyprint linenums">
+<div class="outer_other_thin">
+<input class="other_thin" value="Other" type="button">
+</div>>
+</pre>
+	</div>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,120 @@
+#multi_layer {border: 1px solid transparent; display:-webkit-box;display:-moz-box;width:100%;}
+#multi_layer ul{margin: 0px;padding: 0px;}
+#multi_layer .tree {padding: 3px 12px 10px 2px;height:200px;overflow-y:scroll;overflow-x:auto;background-color:white;}
+#multi_layer .tree ul{display:none;}
+#multi_layer li {
+	list-style: none;
+	font-size: 12px;
+	min-height: 22px;
+	line-height: 22px;
+	color: #333;
+	margin: 3px 0px 3px 3px;
+	position: relative;
+}
+#multi_layer .tree li span{
+	width: 95%;
+	height: 100%;
+	display: block;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	max-width: 190px;
+}
+#multi_layer .tree li span:hover {
+	
+	background-color: #ededed;
+	cursor: pointer;
+}
+#multi_layer .tree li:hover .delete{
+	display: block;
+}
+#multi_layer .tree li .delete{
+	display: block;
+	position:absolute;
+	right:0px;
+	top:2px;
+	cursor:pointer;
+}
+#multi_layer .tree li span.select{
+	background-color: #e5392a;
+	color:white;
+}
+#multi_layer .tree li span.selected{
+	color:#CEC0C0;
+}
+#multi_layer .parent_layer{
+	width:220px;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+	border:1px solid #ddd;
+	border-radius:5px; 
+	-webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    font-size: 12px;
+    float: left\9;
+}
+#multi_layer .child_layer{
+	width:220px;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+	border: 1px solid #ddd;
+	border-radius:5px; 
+	-webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-box-ordinal-group:2;
+    -moz-box-ordinal-group:2;
+    font-size: 12px;
+    float: right\9;
+}
+#multi_layer .pannel{
+	clear: both;
+	height: 24px;
+	padding: 0px;
+	margin:0px;
+	font:bold 12px/24px Arial;
+	background-color: #e6e6e6;
+}
+#multi_layer .pannel>span{
+	margin:5px;
+}
+#multi_layer .button_layer{
+    -webkit-box-flex:1;
+    -moz-box-flex:1;
+    -webkit-box-ordinal-group:2;
+    -moz-box-ordinal-group:2;
+    margin:auto 5px;
+    position: relative;
+}
+#multi_layer .button_layer label{
+	position: absolute;
+	width: 50px;
+	top: 110px;
+	text-align: center;
+	font-size: 12px;
+	left:220px\9;
+	top:100px\9;
+}
+#multi_layer .button_layer a{
+	color: red;
+}
+#multi_layer .tree li i.button.center_close{
+	background-position:-74px -18px;
+}
+#multi_layer .tree li i.button.center_open{
+	background-position:-92px -18px;
+}
+#multi_layer .tree li i.button.switch{
+	weight:18px;
+	height: 18px;
+}
+#multi_layer .tree li i {line-height:16px; margin-right:2px}
+#multi_layer .tree li i.button {line-height:0; margin:0; width:16px; height:16px; display: inline-block; vertical-align:middle;
+	border:0 none; cursor: pointer;outline:none;
+	background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;
+	background-image:url("../../images/shared/components/icoFromZtree.gif"); *background-image:url("/images/shared/components/icoFromZtree.gif")}
+
+#multi_layer .tree li ul.line{ background:url(../../images/shared/components/line_conn.gif) 0 0 repeat-y;padding: 0 0 0 13px}
+
+#multi_layer a {text-decoration:underline;}
+
+

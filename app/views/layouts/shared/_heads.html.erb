@@ -1,0 +1,105 @@
+ <!--头部-->
+<div class="myheading">
+<nav class="navbar navbar-inverse">
+  <div class="x-navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand" data-toggle="offcanvas">
+        <img src="/images/logo/xmo.optimix.asia.png" alt="" style="max-width:100%;height: auto;border: 0;">
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="x-user-main x-search">
+        <label class="x-main-title"><%= t("layout.order_management")%></label>
+      </div>
+       <div class="x-top-menu" >
+        <ul class="nav navbar-nav">
+           <% if current_user.administrator? %>
+             <li class="<%= controller_name == "orders" && action_name != "preview" ? 'selected' : ''%>"><%= link_to "#{t("layout.my_order")}", orders_path%></li>
+             <li class="<%= li_class(["clients"]) %>" <%= left_title_select "#{t("layout.my_client")}",clients_path %></li>
+             <li class="<%= li_class(["products"]) %>"> <%= left_title_select "#{t("layout.products")}",products_path %></li>
+             <li class="<%= li_class(["channels"]) %>"><%= left_title_select "#{t("layout.channels")}",channels_path %></li>
+
+              <li class="<%= li_class(["approval_flows"]) %>">
+                <a href="<%= approval_flows_path %>"><%= t("layout.platform_settings")%></a>
+                <ul class="dropdown-top-menu" aria-labelledby="dropdownMenu1">
+                  <span class="nav-arrow"></span>
+                  <%= left_title_select "#{t("layout.notification_settings")}",approval_flows_path %>
+                  <%= left_title_select "#{t("layout.sales_type_settings")}",new_sales_group_type_approval_flows_path %>
+                </ul>
+              </li>
+           <% else %>
+              <li class="<%= controller_name == "orders" && action_name != "preview" ? 'selected' : ''%>"><%= link_to "#{t("layout.my_order")}", orders_path%></li>
+              <li class="<%= li_class(["clients"]) %>" <%= left_title_select "#{t("layout.my_client")}",clients_path %></li>
+
+              <% if current_user.can_manage_product? %>
+                  <li class="<%= li_class(["products"]) %>"> <%= left_title_select "#{t("layout.products")}",products_path %></li>
+              <% end %>
+              <% if current_user.can_manage_channel? %>
+                  <li class="<%= li_class(["channels"]) %>"><%= left_title_select "#{t("layout.channels")}",channels_path %></li>
+              <% end %>
+           <% end %>
+        </ul>
+      </div>
+      <% if current_user.present? %>
+      <div class="x-user-main navbar-right ">
+        <div class="x-user-con">
+            <span class="x-user-dis"><%= current_user.administrator? ? t("layout.admin") : t("layout.user") %>:&nbsp;&nbsp;<%= current_user.real_name%><br/> </span>
+            <span class="x-user-arrow icon-dropdown"></span>
+        </div>
+        <ul class="x-user-list">
+          <span class="nav-arrow"></span>
+          <li>
+            <a class="x-user-config" href="<%= SendMenu::ReturnXmoUrl %>">
+              <span class="icon_accountsetting icon_setting"></span><%= t("layout.xmo_label")%></a>
+          </li>
+          <li>
+            <a class="x-user-config" href="<%= edit_admin_path(current_user.id)%>">
+              <span class="icon_accountsetting icon_setting"></span><%= t("layout.account_detail")%></a>
+          </li>
+          <li>
+            <a class="x-user-config" href="<%= logout_admins_path %>">
+              <span class="icon_logout icon_setting"></span><%= t("layout.logout")%></a>
+          </li>
+        </ul>
+      </div>
+      <% end %>
+      <div class="navbar-form navbar-right" >
+        <span class="x-lang-en <%= I18n.locale.to_s == 'en' ? 'selected' : ''%>" onclick="change_lang('en')"></span>
+        <span class="x-lang-ch <%= I18n.locale.to_s == 'en' ? '' : 'selected'%>" onclick="change_lang('zh-cn')"></span>
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+</div>
+<script type="text/javascript">
+
+    var request_path='<%= request.path %>';
+    var query_string='<%= request.query_string %>';
+    if (query_string!='') request_path +="?"+ query_string;
+
+    var change_lang =function(value) {
+        var tmp = request_path.split("/");
+        tmp[1] = value;
+        if (request_path == "/"){
+            location.href=tmp.join("/") + "/orders";
+        }else{
+            location.href=tmp.join("/");
+        }
+    };
+
+$("#roles").change(function(){
+  var role_id = $('#roles').val().trim();
+  $.ajax({
+      type: "GET",
+      url:  "/<%= I18n.locale.to_s%>/admins/update_role_id?role_id="+role_id,
+      dataType:"text",
+      success: function(msg){
+        window.location.href="<%= orders_path%>";
+      },
+      error: function(msg){
+      }
+  });
+});
+</script>

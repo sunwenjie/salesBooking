@@ -1,0 +1,45 @@
+<!-- 布局 ｛-->
+
+<header class="jumbotron subhead">
+        <h1>一，布局（layout）</h1>
+        <p class="lead">1.1－XMO中常用的模块</p>
+</header>
+
+<div class="big_section">
+  <div style="clear:both" class="row"><div class="span_label"><label>Big Section (b_section_1)</label></div>
+  <div class="span_after_label">
+
+<pre class="prettyprint linenums">
+<div class="big_section">  // For the outer section
+...
+</div>
+</pre>
+  </div>
+
+</div>
+
+<div class="sub_section_gray">
+<pre class="prettyprint linenums">
+<div class='sub_section_gray'>// For section with gray background
+  ....
+</div> 
+</pre>
+</div>
+
+<div class="sub_section_white">
+<pre class="prettyprint linenums">
+<div class='sub_section_white'>....</div> // For section with white background
+</pre>
+</div>
+
+
+  </div>
+
+  <div class="section">
+<pre class="prettyprint linenums">
+<div class="section">  // For the outer section
+...
+</div>
+</pre>
+  </div>
+<!--｝ 布局 -->

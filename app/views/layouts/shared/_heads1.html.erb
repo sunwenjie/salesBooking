@@ -1,0 +1,91 @@
+<div id="header">
+  <div id='logo'>
+    <img src="/images/logo/xmo.optimix.asia.png" style="width:194px;height:79px"/>
+  </div>
+  <div id ='header_right'>
+    <div id="topnav" >
+        <div id="nav_right" >
+          <% time = Time.new %>
+            <% if current_user.present? %>
+              &nbsp;&nbsp;&nbsp;<%#= link_to "变更密码", edit_user_registration_path %> <span class="divider"> | </span> <%= link_to "账户资料", edit_admin_path(current_user.id) %> <span class="divider"> | </span><%= link_to('登出',logout_admins_path)%>
+              <%#= link_to('登出', destroy_user_session_path) %>
+            <% end %>
+        </div>
+
+        <div id="header_right_block">
+          <div id="w_name">&nbsp;<%= h(current_user.name) %></div>
+          <div id="welcome_label">欢迎, <%= t("#{current_user.role_name}")%>:&nbsp;&nbsp;&nbsp;</div>
+        </div>
+      </div>
+  </div>
+  <div style="clear: both;"></div>
+</div>
+
+<div style="height:50px;">
+<div id="nav">
+	<!-- skiplink anchor: navigation -->
+	<div class="h_nav">
+		<div class='h_nav_body'>
+			<!-- main navigation: horizontal list -->
+			<ul id="h_nav_left">
+                          <%if current_user.is?(["sale","team_head","super_user","legal_officer"])%>
+                            <%= left_title_select "订单列表",orders_path %>
+                            <%= left_title_select "客户列表",clients_path %>
+                          <%elsif current_user.is?("admin")%>
+                            <%= left_title_select "管理",admins_path%>
+                            <%= left_title_select "订单",orders_path%>
+                            <%= left_title_select "客户列表",clients_path %>
+                            <%= left_title_select "产品列表",products_path %>
+                            <%= left_title_select "渠道列表",channels_path %>
+                            <%= left_title_select "事件通知",events_path %>
+                          <%elsif current_user.is?(["sales_manager","media_assessing_officer","product_assessing_officer","sales_president","planner"])%>
+                            <%= left_title_select "待#{current_user.is?(Role.planner_function_group) ? '核对' : '审批' }","#{uncheck_action_name}"%>
+                            <%= left_title_select "已#{current_user.is?(Role.planner_function_group) ? '核对' : '审批' }","#{check_action_name}"%>
+                          <%elsif current_user.is?("operater")%>
+                            <%= left_title_select "订单",orders_path %>
+                          <%elsif current_user.is?("operaters_manager")%>
+                            <%= left_title_select "待分配","/orders/undistribute" %>
+                            <%= left_title_select "已分配","/orders/distribute" %>
+                          <%end%>
+                          <%= left_title_select "XMO",SendMenu::ReturnXmoUrl %>
+		         <li style='width:26px'><span class='menu_spliter'>&nbsp;</span></li>
+			</ul>
+                       <% if current_user.is?("sales_manager") || current_user.is?("sales_president")%>
+                        <ul id="h_nav_right">
+                            <%= right_title_select "订单","/orders/unapproved"%>
+                            <%= right_title_select "排期表","/orders/unproof" if current_user.is?("sales_manager") %>
+                            <%= right_title_select "客户权限","/clients/unapproved"%>
+		            <li class="right_menu "><span class="menu_spliter">&nbsp;</span></li>
+			</ul>
+                        <%end%>
+			<% if current_user.is?("admin")%>
+				<ul id="admin_nav_right">
+					 <li class="right_menu <%= "selected" if ["users", "groups"].include?(params[:controller]) %> have_sub_menu one" id="menu_general_setting">
+              <!-- General Setting -->
+              <span class='menu_spliter'>&nbsp;</span>
+              <span><%= link_to "群组管理", groups_path %></span>
+            </li>
+				</ul>
+			<% end %>
+
+		</div>
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
+$("#roles").change(function(){
+  var role_id = $('#roles').val().trim();
+  $.ajax({
+      type: "GET",
+      url:  "/<%= I18n.locale.to_s%>/admins/update_role_id?role_id="+role_id,
+      dataType:"text",
+      success: function(msg){
+        window.location.href="/orders";
+      },
+      error: function(msg){
+      }
+  });
+});
+</script>
+

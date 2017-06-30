@@ -1,0 +1,17 @@
+development:
+  sendmail: true
+  recipients: "jamst.li@i-click.com"
+  pv_recipients: "mike.gao@i-click.com,jianwei.lv@i-click.com,jinshou.zhu@i-click.com"
+production:
+  sendmail: true
+  recipients: "jamst.li@i-click.com,jay.liu@i-click.com,wenjie.sun@i-click.com,hera.sun@i-click.com"
+  pv_recipients: "mike.gao@i-click.com,jianwei.lv@i-click.com,jinshou.zhu@i-click.com"
+staging:
+  sendmail: true
+  recipients: "jamst.li@i-click.com,jay.liu@i-click.com,wenjie.sun@i-click.com,hera.sun@i-click.com"
+  pv_recipients: "mike.gao@i-click.com,jianwei.lv@i-click.com,jinshou.zhu@i-click.com"
+test:
+  sendmail:
+  recipients:
+
+

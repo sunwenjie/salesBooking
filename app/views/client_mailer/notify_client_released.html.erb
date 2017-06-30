@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>Dear Sir/Madam,</p>
+    <p>Your Client: <%= @client.clientname %>Brand<%= @client.brand %> Status:<%= @time ? "Due to no orders in these 3 months, this client authority was autmatically released. If you want to create orders for this client, please submit client approval again." : "Client authority released" %>
+. Please login system for details.</p>o
+
+    <p>Regards,</br>
+    iClick Interative Asia Limited</p>
+
+
+    <p>您好:</p>
+    <p>您的客户: <%= @client.clientname %>品牌<%= @client.brand.present? ? @client.brand : "-" %> 状态：<%= @time ? "3个月未下单，此客户权限已自动释放。如需下单，请再次提交申请。" : "权限已释放" %>
+。您可以登录系统查看详情。</p>
+
+    <p>谢谢</p>
+
+    <p>爱点击互动</p>
+  </body>
+</html>

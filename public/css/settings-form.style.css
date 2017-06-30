@@ -1,0 +1,8 @@
+.remark em em{margin-left:20px;} 
+
+.yform span.type-button{float:left;min-width:17%;}
+.yform span.type-button input.inline-fl-button{min-width:50px;margin-left:10px;width:auto;float:right;padding:2px;background:none;}
+.yform span.type-button input.inline-fl-button:hover{background:#555;color:white;border:1px solid #ddd;border-color:#444 #ddd #ddd #444;}
+
+.yform div.type-text input.short{width:5%;min-width:60px;text-align:center;}
+.yform div.type-text span.sep{float:left;margin:0px 7px 0px 10px;display:inline-block;*display:inline;*zoom:1;padding-top:7px;}

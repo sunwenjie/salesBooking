@@ -1,0 +1,164 @@
+<%= javascript_include_tag "chosen.jquery.min" %>
+
+<div  class ="big_section">
+  <% submit_action = params[:action] == "edit" ? update_user_admins_path : create_user_admins_path %>
+  <%= form_for @user, :url => submit_action, :html=> {:class=> "form-horizontal"} do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation" class="error sticker">
+      <h2><%= @user.errors.count %>个错误导致用户不能保存成功 :</h2>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= hidden_field_tag "user_id", @user.id %>
+  
+  <div class="control-group">
+    <%= f.label :name , t("admin.index.name"), :class => "control-label" %>
+    <div class="controls">
+      <div class='row'>
+        <div class='item_one'>
+          <div class='span'>
+            <%= f.text_field :name %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :username,t("admin.index.login_name"), :class => "control-label" %>
+    <div class="controls">
+      <div class='row'>
+        <div class='item_one'>
+          <div class='span'>
+            <%if params[:action]=='edit'%>
+            <%= f.text_field :username,:disabled => true %>
+            <%else%>
+            <%= f.text_field :username %>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :useremail,t("admin.index.email"), :class => "control-label" %>
+    <div class="controls">
+      <div class='row'>
+        <div class='item_one'>
+          <div class='span'>
+            <%= f.text_field :useremail %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <div class="control-group">
+    <%= f.label :usercontact, t("admin.index.contact") , :class => "control-label" %>
+    <div class="controls">
+      <div class='row'>
+        <div class='item_one'>
+          <div class='span'>
+            <%= f.text_field :usercontact %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group t_margin_20" >
+    <label class="control-label">
+      <label for="campaign_campaignname" class="inline"><%=t("admin.index.status")%></label>
+    </label>
+    <div class="controls">
+      <div class="row">
+        <div class="item_four_w_help">
+          <div class="span">
+            <label class="radio">
+              <%= radio_button("user", "user_status", "active",:checked=>(@user.user_status == "Active" ? "checked" : "checked"),:onclick=>"change_user_state()" ,:disabled => true )%>
+              <%=t("admin.index.normal")%>
+            </label>
+          </div>
+
+          <div class="span" >
+            <label class="radio" style="margin-left: 20px">
+              <%= radio_button("user", "user_status","inactive",:checked=>(@user.user_status == "Inactive" ? "checked" : ""),:onclick=>"change_user_state()" ,:disabled => true )%>
+              <%=t("admin.index.freeze")%>
+            </label>
+          </div>
+
+          <div class="span" >
+          <label class="radio" style="margin-left: 20px">
+            <%= radio_button("user", "user_status","unactive",:checked=>(@user.user_status == "Unactive" ? "checked" : ""),:onclick=>"change_user_state()" ,:disabled => true )%>
+            <%=t("admin.index.pause")%>
+          </label>
+          </div>
+          <% if  ["edit", "update_user", "update"].include?(params[:action])%>
+          <div class="span ">
+            <label class="radio" style="margin-left: 20px">
+              <%= radio_button("user", "user_status", "remove",:checked=>(@user.user_status == "Paused" ? "checked" : ""),:onclick=>"change_user_state()" ,:disabled => true )%>
+              <%=t("admin.index.remove")%>
+            </label>
+          </div>
+         <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="control-group">
+    <label class="control-label" for="">BU
+    </label>
+    <div class="controls">
+      <div class='row'>
+        <div class='span'>
+           <select id="user_bu" name="user[bu][]" multiple data-placeholder="<%=t("admin.index.select")%>" style="width:380px" class="chzn-select l_margin_0" >
+            <%= option_for_bu(@user.bu) %>
+          </select>
+          </div>
+          <div class="span l_margin_10 t_margin_5">
+              <a class="selection_icon selection_trigger" data-target="#user_bu" href="javascript:void(0);"></a>
+          </div>
+        </div>
+      </div>
+  </div>   
+
+  <div class="row ">
+    <div class='button_area'>
+      <div class="pull-right">
+        <div class="outer_cancel">
+          <button type='button' onclick="window.history.back();"><%=t("admin.index.cancel")%></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% end %>
+</div>
+
+<script type="text/javascript">
+$("input,textarea,select").prop('disabled', true);
+multiple_chosen("#user_bu", ".user_bu");
+
+$('.selection_trigger').click(function(){
+var target = $(this).attr('data-target') + '_chzn';
+$(target).mousedown();
+return false;
+});
+
+function change_user_state(){
+    if ($("#user_user_state_active").is(':checked')) {
+        $("#user_is_active").val(true);
+    }else{
+        $("#user_is_active").val(false);
+    }
+}
+
+</script>

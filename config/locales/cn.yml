@@ -1,0 +1,562 @@
+cn:
+  "FALSE": '否'
+  "false": '否'
+  "TRUE": '是'
+  "true": '是'
+  MEDIA_BUYING: "媒体采购"
+  ANDIENCE_BUYING: "人群购买"
+  order_saved: "订单已保存并等待提交"
+  planner_unapproved: "策划核对中"
+  planner_approved: "策划已核对"
+  sales_manager_unapproved: "订单审批中 销售总监"
+  sales_president_unapproved: "订单审批中 中国区总裁"
+  media_assessing_officer_unapproved: "订单审批中 媒介部门"
+  product_assessing_officer_unapproved: "订单审批中 产品部门"
+  proof_ready: "订单已确认"
+  proof_unapproved: "排期表审批中"
+  examine_completed: "合同已确认"
+  rejected: "订单审批未通过"
+  legal_officer_unapproved: "合同确认中"
+  legal_officer_submit: "合同确认中"
+  sales_manager_submit: "通过"
+  media_assessing_officer_submit: "通过"
+  product_assessing_officer_submit: "通过"
+  proof_uploaded: "上传排期表"
+  proof_submit: "通过"
+  reject: "拒绝"
+  cli_rejected: "客户权限未通过"
+  unapproved: "客户权限确定中"
+  approved: "客户权限已确认"
+  released: "客户权限已释放"
+  processing: "正在配置"
+  materials_incomplete: "素材尚未齐全"
+  need_third_code: "等待提供第三方追踪代码"
+  config_done: "配置完成"
+  please_contact_technology_team_by: "请联系"
+  geo_delivery_type1: "按省份投放"
+  geo_delivery_type2: "按城市等级投放"
+  geo_delivery_type3: "城市自定义投放"
+  province_city_level: "选择省份/城市等级"
+  province_label: "省份"
+  city_level_label: "城市等级"
+  for_help: ""
+  groups:
+    index_pt: "群组"
+    new_pt: "新增群组"
+    edit_pt: "编辑群组"
+    show_pt: "群组详情"
+  products:
+    index_pt: "产品"
+    new_pt: "新增产品"
+    edit_pt: "编辑产品"
+    show_pt: "产品详情"
+  product_types:
+    index_pt: "产品类别"
+    new_pt: "新增产品类别"
+    edit_pt: "编辑产品类别"
+    show_pt: "产品类别详情"
+  channels:
+    index_pt: "渠道"
+    new_pt: "新增渠道"
+    edit_pt: "编辑渠道"
+    show_pt: "渠道详情"
+  clients:
+    index_pt: "广告主"
+    new_pt: "新增广告主"
+    edit_pt: "编辑广告主"
+    approval_pt: "审批客户"
+    show_pt: "客户详情"
+  approval_flows:
+    index_pt: "审批流"
+    new_pt: "新增审批流"
+    edit_pt: "编辑审批流"
+    show_pt: "审批流详情"
+  admins:
+    index_pt: "用户列表"
+    forget_password_pt: "忘记密码"
+    edit_pt: "编辑用户信息"
+    new_pt: "新增用户"
+    login_pt: "登陆"
+    error_mail_pt: "消息邮件"
+    update_role_id_pt: "变换角色"
+    reset_mail_pt: "重置密码"
+  orders:
+    index_pt: "订单"
+    new_pt: "新增订单"
+    edit_pt: "编辑订单"
+    preview_website_pt: "精选网站"
+    preview_interest_pt: "人群兴趣标签"
+    show_pt: "订单详情"
+    allocate_pt: "订单配置"
+    allocate_show_pt: "订单配置详情"
+    download_pt: "订单列表"
+    download_page_pt: "订单列表"
+    executering_pt: "订单列表"
+    scheduling_pt: "排期表及执行表"
+  custom_groups:
+    gender:
+      m: "男"
+      f: "女"
+    location:
+      CN_AH: "安徽"
+      CN_BJ: "北京"
+      CN_FJ: "福建"
+      CN_GS: "甘肃"
+      CN_GD: "广东"
+      CN_GX: "广西"
+      CN_GZ: "贵州"
+      CN_HI: "海南"
+      CN_HE: "河南"
+      CN_HA: "海南"
+      CN_HL: "黑龙江"
+      CN_HB: "河北"
+      CN_HN: "湖南"
+      CN_HW: "海外"
+      CN_HU: "湖北"
+      CN_JL: "吉林"
+      CN_JS: "江苏"
+      CN_JX: "江西"
+      CN_LN: "辽宁"
+      CN_NM: "内蒙古"
+      CN_IM: "内蒙古"
+      CN_NX: "宁夏"
+      CN_QH: "青海"
+      CN_SD: "山东"
+      CN_SX: "山西"
+      CN_SA: "陕西"
+      CN_SN: "陕西"
+      CN_SH: "上海"
+      CN_SC: "四川"
+      CN_TJ: "天津"
+      CN_XZ: "西藏"
+      CN_XJ: "新疆"
+      CN_YN: "云南"
+      CN_ZJ: "浙江"
+      CN_CQ: "重庆"
+      MO: "澳门"
+      HK: "香港"
+      TW: "台湾"
+      SG: "新加坡"
+      OTHERS: "其他"
+      UNKNOWN: "未能分类"
+    interest:
+      air_travel: "航空"
+      alcohol: "酒类"
+      arts_entertainment: "娱乐"
+      audio_equipment: "音响器材t"
+      auto_accessories: "汽车周边"
+      auto_insurance: "汽车保险"
+      automobiles: "汽车"
+      baby_maternity: "母婴育儿"
+      beauty_cosmetics: "美容及化妆品"
+      beverages: "饮料"
+      books_magazines: "书刊杂志"
+      brands: "品牌"
+      careers: "招聘求职"
+      chinese_liquor_spirits: "国语"
+      classical_music_jazz: "高雅音乐"
+      clothing: "服装"
+      colleges_universities: "大学"
+      comics_animation: "动画漫画"
+      commerce: "商业"
+      computers_related_products: "电脑及外设"
+      consulting_services: "咨询及服务"
+      consumer_electronics: "消费数码"
+      cooking_recipes: "烹饪和菜肴"
+      cosmetic_procedures: "整形整容"
+      culture_literature: "文化文学"
+      daily_personal_care: "洗护日用"
+      daily_supplies: "日用百货"
+      dating: "相亲交友"
+      designers_collections: "奢侈品"
+      domestic_appliance: "家用电器"
+      e_commerce: "电子商务"
+      early_childhood_education: "早教幼教"
+      entry_level_cars: "入门级汽车"
+      family_services: "亲子服务"
+      fashion: "时尚"
+      fitness: "健身"
+      food_beverages: "食品美食"
+      fresh_food: "生鲜食品"
+      furniture_decoration: "家居家装"
+      game_accessories: "游戏周边"
+      games: "游戏"
+      hair_body: "美发美体"
+      hardware_networking: "硬件及网络"
+      health_wellness: "健康医疗"
+      healthcare: "保健养生"
+      high_end_cars: "高档汽车"
+      home_appliances: "数码配件"
+      hotels_accommodations: 酒店"
+      humanities_arts: "人文艺术"
+      industrial: "工业"
+      insurance: "保险"
+      internet_technology: "IT及信息产业"
+      investing: "投资理财"
+      jewelry_accessories: "首饰饰品"
+      jobs_education: "教育培训"
+      language_education: "语言培训"
+      leisure_travel: "旅游"
+      leisure_travel_business_travel: "旅游商旅"
+      liquor_spirits: "洋酒"
+      local_food: 地方特产"
+      luxury_cars: "豪华汽车"
+      make_up_cosmetics: "彩妆"
+      massive_multiplayer: "大型客户端游戏r"
+      maternity_parenting: "母婴用品"
+      mba: "MBA"
+      medical_treatment: "医疗"
+      mid_end_cars: "中档汽车"
+      mini_games_flash_games: "小游戏Flash游戏"
+      mobile_phone_tablet_games: "手机平板游戏"
+      mobile_phones_tablets_apps: "手机平板与应用"
+      movies: "院线电影"
+      musical_instruments: "乐器"
+      office_equipment: "电脑办公"
+      office_supplies: "办公文具"
+      online_games: "网页游戏"
+      online_literature: "网络小说"
+      outdoor_sports: "户外"
+      overseas_education: "留学移民"
+      personal_finance: "金融财经"
+      pets: "宠物"
+      photography_videography: "摄影摄像"
+      politics: "时政"
+      pop_music: "流行音乐"
+      primary_secondary_schooling: "初级中级教育"
+      property_development: "开发商"
+      property_management: "物业管理"
+      psychology: "情感心理"
+      real_estate: "楼盘"
+      real_estate_agencies: "中介代理"
+      real_estate_construction: "房地产及建筑"
+      religion_psychics: "宗教和灵媒"
+      rental_cars: "汽车租赁"
+      restaurants: "餐馆美食"
+      science: "科学"
+      shoes_bags: "鞋包"
+      skin_care: "护肤"
+      snacks: "休闲食品"
+      software: "软件"
+      sports: "运动"
+      sports_fitness: "运动健身"
+      sports_games: "电子竞技"
+      telecommunications_services: "电信、通信服务"
+      traffic: "交通"
+      travel_agencies_services: "旅行社"
+      tv_dramas: "网络影视剧"
+      used_cars: "二手车"
+      variety_entertainment: "娱乐综艺"
+      vehicle_maintenance: "养车用车"
+      video_games: "电玩"
+      vocational_continuing_education: "职业技能培训"
+      wedding_services: "婚庆"
+      wine_beer_champagne: "红酒、白葡萄酒、香槟"
+  media:
+    website_industry1: "视频影音"
+    website_industry2: "休闲娱乐"
+    website_industry3: "门户资讯"
+    website_industry4: "生活服务"
+    website_industry5: "军事资讯"
+    website_industry6: "体育运动"
+    website_industry7: "消费数码"
+    website_industry8: "教育培训"
+    website_industry9: "金融财经"
+    website_industry10: "流行时尚"
+    website_industry11: "健康医疗"
+    website_industry12: "母婴育儿"
+    website_industry13: "旅游交通"
+    website_industry14: "家装建材"
+    website_industry15: "汽车资讯"
+    website_industry16: "其他"
+    website_ad_format1: "Banner"
+    website_ad_format2: "富媒体"
+    website_ad_format3: "视频贴片"
+  errors:
+    messages:
+      not_saved: "无法保存"
+  activerecord:
+    attributes:
+      user:
+        email: "电邮"
+        username: "登陆名称"
+        real_name: "名称"
+        tel: "联络方式"
+        roles: "身份"
+        innergroups: "所属群组"
+        current_password: "当前密码"
+        password: "密码"
+        password_confirmation: "密码确认"
+        reset_password_token: ""
+      group:
+        name: "名称"
+        sales_manager_id: "销售总监"
+      order:
+        client_id: "客户名称"
+        linkman: "客户联络人"
+        title: "订单名称"
+        linkman_tel: "联络人电话"
+        start_date: "开始时间"
+        ending_date: "结束时间"
+        regional: "地域售卖方式"
+        budget: "整体预算"
+        cost: "卖价"
+        code: "订单编号"
+        extra_website: "独立购买网站"
+        interest_crowd: "人群购买"
+        advertisement_tatol_budget_radio: ""
+        advertisement_before_other_ctr: ""
+        advertisement_admeasure_miss: ""
+        unfinish_media_plany: ""
+        share_order_blank: ""
+        share_order_group_blank: ""
+        advertisement_ad_type: ""
+        advertisement_num: ""
+        advertisement_cost: ""
+        budget_service_charges_scale: ""
+        nonuniform_date_range: ""
+        nonuniform_budget: ""
+      advertisements:
+        cost: "卖价"
+        ad_platform: "广告平台"
+        ad_type: "广告形式"
+        cost_type: "卖价类型"
+        budget_ratio: "预算分配"
+        planner_ctr: "CTR"
+      client:
+        title: "广告主"
+        license: "商务登记证号码"
+        clientname: "客户名称"
+        clientcontact: "客户联络人"
+        clientphone: "联络人电话"
+        linkman_position: "联络人职位"
+        brand: "品牌名称"
+        address: "公司地址"
+        share_client_blank: ""
+        name_and_brand_channel: ""
+        name_and_brand: ""
+    errors:
+      models:
+          user:
+            attributes:
+              email:
+                blank: "不能为空"
+                taken: "已被占用"
+              real_name:
+                blank: "不能为空"
+                taken: "已被占用"
+              username:
+                blank: "不能为空"
+                taken: "已被占用"
+                invalid: "错误"
+              role_id:
+                blank: "不能为空"
+              tel:
+                blank: "不能为空"
+              roles:
+                blank: "不能为空"
+              roles:
+                blank: "不能为空"
+              innergroups:
+                blank: "不能为空"
+              current_password:
+                blank: "不能为空"
+                invalid: "错误"
+              password:
+                blank: "不能为空"
+                too_short: "请输入至少8位数字或者字母组成的密码"
+                invalid: "错误"
+              password_confirmation:
+                confirmation: "不一致"
+              reset_password_token:
+                invalid: "更新密码失败,请确认链接是否正确。"
+                expired: "您的设置页面已过期，请到登陆页面找回密码。"
+          group:
+            attributes:
+              name:
+                blank: "不能为空"
+                taken: "已被占用"
+              sales_manager_id:
+                blank: "不能为空"
+          advertisement:
+            attributes:
+              cost:
+                not_a_number: "需要是数字"
+                blank: "不能为空"
+                less_than: "买价不能高于1000"
+              budget_ratio:
+                not_a_number: "需要是数字"
+                blank: "不能为空"
+                less_than: "不能高于100"
+              planner_ctr:
+                blank: "不能为空"
+              ad_type:
+                blank: "不能为空"
+          order:
+            attributes:
+              client_id:
+                blank: "不能为空"
+              linkman:
+                blank: "不能为空"
+              linkman_tel:
+                blank: "不能为空"
+              start_date:
+                blank: "不能为空"
+              ending_date:
+                blank: "不能为空"
+              regional:
+                inclusion: "不能为空"
+              budget:
+                not_a_number: "需要是数字"
+                blank: "不能为空"
+                less_than: "整体预算不能高于10000000"
+              cost:
+                not_a_number: "需要是数字"
+                blank: "不能为空"
+                less_than: "买价不能高于1000"
+              extra_website:
+                blank: "不能为空"
+              interest_crowd:
+                blank: "不能为空"
+              title:
+                blank: "不能为空"
+                taken: "已被占用"
+          client:
+            attributes:
+              license:
+                blank: "不能为空"
+                taken: "此登记号码已被记录"
+              clientname:
+                blank: "不能为空"
+                taken: "此用户名已被锁定"
+              clientcontact:
+                blank: "不能为空"
+              clientphone:
+                blank: "不能为空"
+              brand:
+                blank: "不能为空"
+              linkman_position:
+                blank: "不能为空"
+          approval_flow:
+            attributes:
+              name:
+                blank: "不能为空"
+              node_id:
+                blank: "不能为空"
+              user_group:
+                blank: "不能为空"
+              approval_group:
+                blank: "不能为空"
+          product:
+            attributes:
+              product_serial:
+                blank: "不能为空"
+              name:
+                blank: "不能为空"
+              single_buy_amount:
+                blank: "不能为空"
+                not_a_number: "需要是数字"
+              actual_accord_lowest_buy_amount:
+                blank: "不能为空"
+                not_a_number: "需要是数字"
+              public_price:
+                blank: "不能为空"
+                not_a_number: "需要是数字"
+
+              general_discount:
+                blank: "不能为空"
+                not_a_number: "需要是数字"
+                greater_than: "不能小于0"
+                less_than: "不能高于1"
+
+              floor_discount:
+                blank: "不能为空"
+                not_a_number: "需要是数字"
+                greater_than: "不能小于0"
+                less_than: "不能高于1"
+
+              ctr_prediction:
+                blank: "不能为空"
+                not_a_number: "需要是数字"
+                greater_than: "不能小于0"
+          product_type:
+            attributes:
+              name:
+                blank: "不能为空"
+                taken: "已被占用"
+
+              ad_type:
+                blank: "不能为空"
+                taken: "已被占用"
+
+      messages:
+        record_invalid: "Validation failed: %{errors}"
+        not_saved: "用户无法保存"
+        restrict_dependent_destroy:
+          one: "Cannot delete record because a dependent %{record} exists"
+          many: "Cannot delete record because dependent %{record} exist"
+  processing: "正在配置"
+  materials_incomplete: "素材尚未齐全"
+  need_third_code: "等待提供第三方追踪代码"
+  config_done: "配置完成"
+  devise:
+    sessions:
+      user:
+        signed_in: ""
+        signed_out: ""
+        already_signed_out: ""
+    registrations:
+      user:
+        updated: "密码更新成功"
+        signed_out: ""
+        already_signed_out: ""
+    passwords:
+      user:
+        updated: "账户激活成功"
+        signed_out: ""
+        already_signed_out: ""
+  COMPUTER: "PC展示广告"
+  VA15: "PC平台 - 视频广告 前贴片 15秒"
+  #VA30: "PC平台 - 视频广告 前贴片 30 秒"
+  WIN:  "PC平台 - 富媒体 视窗Ad TV"
+  PIP:  "PC平台 - 富媒体 画中画PIP"
+  MIX:  "PC平台 - 富媒体 混投"
+  BAN:  "PC平台 - 通栏横幅广告及其他形式"
+  QQSpace: "PC平台 - QQ空间通栏横幅广告"
+  MOBILE: "移动广告"
+  APPVA15: "移动平台 - 视频广告 前贴片 15秒"
+  ACROSS: "移动平台 - In app 通栏横幅广告"
+  TABLE:  "移动平台 - In app 插屏通栏横幅广告"
+  APPMIX: "移动平台 - 通栏横幅广告 + 插屏混投"
+  QQMessage: "移动平台 - 手机QQ消息流、微信/手机QQ空间/手机QQ Banner"
+  #WecatAndQQ: "移动平台 - 微信/手机QQ空间/手机QQ Banner"
+  MobileBannersAndWecat: "移动平台 - 移动广告(包括微信)"
+  InFeedAdvertisingANDQQ: "移动平台 - In Feed广告(包括QQ)"
+  OTV: "PC平台 - 海外OTV"
+  OTHERTYPE: "其他"
+#  汇率管理功能----start
+  NATION: "全部"
+  US_UK_AU_NZ_MY: "美国,英国,澳洲,新西兰,马来西亚"
+  HK_TW_MA_SG: "香港,台湾,澳门,新加坡"
+  SPECIAL: "北上广深"
+  OTHER: "其他"
+  OTHER_COUNTRY: "其他国家"
+  SPECIAL_COUNTRY: "自定义国家组合"
+#  汇率管理功能----end
+
+  report_template_client: "客户模板"
+  report_template_standard: "标准板"
+  report_period_daliy: "日报"
+  report_period_month: "周报"
+  report_period_closure: "结案"
+  REPORTTEMPLATE:
+    standard: "标准版"
+    client: "客户模板"
+  REPORTPERIOD:
+    daliy: "日报"
+    month: "周报"
+    closure: "结案"
+  THIRDMONITOR:
+    AdMaster: "Ad Master"
+    other: "其它"
+

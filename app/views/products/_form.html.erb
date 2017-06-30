@@ -1,0 +1,498 @@
+<!-- body start -->
+<script type="text/javascript" src="/js/xmo-calendar.js"></script>
+<script src="/js/chosen.jquery.min.js?9120" type="text/javascript"></script>
+
+<link rel="stylesheet" type="text/css" href="/css/css/xmo-calendar.css">
+<style>
+    .ui-autocomplete {
+        max-height:200px;
+        max-width: 380px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+    }
+    /* IE 6 doesn't support max-height
+     * we use height instead, but this forces the menu to always be this tall
+     */
+    * html .ui-autocomplete {
+        width: 380px;
+    }
+</style>
+<%= render :partial => "orders/order_js"%>
+<div  class ="big_section big_section_book">
+<%  @product = @product_new if  @product_new.present? %>
+  <% if @product.errors.any? %>
+      <div class="big_section">
+        <div id="error_explanation" class="error sticker">
+          <!--<h2><%#= @product.errors.count %><%= t('products.new.product_errors_msg') %></h2>-->
+          <h2><%= t('clients.form.client_errors_message_tip') %></h2>
+          <ul>
+            <% @product.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+  <% end %>
+
+  <% if flash[:notice] %>
+      <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+  <%= form_for(@product,:html=>{:id=>"product_form", :class=>"form-horizontal"}) do |f| %>
+
+
+      <div class="sub_section_white sub_section_white_book">
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t("products.new.product_id")%></label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.text_field :product_serial, :disname=>"产品ID", :class=>"required span5",:size=>30 %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t("products.new.product_name")%> </label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.text_field :name, :disname=>"产品名称", :class=>"required span5",:size=>30 %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t("products.new.product_en_name")%> </label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.text_field :en_name, :disname=>"产品英文名称", :class=>"required span5",:size=>30 %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t("products.new.type")%></label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.select :product_category_id,option_for_product_type(@product.product_category_id),{}, {:class => "required select span5 proof_ready_unmodify"} %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t("products.new.financial_settlement_type")%></label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <% financial_settlement_id = @product.financial_settlement_id.present? ? @product.financial_settlement_id : '' %>
+                <%= f.select :financial_settlement_id, options_for_select(options_financial(params[:locale].to_s),financial_settlement_id), {}, {:class=>"required select span5 proof_ready_unmodify"} %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline">广告平台*</label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%#= f.select :ad_platform,[["移动广告","MOBILE"],["PC展示广告","COMPUTER"]],{:selected=> @product.ad_platform.present? ? @product.ad_platform : "COMPUTER"}, {:class => "required select span5 proof_ready_unmodify"} %>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!--<div class="control-group t_margin_20">-->
+          <!--<label class="control-label">-->
+            <!--<label for="campaign_campaignname" class="inline"><%#=t("products.new.sale_type")%></label>-->
+          <!--</label>-->
+          <!--<div class="controls">-->
+            <!--<div class="row">-->
+                <!--<div class="span">-->
+                  <!--<%#= f.select :sale_model,[["CPM","CPM"],["CPC","CPC"]],{:selected => @product.sale_model.present? ? @product.sale_model : "CPM"}, {:class => "required select span5 proof_ready_unmodify"} %>-->
+                <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!-- 投放地域 -->
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t("products.new.regions")%></label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.select :product_regional_id,options_for_regional(@product.product_regional_id), {:class => "required select span5 proof_ready_unmodify"} ,:style=>"width:380px;"%>
+              </div>
+            </div>
+          </div>
+        </div> 
+
+        <!-- 刊例价 -->
+        <div class="control-group t_margin_20">
+          <label class="control-label"><label class="control-label"><%=t("products.new.price")%></label></label>
+          <div class="controls">
+            <div class="row">
+                <div class='span'>
+                  <div class="input-append">
+                    <span class="add-on">
+                    <%= f.select :sale_model,[["CPM","CPM"],["CPC","CPC"]],{:selected => @product.sale_model.present? ? @product.sale_model : "CPM"}, {:class => "required span2 select-inside",:style=>"width:77px;"} %>
+                    </span>
+                    <%= f.text_field :public_price,:disname=>"刊例价", :class=>"align_right numeric", :dis_wiget => "#public_price_dis_input", :style=>"width:192px;display:none;"%>
+                    <input type="text" id="public_price_dis_input" style="width:192px;" class='align_right numeric' placeholder="0.00" />
+                    <span class="add-on">
+                    <%= f.select :currency,option_for_currency(@product.currency), {}, {:class=>"required span2 select-inside",:style=>"width:77px;"} %>
+                    </span>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <!--&lt;!&ndash; 推荐货币 &ndash;&gt;-->
+        <!--<div class="control-group t_margin_20">-->
+          <!--<label class="control-label">-->
+            <!--<label for="campaign_campaignname" class="inline"><%=t("products.new.currency")%></label>-->
+          <!--</label>-->
+          <!--<div class="controls">-->
+            <!--<div class="row">-->
+              <!--<div class="span">-->
+                <!--<%#= f.select :currency,option_for_currency(@product.currency), {:class => "required select span5 proof_ready_unmodify"},:style => "width:383px;" %>-->
+
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+        <!-- 建议折扣 -->
+        <!-- <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline">建议折扣(小数)*</label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%#= f.text_field :general_discount, :disname=>"建议卖价",:class=>"align_right numeric",:size=>30,:style=>"width:367px;" %>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- 最低折扣 -->
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t("products.new.discount")%></label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span input-append">
+                <%= f.text_field :floor_discount,:disname=>"最低折扣",:value => @product.floor_discount ? @product.floor_discount * 100 : '', :class=>"align_right numeric",:size=>30,:style=>"display:none;width:341px;",:dis_wiget => "#floor_discount_dis_input" %>
+                <input type="text" id="floor_discount_dis_input" style="width:341px;"  class='align_right numeric' placeholder="0.00" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+            <label style="font-size:12px;margin-left: 20px;" ><%=t("products.new.floor_price")%>
+             <span id="floor_price_currency"><%= @product.currency ? @product.currency : 'RMB'%></span>  &nbsp;<span id="floor_price"><%= (@product.public_price && @product.floor_discount) ?  number_with_precision(@product.public_price * @product.floor_discount, :precision => 2, :delimiter => ",") : '0.00' %></span>
+            </label>
+          </div>
+        </div>
+
+
+        <!-- 标准CTR -->
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t("products.new.ctr")%></label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span input-append">
+                <%= f.text_field :ctr_prediction, :disname=>"标准CTR",:class=>"align_right numeric",:style=>"display:none;width:341px;",:dis_wiget => "#ctr_prediction_dis_input",:size=>30%>
+                <input type="text" id="ctr_prediction_dis_input" style="width:341px;"  class='align_right numeric' placeholder="0.00" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t("products.new.gp")%></label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span input-append">
+                <%= f.text_field :gp, :disname=>"GP",:class=>"align_right numeric",:style=>"display:none;width:341px;",:dis_wiget => "#gp_dis_input",:size=>30%>
+                <input type="text" id="gp_dis_input" style="width:341px;"  class='align_right numeric' placeholder="0.00" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t("products.new.bu")%></label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <select tabindex="-1" id="product_bu" name="product[bu][]" multiple="" class="chzn-select span5" data-placeholder="<%= t('order.form.please_select') %>" style="width:377px;">
+                  <optgroup label="BU">
+                    <%=  option_for_bu(@product.bu) %>
+                  </optgroup>
+                </select>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="control-group t_margin_20">-->
+          <!--<label class="control-label">-->
+            <!--<label for="campaign_campaignname" class="inline"><%#=t("products.new.gp_media")%></label>-->
+          <!--</label>-->
+          <!--<div class="controls">-->
+            <!--<div class="row">-->
+              <!--<div class="span">-->
+                <!--<%#= f.radio_button :is_distribute_gp,  true, :checked => (@product.is_distribute_gp.present? ? @product.is_distribute_gp : false), :style => "margin-bottom: 5px;" %><%= t('products.new.gp_control_yes')%>-->
+                <!--<%#= f.radio_button :is_distribute_gp, false, :checked => (@product.is_distribute_gp.present? ? !@product.is_distribute_gp : true), :style => "margin-left: 100px;margin-bottom: 5px;" %><%= t('products.new.gp_control_no')%>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="control-group t_margin_20 gp_control <%#= (@product.is_distribute_gp && @product.is_distribute_gp == true) ? '' : 'hide' %> ">-->
+          <!--<label class="control-label">-->
+            <!--<label for="campaign_campaignname" class="inline"><%=t("products.new.gp_type")%></label>-->
+          <!--</label>-->
+          <!--<div class="controls">-->
+            <!--<div class="row">-->
+              <!--<div class="span">-->
+                <!--<%#= f.select :product_gp_type,[["富媒体","CPM"],["混投","MIX"],["DSP","DSP"]],{:selected => @product.product_gp_type, :include_blank => t('order.form.please_select') },:onchange => "gp_type_show()", :class => "required select span5 proof_ready_unmodify" %>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="control-group t_margin_20 gp_control gp_type_control <%#= (@product.is_distribute_gp && @product.is_distribute_gp == true && @product.product_gp_type == 'CPM') ? '' : 'hide' %> ">-->
+          <!--<label class="control-label">-->
+            <!--<label for="campaign_campaignname" class="inline"><%#=t("products.new.xmo_type")%></label>-->
+          <!--</label>-->
+          <!--<div class="controls">-->
+            <!--<div class="row">-->
+              <!--<div class="span">-->
+                <!--<%#= f.select :product_xmo_type,options_for_xmp_type(@product.product_xmo_type),{:include_blank => t('order.form.please_select') }, {:class => "required select span5 proof_ready_unmodify"} %>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline"><%=t('products.new.remark_textarea')%></label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.text_area :remark, :class =>"span5", :style=>"height:100px;width:365px;", :placeholder =>t('products.new.please_input')%>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="control-group t_margin_20">-->
+          <!--<label class="control-label">-->
+            <!--<label for="campaign_campaignname" class="inline">每单最小购买量*</label>-->
+          <!--</label>-->
+          <!--<div class="controls">-->
+            <!--<div class="row">-->
+              <!--<div class="span">-->
+                <!--<%#= f.text_field :single_buy_amount, :disname=>"每单最小购买量", :class=>"align_right numeric",:style=>"display:none;",:dis_wiget => "#single_buy_amount_dis_input",:size=>30 %>-->
+                <!--<input type="text" id="single_buy_amount_dis_input" style="width:367px;" class='align_right numeric'/>-->
+
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="control-group t_margin_20">-->
+          <!--<label class="control-label">-->
+            <!--<label for="campaign_campaignname" class="inline">每单是否询价/核量*</label>-->
+          <!--</label>-->
+          <!--<div class="controls">-->
+            <!--<div class="row">-->
+              <!--<div class="span">-->
+                <!--<%#= f.select :is_single_check_amount,[["是",true],["否",false]],{:selected => @product.is_single_check_amount}, {:class => "required select span5 proof_ready_unmodify"} %>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="control-group t_margin_20">-->
+          <!--<label class="control-label">-->
+            <!--<label for="campaign_campaignname" class="inline">非标是否询价/核量*</label>-->
+          <!--</label>-->
+          <!--<div class="controls">-->
+            <!--<div class="row">-->
+              <!--<div class="span">-->
+                <!--<%#= f.select :is_non_standard_check_amount,[["是",true],["否",false]],{:selected => @product.is_non_standard_check_amount}, {:class => "required select span5 proof_ready_unmodify"} %>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+        <!-- <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline">是否支持点击监控*</label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%#= f.select :is_support_click_monitor,[["是",true],["否",false]],{:selected => @product.is_support_click_monitor}, {:class => "required select span5 proof_ready_unmodify"} %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline">是否支持展示监控*</label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%#= f.select :is_support_display_monitor,[["是",true],["否",false]],{:selected => @product.is_support_display_monitor}, {:class => "required select span5 proof_ready_unmodify"} %>
+              </div>
+            </div>
+          </div>
+        </div> -->
+  </div>
+  <div class="row big_section_b_book">
+    <!-- button area -->
+    <div class="button_area">
+      <div class="r_margin_20">
+        <div class="pull-right">
+          <div class="outer_cancel"><button type='button' onclick='window.history.back();'><%= t('products.new.cancel')%></div>
+          <div class="outer_submit">
+            <input type="submit" value="<%=t('products.new.commit')%>" name="commit" class="submit_tag_button" confirm='<%= t('products.new.confirm_msg') %>'>
+          </div>
+        </div>
+        <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
+          <img src="/images/pre-loading_small.gif">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%end%>
+</div>
+<script>
+   $("#product_product_serial").prop('disabled',true);
+   $("#product_gp").numeric({dis:"#gp_dis_input"});
+    var actual_accord_lowest_buy_amount = $("#product_actual_accord_lowest_buy_amount").numeric({dis:"#actual_accord_lowest_buy_amount_dis_input"});
+    var ctr_prediction = $("#product_ctr_prediction").numeric({dis:"#ctr_prediction_dis_input"});
+    var public_price = $("#product_public_price").numeric({dis:"#public_price_dis_input"});
+    var floor_discount = $("#product_floor_discount").numeric({dis:"#floor_discount_dis_input"});
+    if(typeof (actual_accord_lowest_buy_amount) == "undefined"){
+        $("#actual_accord_lowest_buy_amount_dis_input").val(format_to_numeric($("#product_actual_accord_lowest_buy_amount").val()));
+    }else{
+        $("#actual_accord_lowest_buy_amount_dis_input").val(actual_accord_lowest_buy_amount);
+    }
+
+    if(typeof (ctr_prediction) == "undefined"){
+        $("#ctr_prediction_dis_input").val(format_to_numeric($("#product_ctr_prediction").val()));
+
+    }else{
+        $("#ctr_prediction_dis_input").val(format_to_numeric(ctr_prediction));
+    }
+
+    if(typeof (public_price) == "undefined"){
+        $("#public_price_dis_input").val(format_to_numeric($("#product_public_price").val()));
+
+    }else{
+        $("#public_price_dis_input").val(format_to_numeric(public_price));
+    }
+
+   if(typeof (floor_discount) == "undefined"){
+       $("#floor_discount_dis_input").val(format_to_numeric($("#product_floor_discount").val()));
+
+   }else{
+       $("#floor_discount_dis_input").val(format_to_numeric(floor_discount));
+   }
+
+
+
+   multiple_chosen("#product_bu");
+
+//   $("[name='product[is_distribute_gp]']").click(function () {
+//       if($(this).attr('id') == "product_is_distribute_gp_true"){
+//           $(".gp_control").show();
+//       }else{
+//           $(".gp_control").hide();
+//       }
+//   });
+
+//    function gp_type_show(){
+//      if ($("#product_product_gp_type").val() == "CPM"){
+//         $(".gp_type_control").show();
+//      }else{
+//         $(".gp_type_control").hide();
+//      }
+//    }
+
+   $("#product_currency").change(function() {
+       var current_currency = $(this).val();
+       var old_currency = $("#floor_price_currency").text();
+       $.ajax({
+           type: 'post',
+           data: {currency: current_currency, base_currency: old_currency},
+           url: "<%= exchange_rate_orders_path %>",
+           success: function(data) {
+               var rate = parseFloat(data["rate"]);
+
+               var public_price = convert_null_to_zero($("#product_public_price").val()) * rate;
+               $("#product_public_price").val(format_to_numeric(public_price));
+               $("#public_price_dis_input").val(format_to_numeric(public_price));
+               $("#floor_price_currency").text(current_currency);
+               floor_price();
+           },
+           error: function(data) {}
+       })
+
+
+   })
+   $("#public_price_dis_input,#floor_discount_dis_input").blur(function(){floor_price()});
+   function floor_price(){
+       $("#floor_price").text(format_to_numeric($("#product_public_price").val() * $("#product_floor_discount").val() / 100))
+   }
+
+   $("#product_form").submit(function(){
+       $(":submit",this).attr("disabled","disabled");
+   });
+
+</script>

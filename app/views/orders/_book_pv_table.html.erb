@@ -1,0 +1,49 @@
+
+  
+  <% i = 0%>
+  <% j = 0%>
+<%if @book_pvs %>
+  <% @book_pvs.each do |book|%>
+    <% i = book.placement_id %>
+    <% if !book.city %>
+      <tr class="">
+       <!-- 这是全部的tr -->
+        <td class="align_left">
+          <div class="area_all" data-target=".area_list_<%=i%>">全部<i class="icon-arrow-right"></i>
+          </div>  
+        </td>
+    <% else%>
+       <% j = book.id %>
+      <tr class=" area_list_<%=i%>"  <% if @action_flag.nil? || @action_flag == 1%>style="display:none" <% end%>>
+
+        <td class="align_left">
+          <%= book.city %>
+        </td>
+    <% end%>
+      <td class="align_left">
+        <%= book.media %>
+      </td>
+      <td class="align_left ">
+        <%= book.media_type %>
+      </td>
+      <td class="align_left ">
+        <%= book.midia_form %>
+      </td>
+      <td class="align_right ">
+        <%= number_to_currency(book.sum_pv,unit: "",precision: 0,separator: ",") %>
+      </td>
+      <% if !book.city %>
+      <td class="align_left ">
+        <input class="pv_value content number digits required valid" id="area_list_<%=i%>" type="text"  max="<%=book.sum_pv%>" value="" placeholder="0"  />
+        <input type="hidden" id="area_ids_<%= i%>" value="<%= book.ids%>">
+      </td>
+    <% else%>
+       <td class="align_left ">
+        <input class="pv_value content number digits required valid" type="text"  max="<%=book.sum_pv%>" value="" placeholder="0"  alt="area_list_<%=i%>" id="area_list_<%=i%>_<%=j%>" />
+        <input type="hidden" id="area_ids_<%= i%>_<%=j%>" value="<%= book.ids%>">
+      </td>
+    <% end%>
+      
+    </tr> 
+  <% end%>
+<% end %>

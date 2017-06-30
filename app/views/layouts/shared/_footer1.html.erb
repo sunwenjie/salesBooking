@@ -1,0 +1,101 @@
+<div id="clearfooter" class="clearfooter"></div>
+<!-- id is added to avoid creating empty page in firefox printing version -->
+
+<div id="footer">
+	<div class="container">
+
+      <!-- <div class="admin_login">
+        <a href=/zh-cn/users  class='admin_login_icon'><div></div></a>
+      </div> -->
+     <!--  <div class="footer_item" >
+        <a target="_blank" href="/templates/xmo_help.pdf" onclick="_xmoIstag1();" class='xmo_help_icon'><div>幫助中心</div></a>
+      </div>
+      <div class="footer_item" >
+        <a  href="/zh-cn/privacy_policy"  class='disclaimer_icon'><div>隐私声明</div></a>
+      </div> -->
+
+
+    <div class="copyright" style="width: auto;">
+      Copyright © <%= Time.now.year %> iClick Interactive Asia Limited. All Rights Reserved. </br>
+      v2.0.0
+    </div>
+    <br/><br/>
+    <div class="copyright" style="width: auto;">
+      建议采用浏览器: Internet Explorer 8.0 and 9.0, Chrome 8.0+, Firefox 3.5+, Safari 1.0+, Opera V11+.
+    </div>
+  </div>
+</div>
+
+      <p id='back-top' class='hide_element'>
+        <a href='#top'><span></span</a>
+      </p>
+
+<script>
+$(document).ready(function(){
+
+  // hide #back-top first
+  $("#back-top").hide();
+
+  // fade in #back-top
+  $(function () {
+    $(window).scroll(function () {
+      if ($(this).scrollTop() > 100) {
+        $('#back-top').fadeIn();
+      } else {
+        $('#back-top').fadeOut();
+      }
+
+    });
+
+    // scroll body to 0px on click
+    $('#back-top a').click(function () {
+      $('body,html').animate({
+        scrollTop: 0
+      }, 800);
+      return false;
+    });
+  });
+});
+</script>
+
+ <script type="text/javascript">
+//<![CDATA[
+
+   var request_path='/zh-cn/clients';
+   var query_string='';
+	  if (query_string!='') request_path +="?"+ query_string;
+
+		var change_lang =function(value) {
+	      var tmp = request_path.split("/"); tmp[1] = value;
+	      location.href=tmp.join("/");
+   };
+
+   jQuery(document).ready(function() {
+
+			$(".have_sub_menu").live('mouseover', function(){
+				$(".sub").hide();
+				$(".pointer").hide();
+				$(".sub_h_nav").css("border-bottom","");
+				$(this).find(".sub").show();
+				$(this).find(".pointer").show();
+				// $(".sub_h_nav").css("border-bottom"," dotted thin #51504F");
+			});
+			$(".have_sub_menu").live('mouseout',function(){
+				$(".sub").hide();
+				$(".pointer").hide();
+				// $(".sub_h_nav").css("border-bottom","");
+			});
+   });
+			$(document).ready(function(){
+
+				$('.outer_cancel > button, .outer_other_thin > button').live('click',function(){
+					window.location.href = $(this).attr("href");
+					return false;
+				})
+        //$('#nav').sticky({isTop:true});
+			});
+
+//]]>
+</script>
+
+<!-- //jquery and other functions //-->

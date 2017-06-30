@@ -1,0 +1,683 @@
+
+<style type="text/css">
+    .area_all{cursor: pointer;}
+    .controls.filter_con{padding-right: 40px;}
+    .table_pagin{padding:0px !important;}
+    .pull-right{padding-right:20px;}
+    .sub_title{font-size: 14px}
+
+    #progressbar .ui-progressbar-value {
+        background-color: #ccc;
+    }
+
+    .tr_config{
+        border-top: 1px dotted !important;
+        border-bottom: 1px dotted !important;
+        border-color: #BEBEBE !important;
+        /*border-left: 0px !important;*/
+        /*border-right: 0px !important;*/
+    }
+</style>
+
+<div class="big_section big_section_book">
+<div class="form-horizontal">
+  <%= hidden_field_tag "auto_pv_click_flag","0" %>
+  <%= hidden_field_tag "add_pv_click_flag","0" %>
+  <div id="setting_con_custom" style="margin-top: -20px">
+    <div id = "media_gp_config_show">
+    <!--start-->
+    <!-- <form class="form-horizontal" id="pv_form_list"> -->
+     <% if @order.any_not_order_gp_finish? %>
+        <div class="control-group">
+          <label class="control-label">
+            <label for=""><%= t("order.form.media_imps_share")%></label>
+          </label>
+
+          <div class="controls filter_con config_finish ">
+            <div class="row b_margin_5">
+              <div class="span">
+                <label class="sub_txt2">
+                  <span><%= t("order.form.products_with_all_gp_control")%></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+
+    <% if !@order.any_not_order_gp_finish? %>
+    <div class="control-group">
+      <label class="control-label">
+        <label for=""><%= t("order.form.look_media_imps")%></label>
+      </label>
+
+      <div class="controls filter_con config_no_finish" style="margin-left:145px;margin-top:-23px;">
+        <div class="row b_margin_5">
+          <div class="span">
+            <label class="sub_txt2">
+              <span><%= t('order.form.product_label') %></span>
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="item_two">
+            <div class="span">
+              <select tabindex="-1" id="chosen_product_type"  class="chzn-select span5" data-placeholder="<%= t('order.form.please_select') %>" style="width:330px;">
+                <%= option_for_gp_advertisements(@order,( @type ? @type : nil )) %>
+              </select>
+            </div>
+            <div class="span">
+              <a class="selection_icon selection_trigger" data-target="#chosen_multiple_test" href="javascript:void(0);"></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <%= hidden_field_tag "max_pv",@city_max_pv %>
+          <div class="item_two">
+            <div class="row">
+              <label class="sub_txt2">
+                <span><%= t("order.form.localtion")%></span>
+              </label>
+            </div>
+            <div class="span">
+
+              <select tabindex="-1" id="chosen_multiple_area"  class="chzn-select span5" data-placeholder="<%= t('order.form.order_select_city') %>" style="width:330px;">
+                <%=  option_for_gp_region(@city,( @current_city ? @current_city : nil )) %>
+              </select>
+            </div>
+            <div class="span">
+              <a class="selection_icon selection_trigger" data-target="#chosen_multiple_test" href="javascript:void(0);"></a>
+            </div>
+          </div>
+          <div class="item_two">
+            <div class="row">
+              <label class="sub_txt2">
+                <span><%= t("order.form.site_type")%></span>
+              </label>
+            </div>
+            <div class="span">
+              <select tabindex="-1" id="chosen_multiple_media_type" multiple="" class="chzn-select span5" data-placeholder="<%= t('order.form.please_select') %>" style="width:330px;">
+                <optgroup label="<%= t("order.form.site_type")%>">
+                  <%= option_for_gp_media_type(%w{全部 NA 新闻 视频 女性时尚 门户 电商 财经 金融财经},(@current_media_type.present? ? @current_media_type : nil )) %>
+                </optgroup>
+              </select>
+            </div>
+            <div class="span">
+              <a class="selection_icon selection_trigger" data-target="#chosen_multiple_test" href="javascript:void(0);"></a>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="item_two">
+            <div class="row">
+              <label class="sub_txt2">
+                <span><%= t("order.form.origin_size")%></span>
+              </label>
+            </div>
+            <div class="span">
+              <select tabindex="-1" id="chosen_origin_tag" multiple="" class="chzn-select span5" data-placeholder="<%= t('order.form.please_select') %>" style="width:330px;">
+                <optgroup label="<%= t("order.form.origin_size")%>">
+                  <%=  option_for_gp_origin_size(@origin_size,(@current_origin_size.present? ? @current_origin_size : nil )) %>
+                  <!--<option>全部</option>-->
+                  <!--<option>新闻</option>-->
+                  <!--<option>视频</option>-->
+                  <!--<option>女性时尚</option>-->
+                </optgroup>
+              </select>
+            </div>
+            <div class="span">
+              <a class="selection_icon selection_trigger" data-target="#chosen_multiple_test" href="javascript:void(0);"></a>
+            </div>
+          </div>
+          <div class="item_two">
+            <div class="row">
+              <label class="sub_txt2">
+                <span><%= t("order.form.stand_extend_size")%></span>
+              </label>
+            </div>
+            <div class="span">
+              <select tabindex="-1" id="chosen_expand_tag" multiple="" class="chzn-select span5" data-placeholder="<%= t('order.form.please_select') %>" style="width:330px;">
+                <optgroup label="<%= t("order.form.stand_extend_size")%>">
+                  <%=  option_for_gp_origin_size(@expand_size,(@current_expand_size.present? ? @current_expand_size : nil )) %>
+
+                  <!--<option>PIP</option>-->
+                  <!--<option>Pre-roll</option>-->
+                  <!--<option>ADTV</option>-->
+                </optgroup>
+              </select>
+            </div>
+            <div class="span">
+              <a class="selection_icon selection_trigger" data-target="#chosen_multiple_test" href="javascript:void(0);"></a>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="table_white">
+            <%= hidden_field_tag "auto_pv_size",@auto_pv_size%>
+            <%= hidden_field_tag "left_pv_config",@audo_pv.present? ? "0" : ""%>
+            <%= hidden_field_tag "left_pv_config_scale",@audo_pv.present? ? "0" : "" %>
+            <table class="table table-striped table-bordered table-condensed unlimited_width search_table dataTabl" cellpadding="0" cellspacing="0" border="0" class="display" id="media_list">
+              <thead>
+              <tr>
+                <th class="align_left align_top" id = "checkbox_all" style="width: auto">
+                  <% if @check && @check == "checked" %>
+                    <input type='checkbox' name='checkall' checked = "checked" onclick = "save_ad_gp('all');" />
+                  <% else %>
+                    <input type='checkbox' name='checkall' onclick = "save_ad_gp('all');" />
+                  <% end %>
+                </th>
+                <th class="align_left align_top" style="width: auto"><%= t("order.form.geo_column")%></th>
+                <th class="align_left align_top" style="width: auto"><%= t("order.form.site_name_column")%></th>
+                <th class="align_left align_top" style="width: auto"><%= t("order.form.site_type_column")%></th>
+                <th class="align_left align_top" style="width: auto"><%= t("order.form.ad_type_column")%></th>
+                <th class="align_left align_top" style="width: auto"><%= t("order.form.origin_size_column")%></th>
+                <th class="align_left align_top" style="width: auto"><%= t("order.form.stand_extend_size_column")%></th>
+                <th class="align_left align_top" style="width: auto"><%= t("order.form.ref_ctr")%></th>
+                <th class="align_left align_top" style="width: auto"><%= t("order.form.impressions_allocation_column")%></th>
+                <th class="align_left align_top" style="width: auto"><%= t("order.form.impressions_allocation_rate_column")%></th>
+              </tr>
+              </thead>
+              <tbody id="book_pv_table">
+              <%=render :partial => '/orders/pv_config_table'%>
+              </tbody>
+              <tbody id="all_pv_config">
+
+                <tr>
+                  <td class='align_left tr_config' colspan='6' id = "progressbar_check">
+                    <%if @gp_rake %>
+                      <%=raw @gp_rake %>
+                    <% else %>
+                      <img src='/images/assets/icon01_grey.png'/> <%= t("order.form.no_results")%>
+                    <% end %>
+                  </td>
+                  <td class="align_right tr_config all_config_pv_num" colspan='2'><%= t("order.form.total_impressions")%></td>
+                  <td class="align_right tr_config " id="max_city_pv_config"><%= number_with_precision((@pv_config ? @pv_config : 0), :precision => 0, :delimiter => "," ) %>K</td>
+                  <%= hidden_field_tag "max_city_pv_config_hidden",@pv_config ? @pv_config : 0 %>
+
+                  <td class="align_right tr_config" id="max_city_pv_scale"><%= @pv_config_scale ? sprintf("%.2f",@pv_config_scale.round(2)) : "0.00" %>%</td>
+                  <%= hidden_field_tag "max_city_pv_scale_hidden",@pv_config_scale ? @pv_config_scale : "0.00" %>
+
+                </tr>
+                <% if @audo_pv.present? %>
+                    <tr class="even" id="config_finish_tip">
+                      <td class='align_left' colspan='10'>
+                        <img src='/images/icon_tick.png'/> <%= t("order.form.finish_allocation")%>
+                      </td>
+                    </tr>
+                    <tr class="even hide" id="unconfig_tip">
+                      <td class='align_left' colspan='4' >
+                        <img src='/images/icon_exclamation.png'/> <%= t("order.form.unallocated_impressions")%>
+                        <span id="unconfig_pv" style="color: red"><%= number_with_precision( (@city_max_pv.present? ? (@city_max_pv/1000).round : 0), :precision => 0, :delimiter => ",") %>K</span><span style="color: red">&nbsp;&nbsp;(</span><span id="unconfig_pv_scale" style="color: red">100.00%</span><span style="color: red">)</span>
+                      </td>
+                      <td class="align_right all_config_pv_num" colspan='6' style="border: 0;"><%= t("order.form.allocation_tips")%></td>
+                    </tr>
+                <% else %>
+                    <tr class="even " id="unconfig_tip" >
+                      <td class='align_left' colspan='4' >
+                        <img src='/images/icon_exclamation.png'/> <%= t("order.form.unallocated_impressions")%>
+                        <span id="unconfig_pv" style="color: red"><%=  number_with_precision((@city_max_pv.present? ? (@city_max_pv/1000).round : 0) , :precision => 0, :delimiter => ",") %>K</span><span style="color: red">&nbsp;&nbsp;(</span><span id="unconfig_pv_scale" style="color: red">100.00%</span><span style="color: red">)</span>
+                      </td>
+                      <td class="align_right all_config_pv_num" colspan='6' style="border: 0;"><%= t("order.form.allocation_tips")%></td>
+                    </tr>
+                    <tr class="even hide" id="config_finish_tip">
+                      <td class='align_left' colspan='10'>
+                        <img src='/images/icon_tick.png'/> <%= t("order.form.finish_allocation")%>
+                      </td>
+                    </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="pull-right">
+          <div class="outer_submit">
+          <input type="button" id="auto_pv_config" value="<%= t("order.form.generate_automated_allocation")%>" onclick="audo_pv_distribution()" class="submit">
+          </div>
+          <div class="outer_submit">
+            <input type="button" id="addPv" value="<%= t("order.form.add_product_label")%>" onclick="save_pv_config()" class="submit">
+          </div>
+        </div>
+      </div>
+    </div>
+        <% end %>
+    <!--end-->
+
+    <!--start-->
+    </div>
+
+    <div class="control-group" style="margin-top: 60px;" id="media_gp_config_detail_show">
+      <label class="control-label">
+        <label for=""><%= t("order.form.products_with_gp_control")%></label>
+      </label>
+      <div class="controls filter_con">
+       <% if !@order.gps.where("save_flag = ?",true).present? %>
+            <div class="row b_margin_5">
+              <div class="span">
+                <label class="sub_txt2">
+                  <span><%= t("order.form.no_products")%></span>
+                </label>
+              </div>
+            </div>
+       <% else %>
+
+            <div class='row' style="margin-top: 0px;">
+              <div class='header_add_new_link l_margin_20' style="float: right;margin-top: -5px;margin-right: 20px;"><a href="<%= download_gps_list_gps_path(order_id: @order.id )%>"><%= t("order.form.download_media_list_group")%></a>
+              </div>
+
+              <% if @data.present? %>
+                  <% @data.each do |k,v|%>
+                      <%=render :partial => '/orders/media_selected_table',:locals => {:media_selected_list=>v,:table_id=>k}%>
+                  <% end %>
+              <% end %>
+            </div>
+
+       <% end %>
+
+      </div>
+    </div>
+
+    <!--end-->
+  <div id = "media_gp_evaluate_show">
+    <div class="control-group">
+      <label class="control-label">
+        <%= t("order.form.gp_evaluate")%>
+      </label>
+      <div class="controls">
+        <div class="row b_margin_5" >
+
+        <div class="span">
+          <div class="input-append">
+            <input type="text" id="gp_evaluate" style="width:354px;" class='align_right numeric gp_evaluate' name='gp_evaluate' value = "<%= order_gp_rake %>" />
+            <span class="add-on">%</span>
+            <div style="display: inline-block;padding-top: 3px;padding-left: 10px">
+              <span class="font_27"><%= t("order.form.gp_evaluate_tips")%></span>
+            </div>
+          </div>
+        </div>
+       </div>
+      </div>
+    </div>
+  </div>
+    <div id = "media_gp_result_show">
+     <div class="control-group">
+          <label class="control-label">
+            <label><%= t("order.form.order_total_gp")%></label>
+          </label>
+          <div class="controls filter_con">
+            <div class="row b_margin_5" >
+              <div class="span">
+                <table class="table table-striped table-bordered table-condensed unlimited_width search_table dataTabl" cellpadding="0" cellspacing="0" border="0" class="display" >
+                  <tbody>
+                  <tr class="odd" id = "order_progressbar_check" >
+                    <td class='align_left span3' colspan="3" id = "order_gp_result">
+
+                      <%=raw return_gp_img((order_gp_rake/100).round(2)) %>
+                    </td>
+                    <td class='align_left span8 yellow_mark' colspan="7" style="border-left: 0px;"><%= t('order.form.order_gp_tip')%></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div style="margin-left: 24px">
+              <% if @order.underpraise? || @order.planner_ctr? || @order.send_email_to_approve? %>
+                 <span><img src='/images/icon_exclamation.png'/> <%= t('order.form.need_ceo_approve') %></span>
+              <% else %>
+                 <span><img src='/images/icon_tick.png'/> <%= t("order.form.need_sale_leader_approve")%></span>
+              <% end %>
+            </div>
+      </div>
+    </div>
+  </div>
+    <div class="row big_section_b_book" id="media_gp_config_submit_show" >
+      <!-- button area -->
+      <div class="button_area">
+        <div class="r_margin_20">
+          <div class="pull-right">
+            <div class="outer_cancel"><button type='button' onclick="go_to_advertisements();" ><%= t("order.cancel_bth")%></button></div>
+            <div class="outer_submit">
+              <input type="submit" value="<%= t("order.save")%>" name="commit" onclick="order_examine('save')" class="submit_tag_button">
+            </div>
+          </div>
+          <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
+            <img src="/images/pre-loading_small.gif">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- </form> -->
+  </div>
+</div>
+</div>
+
+
+<!--include expandTable.js-->
+<script type="text/javascript">
+    var search;
+    var initMediaList;
+
+    function save_pv_config(){
+        var add_pv_click_flag = $("#add_pv_click_flag").val();
+        if(add_pv_click_flag == "0") {
+            var all_pv_config = $('#max_city_pv_config').text();
+            var all_pv_config_scale = $('#max_city_pv_scale').text();
+            var max_pv = Math.round(parseFloat($('#max_pv').val()) / 1000);
+            ajax_input_save();
+        }
+        $("#add_pv_click_flag").val("1");
+    }
+
+    $(function(){
+        //search js
+//        var isopen = false,expand;
+        //表格
+        initMediaList = function initMediaList(l){
+            window.medialist = $("#media_list").dataTable({
+                "oLanguage": {"sUrl": "/javascripts/i18n/dataTables-new.<%= I18n.locale.to_s%>.txt"},
+                "sDom": "<'row'<'pull-left'f><'table_pagin'p>>t<'row table_bottom'<'table_pagin'p><'table_info'i>>",
+                "sPaginationType": "full_numbers",
+                "bPaginate": true,
+                "iDisplayLength": l,
+                "bLengthChange": false,
+                "bAutoWidth": false,
+                "aaSorting": [],
+                "aoColumns" : [
+                    { "sType": "boolean","bSortable": false },
+                    { "sType": "string"},
+                    { "sType": "string" },
+                    { "sType": "string"},
+                    { "sType": "string"},
+                    { "sType": "string"},
+                    { "sType": "string"},
+                    { "sType": "string","sWidth": "80px", "aTargets": [7]},
+                    { "sType": "string"},
+                    { "sType": "string"},
+                    { "sType": "string"},
+                    { "sType": "string"},
+                    { "sType": "string"}
+                ],
+                "fnInitComplete" : function(){
+                    $(".dataTables_paginate").click(function(){
+//                        expand.init();
+                    })
+                }
+            });
+
+        }
+        initMediaList(10);
+
+        $("#media_list input[name='checkall']").click(function() {
+            var check = $(this).attr("checked") == undefined ? false : true;
+            $("#media_list tr input[type='checkbox']").each(function() {
+                $(this).attr("checked", check);
+            });
+            if (check){
+                $("#media_list tr input[type='text']").removeAttr("readonly");
+            }else{
+                $("#media_list tr input[type='text']").attr("readonly","true");
+                reset_pv_config("all");
+            }
+        });
+
+        function formap(id){
+//          return $(id).find('option:selected').text();
+            return $(id).find('option:selected').map(function(){ return ($(this).text().indexOf("Banking") > -1 ? '^Banking' : ('^' + $(this).text() + '\$'))}).get().join('|');
+        }
+        function filterfn(v,c){
+            // console.log(v);
+            // console.log(c);
+            if(v=="^全部$" || v == null){
+                v = "";
+            }
+            window.medialist.fnFilter(v,c, true, false, false);
+        }
+        function initFilter(){
+            filterfn("",1);
+            filterfn("",3);
+            filterfn("",6);
+            filterfn("",7);
+
+        }
+        initFilter();
+        search = function search(){
+            var t=[],len,
+                    mediaType = formap("#chosen_multiple_media_type"),
+                    area = formap("#chosen_multiple_area"),
+                    originSize = formap("#chosen_origin_tag"),
+                    expandSize = formap("#chosen_expand_tag");
+
+//            alert(mediaType);
+                filterfn(mediaType,3);
+
+                filterfn(area,1);
+                filterfn(originSize,6);
+                filterfn(expandSize,7);
+                if(mediaType  || area || originSize || expandSize){
+                len = 42;
+                }
+                // console.log(mediaType);
+            // console.log(area);
+            // console.log(originSize);
+            // console.log(expandSize);
+
+            var tt = !mediaType  && !area && !originSize && !expandSize;
+                if(tt){
+                initFilter();
+                }
+        }
+
+        //select js
+//
+        if($('#chosen_product_type option:selected').text().indexOf("通栏横幅广告及其他形式")>0){
+            $('.all_config_pv_num').addClass("hide");
+            $('#max_city_pv_config').addClass("hide");
+            $('#max_city_pv_scale').addClass('hide');
+            $("#addPv").parent().show();
+            $('#auto_pv_config').parent().hide();
+            $('#max_city_pv_scale').text("100%");
+            if(typeof ($('#chosen_multiple_area option:selected').val()) == "undefined"){
+                save_dsp_ad_gp();
+            }
+        }else{
+            $("#addPv").parent().hide();
+            $('#auto_pv_config').parent().show();
+        }
+
+
+
+        $("#chosen_product_type").chosen({disable_search_threshold: 10}).change(function(){
+            var selected = $('#chosen_product_type option:selected').val();
+                $.ajax({
+                    type: "GET",
+                    url: "/<%=I18n.locale.to_s%>/orders/get_pv_config_data?ad_id=" + selected,
+                    dataType: "text",
+                    success: function (msg) {
+                        $('#pv_config_form').html(msg);
+//                        search.apply(this);
+                    },
+                    error: function (msg) {
+                    }
+                });
+//                search.apply(this);
+        });
+        $("#chosen_multiple_media_type").chosen().change(function(){
+            search.apply(this);
+        });
+        selectable_with_all("#chosen_multiple_media_type", '全部');
+
+        if($('#chosen_multiple_area option:selected').val()!=""){
+                get_max_pv();
+        }
+        $("#chosen_multiple_area").chosen({disable_search_threshold: 10}).change(function(){
+                get_max_pv();
+        });
+
+        $("#chosen_origin_tag").chosen({disable_search_threshold: 10}).change(function(){
+            search.apply(this);
+        });
+
+        $("#chosen_expand_tag").chosen({disable_search_threshold: 10}).change(function(){
+            search.apply(this);
+        });
+
+        //右边触发js
+        $('.selection_trigger').click(function(){
+            var target = $(this).attr('data-target') + '_chzn';
+            $(target).mousedown();
+            return false;
+        });
+
+         function get_max_pv(){
+             var selected = $('#chosen_product_type option:selected').val();
+             var city=$('#chosen_multiple_area option:selected').val();
+             if(typeof(city) != "undefined" && city.charAt(city.length-1)=="市") {
+                     city = city.substr(0, city.length - 1);
+                     var audo = <%=raw @current_city ? 2 : 1 %>;
+                     $.ajax({
+                         type: "GET",
+                         url: "/<%=I18n.locale.to_s%>/orders/get_city_max_pv?ad_id=" + selected + "&city=" + city + "&auto=" + audo +"",
+                         dataType: "json",
+                         success: function (msg) {
+                             $('#max_pv').val(msg.max_pv);
+                             $('#unconfig_pv').text(format_to_number(Math.round(parseFloat(msg.max_pv/1000)))+"K");
+                             if($('#chosen_product_type option:selected').text().indexOf("通栏横幅广告及其他形式")>0){
+                                 save_dsp_ad_gp();
+                             }
+                         },
+                         error: function (msg) {
+                         }
+                     });
+                     search.apply(this);
+
+             }
+         }
+    });
+
+    var selectable_with_all = function (ele_id, all_val){
+        var option_all_selected = true;
+        $(ele_id).change(function(){
+            var is_all = false;
+            $(ele_id + " option:selected").each(function(i , l){
+                if($(l).val() == all_val) is_all = true;
+            });
+
+            if($(ele_id + " option:selected").length == 1){
+                $(ele_id).trigger("liszt:updated");
+                option_all_selected = is_all;
+                return false;
+            }
+
+            if(option_all_selected && is_all){
+                $(ele_id +" option[value=" + all_val + "]").removeAttr('selected');
+                option_all_selected = false;
+            }else if(!option_all_selected && is_all){
+                $(ele_id + " option:selected").each(function(i, l) {
+                    if ($(l).val() != all_val) { $(l).removeAttr('selected'); }
+                });
+                option_all_selected = true;
+            }
+            $(ele_id).trigger("liszt:updated");
+        });
+    }
+
+    var order_node_ids = $(".xmo-progress-status [order_id = "+ <%= @order.id %> +"]").last().attr('node_ids').split(",");
+    if(jQuery.inArray("7",order_node_ids) > -1){
+        $("#media_gp_config_show").show();
+        $("#media_gp_config_detail_show").show();
+        $("#media_gp_evaluate_show").show();
+        $("#media_gp_result_show").show();
+        $("#media_gp_config_submit_show").show();
+        var order_status = $(".xmo-progress-status [order_id = "+ <%= @order.id %> +"]").last().attr('status').split(",");
+        if (!( order_status[1] == "3"|| order_status[2] == "3" || <%= !@order.is_gp_commit %>)) {
+//         $("#gp_edit_error").html("<div class='error'><%#= t("order.form.gp_edit_error") %> </div>")
+            $("#media_gp_config_show input").prop("disabled",true)
+            $("#media_gp_config_submit_show").hide();
+            $("#gp_evaluate").prop("disabled",true);
+            $("img[id = 'remove_tag']").css("display","none");
+        }
+
+    }else if(jQuery.inArray("2",order_node_ids) > -1 || jQuery.inArray("3",order_node_ids) > -1){
+        $("#media_gp_config_show").hide();
+        $("#media_gp_config_detail_show").show();
+        $("#media_gp_evaluate_show").show();
+        $("#media_gp_result_show").show();
+        $("#media_gp_config_submit_show").hide();
+        $("#gp_evaluate").prop("disabled",true);
+        $("img[id = 'remove_tag']").css("display","none");
+    }else if(jQuery.inArray("1",order_node_ids) > -1 || jQuery.inArray("5",order_node_ids) > -1 || <%= @order.operator_and_share_opertor.include?  current_user.id %>){
+        $("#media_gp_config_show").hide();
+        $("#media_gp_result_show").show();
+        $("#media_gp_config_detail_show").show();
+        $("#media_gp_evaluate_show").hide();
+        $("#media_gp_config_submit_show").hide();
+        $("#gp_evaluate").prop("disabled",true);
+        $("img[id = 'remove_tag']").css("display","none");
+    }
+    else{
+        $(".list_gp").addClass("hide");
+        $("#tab-gp").addClass("hide");
+    }
+
+
+//    $("#gp_evaluate").val(format_to_numeric($("#gp_evaluate_hidden").val()));
+    $("#gp_evaluate").blur(function (){
+//        $("#gp_evaluate_hidden").val($(this).val());
+        $("#gp_evaluate").val(format_to_numeric($(this).val()));
+        $("#order_gp_result").html(return_gp_img(format_to_numeric($(this).val())))
+    })
+
+
+    function return_gp_img(gp_rake) {
+       var gp_img = "icon01_grey.png"
+       var gp_text = "<%= t("order.form.no_results") %>"
+        if (gp_rake == 0) {
+            gp_img = "icon01_grey.png"
+            gp_text = "<%= t("order.form.no_results") %>"
+        } else if(gp_rake < 30){
+            gp_img = "icon02_red.png"
+            gp_text = "<%= t("order.form.to_be_improved_immediately") %>"
+        } else if(30 <= gp_rake  && gp_rake  < 40) {
+            gp_img = "icon03_orange.png"
+            gp_text = "<%= t("order.form.yet_to_improve_gp") %>"
+        } else if(40 <= gp_rake && gp_rake < 50){
+            gp_img = "icon04_yellow.png"
+            gp_text = "<%= t("order.form.gp_close_to_compliance") %>"
+        }else if(50 <= gp_rake  && gp_rake  < 60) {
+            gp_img = "icon05_green.png"
+            gp_text = "<%= t("order.form.gp_meet_standard") %>"
+        } else if(60 <= gp_rake  && gp_rake  < 70){
+            gp_img = "icon06_blue.png"
+            gp_text = "<%= t("order.form.gp_good") %>"
+        }else if(70 <= gp_rake  && gp_rake  < 100){
+            gp_img = "icon07_darkblue.png"
+            gp_text = "<%= t("order.form.gp_very_good") %>"
+        }
+        return "<img src='/images/assets/"+gp_img+"'/>" + " " +gp_text;
+    }
+
+    function go_to_advertisements(){
+        $("#tab-gp").removeClass("in active");
+        $(".list_gp").removeClass("active");
+        $("#tab-ads").addClass("in active");
+        $(".list_ads").addClass("active");
+        scroll(0,0);
+    }
+
+    function order_examine(saveflag){
+        $.get("<%= order_examine_orders_path%>", {
+                    id:<%= @order.id %>,
+                    gp_evaluate: $("#gp_evaluate").val(),
+                    saveflag: saveflag
+                }, function (data) {
+                    $("#tab-gp").html(data);
+                    scroll(0,0);
+                }
+        )
+    }
+
+</script>

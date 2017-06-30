@@ -1,0 +1,127 @@
+<script type="text/javascript" src="/js/xmo-calendar.js"></script>
+<script src="/js/chosen.jquery.min.js?9120" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/css/css/xmo-calendar.css">
+<div class="row"><div class="client-row"><h1></h1></div></div>
+<div class="big_section">
+<% if flash[:notice] %>
+  <div class="notice"><%= flash[:notice] %></div>
+<% end %>
+<%= form_for(@operation, :url =>{:action =>"allocate_create"},:html=>{:id=>"campaign_form", :class=>"form-horizontal"}) do |f| %>
+    <!-- sub_section_white start -->
+    <%=  f.hidden_field :order_id,:value=>@order.id %>
+    <div class="sub_section_white">
+  <div class="control-group">
+    <label class="control-label">
+      <label for="campaign_status">指定人员</label>
+    </label>
+      <div class="controls">
+      <div class="row">
+        <div class="span">
+          <select name="username" class="required select span5">
+            <% operations =  User.with_bu(current_user.bu) %>
+              <% operations.each do |c| %>
+                <%if @order.operations.last && @order.operator == c.name%>
+                   <option value="<%=c.name%>" selected="selected"><%=c.name%></option>
+                <%else%>
+                   <option value="<%=c.name%>"><%=c.name%></option>
+                <%end%>
+              <% end %>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">
+      <label for="campaign_status">配置状态</label>
+    </label>
+      <div class="controls">
+      <div class="row">
+        <div class="span">
+          <select name="operation[action]" class="required select span5">
+            <%Operation::ACTIONS.each do |a|%>
+               <%if @order.operations.last && @order.operations.last.action == a%>
+                  <option value="<%=a%>" selected="selected"><%=t(a)%></option>
+               <%else%>
+                  <option value="<%=a%>"><%=t(a)%></option>
+               <%end%>
+            <%end%>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+	<div class="control-group">
+		<label class="control-label">
+			<label for="campaign_status">备注</label>
+		</label>
+		<div class="controls">
+			<div class="row">
+				<div class="span">
+			     <%= f.text_area :comment,:rows =>"6",:class=>"span5",:value=>@order.operations.last ? @order.operations.last.comment : "" %>
+				</div>
+			</div>
+		</div>
+	</div>
+    </div>
+    <!-- sub_section_white end -->
+<div class="row t_margin_30">
+    <!-- button area -->
+    <div class="button_area">
+    <div class="r_margin_20">
+        <div class="pull-right">
+            <div class="outer_cancel">
+              <a class="change_cancel_btn cancel cancel_pretargeting" href="<%=session[:left_tab]%>">
+                 返回
+              </a>
+            </div>
+            <div class="outer_submit">
+              <a href="/operating_director">
+                  <input type="submit" class="submit_tag_button" name="commit" value="确定">
+              </a>
+             </div>
+        </div>
+        <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
+            <img src="/images/pre-loading_small.gif">
+        </div>
+    </div>
+    </div>
+  </div>
+<%end%>
+</div>
+
+<script type="text/javascript">
+  //selectable_with_all("#opt_list", "ALL");
+ 
+  //multiple_chosen("#opt_list", ".opt_list");
+  multiple_chosen("#sale_groups", ".sale_groups");
+  function selectable_with_all(ele_id, all_val){
+    var option_all_selected = true;
+    $(ele_id).change(function(){
+      var is_all = false;
+      $(ele_id + " option:selected").each(function(i , l){
+          if($(l).val() == all_val) is_all = true;
+      });
+
+      if($(ele_id + " option:selected").length == 1){
+          $(ele_id).trigger("liszt:updated");
+          option_all_selected = is_all;
+          return false;
+      }
+
+      if(option_all_selected && is_all){
+        $(ele_id +" option[value=" + all_val + "]").removeAttr('selected');
+          option_all_selected = false;
+        }else if(!option_all_selected && is_all){
+            $(ele_id + " option:selected").each(function(i, l) {
+                if ($(l).val() != all_val) { $(l).removeAttr('selected'); }
+            });
+            option_all_selected = true;
+        }
+        $(ele_id).trigger("liszt:updated");
+        //$(ele_id).valid();
+    });
+  }
+
+</script>

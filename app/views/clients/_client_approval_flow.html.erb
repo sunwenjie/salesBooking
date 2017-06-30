@@ -1,0 +1,23 @@
+<%= javascript_include_tag "/js/jquery.xmo_tooltips" %>
+<% client = Client.with_sale_clients(current_user.id,@client.id).present? ? Client.with_sale_clients(current_user.id,@client.id).last : @client  %>
+<style>
+    .popover.bottom .arrow{top:0;left:85%;margin-left:-5px;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:5px solid red;}
+
+</style>
+<table border="0">
+  <tr>
+    <td style="padding: 5px;"><%= t("order.flow.submit_or_approval") %></td>
+    <td class="v_align_middle">
+      <div class="xmo-progress-status" >
+        <div class="xmo-progress-status-step no-mouseout <%= client_node_class(client.state)%> xmo-tooltip-click" data-position="left-bottom" id="<%= client.id%>_message" client_id="<%= client.id %>" node_id="<%= client["node_id"] %>" status="<%= client["status"] %>" whether_cross_district="<%= client["whether_cross_district"] %>" url="<%= ajax_client_node_message_clients_path %>" type="client_node_message" position="client_show_page">
+          <span class="xmo-progress-status-round"><%=t("clients.index.client_approve")%></span>
+
+          <span class="xmo-progress-status-arrow"></span>
+          <div id="<%=client.id.to_s%>_client_node_message"></div>
+        </div>
+      </div>
+
+    </td>
+  </tr>
+</table>
+<%= render :partial => "client_submit_and_approval_js"%>

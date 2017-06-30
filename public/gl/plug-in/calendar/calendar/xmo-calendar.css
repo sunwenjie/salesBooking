@@ -1,0 +1,153 @@
+.xmoCalendarWraper{
+  	/*padding-bottom: 0;*/
+  	width: 57em;
+    display: none;
+    position:absolute;
+    background: #fff;
+    padding-top: 7px;
+}
+.xmoCalendarInputSchedule{cursor: pointer !important;}
+.xmoCalendarInner{
+	-moz-border-radius: 6px;      /* Gecko browsers */
+    -webkit-border-radius: 6px;   /* Webkit browsers */
+    border-radius:6px;            /* W3C syntax */
+	border:1px solid #EEEEEE;
+  	padding: 0.5em;
+  	position: relative;
+}
+.inputing{
+	border:1px solid #e83828 !important;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 0 5px rgba(255, 0, 0, 1) !important;
+	-moz-box-shadow: 0 0 5px rgba(255, 0, 0, 1) !important;
+	box-shadow: 0 0 5px rgba(255, 0, 0, 1) !important;
+}
+.icon_trigger{cursor: pointer;}
+.xmoCalendarWraper th,td{margin:0;padding:0px}
+.xmoCalendarDataRange{width: 110px; float: left;}
+.xmoCalendarDataRange dd{
+	height: 30px;
+	 line-height: 30px;
+	background: #eee;
+	color: #333;
+	-moz-border-radius: 6px;      /* Gecko browsers */
+    -webkit-border-radius: 6px;   /* Webkit browsers */
+    border-radius:6px;            /* W3C syntax */
+    text-indent: 1em;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+.xmoCalendarDataRange dd:hover,.xmoCalendarDataRange dd.current{
+	background: #333;
+	color: #fff;
+	cursor: pointer;
+}
+.xmoCalendarDataRange dl{margin-bottom: 0;}
+.xmoCalendarDataRange dd:last-child{margin-bottom: 0;}
+.xmoCalendarMainArea{width: 544px; float: right;}
+.xmoCalendarMainArea .row .span{margin-left: 0; margin-right: 40px; font-size: 14px;}
+.xmoCalendarMainArea .row .span input{display: inline; width: 100px;margin-left: 4px;}
+.xmoCalendarTitle{
+	background: #e60f02; height: 30px; line-height: 30px; position: relative;
+	font-size: 13px;
+	/*font-weight: 600;*/
+	-moz-border-radius: 6px;      /* Gecko browsers */
+    -webkit-border-radius: 6px;   /* Webkit browsers */
+    border-radius:6px;            /* W3C syntax */
+    overflow: hidden;
+}
+.xmoCalendarTitle table{width: 100%;line-height: 1.4em; margin: 0;} 
+.xmoCalendarTitle .xmoCalendarMonth{text-align: center; color: #fff; float: left; width: 33.3%; font-size: 13px; font-weight: 600; height: 30px; background: url('calendar-title-bg.png') repeat-x; vertical-align: center; line-height: 30px;}
+.xmoCalendarTableWraper{width: 160px; height: 166px; float: left; padding:0 10px; border-right: 1px #eee solid;padding-bottom: 0.5em;}
+.xmoCalendarTableWraperLast{padding-right: 0; border-right: 0;}
+.xmoCalendarPrev,.xmoCalendarNext{position: absolute;width: 1em; height: 1em; background: #fff; cursor: pointer;
+	-moz-border-radius: 1em;      /* Gecko browsers */
+    -webkit-border-radius: 1em;   /* Webkit browsers */
+    border-radius:1em;            /* W3C syntax */
+}
+.xmoCalendarPrev{top: 0.7em; left: 0.4em;background: url('calendar-arrow-left.png') center center no-repeat;}
+.xmoCalendarNext{top: 0.7em; right: 0.4em;background: url('calendar-arrow-right.png') center center no-repeat;}
+.xmoCalendarTable{
+	margin: 0;
+	margin-top: 4px;
+	font-size: 12px;
+	color: #333;
+	border-collapse: collapse;
+    border: none;
+}
+.xmoCalendarTable tr td{width: 20px; height: 20px;overflow: hidden;}
+.xmoCalendarTable tr a{
+	display: block; 
+	padding:2px;
+	text-decoration:none; 
+	text-align: center;
+	line-height: 20px;
+	height: 18px;
+	width: 18px;
+	color: #fff;
+	font-size: 11px; 
+	font-weight: 400;
+	-moz-border-radius: 3px;      /* Gecko browsers */
+    -webkit-border-radius: 3px;   /* Webkit browsers */
+    border-radius:3px;            /* W3C syntax */
+    overflow: hidden;
+    color: #333;
+}
+.xmoCalendarList{border:1px solid #EEEEEE; border-top: none;
+	-moz-border-radius:0 0 6px 6px;      /* Gecko browsers */
+    -webkit-border-radius:0 0 6px 6px;   /* Webkit browsers */
+    border-radius:0 0 6px 6px;            /* W3C syntax */
+}
+.svg-triangle{position: absolute; top: 0px; left: 180px; z-index: 100000; width: 20px; height: 20px;}
+.xmoCalendarTable tr a.selected,.xmoCalendarTable tr a.justSelected,.xmoCalendarTable th a.thSelectAllHover{background: #b91d07; color: #fff;}
+.xmoCalendarTable tr a.today{background: #000; color: #fff;}
+.xmoCalendarTable tr{border:none;}
+.xmoCalendarTable td,.xmoCalendarTable th{
+border: solid #fff 1px;
+}
+#mask{position: absolute; top: 0; left: 0; background:url(mask.gif) repeat;}
+.xmoCalendarTable th a{background: #fff;color: #333; font-weight: 600;}
+.inputingBox td a:hover,.xmoCalendarTable tr a.removed:hover{background: #ccc; border:none; width: 18px; height: 18px;line-height: 22px;}
+.xmoCalendarTable td a.aHover{background: #f2b5b0 !important; border:none; color: #fff !important}
+.xmoCalendarTable tr a.disabled,.xmoCalendarTable tr a.disabled:link,.xmoCalendarTable tr a.disabled:visited,.xmoCalendarTable tr a.disabled:hover{background: #fff;color: #ccc;cursor: default;}
+.xmoCalendarTable tr a.compare{background: #d19379;color: #fff;}
+.xmoCalendarTable tr a.compareAndSelected{background: #d19379;color: #fff; border:2px #b91d07 solid;height: 14px;width: 14px; line-height: 14px;}
+.xmoCalendarTable tr a.compareAndSelected:hover,.xmoCalendarTable tr a.removed,.xmoCalendarTable th a.thRemoveAllHover,.xmoCalendarTable td a.selected:hover,.xmoCalendarTable td a.removed:hover{background: #000; color: #fff;border:1px #b91d07 solid; background: #fff url('unselected-bg.png') left top no-repeat;color: #333;height: 16px;line-height: 16px; width: 16px; }
+
+.xmoCalendarError{padding-top: 6px; float:left;color: #999; position: relative; left: 6px;}
+.xmoCalendarTable th{padding: ;}
+.xmoCalendarMainArea .outer_submit{float: right;margin: 10px 10px 10px 0;}
+.xmoCalendarTableTips{width: 440px;}
+.xmoCalendarTableTips span{margin-left: 4px; text-decoration: underline;cursor: pointer;}
+.xmoCalendarTableTips span:hover{color: #f67069;}
+.xmoCalendarOnlySelectDate{
+	width: 46.6em;
+}
+.xmoCalendarOnlySelectDate .xmoCalendarDataRange{
+	display: none;
+}
+.xmoCalendarOnlySelectDate .xmoCalendarMainHead,.xmoCalendarOnlySelectDate .outer_submit,.xmoCalendarOnlySelectDate .xmoCalendarTableTips{display: none;}
+.xmoCalendarCompositeFastSelect{width: 11.1em;}
+.xmoCalendarCompositeFastSelect .xmoCalendarMainArea{display: none;}
+.xmoCalendarCompositeFastSelect .svg-triangle{left: 110px;}
+
+.CompositeAllBox_1{display: block;height: 30px;}
+.CompositeAllBox_1 span {
+  display: block;
+  float: left;
+  height: 28px;
+  line-height: 28px;
+  padding-right: 10px;
+}
+.CompositeAllBox_1 span input{margin-top: 0; margin-right: 2px;}
+.CompositeAllBox_1 select{float: left;}
+
+
+
+
+
+
+
+

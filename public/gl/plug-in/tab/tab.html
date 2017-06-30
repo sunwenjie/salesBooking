@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <link rel="shortcut icon" href="/images/favicon.ico?v=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <META name="Author" Content="Optimix Technology" />
+    <meta name="copyright" content="Copyright &copy; 2014 OPTIMIX" />
+    <meta name="Robots" contect="none,noindex,nofollow,noarchive" />
+    <title> booking system</title>
+    <!-- add your meta tags here -->
+<!-- 
+https://www.fontfont.com/how-to-use-ff-chartwell#chartwell-web
+ -->
+	<link href="http://xmo.optimix.asia/bootstrap/css/bootstrap.css?91013" media="all" rel="stylesheet" type="text/css" />
+<link href="http://xmo.optimix.asia/stylesheets/chosen.css?91013" media="all" rel="stylesheet" type="text/css" />
+<link href="http://xmo.optimix.asia/stylesheets/xmo/application.css?91013" media="all" rel="stylesheet" type="text/css" />
+<link href="http://xmo.optimix.asia/stylesheets/xmo/xmo_components.css?91013" media="all" rel="stylesheet" type="text/css" />
+	<link href="http://xmo.optimix.asia/stylesheets/css/redmond/jquery-ui-1.8.17.custom.css?91013" media="all" rel="stylesheet" type="text/css" />
+    <!-- include javascripts -->
+    <script src="http://xmo.optimix.asia/javascripts/js/jquery-1.7.1.min.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/jquery-ui-1.8.21.custom.min.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/jquery.linkselect.min.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/jquery.tooltip.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/bootstrap/js/bootstrap-tooltip.js?91013" type="text/javascript"></script>
+<script src="http://xmo.optimix.asia/javascripts/jquery.xmo_tooltips.js?91013" type="text/javascript"></script>
+<script src="http://xmo.optimix.asia/bootstrap/js/bootstrap-popover.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/js/component.js?91013" type="text/javascript"></script>
+	<script src="http://xmo.optimix.asia/javascripts/jquery.sticky.js?91013" type="text/javascript"></script>
+    <script src="http://xmo.optimix.asia/javascripts/jquery.defaultvalue.js?91013" type="text/javascript"></script>
+  <script src="http://xmo.optimix.asia/bootstrap/js/bootstrap-dropdown.js?91013" type="text/javascript"></script>
+	<script src="http://xmo.optimix.asia/bootstrap/js/bootstrap.min.js?91013" type="text/javascript"></script>
+  <script type="text/javascript" src="./data.js"></script>
+  <script src="js/chart/chartwell.min.js" type="text/javascript"></script>
+  <script src="js/chart/chartwell_radar.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <style type="text/css">
+.xmo-tab-brand{
+  width: 412px;
+  /*height: 300px;*/
+  border:1px #c8c8c8 solid;
+  position: relative;
+}
+.xtb-nav-list{width: 76px; float: left;}
+.xtb-nav-list ul{padding: 0;margin: 0;}
+.xtb-nav-list ul li{
+  display: block;
+  line-height: 46px;
+  height: 46px;
+  font-size: 12px;
+  text-align: center;
+  color: #6d6d6d;
+  cursor: pointer;
+  background: #ebebeb;
+  border-bottom: 2px #c8c8c8 solid;
+}
+.xtb-nav-list ul li.last{border:none;}
+.xtb-nav-list ul li.active{background:#fff;}
+.xmo-tab-brand .tab-content{width: 328px; padding-left: 6px; float: right;}
+.xtb-arrows{
+  position: absolute;
+  right: 24px;
+  width: 27px;
+  height: 20px;
+  background: url(arrows.png) no-repeat;
+  cursor: pointer;
+}
+.xtb-arrows-top{bottom: 60px;}
+.xtb-arrows-bottom{bottom: 16px;background-position:0 -20px;}
+.xtb-title{border-bottom: 2px #8a8a8a solid;color: #8a8a8a;line-height: 26px; height: 30px; padding-top: 16px;
+  font-size: 14px;
+}
+.line_per{height: 22px; width: 100%;}
+.line_per i{height: 12px; position: relative; top: 1px; margin-left: 4px;}
+#income-content,#age-content{padding-top: 30px;}
+#canvas_area{font-size: 190px; width: 159px; margin: 0 auto; margin-top: 40px; margin-bottom: 20px;}
+#interests-content{position: relative;overflow: hidden;padding: 10px 40px 0 0;}
+#interests-content .data_item{width: 70px; text-align: center; color: #4d4d4d; position:absolute;}
+#interests-content .data_item p{font-weight: 600; font-size: 14px;}
+
+#interests-content.data_6 #data_item_1{top: 10px;left: 58px; width: 140px;}
+#interests-content.data_6 #data_item_2{top: 60px;left: 190px;}
+#interests-content.data_6 #data_item_3{top: 150px;left: 190px;}
+#interests-content.data_6 #data_item_4{top: 192px;left: 58px; width: 140px;}
+#interests-content.data_6 #data_item_5{top: 150px;left: -10px;}
+#interests-content.data_6 #data_item_6{top: 60px;left: -10px;}
+
+#interests-content.data_5 #data_item_1{top: 10px;left: -14px; width: 100%;}
+#interests-content.data_5 #data_item_2{top: 80px;left: 192px;}
+#interests-content.data_5 #data_item_3{top: 160px;left: 178px;}
+#interests-content.data_5 #data_item_4{top: 160px;left: 0px;}
+#interests-content.data_5 #data_item_5{top: 80px;left: -10px;}
+
+#interests-content.data_4 #data_item_1{top: 10px;left: -20px; width:100%;}
+#interests-content.data_4 #data_item_2{top: 100px;left: 198px;}
+#interests-content.data_4 #data_item_3{top: 192px;left: 58px; width: 140px;}
+#interests-content.data_4 #data_item_4{top: 100px;left: -10px;}
+
+
+#interests-content.data_3 #data_item_1{top: 10px;left: -20px; width: 100%;}
+#interests-content.data_3 #data_item_2{top: 120px;left: 188px;}
+#interests-content.data_3 #data_item_3{top: 120px;left: -10px; }
+    </style>
+    <div class="xmo-tab-brand">
+      <div class="xtb-nav-list">
+        <ul class="">
+          <li class="active" href="#gender" data-toggle="tab">GENDER</li>
+          <li href="#age" data-toggle="tab">AGE</li>
+          <li href="#income" data-toggle="tab">INCOME</li>
+          <li href="#interests" data-toggle="tab">INTERESTS</li>
+          <li href="#location" data-toggle="tab">LOCATION</li>
+          <li class="last" href="#device" data-toggle="tab">DEVICE</li>
+        </ul>
+      </div>
+      <div class="tab-content">
+          <div class="tab-pane active" id="gender">
+            <div class="xtb-title">GENDER</div>
+          </div>
+          <div class="tab-pane" id="age">
+            <div class="xtb-title">AGE</div>
+            <div id="age-content"></div>
+          </div>
+          <div class="tab-pane" id="income">
+            <div class="xtb-title">INCOME</div>
+            <div id="income-content"></div>
+          </div>
+          <div class="tab-pane" id="interests">
+            <div class="xtb-title">INTERESTS</div>
+            <div id="interests-content"></div>
+          </div>
+          <div class="tab-pane" id="location">
+            <div class="xtb-title">LOCATION</div>
+          </div>
+          <div class="tab-pane" id="device">
+            <div class="xtb-title">DEVICE</div>
+          </div>
+      </div>
+      <div class="cle"></div>
+      <div class="xtb-arrows xtb-arrows-top hide"></div>
+      <div class="xtb-arrows xtb-arrows-bottom"></div>
+    </div>
+    <script type="text/javascript">
+    $('.xtb-nav-list li[data-toggle="tab"]').on('shown', function (e) {
+        $('.xtb-nav-list li').removeClass('active');
+        $(this).addClass('active');
+        var current = $('.xtb-nav-list li.active');
+        var index = $('.xtb-nav-list li').index(current);
+        $('.xtb-arrows').show();
+        if(index == 0){
+          $('.xtb-arrows-top').hide();
+        }
+        if(index == $('.xtb-nav-list li').length -1){
+          $('.xtb-arrows-bottom').hide();
+        }
+    })
+    $(document).on('click','.xtb-arrows-top',function(event){
+        event.preventDefault();
+        var current = $('.xtb-nav-list li.active');
+        var index = $('.xtb-nav-list li').index(current);
+        current.prev().click();
+        $('.xtb-arrows-bottom').show();
+        if(index == 1){
+          $('.xtb-arrows-top').hide();
+          return;
+        }
+        return false;
+    })
+    $(document).on('click','.xtb-arrows-bottom',function(event){
+        event.preventDefault();
+        var current = $('.xtb-nav-list li.active');
+        var index = $('.xtb-nav-list li').index(current);
+        current.next().click();
+        $('.xtb-arrows-top').show();
+        if(index == $('.xtb-nav-list li').length -2){
+          $('.xtb-arrows-bottom').hide();
+          return;
+        }
+        return false;
+    })
+    $(function(){
+        $('.xtb-nav-list li').eq(3).click();
+        TAB.init();
+    })
+
+
+    var TAB = {
+      init : function(){
+        this.per_line(data_age,$('#age-content'));
+        this.per_line(data_income,$('#income-content'));
+        this.interest(data_interest,'#interests-content');
+      },
+      color : ['#ebcab8','#ebbda9','#f5a590','#e84427','#851e00','#5f1500'],
+      per_line : function(dataAry,$box){
+        $box.html('');
+        for(var i = 0; i < dataAry.length; i++){
+          var item = dataAry[i],
+          color = this.color[i],
+          per = item.per*100;
+          var html = $('<div class="line_per"><span class="name pull-left">'+ item.name +'</span> <span class="pull-right">'+per+'%<i></i></span></div>');
+          $box.append(html);
+          html.find('i').css({
+            background : color
+          }).animate({
+            width : item.per * 190,
+            background : color
+          },1000);
+        }
+      },
+      interest : function(data,id){
+        $(id).html('<div id="canvas_area"><span class="chartwell radar"></span></div>');
+        var html = '<span style="color: #b8b7bc">d</span>';
+        $(id + ' .data_item').remove();
+        for (var i = 0; i < data.length; i++) {
+          var item = data[i];
+          html += '<span style="color: '+this.color[i]+'">'+item.value+'</span>';
+          $(id).append('<div class="data_item" id="data_item_'+ (i+1) +'">'+ item.name +'<br/><p>'+ item.value2 +'</p></div>');
+        };
+        $(id).attr('class','pre_box_con')
+        var length = data.length;
+        $(id).addClass('data_'+length);
+        $(id + ' #canvas_area .chartwell').html(html);
+        FFChartwell();
+      },
+    }
+    </script>
+  </body>
+</html>

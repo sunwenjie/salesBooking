@@ -1,0 +1,457 @@
+
+<%if @pv_list_filter %>
+    <%i = 0%>
+    <% pv_cities = @pv_list_filter.map(&:city).uniq
+       pv_cities_h = {}
+       pv_cities_h = pv_cities.map{|c| [c,Order.map_region_names(c)]}.to_h if pv_cities.present?
+    %>
+    <% @pv_list_filter.each do |book| %>
+        <%i += 1%>
+        <tr class = "area_list_<%=i%>" id = "checkbox_<%= i %>" index= "<%= i %>">
+          <td class="align_left" width="20px">
+            <% if @audo_pv && @audo_pv[book.id.to_s] %>
+                <input type='checkbox' name='pv_config_item' value = "<%= i %>" checked = "checked"  onclick = "save_ad_gp('<%= i %>');" />
+            <% else %>
+                <input type='checkbox' name='pv_config_item' value = "<%= i %>" onclick = "save_ad_gp('<%= i %>');" />
+            <% end %>
+          </td>
+          <td class="align_left" id = "city_<%= i %>" >
+            <%= pv_cities_h[book.city].nil? ? "" : pv_cities_h[book.city] %>
+          </td>
+          <td class="align_left" id = "media_<%= i %>" >
+            <%= book.media %>
+          </td>
+          <td class="align_left " id = "media_type_<%= i %>" >
+            <%= book.media_type %>
+          </td>
+          <td class="align_left " id = "media_form_<%= i %>" >
+            <%= book.midia_form %>
+          </td>
+          <td class="align_left " style="display: none" >
+            <%= t(Advertisement::COMPUTER_PV_MEDIA_TYPE[book.midia_form]) %>
+          </td>
+          <td class="align_left " id = "ad_original_size_<%= i %>" >
+            <%= book.ad_original_size %>
+          </td>
+          <td class="align_left " id = "ad_expand_size_<%= i %>" >
+            <%= book.ad_expand_size %>
+          </td>
+          <td class="align_right " id = "ctr_<%= i %>" >
+            <% book.ctr.present? ? book.ctr.scan(/[-+]?[0-9]*\.?[0-9]+/).each{|c|book.ctr.sub!(c, number_with_precision(c.to_i, :precision => 2).to_s)} : '0.00' %>
+          <%= book.ctr%>
+          </td>
+          <td class="align_right " id = "average_cost_cpm_<%= i %>" style="display: none" >
+            <%= book.average_cost_cpm %>
+          </td>
+          <td class="align_right " id = "media_id_<%= i %>" style="display: none" >
+            <%= book.id %>
+          </td>
+
+          <td class="align_center">
+            <% pv_da = ( @audo_pv && @audo_pv[book.id.to_s] ) ?   @audo_pv[book.id.to_s][3]:  ""  %>
+            <input class="pv_value numeric align_right" data_value = "<%= pv_da %>" id="pv_config_<%=i%>" type="text" <%= (@audo_pv && @audo_pv[book.id.to_s]) ? '':'readonly' %>   value="<%= number_with_precision(pv_da, :precision => 0, :delimiter => ",") %>" placeholder="0" style="width:45px;float: left" onchange = "change_sum_pv('<%= i %>','pv_config');"/><span style="float: right;margin-left: 2px;margin-top: 5px;">K</span>
+          </td>
+
+          <td class="align_left numeric">
+            <% pv_da_scale = ( @audo_pv && @audo_pv[book.id.to_s] ) ? sprintf("%.2f",@audo_pv[book.id.to_s][2].round(2)) : ""  %>
+            <input class="pv_value  numeric align_right" type="text" data_a = "<%= pv_da_scale %>" <%= (@audo_pv && @audo_pv[book.id.to_s]) ? '':'readonly' %>  data_value = "<%= pv_da_scale %>" value = "<%= pv_da_scale %>" style="width:45px;float: left"  placeholder="0"  alt="area_list_<%=i%>" id="pv_config_scale_<%=i%>" onchange = "change_sum_pv('<%= i %>','pv_config_scale');"/><span style="float: right;margin-right: 10px;margin-top: 5px;">%</span>
+          </td>
+
+        </tr>
+    <% end%>
+<% end %>
+
+<script>
+
+    $(document).ready(function(){
+        $("#media_list tr input[name='pv_config_item']").click($select_pv);
+    })
+
+    //媒体选择多选框点击事件
+    var $select_pv=function(){
+        var check = $(this).attr("checked") == undefined ? false : true;
+        var input_td;
+        if(check){
+            input_td = $(this).parent().parent().find("td input[type='text']");
+            input_td.removeAttr("readonly");
+
+        }else{
+            input_td = $(this).parent().parent().find("td input[type='text']");
+            input_td.attr("readonly","true");
+            reset_pv_config($(this).val());
+        }
+    }
+
+    //横幅通栏DSP类型保存
+    function save_dsp_ad_gp(){
+        var selected_advertisement_id = $('#chosen_product_type option:selected').val();
+        var gps = new Array();
+        var city = $('#chosen_multiple_area option:selected').val();
+        var gp = {};
+        if(typeof (city) == 'undefined'){
+            gp.city = "-";
+        }else{
+            if(city.charAt(city.length-1) == '市'){
+                city = city.substr(0,city.length-1);
+                gp.city = city;
+            }
+        }
+        gp.media = "RTB" ;
+        gp.media_id = 0 ;
+        gp.media_type = "NA" ;
+        gp.media_form = "DSP";
+        gp.ad_original_size = "NA";
+        gp.ad_expand_size = "NA";
+        gp.ctr = "NA";
+        gp.pv_config = $("#max_pv").val();
+        gp.pv_config_scale = 100;
+        gp.order_id = <%= @order.id %> ;
+        gp.advertisement_id = selected_advertisement_id;
+        gps.push(gp);
+        $.ajax({
+            type : "POST",
+            url : "<%= ajax_gp_save_gps_path %>",
+            data : {"gps_attributes":gps},
+            success : function(data){
+                $("#progressbar_check").html(data);
+            }
+        })
+    }
+
+    //自动分配gp保存
+    function audo_pv_distribution(){
+        var auto_pv_click_flag = $("#auto_pv_click_flag").val();
+        if (auto_pv_click_flag == "0") {
+            var selected_advertisement_id = $('#chosen_product_type option:selected').val();
+            var gps = new Array()
+            var gp = {};
+            var a = $("#chosen_multiple_media_type").val();
+            var b = $("#chosen_origin_tag").val();
+            var c = $("#chosen_expand_tag").val();
+            var boxcheck
+
+            if ($("#checkbox_all input[type='checkbox']").is(':checked')) {
+                boxcheck = "checked"
+            } else {
+                boxcheck = "unchecked"
+            }
+
+            if ($("#media_list tr input[name='pv_config_item']").length > 0) {
+                var all_select_checkbox = $.map($("#media_list tr input[name='pv_config_item']"), function (option) {
+                    return $(option).val()
+                })
+                gp.city = $("#city_" + all_select_checkbox[0]).text().replace(/\s/g, "");
+                if (gp.city.charAt(gp.city.length - 1) == "市") {
+                    gp.city = gp.city.substr(0, gp.city.length - 1);
+                }
+            }
+            gp.advertisement_id = selected_advertisement_id;
+            gps.push(gp);
+            $.ajax({
+                type: "POST",
+                dataType: "text",
+                url: "<%= audo_pv_distribution_gps_path %>",
+                data: {"gps_attributes": gps, "origin_size": b, "expand_size": c, "media_type": a, "check": boxcheck},
+                success: function (data) {
+                    $("#pv_config_form").html(data);
+                    if ($('#auto_pv_size').val() > 0) {
+                        $("#addPv").parent().show();
+                        $('#auto_pv_config').parent().hide();
+                    }
+                }
+            })
+        }
+        $("#auto_pv_click_flag").val("1");
+
+    }
+
+
+    //添加按钮提交
+    function ajax_input_save(){
+        var selected_advertisement_id = $('#chosen_product_type option:selected').val();
+        var gps = new Array()
+        var gp = {};
+        if($("#media_list tr input[name='pv_config_item']").length > 0){
+            var all_select_checkbox = $.map($("#media_list tr input[name='pv_config_item']"), function(option){return $(option).val()})
+            gp.city = $("#city_"+all_select_checkbox[0]).text().replace(/\s/g,"");
+            if(gp.city.charAt(gp.city.length-1)=="市"){
+                gp.city=gp.city.substr(0,gp.city.length-1);
+            }
+        }
+        gp.advertisement_id = selected_advertisement_id;
+        gps.push(gp);
+//        var last_node = $(".xmo-progress-status [order_id = "+ <%#= @order.id %> +"]").last();
+//        var order_status = last_node.attr('status').split(",");
+//        var is_standard  = last_node.attr('is_statndard_or_unstatnard')
+//
+//        var order_approval_status = "";
+//        var node_id = "";
+//        if (is_standard == "true"){
+//            order_approval_status = order_status[2]
+//            node_id = "3"
+//        }else{
+//            order_approval_status = order_status[1]
+//            node_id = "2"
+//        }
+        $.ajax({
+            type : "POST",
+            url : "<%= ajax_input_save_gps_path %>",
+//            data : {"gps_attributes":gps,"node_id":node_id,"status":order_approval_status},
+            data : {"gps_attributes":gps},
+            success : function(data){
+                $("#pv_config_form").html(data);
+                scroll(0,0);
+            }
+        })
+    }
+
+    //多选框（单选/全选）选中添加、分配文本框分配保存
+    function save_ad_gp(i){
+        var check = $("#checkbox_"+i+" input[type='checkbox']").is(':checked');
+        var gps = new Array()
+
+        if($("#media_list tr input[name='pv_config_item']").length > 0){
+            if(i=="all"){
+                var all_select_checkbox = $.map($("#media_list tr input[name='pv_config_item']"), function(option){return $(option).val()})
+                for (a = 0; a < all_select_checkbox.length; a++){
+                    var z = all_select_checkbox[a];
+                    gp = commit_gp_attributes(z,check);
+                    gps.push(gp);
+                }
+            }else{
+                gp = commit_gp_attributes(i,check);
+                gps.push(gp);
+            }
+
+            $.ajax({
+                type : "POST",
+                url : "<%= ajax_gp_save_gps_path %>",
+                data : {"gps_attributes":gps},
+                success : function(data){
+                    $("#progressbar_check").html(data);
+                }
+            })
+        }
+    }
+
+    //组装gp保存数据
+    function commit_gp_attributes(z,check){
+        var selected_advertisement_id = $('#chosen_product_type option:selected').val();
+        var gp = {};
+        gp.city = $("#city_"+z).text().replace(/\s/g,"");
+        if(gp.city.charAt(gp.city.length-1)=="市"){
+            gp.city=gp.city.substr(0,gp.city.length-1);
+        }
+        gp.media = $("#media_"+z).text().replace(/\s/g,"") ;
+        gp.media_id = $("#media_id_"+z).text().replace(/\s/g,"") ;
+        gp.media_type = $("#media_type_"+z).text().replace(/\s/g,"") ;
+        gp.media_form = $("#media_form_"+z).text().replace(/\s/g,"");
+        gp.ad_original_size = $("#ad_original_size_"+z).text().replace(/\s/g,"");
+        gp.ad_expand_size = $("#ad_expand_size_"+z).text().replace(/\s/g,"");
+        gp.average_cost_cpm = $("#average_cost_cpm_"+z).text().replace(/\s/g,"");
+        gp.ctr = $("#ctr_"+z).text().replace(/\s/g,"");
+        gp.pv_config = $("#pv_config_"+z).val().replace(/,/g,'');
+        gp.pv_config_scale = $("#pv_config_scale_"+z).val();
+        gp.order_id = <%= @order.id %> ;
+        gp.advertisement_id = selected_advertisement_id;
+        if(!check){ gp._destroy = "1"; }
+        return gp
+    }
+
+    //分配文本框分配保存
+    function change_sum_pv(i,flag){
+        check_pv_config(i,flag);
+//      check_pv_config(flag);
+        save_ad_gp(i);
+    }
+
+    //多选框选择事件触发
+    function reset_pv_config(n){
+//      var pv_config = Math.round( $('#max_city_pv_config').text().replace ( /[^\d.]/g, '' ) );
+// s=s.replace(/,/g,'');
+//
+//      var pv_config_scale = Math.round( $('#max_city_pv_scale').text().replace ( /[^\d.]/g, '' ) );
+        var pv_config =  $('#max_city_pv_config_hidden').val();
+        var pv_config_scale =  parseFloat($('#max_city_pv_scale_hidden').val()).toFixed(2);
+        var max=Math.round(parseFloat($('#max_pv').val())/1000);
+        if(n == "all"){
+            $("#media_list tr input[name='pv_config_item']").each(function(){
+                var input_td = $(this).parent().parent().find("td input[type='text']");
+                var current_pv_config = input_td.eq(0).val() == "" ? "0" : parseInt(input_td.eq(0).val().replace(/,/g,''));
+//            var current_pv_config = input_td.eq(0).val() == "" ? "0" : parseInt(input_td.eq(0).val());
+                var current_pv_config_scale = input_td.eq(1).val() == "" ? "0" : input_td.eq(1).val() ;
+                if (current_pv_config != "") {
+                    pv_config = (pv_config - current_pv_config) <0 ? 0 : (pv_config - current_pv_config)
+                    pv_config_scale = (pv_config_scale - current_pv_config_scale) < 0 ? 0.0 : (pv_config_scale - current_pv_config_scale)
+                }
+                input_td.attr("data_value","");
+            });
+            $('#left_pv_config').val("");
+            $('#left_pv_config_scale').val("");
+
+            $("#media_list tr input[type='text']").val("");
+
+        }else{
+
+            var current_pv = $("#pv_config_scale_"+n)
+            var input_td = current_pv.closest("tr").find("td input[type='text']");
+//        var current_pv_config = input_td.eq(0).val() == "" ? "0" : parseInt(input_td.eq(0).val());
+            var current_pv_config = input_td.eq(0).val() == "" ? "0" : parseInt(input_td.eq(0).val().replace(/,/g,''));
+            var current_pv_config_scale = input_td.eq(1).val() == "" ? "0" : input_td.eq(1).val();
+
+            pv_config = (pv_config - current_pv_config) <0 ? 0 : (pv_config - current_pv_config)
+            pv_config_scale = (pv_config_scale - current_pv_config_scale) < 0 ? 0.0 : (pv_config_scale - current_pv_config_scale)
+            $('#left_pv_config').val(max-pv_config);
+            $('#left_pv_config_scale').val(100 - pv_config_scale);
+            $("#pv_config_"+n).attr("data_value","");
+            $("#pv_config_scale_"+n).attr("data_value","");
+            input_td.val("");
+        }
+        $('#max_city_pv_config').text(format_to_number(pv_config)+"K");
+        $('#max_city_pv_scale').text(parseFloat(pv_config_scale).toFixed(2)+"%");
+
+        $('#max_city_pv_config_hidden').val(pv_config);
+        $('#max_city_pv_scale_hidden').val(parseFloat(pv_config_scale));
+
+
+        $('#left_pv_config').val(max-pv_config);
+        $('#left_pv_config_scale').val(100 - pv_config_scale);
+        $("#pv_config_"+n).attr("data_value","");
+        $("#pv_config_scale_"+n).attr("data_value","");
+
+        $('#unconfig_pv').text( format_to_number(Math.round(max-pv_config))+"K");
+        $('#unconfig_pv_scale').text((100-pv_config_scale).toFixed(2)+"%");
+        set_div_show(pv_config,pv_config_scale);
+    }
+
+    //    媒体分配文本框联动触发事件
+    function check_pv_config(i,flag){
+//            var pv_config =  parseInt($('#max_city_pv_config').text().replace ( /[^\d.]/g, '' ));
+//            var pv_config_scale = parseFloat( $('#max_city_pv_scale').text().replace ( /[^\d.]/g, '' ));
+
+        var pv_config =  $('#max_city_pv_config_hidden').val();
+        var pv_config_scale =  parseFloat($('#max_city_pv_scale_hidden').val()).toFixed(2);
+
+        var max=Math.round(parseFloat($('#max_pv').val())/1000);
+        var current_pv = $("#pv_config_"+i);
+        var input_td = current_pv.closest("tr").find("td input[type='text']");
+        var current_pv_config = input_td.eq(0).val() == "" ? "0" : parseInt(input_td.eq(0).val().replace(/,/g,''));
+//            var current_pv_config = input_td.eq(0).val() == "" ? "0" : parseInt(input_td.eq(0).val());
+
+        var current_pv_config_scale = input_td.eq(1).val() == "" ? "0" : input_td.eq(1).val() ;
+        var left_pv = $('#left_pv_config').val() == "" ? max : parseInt($('#left_pv_config').val()) ;
+        var left_pv_scale = $('#left_pv_config_scale').val() == "" ? 100 : parseFloat($('#left_pv_config_scale').val());
+
+        var before_pv_config = $("#pv_config_"+i).attr("data_value");
+        var before_pv_config_scale = $("#pv_config_scale_"+i).attr("data_value");
+
+        if(isNaN(current_pv_config) || isNaN(current_pv_config_scale) ){
+            $("#pv_config_"+i).numeric({dis:"#pv_config_"+i});
+            $("#pv_config_scale_"+i).numeric({dis:"#pv_config_scale_"+i});
+            $("#pv_config_"+i).val("0");
+            $("#pv_config_scale_"+i).val("0.0");
+        }else {
+            if (flag == "pv_config") {
+                if (current_pv_config != "" || current_pv_config == "0") {
+                    if (before_pv_config != "" && before_pv_config_scale != "") {
+                        pv_config = pv_config - before_pv_config;
+                        left_pv = max - pv_config;
+                        pv_config_scale = pv_config_scale - before_pv_config_scale;
+                        left_pv_scale = 100 - pv_config_scale;
+                    }
+                    if (current_pv_config >= left_pv) {
+                        input_td.eq(0).val(left_pv);
+                        input_td.eq(1).val(parseFloat(left_pv_scale).toFixed(2));
+                        $('#left_pv_config').val(0);
+                        $('#left_pv_config_scale').val(0);
+                        pv_config = max;
+                        pv_config_scale = 100;
+                        $("#pv_config_" + i).attr("data_value", left_pv);
+                        $("#pv_config_scale_" + i).attr("data_value", left_pv_scale);
+                    } else {
+                        input_td.eq(0).val(parseInt(current_pv_config));
+                        var pv_scale = (parseInt(current_pv_config) / max * 100).toFixed(2);
+                        if (parseFloat(pv_config_scale) + parseFloat(pv_scale) > 100) {
+                            input_td.eq(1).val(100 - pv_config_scale);
+                        } else {
+                            input_td.eq(1).val(pv_scale);
+                        }
+                        pv_config = parseInt(pv_config) + parseInt(input_td.eq(0).val());
+                        pv_config_scale = parseFloat(pv_config_scale) + parseFloat(input_td.eq(1).val());
+                        $('#left_pv_config').val(max - pv_config);
+                        $('#left_pv_config_scale').val(100 - pv_config_scale);
+                        $("#pv_config_" + i).attr("data_value", current_pv_config);
+                        $("#pv_config_scale_" + i).attr("data_value", parseFloat(input_td.eq(1).val()));
+                    }
+                }
+            }
+
+
+            if (flag == "pv_config_scale") {
+                if (current_pv_config_scale != "") {
+                    if (before_pv_config_scale != "" && before_pv_config != "") {
+                        pv_config_scale = pv_config_scale - before_pv_config_scale;
+                        left_pv_scale = 100 - pv_config_scale;
+                        pv_config = pv_config - before_pv_config;
+                        left_pv = max - pv_config;
+                    }
+                    if (current_pv_config_scale > left_pv_scale) {
+                        input_td.eq(0).val(left_pv);
+                        input_td.eq(1).val(parseFloat(left_pv_scale).toFixed(2));
+                        $('#left_pv_config').val(0);
+                        $('#left_pv_config_scale').val(0);
+                        pv_config = max;
+                        pv_config_scale = 100;
+                        $("#pv_config_scale_" + i).attr("data_value", left_pv_scale);
+                        $("#pv_config_" + i).attr("data_value", left_pv);
+                    } else {
+                        var pv = Math.round(max * parseFloat(current_pv_config_scale) / 100);
+                        input_td.eq(1).val(parseFloat(current_pv_config_scale).toFixed(2));
+                        if ((parseInt(pv_config) + pv) > max) {
+                            input_td.eq(0).val(max - pv_config);
+                        } else {
+                            input_td.eq(0).val(pv);
+                        }
+
+                        pv_config = parseInt(pv_config) + parseInt(input_td.eq(0).val());
+                        pv_config_scale = parseFloat(pv_config_scale) + parseFloat(input_td.eq(1).val());
+                        $('#left_pv_config').val(max - pv_config);
+                        $('#left_pv_config_scale').val(100 - pv_config_scale);
+                        $("#pv_config_scale_" + i).attr("data_value", parseFloat(current_pv_config_scale));
+                        $("#pv_config_" + i).attr("data_value", parseInt(input_td.eq(0).val()));
+                    }
+                }
+            }
+            $('#max_city_pv_config').text(format_to_number(pv_config) + "K");
+            $('#max_city_pv_scale').text(pv_config_scale.toFixed(2) + "%");
+            $('#max_city_pv_config_hidden').val(pv_config);
+            $('#max_city_pv_scale_hidden').val(pv_config_scale.toFixed(2));
+            $('#unconfig_pv').text(format_to_number(Math.round(max - pv_config)) + "K");
+            $('#unconfig_pv_scale').text((100 - pv_config_scale).toFixed(2) + "%");
+//                alert(format_to_numeric(parseInt(input_td.eq(0).val())).toFixed(0));
+
+            input_td.eq(0).val(format_to_number(parseInt(input_td.eq(0).val())));
+
+            set_div_show(pv_config, pv_config_scale);
+        }
+    }
+
+
+
+    function set_div_show(pv,pv_scale){
+        var max=Math.round(parseFloat($('#max_pv').val())/1000);
+        if(max == pv || pv_scale==100){
+            $("#addPv").parent().show();
+            $('#auto_pv_config').parent().hide();
+            $('#config_finish_tip').show();
+            $('#unconfig_tip').hide();
+        }else{
+            $("#addPv").parent().hide();
+            $('#auto_pv_config').parent().show();
+            $('#unconfig_tip').show();
+            $('#config_finish_tip').hide();
+        }
+    }
+
+
+</script>

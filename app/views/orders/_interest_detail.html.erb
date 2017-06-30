@@ -1,0 +1,70 @@
+<script type="text/javascript" src="/js/bubble/chart/chartwell.min.js"></script>
+<script type="text/javascript" src="/js/bubble/chart/chartwell_radar.min.js"></script>
+<script type="text/javascript" src="/js/bubble/chart/excanvas.min.js"></script>
+<script type="text/javascript" src="/js/bubble/donut_chart.js"></script>
+<script type="text/javascript" src="/js/bubble/config.js"></script>
+<script type="text/javascript" src="/js/bubble/brand.js"></script>
+<script type="text/javascript" src="/js/quotation_js/base64.js"></script>
+<script type="text/javascript" src="/js/quotation_js/jquery.tagcloud.js"></script>
+<script type="text/javascript" src="/js/quotation_js/canvas2image.js"></script>
+<script type="text/javascript" src="/js/quotation_js/html2canvas.js"></script>
+<% @interest_audience_result = interest_audience_result %>
+<div class="t_padding_20">
+<div class="book-report-title clearfix row" id="export_div">
+  <div class="pull-left span" style="color:#333333;">人群兴趣标签总结</div>
+  <div class="pull-right span r_margin_20">
+    <div class="dropdown" id="export_dropdow">
+    <a href="#id" data-toggle="dropdown" class="dropdown-pdf"><i class="icon-export-to-nc"></i>下载<i class="icon-arrow-down"></i></a>
+    <ul class="dropdown-menu">
+      <li>
+        <div class="white_pointer pointer_position"></div>
+      </li>
+      <li>
+        <a href="" id="export_img">图片</a>
+      </li>
+    </ul>
+  </div>
+  </div>
+</div>
+<div id="img-export-box" class="t_padding_20">
+<div class="row">
+  <div class="span font_29">人群总数 <span><%=number_with_delimiter(@interest_audience_result["audience"])%></span></div>
+</div>
+<div class="row b_margin_0">
+<div class="brand-box radius-5 span pull-left" style="height:448px;width:444px;">
+    <div class="brand-box-title">兴趣</div>
+    <div id="interests-content"></div>
+</div>
+<div class="brand-box radius-5 span pull-left" style="height:448px;width:444px;">
+  <div class="brand-box-title">设备</div>
+  <div id="device-content"></div>
+</div>
+<div class="brand-box radius-5 span" style="height:356px;width:910px;">
+    <div class="brand-box-title">地域分布</div>
+    <div id="location-content"></div>
+</div>
+<div class="cle"></div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    var ajax_data = <%= raw @interest_audience_result.to_json %>
+    XMO_Band.initTab(ajax_data,10);
+    $('#export_img').click(function(e){
+      e.preventDefault();
+      // $("html,body").scrollTop(0)
+      // $('#sub_section_gray').addClass('export_now');
+      html2canvas($('#img-export-box')[0], {
+      onrendered: function(canvas) {
+        var datas = canvas.toDataURL("image/png");
+        var base64 = datas.replace(/^data:image\/(png|jpg);base64,/, "");
+        $('#sub_section_gray').removeClass('export_now');
+        $.post("<%= export_image_orders_path %>",{img_data:base64, img_name:'interest_audience'}, function(data){
+            window.location.href = data.img_url;
+            console.info(data.img_url)
+         });
+      }
+    });
+    return false;
+    });
+</script>

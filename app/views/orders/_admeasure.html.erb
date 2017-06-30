@@ -1,0 +1,43 @@
+
+  
+  <% i = 0%>
+ <!-- for table -->
+
+<% admeasure = I18n.locale.to_s == "en" ? @advertisement.admeasure_en : @advertisement.admeasure   %>
+
+<%if admeasure %>
+  <% admeasure.each do |book|%>
+    <% i += 1 %>
+    <% if i == admeasure.size %>
+      <tr class="">
+       <!-- 这是全部的tr -->
+        <td class="align_left">
+          <div class="area_all" data-target=".area_list_<%=i%>"><%= t("order.form.all") %>
+          </div>  
+        </td>
+    <% else%>
+      <tr class=" area_list_<%=i%>">
+        <td class="align_left">
+          <%= book[0]  %>
+        </td>
+    <% end%>
+      <td class="align_left">
+        <%= @advertisement.budget_ratio("super").to_f == 0 ?  0 : number_with_precision(@advertisement.impressions_prediction.to_i * ((book[1].to_f)/ @advertisement.budget_ratio("super")), :precision => 0, :delimiter => ",")  %>
+      </td>
+    <% if i == admeasure.size %>
+      <td class="align_left ">
+
+        <input class="admeasure_show admeasure_first content number  valid" style="height: 24px;" disabled="disabled" name="ad[all_myplanner]" id="ad_all_myplanner" type="text"  max="" value="<%= book[1] %>" placeholder="0"  />
+        <input type="hidden" class='admeasure_show' name="ad[all_mycity]" id="ad_all_city" value="<%= book[0] %>">
+
+      </td>
+    <% else%>
+       <td class="align_left ">
+        <input class="admeasure_show admeasure_first admeasure_value content number  valid" style="height: 24px;" type="text"  max="" value="<%= book[1] %>" placeholder="0"  alt="area_list_<%=i%>" name="ad[myplanner][]" id="ad_myplanner_<%=i-1%>" />
+        <input type="hidden" class='admeasure_show' name="ad[mycity][]" id="ad_city_<%=i-1%>" value="<%= book[0] %>" >
+      </td>
+    <% end%>
+      
+    </tr> 
+  <% end%>
+<% end %>

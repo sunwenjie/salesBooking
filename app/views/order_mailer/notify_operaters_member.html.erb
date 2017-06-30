@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <div>
+      <p>您好:</p>
+
+      <p>您被分配到订单<%= @order.code %>
+      </p>
+      <p>
+        订单状态为：<span style="color:red;"><%= I18n.t @order.state%></span>
+      </p>
+      <p>以下为订单详情：</p>
+      <div>
+        <%if @order.whether_service?%>
+            <%= render :partial => "service_order_template",:object=>@order %>
+        <%else %>
+            <%= render :partial => "order_template",:object=>@order %>
+            <%= render :partial => "advertisement_template",:object=>@order %>
+        <% end %>
+      </div>
+      <p>谢谢</p>
+
+      <p>爱点击互动</p>
+    </div>
+  </body>
+</html> 

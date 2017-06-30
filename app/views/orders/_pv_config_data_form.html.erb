@@ -1,0 +1,279 @@
+
+<style type="text/css">
+    .area_all{cursor: pointer;}
+    .controls.filter_con{padding-right: 40px;}
+    .table_pagin{padding:0px !important;}
+    .pull-right{padding-right:20px;}
+    .sub_title{font-size: 14px}
+
+    #progressbar .ui-progressbar-value {
+        background-color: #ccc;
+    }
+
+    .tr_config{
+        border-top: 1px dotted !important;
+        border-bottom: 1px dotted !important;
+        border-color: #BEBEBE !important;
+        /*border-left: 0px !important;*/
+        /*border-right: 0px !important;*/
+    }
+</style>
+
+<div class="big_section big_section_book">
+<div class="form-horizontal">
+
+  <div id="setting_con_custom" style="margin-top: -20px">
+    <!-- 订单预算 -->
+
+    <div class="control-group">
+      <label class="control-label"><%= t("order.form.budget")%></label>
+      <div class="controls">
+        <div class="row">
+            <div class='span'>
+              <div class="input-append">
+                <input type="text" id="budget" style="width:336px;" class='align_right numeric budget' name='budget' disabled="disabled" value = "<%= number_with_precision(@order.budget,:precision => 2,:delimiter=>",") %>" />
+              <span class="add-on currency_unit_budget">
+                <%=@order.budget_currency%>
+              </span>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        <%= t("order.form.gp_evaluate")%>
+      </label>
+      <div class="controls">
+        <div class="row b_margin_5" >
+
+        <div class="span">
+          <div class="input-append">
+            <input type="text" id="gp_evaluate" style="width:345px;" class='align_right numeric gp_evaluate' name='gp_evaluate' disabled="disabled" value = "<%= format("%.2f",order_gp_rake) %>" placeholder="0.00"/>
+            <span class="add-on">%</span>
+          </div>
+        </div>
+       </div>
+        <div style="display: inline-block;padding-top: 3px;padding-left: 20px">
+          <span class="font_27"><a class="blue-href align_left gp_evaluate_fix" href="javascript:go_to_advertisements();"><%= t("order.form.gp_evaluate_fix") %></a><%= t("order.form.gp_evaluate_tips")%></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 代理返点 -->
+
+    <div class="control-group agency_rebate_label">
+      <label class="control-label"><%= t("order.form.agency_rebate")%></label>
+      <div class="controls">
+        <div class="row">
+          <div class='span'>
+            <div class="input-append">
+              <input type="text" id="agency_rebate" style="width:345px;" class='align_right numeric agency_rebate' name='agency_rebate'  value = "<%= @order.rebate.present? ? format("%.2f",@order.rebate) : format("%.2f",0.00) %>" placeholder="0.00"/>
+              <span class="add-on">
+                %
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 市场推广费用 -->
+
+    <div class="control-group market_cost_label">
+      <label class="control-label"><%= t("order.form.marketing_cost")%></label>
+      <div class="controls">
+        <div class="row">
+          <div class='span'>
+            <div class="input-append">
+              <input type="text" id="market_cost" style="width:345px;" class='align_right numeric market_cost' name='market_cost'  value = "<%= @order.market_cost.present? ? format("%.2f",@order.market_cost) : format("%.2f",@order.default_market_cost) %>" placeholder="0.00"/>
+              <span class="add-on">
+                %
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 净毛利 -->
+
+    <div class="control-group net_gp_label">
+      <label class="control-label"><%= t("order.form.net_gp")%></label>
+      <div class="controls">
+        <div class="row">
+          <div class='span'>
+            <div class="input-append">
+              <input type="text" id="net_gp" style="width:345px;" class='align_right numeric net_gp' name='net_gp' disabled="disabled" value = "<%= @order.net_gp %>" placeholder="0.00"/>
+              <span class="add-on">
+                %
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row b_margin_5" >
+          <div id="order_gp_result" class="span">
+            <%=raw return_gp_img((order_gp_rake/100).round(2)) %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row big_section_b_book" id="media_gp_config_submit_show" >
+      <!-- button area -->
+      <div class="button_area">
+        <div class="r_margin_20">
+          <div class="pull-right">
+            <div class="outer_cancel"><button type='button' onclick="go_to_advertisements();" ><%= t("order.cancel_bth")%></button></div>
+            <div class="outer_submit">
+              <input type="submit" value="<%= t("order.save")%>" name="commit" onclick="order_examine('save')" class="submit_tag_button">
+            </div>
+          </div>
+          <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
+            <img src="/images/pre-loading_small.gif">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- </form> -->
+  </div>
+</div>
+</div>
+
+
+<!--include expandTable.js-->
+<script type="text/javascript">
+
+    var order_node_ids = $(".xmo-progress-status [order_id = "+ <%= @order.id %> +"]").last().attr('node_ids').split(",");
+    if (<%= current_user.administrator?%>){
+        $(".agency_rebate_label").show();
+        $(".gp_evaluate_fix").hide();
+        $(".market_cost_label").show();
+        $(".net_gp_label").show();
+        $("#media_gp_config_submit_show").hide();
+        $("#agency_rebate").prop("disabled",true);
+        $("#market_cost").prop("disabled",true);
+    }
+    else if(jQuery.inArray("2",order_node_ids) > -1 || jQuery.inArray("3",order_node_ids) > -1){
+        $(".agency_rebate_label").show();
+        $(".gp_evaluate_fix").hide();
+        $(".market_cost_label").show();
+        $(".net_gp_label").show();
+
+        var orderApprovalStatus = $(".xmo-tooltip-click[type = 'order_approval']").attr("status").split(",")
+        if((jQuery.inArray("3",order_node_ids) > -1 && jQuery.inArray("2",order_node_ids) <= -1) || (orderApprovalStatus[1] == "2" || orderApprovalStatus[2] == "2")  ){
+            $("#media_gp_config_submit_show").hide();
+            $("#agency_rebate").prop("disabled",true);
+            $("#market_cost").prop("disabled",true);
+        }else{
+            $("#media_gp_config_submit_show").show();
+        }
+    }
+    else if(jQuery.inArray("7",order_node_ids) > -1){
+        $(".agency_rebate_label").hide();
+        $(".market_cost_label").hide();
+        $(".net_gp_label").hide();
+        $("#media_gp_config_submit_show").hide();
+
+    }
+    else{
+        $(".list_gp").hide()
+        $("#tab-gp").hide();
+    }
+    $(document).ready(function() {
+                $("#net_gp").val(gp_result());
+                $("#order_gp_result").html(return_gp_img(gp_result()));
+            }
+    )
+
+    $("#agency_rebate").on("blur",function(){
+       var agency_rebate = $(this).val();
+        if (agency_rebate == "" || isNaN(agency_rebate) || parseFloat(agency_rebate) < 0.0){
+            agency_rebate = 0.0;
+        }else if (parseFloat(agency_rebate) > 100.0){
+            agency_rebate = 100.0;
+        }
+            $(this).val(parseFloat(agency_rebate).toFixed(2));
+
+            $("#net_gp").val(gp_result());
+            $("#order_gp_result").html(return_gp_img(gp_result()));
+
+    })
+
+    $("#market_cost").on("blur",function(){
+       var market_cost = $(this).val();
+        if (market_cost == "" || isNaN(market_cost) || parseFloat(market_cost) < 0){
+            market_cost = 0.0;
+        }else if (parseFloat(market_cost) > 100.0){
+            market_cost = 100.0;
+        }
+            $(this).val(parseFloat(market_cost).toFixed(2));
+            $("#net_gp").val(gp_result());
+            $("#order_gp_result").html(return_gp_img(gp_result()));
+
+    })
+
+
+    function gp_result(){
+        var gp_evaluate = parseFloat($("#gp_evaluate").val());
+        var agency_rebate = parseFloat($("#agency_rebate").val());
+        var market_cost = parseFloat($("#market_cost").val());
+        console.log("gp_evaluate==:"+gp_evaluate);
+        console.log("agency_rebate:"+agency_rebate);
+        console.log("market_cost:"+market_cost);
+        if(isNaN(gp_evaluate) ){ gp_evaluate = 0.0}
+        if(isNaN(agency_rebate) ){agency_rebate = 0.0}
+        if (isNaN(market_cost)){market_cost = 0.0}
+        var net_gp = (gp_evaluate - agency_rebate - market_cost).toFixed(2)
+//        if (net_gp < 0.0){net_gp = 0.00}
+        return net_gp
+    }
+
+    function return_gp_img(gp_rake) {
+       var gp_img = "icon02_red.png"
+       var gp_text = "<%= t("order.form.to_be_improved_immediately2") %>"
+       var min = <%= @order.unstandard_range[0] %>
+       var max = <%= @order.unstandard_range[1] %>
+        if(gp_rake < min){
+            gp_img = "icon02_red.png"
+            gp_text = "<%= t("order.form.to_be_improved_immediately2") %>"
+        } else if(min <= gp_rake  && gp_rake  <= max) {
+            gp_img = "icon03_orange.png"
+            gp_text = "<%= t("order.form.yet_to_improve_gp2") %>"
+        }else if(max < gp_rake  && gp_rake  < 100){
+            gp_img = "icon05_green.png"
+            gp_text = "<%= t("order.form.gp_meet_standard2") %>"
+        }
+        return "<img src='/images/assets/"+gp_img+"'/>" + " " +gp_text;
+    }
+
+    function go_to_advertisements(){
+        $("#tab-gp").removeClass("in active");
+        $(".list_gp").removeClass("active");
+        $("#tab-ads").addClass("in active");
+        $(".list_ads").addClass("active");
+        scroll(0,0);
+    }
+
+
+
+    function order_examine(saveflag){
+        $.get("<%= order_examine_orders_path%>", {
+                    id:<%= @order.id %>,
+                    gp_evaluate: $("#gp_evaluate").val(),
+                    agency_rebate: $("#agency_rebate").val(),
+                    market_cost: $("#market_cost").val(),
+                    net_gp: $("#net_gp").val(),
+                    saveflag: saveflag
+                }, function (data) {
+                    $("#tab-gp").html(data);
+                    scroll(0,0);
+                }
+        )
+    }
+
+
+</script>

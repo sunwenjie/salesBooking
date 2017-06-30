@@ -1,0 +1,185 @@
+<style>
+    .print th{border-top:1px black solid;border-right:1px black solid;}
+    .print td{border-top:1px black solid;border-right:1px black solid;}
+    .print{margin-top:1px; margin-left:5px; border-bottom:1px black solid;border-left:1px black solid;}
+</style>
+
+
+<%
+   media_gps = Gp.get_gp_list(@order.id)
+   @result = media_gps.group_by(&:advertisement_id)
+   @result.each{|advertisement_id,city_gps|
+   @send_ad = Advertisement.find(city_gps.last.advertisement_id)
+%>
+    <div class="row b_margin_5">
+      <div class="span">
+        <label class="sub_txt2">
+          <span><%= @send_ad.get_advertisements_live + t(Advertisement.find(advertisement_id).ad_type) %></span>
+        </label>
+      </div>
+    </div>
+    <div class="row ">
+      <div  lass="table_white"  style="position: relative;">
+        <table class="print">
+          <% if Advertisement.find(advertisement_id).ad_type == "BAN" %>
+              <thead>
+              <tr>
+                <th class="align_center align_top">地域</th>
+                <th class="align_center align_top">媒体</th>
+                <th class="align_center align_top">分配点击量</th>
+                <th class="align_center align_top">媒体成本(CPC)</th>
+                <th class="align_center align_top">预估GP(%)</th>
+                <th class="align_center align_top">预估GP</th>
+              </tr>
+              </thead>
+              <tbody id="book_pv_table">
+
+              <%if city_gps %>
+                  <% city_media = city_gps.group_by(&:city) %>
+
+                  <% city_media.each do |city,media| %>
+                      <% all_pv = 0
+                         all_gp = 0
+                         all_gp_cpc = 0
+                         all_gp_scale = 0
+                      %>
+                      <% if city == "-" %>
+                          <tr>
+                            <td class="align_center v_align_middle" >
+                              <%= "全部" %>
+                            </td>
+                            <td class="align_center v_align_middle" >
+                              <%= media[0].media %>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= media[0].pv_config * 1000 %>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= media[0].get_total_price.round(3) %>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= (media[0].get_total_rake * 100).round(2) %><span>%</span>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= media[0].get_gp.round(2) %>
+                            </td>
+                          </tr>
+                      <% else %>
+                      <% media.each_with_index do |gp,index| %>
+                          <% all_pv += gp.pv_config.to_i
+                             if index == 0
+                             all_gp_cpc = gp.get_total_price.round(3)
+                             all_gp_scale = (gp.get_total_rake * 100).round(2)
+                             end
+                          %>
+                          <tr>
+                            <td class="align_center v_align_middle" >
+                              <%= city %>
+                            </td>
+                            <td class="align_center v_align_middle" >
+                              <%= gp.media %>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= gp.pv_config * 1000 %>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= gp.advertisement.get_average_cost(city).round(2) %>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= (gp.get_gp_rake * 100).round(2) %><span>%</span>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= gp.get_gp.round(2) %>
+                            </td>
+
+                          </tr>
+                      <% end%>
+                      <tr class="odd" >
+                        <td class="align_center" colspan='2'>全部</td>
+                        <td class="align_center"><%= all_pv * 1000 %></td>
+                        <td class="align_center"><%= all_gp_cpc %></td>
+                        <td class="align_center"><%= (all_gp_scale * 100).round(2)%><span>%</span></td>
+                        <td class="align_center"><%= all_gp %></td>
+
+                      </tr>
+                      <% end %>
+                  <%end%>
+              <% end %>
+              </tbody>
+          <% else %>
+              <thead>
+              <tr>
+                <th class="align_center align_top">地域</th>
+                <th class="align_center align_top">媒体</th>
+                <th class="align_center align_top">分配展示量比例</th>
+                <th class="align_center align_top">分配展示量</th>
+                <th class="align_center align_top">媒体成本(CPM)</th>
+                <th class="align_center align_top">预估GP(%)</th>
+                <th class="align_center align_top">预估GP</th>
+              </tr>
+              </thead>
+              <tbody id="book_pv_table">
+
+              <%if city_gps %>
+                  <% city_media = city_gps.group_by(&:city) %>
+                  <% city_media.each do |city,media| %>
+                      <% all_pv= 0
+                         all_gp = 0
+                         all_gp_cpm = 0
+                         all_gp_scale = 0
+                      %>
+                      <% media.each_with_index do |gp,index| %>
+                          <% all_pv += gp.pv_config.to_i
+                             all_gp += gp.get_gp
+                             if index == 0
+                               all_gp_cpm = gp.get_total_price.round(3)
+                               all_gp_scale = (gp.get_total_rake * 100).round(2)
+                             end
+                          %>
+                          <tr>
+                            <td class="align_center v_align_middle" >
+                              <%=  city %>
+                            </td>
+                            <td class="align_center v_align_middle" >
+                              <%= gp.media %>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= gp.pv_config_scale %><span>%</span>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= gp.pv_config * 1000 %>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= gp.average_cost_cpm %>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= (gp.get_gp_rake * 100).round(2) %><span>%</span>
+                            </td>
+                            <td class="align_center v_align_middle">
+                              <%= gp.get_gp.round(2) %>
+                            </td>
+
+                          </tr>
+                      <% end%>
+                      <tr class="odd" >
+                        <td style="display: none"></td>
+                        <td class="align_center" colspan='2'>全部</td>
+                        <td class="align_center">100%</td>
+                        <td class="align_center"><%= all_pv * 1000 %></td>
+                        <td class="align_center"><%= all_gp_cpm %></td>
+                        <td class="align_center"><%= all_gp_scale %><span>%</span></td>
+                        <td class="align_center"><%= all_gp %></td>
+
+                      </tr>
+                  <%end%>
+              <% end %>
+              </tbody>
+          <% end %>
+
+        </table>
+      </div>
+    </div>
+    </div>
+<%
+   }
+%>

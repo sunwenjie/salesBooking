@@ -1,0 +1,35 @@
+class AddTencentRateOnOffer < ActiveRecord::Migration
+  def change
+    Offer.create [
+              {ad_platform: 'COMPUTER',ad_type:'QQSpace',regional:'SPECIAL',public_price:'7.5',general_discount:'0.3',floor_discount:'0.20',ctr_prediction:'0.50'},
+              {ad_platform: 'COMPUTER',ad_type:'QQSpace',regional:'OTHER',public_price:'6.0',general_discount:'0.3',floor_discount:'0.20',ctr_prediction:'0.50'},
+              {ad_platform: 'COMPUTER',ad_type:'QQSpace',regional:'NATION',public_price:'4.0',general_discount:'0.3',floor_discount:'0.20',ctr_prediction:'0.50'},
+              {ad_platform: 'MOBILE',ad_type:'QQMessage',regional:'SPECIAL',public_price:'25.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'MOBILE',ad_type:'QQMessage',regional:'OTHER',public_price:'20.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'MOBILE',ad_type:'QQMessage',regional:'NATION',public_price:'15.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'MOBILE',ad_type:'WecatAndQQ',regional:'SPECIAL',public_price:'25.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'MOBILE',ad_type:'WecatAndQQ',regional:'OTHER',public_price:'20.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'MOBILE',ad_type:'WecatAndQQ',regional:'NATION',public_price:'15.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'COMPUTER',ad_type:'QQSpaceCPE',regional:'SPECIAL',public_price:'17.5',general_discount:'0.3',floor_discount:'0.20',ctr_prediction:'100.0'},
+              {ad_platform: 'COMPUTER',ad_type:'QQSpaceCPE',regional:'OTHER',public_price:'12.5',general_discount:'0.3',floor_discount:'0.20',ctr_prediction:'100.0'},
+              {ad_platform: 'COMPUTER',ad_type:'QQSpaceCPE',regional:'NATION',public_price:'7.5',general_discount:'0.3',floor_discount:'0.20',ctr_prediction:'100.0'},
+              {ad_platform: 'MOBILE',ad_type:'QQMessageCPE',regional:'SPECIAL',public_price:'80.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'100.0'},
+              {ad_platform: 'MOBILE',ad_type:'QQMessageCPE',regional:'OTHER',public_price:'60.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'100.0'},
+              {ad_platform: 'MOBILE',ad_type:'QQMessageCPE',regional:'NATION',public_price:'40.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'100.0'},
+              {ad_platform: 'MOBILE',ad_type:'WecatAndQQCPE',regional:'SPECIAL',public_price:'80.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'100.0'},
+              {ad_platform: 'MOBILE',ad_type:'WecatAndQQCPE',regional:'OTHER',public_price:'60.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'100.0'},
+              {ad_platform: 'MOBILE',ad_type:'WecatAndQQCPE',regional:'NATION',public_price:'40.00',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'100.0'}, 
+              {ad_platform: 'MOBILE',ad_type:'MobileBannersAndWecatCPC',regional:'US_UK_AU_NZ_MY',public_price:'21.56',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.60'},
+              {ad_platform: 'MOBILE',ad_type:'MobileBannersAndWecatCPC',regional:'HK_TW_MA_SG',public_price:'15.40',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.60'},
+              {ad_platform: 'MOBILE',ad_type:'MobileBannersAndWecatCPC',regional:'OTHER_COUNTRY',public_price:'12.32',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.60'},
+              {ad_platform: 'MOBILE',ad_type:'InFeedAdvertisingANDQQCPC',regional:'US_UK_AU_NZ_MY',public_price:'123.17',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.60'},
+              {ad_platform: 'MOBILE',ad_type:'InFeedAdvertisingANDQQCPC',regional:'HK_TW_MA_SG',public_price:'92.38',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.60'},
+              {ad_platform: 'MOBILE',ad_type:'InFeedAdvertisingANDQQCPC',regional:'OTHER_COUNTRY',public_price:'61.59',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.60'},
+              {ad_platform: 'MOBILE',ad_type:'MobileBannersAndWecatCPM',regional:'US_UK_AU_NZ_MY',public_price:'338.73',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'MOBILE',ad_type:'MobileBannersAndWecatCPM',regional:'HK_TW_MA_SG',public_price:'277.14',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'MOBILE',ad_type:'MobileBannersAndWecatCPM',regional:'OTHER_COUNTRY',public_price:'215.55',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'MOBILE',ad_type:'InFeedAdvertisingANDQQCPM',regional:'US_UK_AU_NZ_MY',public_price:'615.87',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'MOBILE',ad_type:'InFeedAdvertisingANDQQCPM',regional:'HK_TW_MA_SG',public_price:'492.70',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'},
+              {ad_platform: 'MOBILE',ad_type:'InFeedAdvertisingANDQQCPM',regional:'OTHER_COUNTRY',public_price:'369.52',general_discount:'0.3',floor_discount:'0.10',ctr_prediction:'0.30'}]
+  end
+end

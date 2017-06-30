@@ -1,0 +1,33 @@
+fieldset.report_view{
+ overflow: visible;
+ padding-left: 20px;
+ padding-bottom: 20px;
+
+}
+ul.chzn-results li, div.chzn-container span, ul.chzn-choices li, ul.chzn-choices li span, ul.chzn-choices li input {
+	 font:12px arial,sans-serif;
+}
+.yform label{
+ /*font-size: 13px;*/
+ padding-left: 0px;
+}
+fieldset.selection_view{
+ overflow: visible;
+ padding-left: 20px;
+}
+fieldset.report_view div{
+	display:inline; 
+	float:left; 
+	width:150px;
+}
+
+fieldset.report_view select{
+	width: 80px;
+}
+
+.yform input,
+  .yform textarea,
+  .yform select {
+    border:1px solid #ddd;
+  }
+

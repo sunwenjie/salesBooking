@@ -1,0 +1,102 @@
+<!-- 布局 ｛-->
+
+<header class="jumbotron subhead">
+        <h1>二，表单（Fields）</h1>
+        <p class="lead">1.1－XMO中常用的模块</p>
+</header>
+
+<div class="big_section">
+<form class="form-horizontal">
+
+
+<div class="sub_section_white">
+<div class="control-group t_margin_20">
+  <label class="control-label">
+  	<label for="requiredField" class="inline">required field*</label>
+  </label>
+  <div class="controls">
+		<div class="row">
+			<div class="span">
+		    <input type="text" size="30" name="campaign[campaignname]" id="requiredField" disname="required field" class="required span5">
+			</div>
+		</div>
+  </div>
+</div>
+
+<div class="row">
+<span class="label label-important">说明：请在必须项上加 ＊ </span>
+</div>
+
+<pre class="prettyprint linenums">
+<div class="control-group t_margin_20">
+  <label class="control-label">
+  	<label for="requiredField" class="inline">required field*</label>
+  </label>
+  <div class="controls">
+	<div class="row">
+		<div class="span">
+	    <input type="text" size="30" name="campaign[campaignname]" id="requiredField" disname="required field" class="required span5">
+		</div>
+	</div>
+  </div>
+</div>
+</pre>
+</div>
+
+
+
+<div class="sub_section_gray">
+<div class="control-group">
+<label for="subportfolio_subportfolioname" class="control-label">Short field
+<br/>(Short width input)</label>
+  <div class="controls">
+    <div class="row">
+      <div class="item_two_column">
+        <div class="span">
+          <input type="text" style="width: 250px;" size="30" name="subportfolio[subportfolioname]" id="subportfolio_subportfolioname" disname="Strategy Name" class="required">
+        </div>
+        <div class="span">
+          <div class="label_w_item">
+            <label for="subportfolio_status">Status</label>
+            <div><select name="subportfolio[status]" id="subportfolio_status"><option value="Active">Active</option>
+<option value="Pause">Pause</option></select></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<pre class="prettyprint linenums">
+<div class="control-group">
+<label for="subportfolio_subportfolioname" class="control-label">Short field
+<br/>(Short width input)</label>
+  <div class="controls">
+    <div class="row">
+      <div class="item_two_column">
+        <div class="span">
+          <input type="text" style="width: 250px;" size="30" name="subportfolio[subportfolioname]" id="subportfolio_subportfolioname" disname="Strategy Name" class="required">
+        </div>
+        <div class="span">
+          <div class="label_w_item">
+            <label for="subportfolio_status">Status</label>
+            <div><select name="subportfolio[status]" id="subportfolio_status"><option value="Active">Active</option>
+<option value="Pause">Pause</option></select></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</pre>
+
+</div>
+
+
+
+
+</form>
+
+</div>
+<!--｝ 布局 -->

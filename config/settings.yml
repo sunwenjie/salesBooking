@@ -1,0 +1,27 @@
+defaults: &defaults
+  redis: &redis_defaults
+    server: 'localhost'
+    port: 6379
+    db_num: 0
+    password: ''
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+  redis:
+    <<: *redis_defaults
+    port: 6379
+    password: salespassword
+
+production:
+  <<: *defaults
+  redis:
+    <<: *redis_defaults
+    server: '10.1.11.140'
+    port: 6379
+    password: salespassword

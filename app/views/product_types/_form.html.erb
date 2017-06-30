@@ -1,0 +1,105 @@
+<!-- body start -->
+<script type="text/javascript" src="/js/xmo-calendar.js"></script>
+<script src="/js/chosen.jquery.min.js?9120" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/css/css/xmo-calendar.css">
+<style>
+    .ui-autocomplete {
+        max-height:200px;
+        max-width: 380px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+    }
+    /* IE 6 doesn't support max-height
+     * we use height instead, but this forces the menu to always be this tall
+     */
+    * html .ui-autocomplete {
+        width: 380px;
+    }
+</style>
+<div  class ="big_section">
+  <% if @product_type.errors.any? %>
+      <div class="big_section">
+
+        <div id="error_explanation" class="error sticker">
+          <h2><%= @product_type.errors.count %>个错误导致汇率不能保存成功 :</h2>
+          <ul>
+            <% @product_type.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+  <% end %>
+
+  <% if flash[:notice] %>
+      <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+  <%= form_for(@product_type ,:html=>{:id=>"product_type_form", :class=>"form-horizontal"}) do |f| %>
+
+
+      <div class="sub_section_white">
+
+        <!--<div class="control-group t_margin_20">-->
+          <!--<label class="control-label">-->
+            <!--<label for="campaign_campaignname" class="inline">广告平台</label>-->
+          <!--</label>-->
+          <!--<div class="controls">-->
+            <!--<div class="row">-->
+              <!--<div class="span">-->
+                <!--<%= f.select :ad_platform,options_for_offer_ad_platform,{}, {:class => "required select span5 proof_ready_unmodify"} %>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <%= hidden_field_tag "offer_id",@id %>
+
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline">产品类型名称</label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.text_field :name, :disname=>"产品类型名称", :class=>"required span5",:size=>30 %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group t_margin_20">
+          <label class="control-label">
+            <label for="campaign_campaignname" class="inline">产品类型简称</label>
+          </label>
+          <div class="controls">
+            <div class="row">
+              <div class="span">
+                <%= f.text_field :ad_type, :disname=>"产品类型简称", :class=>"required span5",:size=>30 %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- sub_section_white end -->
+      <div class="row t_margin_30">
+        <!-- button area -->
+        <div class="button_area">
+          <div class="r_margin_20">
+            <div class="pull-right">
+              <div class="outer_cancel"><button type='button' href='/offers'>取消</button></div>
+              <div class="outer_submit">
+                <input type="submit" value="新建" name="commit" class="submit_tag_button" confirm='您确定要提交吗？'>
+              </div>
+            </div>
+            <div id="submit_loading" style="display:none" class="save_loading pull-right r_margin_10 t_margin_10">
+              <img src="/images/pre-loading_small.gif">
+            </div>
+          </div>
+        </div>
+      </div>
+  <%end%>
+</div>

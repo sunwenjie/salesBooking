@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+NUM=`ps aux | grep -v grep | grep -c 'email_receiver.rb'`
+
+if [ $NUM -ge 1 ];then
+  PID=`ps aux | grep 'email_receiver.rb' | grep -v grep | awk '{print $2}'`
+  kill $PID
+  sleep 3
+  nohup bundle exec rails runner email_receiver.rb -e production > /dev/null 2>&1 &
+  exit 0
+elif [ $NUM -eq 0 ];then
+  nohup bundle exec rails runner email_receiver.rb -e production > /dev/null 2>&1 &
+  exit 0
+else
+  echo "email_receiver error count"
+fi

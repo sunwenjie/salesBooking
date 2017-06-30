@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <link rel="shortcut icon" href="/images/favicon.ico?v=1">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1"/>
+    <title><%= raw t("admin.login.title")%></title>
+  <%= stylesheet_link_tag "/bootstrap/css/bootstrap.min.css" %>
+  <%= stylesheet_link_tag "xmo/login" %>
+  <%= javascript_include_tag "js/jquery-1.7.1.min" %>
+  <%= javascript_include_tag "js/component.js" %>
+  
+
+  </head>
+
+  <body class="bg">
+  <style type="text/css">
+    .announcement{
+      background-color: #FFEEEE;
+        border: 1px solid #da1818;
+        padding: 5px 10px;
+        width: 250px;
+        min-height: 28px;
+        word-wrap: break-word;
+        font-size: 12px;
+        text-align: left;
+        border-radius: 5px;
+        position: relative;
+    }
+    .announcement  label{
+      margin: 0;
+    }
+    .announcement .close_message{
+      position: absolute;
+        top: -14px;
+        background: url("../../images/shared/components/close-message.png") no-repeat left top;
+        width: 26px;
+        height: 26px;
+        right: -4px;
+    }
+  </style>
+  <div class="x-lang">
+    <span><%= link_to '', "/en/auth/login", :class=>"#{I18n.locale.to_s=='zh-cn' ? 'x-lang-en' : 'x-lang-en selected'}" %> </span>
+    <span><%= link_to '', "/zh-cn/auth/login", :class=>"#{I18n.locale.to_s=='zh-cn' ? 'x-lang-ch selected' : 'x-lang-ch'}" %></span>
+  </div>
+
+  <div class="x-container">
+    <div class="login-title">
+      <div class="login-description">
+        <img src="/images/login/title.png" style="float:left;">
+       <%= raw t('admin.login.login-description') %>
+      </div>
+    </div>
+    <div class="login-box clearfix">
+      <div class="x-login">
+        <img src="/images/login/iclick-logo.png">
+        <div class="x-logo col-xs-12">
+          <span class="f-24"><%= raw t('admin.login.welcome') %></span>
+        </div>
+        <div class="x-login-warp">
+          <%= form_tag( { :action => "login" }, :class => "" , :autocomplete=>"off",:id=>"loginForm" ) do %>
+            <input name='back_url' type='hidden' value='<%=params[:back_url]-%>'/>
+            <div class="form-group has-feedback ">
+              <div class="input-group">
+                <span class="login-ico"></span>
+                <input type="text" id="username" name="username"  class='input-account form-control' placeholder="<%= raw t('admin.login.username') %>" />
+              </div>
+            </div>
+            <div class="form-group has-feedback ">
+              <div class="input-group">
+                <span class="password-ico"></span>
+                <input type="password" name="password" class='input-password form-control' placeholder="<%= raw t('admin.login.password') %>" />
+              </div>
+            </div>
+
+            <div class="form-group has-feedback">
+              <%= hidden_field_tag "domain", session[:domain] == "xmostg.optimix.asia" ? "xmo.optimix.asia" : session[:domain] %>
+
+              <a href="javascript:void(0)" id="login_ok">
+                <input type="submit" class="btn btn-danger" style="width: 262px;" value="<%= raw t('admin.login.login_label')%>"/>
+              </a>
+              <div class="clear"></div>
+              <div style="margin-top:10px;" class="text-center">
+
+                <input type="checkbox" value="1" name="remember_me" style="<%=I18n.locale.to_s=='zh-cn' ? 'margin-bottom: 6px;margin-left: -215px;' : 'margin-bottom: 6px;margin-left: -170px;' %>"/><span style="margin-left: 5px"><%= raw t('admin.login.remeber_me') %></span>
+                <div style="<%=I18n.locale.to_s=='zh-cn' ? ' margin-left: 195px;margin-top:-20px;' : 'margin-left: 150px;margin-top:-20px;' %>">
+                <a class="x-link" href="<%= "#{SendMenu::ReturnXmoUrls}/#{I18n.locale.to_s}/admin/forget_password?booking=1"%>" style='text-decoration: underline;color: cornflowerblue'><%= t("admin.login.forget_password") %></a>
+                </div>
+              </div>
+
+
+              <label id='message' class="warning_msg">
+                <% flash.each do |key, msg| %>
+                  <% if key.to_s.present? %>
+                    <img src="/images/login/asset_error.png" class='warning_icon'/>
+                  <% end %><%= content_tag :div, msg.html_safe, :class => key, :id => "Message" %>
+                  <% end %>
+              </label>
+              <div class="announcement" style="margin-top: 5px;margin-bottom: 40px;position: relative;">
+                <a href="javascript:void(0);"  class="close_message" title="Close" onclick='messageClose(this,"pretargetingscreative_performance_dashboard","0","close_warning_message","zh-cn",false);return false;'></a>
+                <h4><%= t('admin.login.announcement')%></h4>
+                <label style="font-size: 12px">
+                  <% if I18n.locale.to_s == 'zh-cn' %>
+                      系统已进行升级。<br/>请使用电邮地址登入系统。<br/>如有问题，请<a href='https://xmo.optimix.asia/zh-cn/admin/forget_password?booking=1' style='text-decoration: underline;color: #333333;'>按此</a>来寻找您的帐户密码。
+                  <% else %>
+                      The booking system has been upgraded.<br/>Please sign in using your email address.<br/>If you have any questions, please <a href='https://xmo.optimix.asia/en/admin/forget_password?booking=1' style='text-decoration: underline;color: #333333;'>click here</a> to find your account info.
+                  <% end %>
+                </label>
+              </div>
+
+            </div>
+          <% end %>
+        </div>
+        
+      </div>
+
+      <div class="clearfix login-footer">
+
+        <div>Copyright © <%= Time.now.year %> iClick Interactive Asia Limited. All Rights Reserved.</div>
+          <%= raw t('admin.login.suggested_browsers')%>
+        </div>
+      </div>
+    </div>
+    <div style="clear:both"></div>
+  </div>
+  </body>
+
+</html>
+

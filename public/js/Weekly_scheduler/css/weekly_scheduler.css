@@ -1,0 +1,123 @@
+#calendar_conatin table {
+  max-width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+#calendar{
+	border: solid 3px #f1f1f2;
+	clear:both;
+	font-family: Arial, sans-serif;
+	font-size: 11px;
+	width:640px;
+	
+}
+.select_box{
+	border-left:dashed #C9C9C9;
+	border-right:dashed #C9C9C9;
+	border-bottom:dashed #B9B9B9;
+	border-top:dashed #B9B9B9;
+	border-width:thin;
+	height: 20px;
+	width: 20px;
+	
+}
+
+.left_header{
+	padding-right:10px;
+	text-align: center;
+	color:#51504f;
+	width: 40px;
+	
+}
+.container{
+	padding-top:20px;
+
+}
+.header_line{
+	border-left: solid 1px #51504f;
+	border-right: solid 1px #51504f;
+	border-bottom: solid 1px #51504f;
+	height: 8px;
+	line-height: 5px;
+	
+}
+.header_num_left{
+	border-left: solid 1px #51504f;
+	line-height: 5px;
+}
+.header_num_center{
+	border-left: solid 1px #51504f;
+	line-height: 5px;
+}
+.header_num_right{
+	border-right: solid 1px #51504f;
+	line-height: 5px;
+}
+.header_num{
+	text-align: center;
+	padding-bottom: 3px;
+	color:#51504f;
+}
+#padding_box  td{
+	border: none;
+	height:1px;
+}
+.padding{
+	height:20px;
+}
+#left_time_header{
+	float:left;
+	padding-left: 26px;
+	width: 100px;
+	text-align: center;
+}
+#center_time_header{
+	float: left;
+	padding-left: 60px;
+	text-align: center;
+	width: 100px;
+}
+#right_time_header{
+	float:right;
+	padding-right:20px;
+}
+#calendar_body{
+	margin: 0 auto;
+/*	width: 558px;*/
+}
+#calendar_conatin{
+	padding-top:25px;
+	padding-left:7px;
+	padding-right:7px;
+	padding-bottom:25px;
+}
+.chosen_odd{
+	background-image: url(../img/red.png);
+}
+.chosen_even{
+	background-image: url(../img/light-red.png);
+}
+
+#left_time_header_icon{
+	background: url(../img/sun-icon.png) center center no-repeat;
+	float: left;
+	width: 25px;
+	height: 24px;
+	margin-left: 80px;
+}
+#right_time_header_icon{
+	background: url(../img/moon-icon.png) center center no-repeat;
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin-left: 70px;
+}
+
+#cal_all_time{
+	margin:0 10px 0 85px;
+	float:left;
+}
+.cal_all_time_txt{
+	vertical-align: middle;
+	font-size: 12px;
+}

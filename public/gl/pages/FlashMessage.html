@@ -1,0 +1,166 @@
+
+<header class="subNavList">
+<ul>
+
+</ul>
+</header>
+
+<header class="jumbotron subhead">
+        <h1>五，提示信息（Flash Message）</h1>
+</header>
+<div class="big_section">
+<header class="jumbotron subhead">
+        <p class="lead subNavItem" id="flash_1">5.1-Notice</p>
+</header>
+<div class="notice"> 
+Notice
+</div>
+<pre class="prettyprint linenums">
+<div class="notice">Notice</div>
+</pre>
+
+<header class="jumbotron subhead">
+        <p class="lead subNavItem" id="flash_2">5.2-Info</p>
+</header>
+<div class="info">Info</div>
+<pre class="prettyprint linenums">
+<div class="info">Info</div>
+</pre>
+<header class="jumbotron subhead">
+        <p class="lead subNavItem" id="flash_2">5.3-Warning</p>
+</header>
+<div class="warning">Warning</div>
+<pre class="prettyprint linenums">
+<div class="warning">Warning</div>
+</pre>
+<header class="jumbotron subhead">
+        <p class="lead subNavItem" id="flash_2">5.4-Error</p>
+</header>
+<div class="error">Error</div>
+<pre class="prettyprint linenums">
+<div class="error">Error</div>
+</pre>
+<header class="jumbotron subhead">
+        <p class="lead subNavItem" id="flash_2">5.5-multiple</p>
+</header>
+
+<div class="row">
+    <div class="warning">
+    	<a onclick="messageClose(this,&quot;client_cross_marketplace_dashboard&quot;,&quot;606&quot;,&quot;wizard_close_message&quot;,&quot;en&quot;,false);
+        return false;" id="no_media_plan_new_close" title="Close" class="close_message" href="javascript:void(0);"></a>
+      Please setup <a target="_blank" href="http://xmo.optimix.asia/en/campaigns/new?client_id=606">Media Plan</a> before the Account Summary is available.<br>
+      For further Account Analysis, please also setup the following:
+      <div class="clean_padding"></div>
+	  <div class="indent_list_message">
+         <ul>
+           <li>
+             <a target="_blank" href="http://xmo.optimix.asia/en/clients/606/goalinfos/new">Goal Funnel</a>
+             <img id="p12" src="./images/shared/components/help-icon.png">
+             <div class="tooltip_class">Goal funnel helps to analyze website traffic, from understanding drop out rate to conversion traffic source, including organic traffic.</div>
+             <script type="text/javascript">
+			$('#p12').tooltip({
+			      position: 'top right',
+			      //relative: true,
+			      tipClass: 'tooltip_class',
+			      onBeforeShow: function(event, position) {
+			        this.getTip().appendTo(document.body);
+			        return true;
+			      }
+			    }).dynamic({ bottom: { direction: 'down', bounce: true } });
+			</script>
+           </li>
+           <li>
+             <a target="_blank" href="http://xmo.optimix.asia/en/clients/606/virtualtags">Virtual Tag</a>*
+             <img id="p11" src="./images/shared/components/help-icon.png">
+             <div class="tooltip_class">Virtual Tags provide additional grouping capability to help organizing and managing keywords beyond the limitation of the account structure.</div>
+             <script type="text/javascript">
+			$('#p11').tooltip({
+			      position: 'top right',
+			      //relative: true,
+			      tipClass: 'tooltip_class',
+			      onBeforeShow: function(event, position) {
+			        this.getTip().appendTo(document.body);
+			        return true;
+			      }
+			    }).dynamic({ bottom: { direction: 'down', bounce: true } });
+			</script>
+           </li>
+         </ul>
+      </div>
+      <p class="t_margin_20">* Optional</p>
+    </div>
+  </div>
+
+
+<pre class="prettyprint linenums">
+<div class="row">
+    <div class="warning">
+    	<a onclick="messageClose(this,&quot;client_cross_marketplace_dashboard&quot;,&quot;606&quot;,&quot;wizard_close_message&quot;,&quot;en&quot;,false);
+        return false;" id="no_media_plan_new_close" title="Close" class="close_message" href="javascript:void(0);"></a>
+      Please setup <a target="_blank" href="http://xmo.optimix.asia/en/campaigns/new?client_id=606">Media Plan</a> before the Account Summary is available.<br>
+      For further Account Analysis, please also setup the following:
+      <div class="clean_padding"></div>
+	  <div class="indent_list_message">
+         <ul>
+           <li>
+             <a target="_blank" href="http://xmo.optimix.asia/en/clients/606/goalinfos/new">Goal Funnel</a>
+             <img id="p12" src="./images/shared/components/help-icon.png">
+             <div class="tooltip_class">Goal funnel helps to analyze website traffic, from understanding drop out rate to conversion traffic source, including organic traffic.</div>
+             //相关js 代码 请使项目中用helper的写法
+           </li>
+           <li>
+             <a target="_blank" href="http://xmo.optimix.asia/en/clients/606/virtualtags">Virtual Tag</a>*
+             <img id="p11" src="./images/shared/components/help-icon.png">
+             <div class="tooltip_class">Virtual Tags provide additional grouping capability to help organizing and managing keywords beyond the limitation of the account structure.</div>
+			//相关js 代码 请使项目中用helper的写法
+           </li>
+         </ul>
+      </div>
+      <p class="t_margin_20">* Optional</p>
+    </div>
+  </div>
+</pre>
+<div class="row">
+<span class="label label-important">说明：其他形式的Tips也都是在上面的基本类型中插入数据，不再多举例。</span>
+</div>
+
+<div class="row datil-intro">
+<div class="span8">
+<h3>General Usage</h3>
+
+<h3>Notice(Green)</h3>
+<ol>
+<li>Use if it is successful updated or created</li>
+</ol>
+
+<h3>Info(Blue)</h3>
+<ol>
+<li>Use if it is neither warning nor error message</li>
+<li>Just to state the findings</li>
+</ol>
+
+<h3>Warning(Yellow)</h3>
+<ol>
+<li>Use for warning</li>
+<li>Highlight a message</li>
+</ol>
+
+
+<h3>Error(Red)</h3>
+<ol>
+<li>Use for error finding</li>
+</ol>
+
+<h3>Conditions with close buttons</h3>
+<ol>
+<li>Once click close, user will automatically agree not showing the message again.</li>
+<li>Suitable for messages that ask for further setup or setup updates</li>
+</ol>
+
+
+
+</div>
+</div>
+
+
+</div>

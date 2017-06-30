@@ -1,0 +1,686 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  hello: "Hello world"
+  platform_setting: "Settings"
+  title: "Booking System"
+  events:
+    index_pt: "Event Notification"
+    title: "Event Notification"
+    new_pt: "Add a Event Notification"
+    create_pt: "Add a Event Notification"
+    edit_pt: "Edit a Event Notification"
+    show_pt: "Event Notification Details"
+  groups:
+    index_pt: "Groups"
+    title: "Groups"
+    new_pt: "Add a Group"
+    create_pt: "Add a Group"
+    edit_pt: "Edit a Group"
+    show_pt: "Group Details"
+  products:
+    index_pt: "Products"
+    title: "Product"
+    new_pt: "Create a New Product"
+    create_pt: "Create a New Product"
+    edit_pt: "Edit Product"
+    show_pt: "Details"
+    update_pt: "Edit Product"
+  product_types:
+    index_pt: "Product Category"
+    title: "Product Category"
+    new_pt: "Add a Product Category"
+    create_pt: "Add a Product Category"
+    edit_pt: "Edit a Product Category"
+    show_pt: "Product Category Details"
+  channels:
+    index_pt: "Agencies"
+    title: "Agency"
+    new_pt: "Create A New Agency"
+    create_pt: "Create A New Agency"
+    edit_pt: "Edit Agency"
+    show_pt: "Details"
+    update_pt: "Edit Agency"
+  clients:
+    index_pt: "Advertisers"
+    title: "Advertiser"
+    new_pt: ""
+    create_pt: "Create A New Advertiser"
+    edit_pt: "Edit Advertiser"
+    approval_pt: "Approve Advertisers"
+    show_pt: "Advertiser Details"
+  approval_flows:
+    index_pt: "User Permissions"
+    title: "User Permission"
+    new_pt: "Create A New User Permission"
+    create_pt: "Create A New User Permission"
+    edit_pt: "Edit User Permission"
+    show_pt: "Details"
+    update_pt: "Edit User Permission"
+  admins:
+    index_pt: "Client Lists"
+    title: "Client"
+    forget_password_pt: "Forget Password"
+    edit_pt: "Edit Client"
+    new_pt: "Add a Client"
+    create_pt: "Add a Client"
+    login_pt: "Login"
+    error_mail_pt: "Email"
+    update_role_id_pt: "Change Role"
+    reset_mail_pt: "Reset Password"
+  orders:
+    index_pt: "Orders"
+    title: "Order"
+    new_pt: ""
+    create_pt: "Create A New Order"
+    edit_pt: "Edit Order"
+    preview_website_pt: "Premium Website"
+    preview_interest_pt: "Audience Interests"
+    show_pt: "Order Details"
+    allocate_pt: "Order Setting"
+    allocate_show_pt: "Order Setting Detail"
+    download_pt: "Order List"
+    download_page_pt: "Order List"
+    executering_pt: "Order List"
+    scheduling_pt: "Media Plan & Execution Plan"
+  "FALSE": 'No'
+  "false": 'No'
+  "TRUE": 'Yes'
+  "true": 'Yes'
+  input_email_name: "Please enter your username/email"
+  email_name: "Username/Email"
+  MEDIA_BUYING: "Direct Media Buy"
+  ANDIENCE_BUYING: "Target Audience"
+  order_saved: "order saved & Wait for submission"
+  planner_unapproved: "plan is checking"
+  planner_approved: "plan is checked"
+  sales_manager_unapproved: "Director of Sales approve"
+  sales_president_unapproved: "President of China approve"
+  media_assessing_officer_unapproved: "Media sector approve"
+  product_assessing_officer_unapproved: "Product Sector approve"
+  proof_ready: "order is confirmed"
+  proof_unapproved: '"Media plan approval: in progress"'
+  examine_completed: "contract is confirmed"
+  rejected: '"order approval: rejected"'
+  legal_officer_unapproved: '"contract confirm: in progress"'
+  legal_officer_submit: '"contract confirm: in progress"'
+  sales_manager_submit: "pass"
+  media_assessing_officer_submit: "pass"
+  product_assessing_officer_submit: "pass"
+  proof_uploaded: "upload media plan"
+  proof_submit: "pass"
+  reject: "reject"
+  cli_rejected: "client privilege does not pass"
+  unapproved: "client privilege determination"
+  approved: "client privilege has been confirmed"
+  released: "Client privilege has been released"
+  processing: "Launch Preparation"
+  materials_incomplete: "Awaiting Ads Material"
+  need_third_code: "Awaiting 3rd party code"
+  config_done: "Preparation Completed"
+  please_contact_technology_team_by: "Please contact"
+  geo_delivery_type1: "By Province"
+  geo_delivery_type2: " By City Level"
+  geo_delivery_type3: "City Custom"
+  province_city_level: "Select Province/City Level"
+  province_label: "Province"
+  city_level_label: "City Level"
+  for_help: ""
+  custom_groups:
+    gender:
+      m: "male"
+      f: "female"
+    location:
+      CN_AH: "安徽"
+      CN_BJ: "北京"
+      CN_FJ: "福建"
+      CN_GS: "甘肃"
+      CN_GD: "广东"
+      CN_GX: "广西"
+      CN_GZ: "贵州"
+      CN_HI: "海南"
+      CN_HE: "河南"
+      CN_HA: "海南"
+      CN_HL: "黑龙江"
+      CN_HB: "河北"
+      CN_HN: "湖南"
+      CN_HW: "海外"
+      CN_HU: "湖北"
+      CN_JL: "吉林"
+      CN_JS: "江苏"
+      CN_JX: "江西"
+      CN_LN: "辽宁"
+      CN_NM: "内蒙古"
+      CN_IM: "内蒙古"
+      CN_NX: "宁夏"
+      CN_QH: "青海"
+      CN_SD: "山东"
+      CN_SX: "山西"
+      CN_SA: "陕西"
+      CN_SN: "陕西"
+      CN_SH: "上海"
+      CN_SC: "四川"
+      CN_TJ: "天津"
+      CN_XZ: "西藏"
+      CN_XJ: "新疆"
+      CN_YN: "云南"
+      CN_ZJ: "浙江"
+      CN_CQ: "重庆"
+      MO: "澳门"
+      HK: "香港"
+      TW: "台湾"
+      SG: "新加坡"
+      OTHERS: "其他"
+      UNKNOWN: "未能分类"
+    interest:
+      air_travel: "航空"
+      alcohol: "酒类"
+      arts_entertainment: "娱乐"
+      audio_equipment: "音响器材t"
+      auto_accessories: "汽车周边"
+      auto_insurance: "汽车保险"
+      automobiles: "汽车"
+      baby_maternity: "母婴育儿"
+      beauty_cosmetics: "美容及化妆品"
+      beverages: "饮料"
+      books_magazines: "书刊杂志"
+      brands: "品牌"
+      careers: "招聘求职"
+      chinese_liquor_spirits: "国语"
+      classical_music_jazz: "高雅音乐"
+      clothing: "服装"
+      colleges_universities: "大学"
+      comics_animation: "动画漫画"
+      commerce: "商业"
+      computers_related_products: "电脑及外设"
+      consulting_services: "咨询及服务"
+      consumer_electronics: "消费数码"
+      cooking_recipes: "烹饪和菜肴"
+      cosmetic_procedures: "整形整容"
+      culture_literature: "文化文学"
+      daily_personal_care: "洗护日用"
+      daily_supplies: "日用百货"
+      dating: "相亲交友"
+      designers_collections: "奢侈品"
+      domestic_appliance: "家用电器"
+      e_commerce: "电子商务"
+      early_childhood_education: "早教幼教"
+      entry_level_cars: "入门级汽车"
+      family_services: "亲子服务"
+      fashion: "时尚"
+      fitness: "健身"
+      food_beverages: "食品美食"
+      fresh_food: "生鲜食品"
+      furniture_decoration: "家居家装"
+      game_accessories: "游戏周边"
+      games: "游戏"
+      hair_body: "美发美体"
+      hardware_networking: "硬件及网络"
+      health_wellness: "健康医疗"
+      healthcare: "保健养生"
+      high_end_cars: "高档汽车"
+      home_appliances: "数码配件"
+      hotels_accommodations: 酒店"
+      humanities_arts: "人文艺术"
+      industrial: "工业"
+      insurance: "保险"
+      internet_technology: "IT及信息产业"
+      investing: "投资理财"
+      jewelry_accessories: "首饰饰品"
+      jobs_education: "教育培训"
+      language_education: "语言培训"
+      leisure_travel: "旅游"
+      leisure_travel_business_travel: "旅游商旅"
+      liquor_spirits: "洋酒"
+      local_food: "地方特产"
+      luxury_cars: "豪华汽车"
+      make_up_cosmetics: "彩妆"
+      massive_multiplayer: "大型客户端游戏r"
+      maternity_parenting: "母婴用品"
+      mba: "MBA"
+      medical_treatment: "医疗"
+      mid_end_cars: "中档汽车"
+      mini_games_flash_games: "小游戏Flash游戏"
+      mobile_phone_tablet_games: "手机平板游戏"
+      mobile_phones_tablets_apps: "手机平板与应用"
+      movies: "院线电影"
+      musical_instruments: "乐器"
+      office_equipment: "电脑办公"
+      office_supplies: "办公文具"
+      online_games: "网页游戏"
+      online_literature: "网络小说"
+      outdoor_sports: "户外"
+      overseas_education: "留学移民"
+      personal_finance: "金融财经"
+      pets: "宠物"
+      photography_videography: "摄影摄像"
+      politics: "时政"
+      pop_music: "流行音乐"
+      primary_secondary_schooling: "初级中级教育"
+      property_development: "开发商"
+      property_management: "物业管理"
+      psychology: "情感心理"
+      real_estate: "楼盘"
+      real_estate_agencies: "中介代理"
+      real_estate_construction: "房地产及建筑"
+      religion_psychics: "宗教和灵媒"
+      rental_cars: "汽车租赁"
+      restaurants: "餐馆美食"
+      science: "科学"
+      shoes_bags: "鞋包"
+      skin_care: "护肤"
+      snacks: "休闲食品"
+      software: "软件"
+      sports: "运动"
+      sports_fitness: "运动健身"
+      sports_games: "电子竞技"
+      telecommunications_services: "电信、通信服务"
+      traffic: "交通"
+      travel_agencies_services: "旅行社"
+      tv_dramas: "网络影视剧"
+      used_cars: "二手车"
+      variety_entertainment: "娱乐综艺"
+      vehicle_maintenance: "养车用车"
+      video_games: "电玩"
+      vocational_continuing_education: "职业技能培训"
+      wedding_services: "婚庆"
+      wine_beer_champagne: "红酒、白葡萄酒、香槟"
+  media:
+    website_industry1: "视频影音"
+    website_industry2: "休闲娱乐"
+    website_industry3: "门户资讯"
+    website_industry4: "生活服务"
+    website_industry5: "军事资讯"
+    website_industry6: "体育运动"
+    website_industry7: "消费数码"
+    website_industry8: "教育培训"
+    website_industry9: "金融财经"
+    website_industry10: "流行时尚"
+    website_industry11: "健康医疗"
+    website_industry12: "母婴育儿"
+    website_industry13: "旅游交通"
+    website_industry14: "家装建材"
+    website_industry15: "汽车资讯"
+    website_industry16: "其他"
+    website_ad_format1: "Banner"
+    website_ad_format2: "富媒体"
+    website_ad_format3: "视频贴片"
+  errors:
+    messages:
+      not_saved: "cannot save"
+  activerecord:
+    attributes:
+      user:
+        email: "Email"
+        username: "Username"
+        real_name: "Name"
+        tel: "Contact Number"
+        roles: "Credit"
+        innergroups: "Owner Groups"
+        current_password: "Original Password"
+        password: "New Password"
+        password_confirmation: "Confirm New Password"
+        reset_password_token: ""
+      group:
+        name: "Name"
+        sales_manager_id: "Sale Manager"
+      order:
+        client_id: "Advertiser"
+        linkman: "Contact Person"
+        title: "Order Name"
+        linkman_tel: "Contact Number"
+        start_date: "Start Date"
+        ending_date: "End Date"
+        regional: "Region"
+        budget: "Budget"
+        cost: "Sell Price"
+        code: "Order ID"
+        extra_website: "Individual Purchased Websites"
+        interest_crowd: "Target Audience"
+        msa_contract: "Contract ID"
+        business_opportunity_number: "Sales Opportunity ID"
+        advertisement_tatol_budget_radio: ""
+        advertisement_before_other_ctr: ""
+        advertisement_admeasure_miss: ""
+        unfinish_media_plany: ""
+        share_order_blank: ""
+        share_order_group_blank: ""
+        advertisement_ad_type: ""
+        advertisement_num: ""
+        advertisement_cost: ""
+        budget_service_charges_scale: ""
+        nonuniform_date_range: ""
+        nonuniform_budget: ""
+      advertisements:
+        cost: "Sell Price"
+        ad_platform: "Ad Platform"
+        ad_type: "Ad Format"
+        cost_type: "Sell Model"
+        budget_ratio: "Budget Allocation"
+        planner_ctr: "CTR"
+      client:
+        title: "Advertiser"
+        license: "Business Registration Certificate"
+        clientname: "Advertiser Name"
+        clientcontact: "Contact Person"
+        clientphone: "Contact Number"
+        linkman_position: "Position of Contact Person"
+        brand: "Brand"
+        address: "Company Address"
+        share_client_blank: ""
+        industry_id: "Industry"
+        name_and_brand_channel: ""
+        name_and_brand: ""
+
+      channel:
+        channel_name: "Agency Name"
+        user_ids: "Salesperson"
+        qualification_name: "Qualification Name"
+        currency_id: "Currency"
+        contact_person: "Contact Person"
+        phone: "Contact Number"
+        email: "Email"
+        position: "Position"
+        company_adress: "Company Address"
+        nonuniform_date_range: ""
+        nonuniform_rebate: ""
+      product:
+        name: "Product Name"
+        bu: "BU"
+        public_price: "Listprice"
+        floor_discount: "Lowest Discount"
+        ctr_prediction: "Standard CTR"
+      approval_flow:
+        name: "User Permission Name"
+        node_id: "Flow Node"
+        user_group: "User Groups"
+        approval_group: "Permission Group"
+    errors:
+      models:
+          user:
+            attributes:
+              email:
+                blank: "cannot be empty"
+                taken: "has already exists"
+              real_name:
+                blank: "cannot be empty"
+                taken: "has already exists"
+              username:
+                blank: "cannot be empty"
+                taken: "has already exists"
+                invalid: "error"
+              role_id:
+                blank: "cannot be empty"
+              tel:
+                blank: "cannot be empty"
+              roles:
+                blank: "cannot be empty"
+              roles:
+                blank: "cannot be empty"
+              innergroups:
+                blank: "cannot be empty"
+              current_password:
+                blank: "cannot be empty"
+                invalid: "error"
+              password:
+                blank: "cannot be empty"
+                too_short: "Please enter password consisting of at least 8 numbers or alphabets "
+                invalid: "error"
+              password_confirmation:
+                confirmation: "The password you input twice is not the same"
+              reset_password_token:
+                invalid: "Password change falied,Please confirm the link is right."
+                expired: "Your setting page expired, please find password in login page."
+          group:
+            attributes:
+              name:
+                blank: "is required, cannot be empty"
+                taken: "has already exists"
+              sales_manager_id:
+                blank: "is required, cannot be empty"
+          advertisement:
+            attributes:
+              cost:
+                not_a_number: "must be number"
+                blank: "is required, cannot be empty"
+                less_than: "Sell price must not be greater than 1000"
+              budget_ratio:
+                not_a_number: "must be number"
+                blank: "is required, cannot be empty"
+                less_than: "must not be greater than 100"
+              planner_ctr:
+                blank: "is required, cannot be empty"
+              ad_type:
+                blank: "is required, cannot be empty"
+          order:
+            attributes:
+              client_id:
+                blank: "is required, cannot be empty"
+              linkman:
+                blank: "is required, cannot be empty"
+              linkman_tel:
+                blank: "is required, cannot be empty"
+              start_date:
+                blank: "is required, cannot be empty"
+              ending_date:
+                blank: "is required, cannot be empty"
+              regional:
+                inclusion: "is required, cannot be empty"
+              budget:
+#                not_a_number: "must be number"
+                blank: "is required, cannot be empty"
+#                less_than: "Budget must less than 10000000"
+              cost:
+                not_a_number: "must be number"
+                blank: "is required, cannot be empty"
+                less_than: "Sell price must not be greater than 1000"
+              extra_website:
+                blank: "is required, cannot be empty"
+              interest_crowd:
+                blank: "is required, cannot be empty"
+              title:
+                blank: "is required, cannot be empty"
+                taken: "have already exists"
+              msa_contract:
+                blank: "is required, cannot be empty"
+              business_opportunity_number:
+                blank: "is required, cannot be empty"
+          client:
+            attributes:
+              license:
+                blank: "is required, cannot be empty."
+                taken: "This registration number has been recorded"
+              clientname:
+                blank: "is required, cannot be empty."
+                taken: "This user name has been locked"
+              clientcontact:
+                blank: "is required, cannot be empty."
+              clientphone:
+                blank: "is required, cannot be empty."
+              brand:
+                blank: "is required, cannot be empty."
+                taken: "Failed to create : Same brand had been registered under this agency, please check."
+              linkman_position:
+                blank: "is required, cannot be empty."
+              industry_id:
+                blank: "is required, cannot be empty."
+
+          approval_flow:
+            attributes:
+              name:
+                blank: "is required, cannot be empty"
+              node_id:
+                blank: "is required, cannot be empty"
+              user_group:
+                blank: "is required, cannot be empty"
+              approval_group:
+                blank: "is required, cannot be empty"
+              min:
+                blank: "is required, cannot be empty"
+              max:
+                blank: "is required, cannot be empty"
+          product:
+            attributes:
+              product_serial:
+                blank: "is required, cannot be empty"
+              name:
+                blank: "is required, cannot be empty"
+              single_buy_amount:
+                blank: "is required, cannot be empty"
+                not_a_number: "must be number"
+              actual_accord_lowest_buy_amount:
+                blank: "is required, cannot be empty"
+                not_a_number: "must be number"
+              public_price:
+                blank: "is required, cannot be empty"
+                not_a_number: "must be number"
+              general_discount:
+                blank: "is required, cannot be empty"
+                not_a_number: "must be number"
+                greater_than: "must not be less than 0"
+                less_than: "must not be less than 1"
+
+              floor_discount:
+                blank: "is required, cannot be empty"
+                not_a_number: "must be number"
+                greater_than: "must not be less than 0"
+                less_than: "must not be less than 100"
+
+              ctr_prediction:
+                blank: "is required, cannot be empty"
+                not_a_number: "must be number"
+                greater_than: "must not be less than 0"
+                less_than: "must not be less than 100"
+
+              gp:
+                blank: "is required, cannot be empty"
+                not_a_number: "must be number"
+                greater_than: "must not be less than 0"
+                less_than: "must not be less than 100"
+
+              bu:
+                blank: "is required, cannot be empty"
+
+              financial_settlement_id:
+                blank: "is required, cannot be empty"
+
+          product_type:
+            attributes:
+              name:
+                blank: "is required, cannot be empty"
+                taken: "have already exists"
+
+              ad_type:
+                blank: "is required, cannot be empty"
+                taken: "have already exists"
+          channel:
+            attributes:
+              channel_name:
+                blank: "is required, cannot be empty"
+                taken: "have already exists"
+              user_ids:
+                blank: "is required, cannot be empty"
+              qualification_name:
+                blank: "is required, cannot be empty"
+              currency_id:
+                blank: "is required, cannot be empty"
+              contact_person:
+                blank: "is required, cannot be empty"
+              phone:
+                blank: "is required, cannot be empty"
+              email:
+                blank: "is required, cannot be empty"
+                invalid: "pattern is invalid"
+              position:
+                blank: "is required, cannot be empty"
+              company_adress:
+                blank: "is required, cannot be empty"
+              rebate:
+                blank: "is required, cannot be empty"
+
+      messages:
+        record_invalid: "Validation failed: %{errors}"
+        not_saved: "Client cannot save"
+        restrict_dependent_destroy:
+          one: "Cannot delete record because a dependent %{record} exists"
+          many: "Cannot delete record because dependent %{record} exist"
+  devise:
+    sessions:
+      user:
+        signed_in: ""
+        signed_out: ""
+        already_signed_out: ""
+    registrations:
+      user:
+        updated: "Password updated successfully"
+        signed_out: ""
+        already_signed_out: ""
+    passwords:
+      user:
+        updated: "Account activated successfully"
+        signed_out: ""
+        already_signed_out: ""
+  COMPUTER: "PC展示广告"
+  VA15: "PC平台 - 视频广告 前贴片 15秒"
+  #VA30: "PC平台 - 视频广告 前贴片 30 秒"
+  WIN:  "PC平台 - 富媒体 视窗Ad TV"
+  PIP:  "PC平台 - 富媒体 画中画PIP"
+  MIX:  "PC平台 - 富媒体 混投"
+  BAN:  "PC平台 - 通栏横幅广告及其他形式"
+  QQSpace: "PC平台 - QQ空间通栏横幅广告"
+  MOBILE: "移动广告"
+  APPVA15: "移动平台 - 视频广告 前贴片 15秒"
+  ACROSS: "移动平台 - In app 通栏横幅广告"
+  TABLE:  "移动平台 - In app 插屏通栏横幅广告"
+  APPMIX: "移动平台 - 通栏横幅广告 + 插屏混投"
+  QQMessage: "移动平台 - 手机QQ消息流、微信/手机QQ空间/手机QQ Banner"
+  #WecatAndQQ: "移动平台 - 微信/手机QQ空间/手机QQ Banner"
+  MobileBannersAndWecat: "移动平台 - 移动广告(包括微信)"
+  InFeedAdvertisingANDQQ: "移动平台 - In Feed广告(包括QQ)"
+  OTV: "PC平台 - 海外OTV"
+  OTHERTYPE: "其他"
+#  汇率管理功能----start
+  NATION: "All"
+  US_UK_AU_NZ_MY: "美国,英国,澳洲,新西兰,马来西亚"
+  HK_TW_MA_SG: "香港,台湾,澳门,新加坡"
+  SPECIAL: "北上广深"
+  OTHER: "其他"
+  OTHER_COUNTRY: "其他国家"
+  SPECIAL_COUNTRY: "自定义国家组合"
+#  汇率管理功能----end
+
+  report_template_client: "Client Template"
+  report_template_standard: "Standard Template"
+  report_period_daliy: "Daily Report"
+  report_period_month: "Weekly Report"
+  report_period_closure: "Closing Report"
+  REPORTTEMPLATE:
+    standard: "Standard Template"
+    client: "Client Template"
+  REPORTPERIOD:
+    daliy: "Daily Report"
+    month: "Weekly Report"
+    closure: "Closing Report"
+  THIRDMONITOR:
+    AdMaster: "Ad Master"
+    other: "Others"
+
